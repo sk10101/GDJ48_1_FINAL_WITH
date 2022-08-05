@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!-- (DB)접속 정보 -->
+	<!-- 접속할 DB 계정 id, pw 입력 -->
+	<bean name="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	    <property name="driverClassName" value="${Globals.driverClassName}"/>
+	    <property name="url" value="${Globals.url}"/>
+	    <property name="username" value="${Globals.username}"/>
+	    <property name="password" value="${Globals.password}"/>
+	</bean>
+
+</beans>

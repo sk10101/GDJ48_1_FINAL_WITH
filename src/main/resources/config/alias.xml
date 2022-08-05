@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- 특정 패키지를 등록하는 방식 -->
+<configuration>
+	<typeAliases>
+		<package name="com.with.member.dto"/>
+		<package name="com.with.board.dto"/>
+		<package name="com.with.report.dto"/>
+		<package name="com.with.inquery.dto"/>
+		<package name="com.with.history.dto"/>
+		<package name="com.with.alarm.dto"/>
+		<package name="com.with.apply.dto"/>
+	</typeAliases>
+</configuration>

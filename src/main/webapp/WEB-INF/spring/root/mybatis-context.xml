@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd">
+
+
+	<!-- mybatis 사용 설정 -->
+	<!-- name = 필수요소(이름이 정해져 있음), id = 선택요소(이름이 정해져 있지 않음) -->
+	<!-- 어떤 DB 를 쓸건지에 관한 정보를 제공 -->
+	<!-- 쿼리문이(xml) 어디에 있는지 지정해줘야 한다. -->
+	<!-- 아래 dao path 경로 확인 -->
+	<!-- list 를 활용하면 전혀 다른 패키지 경로도 등록 가능 ex) com.gudi.member.dao -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	    <property name="dataSource" ref="datasource"/>
+	    <property name="mapperLocations">
+	    	<list>
+	    		<value>classpath:com/with/member/dao/*.xml</value>
+	    		<value>classpath:com/with/board/dao/*.xml</value>
+	    		<value>classpath:com/with/report/dao/*.xml</value>
+	    		<value>classpath:com/with/inquery/dao/*.xml</value>
+	    		<value>classpath:com/with/history/dao/*.xml</value>
+	    		<value>classpath:com/with/alarm/dao/*.xml</value>
+	    		<value>classpath:com/with/apply/dao/*.xml</value>
+	    	</list>
+	    </property>
+	    <property name="configLocation" value="classpath:config/alias.xml"/>
+	</bean>
+	 
+	 
+	<!-- 간편 사용 설정 (mybatis 를 사용하는 패키지 범위를 잡아준다.) -->
+	<!-- DB 관련하여 dao 에서 모두 처리할 것이기 때문에 아래와 같이 설정한다. -->
+	<!-- dao 패키지 경로 확인 -->
+	<mybatis-spring:scan base-package="com.with.member.dao"/>
+	<mybatis-spring:scan base-package="com.with.board.dao"/>
+	<mybatis-spring:scan base-package="com.with.report.dao"/>
+	<mybatis-spring:scan base-package="com.with.inquery.dao"/>
+	<mybatis-spring:scan base-package="com.with.history.dao"/>
+	<mybatis-spring:scan base-package="com.with.alarm.dao"/>
+	<mybatis-spring:scan base-package="com.with.apply.dao"/>
+	
+
+
+
+</beans>

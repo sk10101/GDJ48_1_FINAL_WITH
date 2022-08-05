@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+
+	<!-- Interceptor 의 묶음 -->
+	<!-- mapping 은 일치하는 요청을 Intercept 한다. -->
+	<!-- exclude-mapping 은 일치하는 요청을 제외한다. -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*"/>
+			<mvc:exclude-mapping path="/"/>
+			<mvc:exclude-mapping path="/join*"/>
+			<mvc:exclude-mapping path="/login.do"/>
+			<mvc:exclude-mapping path="/logout.do"/>
+			<bean class="com.with.utils.LoginInter"/>
+		</mvc:interceptor>
+		<!-- 나중에 인터페이스 추가하면서 주석 해제할 것
+		<mvc:interceptor>
+			<mvc:mapping path="/*"/>
+			<mvc:exclude-mapping path="/"/>
+			<bean class="com.with.utils.MemberInter"/>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/*"/>
+			<mvc:exclude-mapping path="/"/>
+			<bean class="com.with.utils.UnivInter"/>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/*"/>
+			<mvc:exclude-mapping path="/"/>
+			<bean class="com.with.utils.PenaltyInter"/>
+		</mvc:interceptor>
+		-->
+	</mvc:interceptors>
+
+
+</beans>
