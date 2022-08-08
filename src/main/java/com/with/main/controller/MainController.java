@@ -10,13 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MainController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
-		
-		
-		
-		return "home";
+		return "myInfo";
 	}
-	
 }
