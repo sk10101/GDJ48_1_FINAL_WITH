@@ -11,12 +11,10 @@ public class MainController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {
-		
-		
-		
-		return "home";
-	}
 	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String main() {
+		return "main";
+	}
+
 }
