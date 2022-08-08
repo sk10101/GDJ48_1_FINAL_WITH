@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.with.board.dao.DeliveryDAO">
+	<select id="deliList" resultType="board">
+		SELECT bcc.board_idx
+		,subject
+		,appoint_place
+		,member_id
+		,min_delivery
+		,write_date
+		,deadline
+		,hit
+		,member_cnt
+		,recruit_end FROM board_common_column bcc, delivery_board d
+			WHERE bcc.board_idx = d.board_idx AND category_id = '배달게시판'
+				ORDER BY bcc.board_idx DESC
+	</select>
+	
+	<update id="upHit" parameterType="String">
+		UPDATE board_common_column SET hit = hit+1
+			WHERE board_idx = #{board_idx}
+	</update>
+	
+	<select id="deliDetail" parameterType="String" resultType="board">
+		SELECT bcc.board_idx
+		,subject
+		,appoint_place
+		,member_id
+		,min_delivery
+		,write_date
+		,deadline
+		,hit
+		,member_cnt
+		,recruit_end
+		,gender
+		,content
+		,min_fund
+		,delivery_fee FROM board_common_column bcc, delivery_board d
+			WHERE bcc.board_idx = #{board_idx} AND bcc.board_idx = d.board_idx
+	</select>
+</mapper>
+
+

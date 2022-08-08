@@ -2,8 +2,11 @@ package com.with.board.dto;
 
 import java.sql.Date;
 
-public class BoardDTO {
+import org.apache.ibatis.type.Alias;
 
+@Alias("board")
+public class BoardDTO {
+	// 게시판 공통 컬럼 (식사)
 	private int board_idx;
 	private String member_id;
 	private String category_id;
@@ -18,6 +21,7 @@ public class BoardDTO {
 	private int member_cnt;
 	private int recruit_end;
 	private int hide;
+	
 	public int getBoard_idx() {
 		return board_idx;
 	}
@@ -103,6 +107,39 @@ public class BoardDTO {
 		this.hide = hide;
 	}
 	
+	// 택시 게시판 전용 컬럼
+	private String detination;
+		
+	public String getDetination() {
+		return detination;
+	}
+	public void setDetination(String detination) {
+		this.detination = detination;
+	}
+
+	// 배달 게시판 전용 컬럼
+	private String min_delivery;
+	private String delivery_fee;
+	private String min_fund;
+	
+	public String getMin_delivery() {
+		return min_delivery;
+	}
+	public void setMin_delivery(String min_delivery) {
+		this.min_delivery = min_delivery;
+	}
+	public String getDelivery_fee() {
+		return delivery_fee;
+	}
+	public void setDelivery_fee(String delivery_fee) {
+		this.delivery_fee = delivery_fee;
+	}
+	public String getMin_fund() {
+		return min_fund;
+	}
+	public void setMin_fund(String min_fund) {
+		this.min_fund = min_fund;
+	}
 	
 	
 	

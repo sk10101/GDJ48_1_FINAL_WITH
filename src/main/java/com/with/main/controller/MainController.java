@@ -15,7 +15,7 @@ public class MainController {
 	
 	@RequestMapping(value = "/cc", method = RequestMethod.GET)
 	public String main() {
-		return "main";
+		return "/main";
 	}
 
 }
