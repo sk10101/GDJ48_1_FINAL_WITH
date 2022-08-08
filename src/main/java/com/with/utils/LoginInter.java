@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class LoginInter extends HandlerInterceptorAdapter {
-	
+	/*
 	
 	// pre handler : CONTROLLER 를 거치기 전에 이곳을 들린다.
 	// 반환값이 false 이면, 해당 컨트롤러로 접근하지 못한다. (하얀 화면이 뜬다.)
@@ -46,5 +46,5 @@ public class LoginInter extends HandlerInterceptorAdapter {
 		String content = "<div>안녕하세요 "+ loginId +"님 <a href='logout.do'>로그아웃</a></div>";
 		mav.addObject("loginBox",content);
 	}
-	
+*/	
 }
