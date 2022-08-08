@@ -33,7 +33,51 @@
 	   <jsp:include page="../commons/memberSideBar3.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	     
+	     <form action="MealWrite.do" method="post">
+	<h3>글쓰기</h3>
+		<table>
+			<tr>
+				<th>제목</th>
+				<td><input type="text" name="subject"  placeholder="30자 이내"/></td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td><textarea name="content"  placeholder="500자 이내"></textarea></td>
+			</tr>
+			<tr>
+			<tr>
+				<th>성별</th>
+				<td><input type="checkbox" name="gender"/>남자만<input type="checkbox">여자만<input type="checkbox">상관없음</td>
+			</tr>
+			<tr>
+				<th>약속장소</th>
+				<td><input type="text" name="appoint_place"/> <input type="text" placeholder="주소 검색"></td>
+			</tr>
+			<tr>
+				<th>사진</th>
+				<td><input type="file" name="photo"/></td>
+			</tr>
+			<tr>
+				<th>모집인원</th>
+				<td>
+					<select name="option">
+						<option value="3">3</option>
+						<option value="3">2</option>
+						<option value="3">1</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>마감시간</th>
+				<td><input type="date" name="deadline"/></td>
+			</tr>
+			<tr>
+			<th colspan="2">
+				<button>등록</button>
+			</th>
+			</tr>
+		</table>
+	</form>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>
