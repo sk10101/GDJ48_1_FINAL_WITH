@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.with.history.dao.HistoryDAO">
+	
+	
+<select id="mygrouplist" resultType="com.with.history.dto.HistoryDTO">
+	SELECT 
+		b.board_idx,
+		b.category_id,
+		b.subject,
+		b.write_date,
+		count(a.member_id),
+		b.recruit_end 
+	FROM board_common_column b, apply a 
+	WHERE b.member_id = #{prams3} AND a.status = '대기중' AND b.board_idx = a.board_idx AND b.member_id = a.member_id;
+	</select>
+	
+	<!-- 
+	<select id="mygrouplist" resultType="com.with.history.dto.HistoryDTO">
+	SELECT 
+		b.board_idx,
+		b.category_id,
+		b.subject,
+		b.write_date,
+		count(a.member_id),
+		b.recruit_end 
+	FROM 
+		board_common_column b, apply a 
+	WHERE 
+		a.status = '대기중' AND b.board_idx = a.board_idx AND b.member_id = a.member_id;
+</select>
+ -->
+	<select id="sendallCount" resultType="int">
+		SELECT COUNT(member_id) FROM board_common_column WHERE member_id = #{param1}
+	</select>
+
+</mapper>
