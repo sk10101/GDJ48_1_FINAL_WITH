@@ -20,7 +20,7 @@
 		</layout>
 	</appender>
 	
- 	<!-- 파일 설정 -->
+ 	<!-- 파일 설정 
  	 <appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
  	     	<param name="File" value="C:/service.log" />
       		<param name="DatePattern" value=".yyyy-MM-dd-HH-mm"/>
@@ -28,7 +28,7 @@
       	  		<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p: %c - %m%n" />
       		</layout>
    	</appender>
-	
+	-->
 	<!-- Application Loggers -->
 	<logger name="com.with.main">
 		<level value="info" />

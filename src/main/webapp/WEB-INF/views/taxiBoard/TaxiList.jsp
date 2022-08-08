@@ -28,9 +28,29 @@
     }
 </style>
 <body>
-	<jsp:include page="../commons/adminHeader.jsp"/>
+	<jsp:include page="../commons/header.jsp"/>
+	<!--
+	<c:choose>
+		<c:when test="회원등급이 일반회원일때">
+		   	<jsp:include page="../commons/header.jsp"/>
+		</c:when>
+		<c:when test="회원등급이 관리자일때">
+			<jsp:include page="../commons/adminHeader.jsp"/>
+		</c:when>
+	</c:choose>
+	  -->	
 	<div class="content-wrap">
-	   <jsp:include page="../commons/adminSideBar2.jsp"/>
+	<jsp:include page="../commons/memberSideBar2.jsp"/>
+	<!-- 
+	<c:choose>
+		<c:when test="회원등급이 일반회원일때">
+		   <jsp:include page="../commons/memberSideBar1.jsp"/>
+		</c:when>
+		<c:when test="회원등급이 관리자일때">
+			<jsp:include page="../commons/adminSideBar1.jsp"/>
+		</c:when>
+	</c:choose>
+	 -->
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	     

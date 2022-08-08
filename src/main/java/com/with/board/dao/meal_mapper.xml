@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.with.board.MealDAO">
-
+<mapper namespace="com.with.board.dao.MealDAO">
+	<select id="list" resultType="board" parameterType="String">
+	select *from board_common_column bcc
+		WHERE category_id = '밥게시판'
+	</select>
+	
+	<insert id="MealWrite" 
+		useGeneratedKeys="true"
+		keyColumn="board_idx"
+		keyProperty="board_idx"
+		parameterType="hashmap">
+		INSERT INTO board_common_column (board_idx,subject, content, gender,appoint_place, member_cnt, deadline)
+			VALUES(#{board_idx},#{subject},#{content},#{gender},#{appoint_place},#{member_cnt},#{deadline})
+	</insert>
+	
+	<insert id="mealFileSave"> 
+		INSERT INTO photo(oriFileName, newFileName, board_idx, category_id)
+		VALUES(#{param1},#{param2},#{param3},#{param4})
+	</insert>
 </mapper>
 
 
