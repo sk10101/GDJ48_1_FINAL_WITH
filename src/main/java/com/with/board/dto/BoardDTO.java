@@ -2,6 +2,9 @@ package com.with.board.dto;
 
 import java.sql.Date;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("board")
 public class BoardDTO {
 	// 게시판 공통 컬럼 (식사)
 	private int board_idx;
