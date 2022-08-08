@@ -55,10 +55,55 @@
 </style>
 <body>
     <div class="main">
-        <div class="logo"><a href="#"><img src="./resources/images/logo.png" alt="logo"></a></div>  
+        <div class="logo"><a href="#"><img src="/resources/images/logo.png" alt="logo"></a></div>  
         <div class="content">
             <!-- 여기에서 작업 시작하세요 -->
-
+	<h3>회원가입 페이지</h3>
+	<form action="join.do" method="post"> <!-- 회원가입은 노출될수있으므로 post로. -->
+		<table>
+			<tr>
+				<th>아이디</th>
+				<td><input type="text" name="member_id"/></td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td><input type="text" name="member_pw"/></td> <!--   어떤 패스워드넣었는지 확인하려고 text 타입으로.. -->
+			</tr>
+			<tr>
+				<th>이름</th>
+				<td><input type="text" name="name"/></td>
+			</tr>
+			<tr>
+				<th>성별</th>
+				<td>
+				<label><input name="gender" type="radio" checked value="남자">남</label>
+                <input id="female" name="gender" type="radio" value="여자"><label for="female">여</label>
+				</td>
+			</tr>
+			<tr>
+				<th>대학교</th>
+				<td><input type="text" name="university_idx"/></td>
+			</tr>
+			<tr>
+				<th>연락처</th>
+				<td><input type="text" name="phone"/></td>
+			</tr>
+			<tr>
+				<th>EMAIL</th>
+				<td><input type="text" name="email"/></td>
+			</tr>
+		
+<!-- 			<tr>
+			 <th>프로필 사진 등록</th>
+             <td><input name="file" type="file"  name=multiple></td>		
+             </tr>	 -->
+			<tr>
+				<th colspan="2">
+					<input type="submit" value="회원가입"/>
+				</th>
+			</tr>
+		</table>
+	</form>
         </div>
     </div>
 	<jsp:include page="../commons/memberFooter.jsp"/>
