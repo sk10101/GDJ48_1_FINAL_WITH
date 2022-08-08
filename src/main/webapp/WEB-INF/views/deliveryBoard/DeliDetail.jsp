@@ -42,7 +42,7 @@
 	       <!-- 여기에서 작업 시작하세요 -->
 	     	<table>
 	     		<tr>
-	     			<td class='subject'>     ${info.subject}</td>
+	     			<td class='subject'>${info.subject}</td>
 	     		</tr>
 				<tr>
 					<td>약속장소 : ${info.appoint_place}</td>
@@ -74,20 +74,43 @@
 			</table>
 			<hr>
 			<table>
+				
 				<tr>
 					<td>이미지 추가해야함${info.content}</td>
 				</tr>
 			</table>
-			<hr>
+			<hr> 
+			<!-- 아래부터 참여현황 -->
 			<table>
 				<tr>
 					<th><img alt="참여현황" src="../resources/images/people.png" style="width:20px; height:20px;">참여현황</th>
 				</tr>
+				<tr>
+					<th>아이디</th>
+					<th>성별</th>
+					<th>금액</th>
+					<th>연락처</th>
+					<th>평가</th>
+					<c:if test="${info.member_id eq 'tester'}"><th>강퇴</th></c:if>
+				</tr>
 			</table>
+			<!-- 아래부터 Kakao Map API 구역 -->
+			<div id="map" style="width:500px;height:350px;"></div>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script>
+	
+	var lat = '${}'; // 위도
+	var lng = '${}'; // 경도
+	
+	//지도를 그리기 위한 옵션 설정
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = {
+	        center: new kakao.maps.LatLng(37.45975, 126.95109), // 지도의 중심좌표
+	        level: 3, // 지도의 확대 레벨
+	        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도의 종류
+	    };
 </script>
 </html>

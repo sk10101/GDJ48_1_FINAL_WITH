@@ -42,4 +42,18 @@ public class DeliveryController {
 		
 		return mav;
 	}
+	
+	
+	// 상세보기 Kakao MAP API 관련 콘트롤러
+	// 등록한 위도 경도 가져오기
+	@RequestMapping(value = "/LatLng", method = RequestMethod.GET)
+	public ModelAndView LatLng(HttpSession session) {
+		
+		logger.info("위도 경도 가져오기 컨트롤러 접속");
+		ModelAndView mav = new ModelAndView();
+		mav = service.LatLng();
+		
+		return mav;
+	}
+	
 }

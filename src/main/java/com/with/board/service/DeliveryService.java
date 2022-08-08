@@ -48,4 +48,14 @@ public class DeliveryService {
 		return mav;
 	}
 
+
+	public ModelAndView LatLng() {
+		logger.info("위도 경도 가져오기 서비스 요청");
+		ModelAndView mav = new ModelAndView();
+		
+		return null;
+	}
+
+
+
 }

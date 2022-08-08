@@ -16,7 +16,8 @@ public class BoardDTO {
 	private String content;
 	private Date deadline;
 	private String appoint_place;
-	private String appoint_coords;
+	private String appoint_coords_lat;
+	private String appoint_coords_lng;
 	private String gender;
 	private int member_cnt;
 	private int recruit_end;
@@ -76,11 +77,11 @@ public class BoardDTO {
 	public void setAppoint_place(String appoint_place) {
 		this.appoint_place = appoint_place;
 	}
-	public String getAppoint_coords() {
-		return appoint_coords;
+	public String getAppoint_coords_lat() {
+		return appoint_coords_lat;
 	}
-	public void setAppoint_coords(String appoint_coords) {
-		this.appoint_coords = appoint_coords;
+	public void setAppoint_coords_lat(String appoint_coords_lat) {
+		this.appoint_coords_lat = appoint_coords_lat;
 	}
 	public String getGender() {
 		return gender;
@@ -140,7 +141,12 @@ public class BoardDTO {
 	public void setMin_fund(String min_fund) {
 		this.min_fund = min_fund;
 	}
-	
-	
+	// 경도를 담는 변수
+	public String getAppoint_coords_lng() {
+		return appoint_coords_lng;
+	}
+	public void setAppoint_coords_lng(String appoint_coords_lng) {
+		this.appoint_coords_lng = appoint_coords_lng;
+	}
 	
 }
