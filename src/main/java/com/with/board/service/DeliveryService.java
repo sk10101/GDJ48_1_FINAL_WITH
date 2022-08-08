@@ -37,7 +37,7 @@ public class DeliveryService {
 	@Transactional
 	public ModelAndView deliDetail(String board_idx) {
 		logger.info("상세보기 서비스 요청");
-		ModelAndView mav = new ModelAndView("DeliDetail");
+		ModelAndView mav = new ModelAndView("deliveryBoard/DeliDetail");
 		
 		// 조회수 올리기
 		dao.upHit(board_idx);

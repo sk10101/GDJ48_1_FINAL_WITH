@@ -30,7 +30,7 @@
 <body>
 	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
-	   <jsp:include page="../commons/memberSideBar1.jsp"/>
+	   <jsp:include page="../commons/memberSideBar3.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	     

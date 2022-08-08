@@ -22,7 +22,7 @@
 			WHERE board_idx = #{board_idx}
 	</update>
 	
-	<select id="detail" parameterType="String" resultType="board">
+	<select id="deliDetail" parameterType="String" resultType="board">
 		SELECT bcc.board_idx
 		,subject
 		,appoint_place
@@ -33,7 +33,10 @@
 		,hit
 		,member_cnt
 		,recruit_end
-		,min_fund FROM board_common_column bcc, delivery_board d
+		,gender
+		,content
+		,min_fund
+		,delivery_fee FROM board_common_column bcc, delivery_board d
 			WHERE bcc.board_idx = #{board_idx} AND bcc.board_idx = d.board_idx
 	</select>
 </mapper>
