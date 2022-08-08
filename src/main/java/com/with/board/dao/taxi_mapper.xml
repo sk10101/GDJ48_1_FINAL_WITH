@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.with.board.dao.TaxiDAO">
+
+<select id="taxiList" resultType="board">
+	SELECT 
+	bcc.board_idx,
+	bcc.member_id,
+	hit,
+	write_date,
+	subject,
+	deadline,
+	appoint_place,
+	member_cnt,
+	recruit_end,
+	bcc.hide,
+	destination
+	FROM 
+	board_common_column bcc,
+	taxi_board t,
+	member m
+	WHERE
+	bcc.board_idx = t.board_idx AND
+	bcc.hide = 0
+<!-- 	category_id = '택시게시판' AND
+	m.member_id = bcc.member_id AND
+	m.university_idx = (SELECT m.university_idx FROM `member` m WHERE m.member_id  = '로그인 한 아이디'); -->
+</select>
+
+<select id="allCount" resultType="integer">
+	SELECT COUNT(*) FROM board_common_column
+</select>
+
+</mapper>
