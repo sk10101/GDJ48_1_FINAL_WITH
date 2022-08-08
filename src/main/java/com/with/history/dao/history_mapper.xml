@@ -14,7 +14,7 @@
 		count(a.member_id),
 		b.recruit_end 
 	FROM board_common_column b, apply a 
-	WHERE b.member_id = #{prams3} AND a.status = '대기중' AND b.board_idx = a.board_idx AND b.member_id = a.member_id;
+	WHERE b.member_id = '일반회원' AND a.status = '대기중' AND b.board_idx = a.board_idx
 	</select>
 	
 	<!-- 
@@ -32,8 +32,19 @@
 		a.status = '대기중' AND b.board_idx = a.board_idx AND b.member_id = a.member_id;
 </select>
  -->
-	<select id="sendallCount" resultType="int">
-		SELECT COUNT(member_id) FROM board_common_column WHERE member_id = #{param1}
+	<select id="historyallCount" resultType="int">
+		SELECT COUNT(member_id) FROM board_common_column WHERE member_id = '일반회원'
 	</select>
+	
+<!-- 	
+	<select id="myglist" resultType="com.with.history.dto.HistoryDTO">	
+		SELECT * FROM board_common_column 
+			<where>
+				<if test="!param2.equals('') and param1 == 'subject'">subject LIKE CONCAT('%', #{param2}, '%')</if>
+				<if test="!param2.equals('') and param1 == 'category'">category LIKE CONCAT('%', #{param2}, '%')</if>
+				<if test="!param2.equals('') and param1 == 'recruit_end'">recruit_end LIKE CONCAT('%', #{param2}, '%')</if>			
+			</where>
+	</select>
+	 -->
 
 </mapper>

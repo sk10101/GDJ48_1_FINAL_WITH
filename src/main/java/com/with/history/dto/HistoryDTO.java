@@ -1,27 +1,30 @@
 package com.with.history.dto;
 
+import java.sql.Date;
+
 public class HistoryDTO {
 
 	private int history_idx;
-	private int member_id;
+	private String member_id;
 	private int board_idx;
 	private int hide;
-	private int category_id;
-	private int write_date;
-	private int subject;
-	private int content;
-	private int status;
+	private String category_id;
+	private Date write_date;
+	private String subject;
+	private String content;
+	private String status;
 	private int recruit_end;
+	
 	public int getHistory_idx() {
 		return history_idx;
 	}
 	public void setHistory_idx(int history_idx) {
 		this.history_idx = history_idx;
 	}
-	public int getMember_id() {
+	public String getMember_id() {
 		return member_id;
 	}
-	public void setMember_id(int member_id) {
+	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
 	public int getBoard_idx() {
@@ -36,34 +39,34 @@ public class HistoryDTO {
 	public void setHide(int hide) {
 		this.hide = hide;
 	}
-	public int getCategory_id() {
+	public String getCategory_id() {
 		return category_id;
 	}
-	public void setCategory_id(int category_id) {
+	public void setCategory_id(String category_id) {
 		this.category_id = category_id;
 	}
-	public int getWrite_date() {
+	public Date getWrite_date() {
 		return write_date;
 	}
-	public void setWrite_date(int write_date) {
+	public void setWrite_date(Date write_date) {
 		this.write_date = write_date;
 	}
-	public int getSubject() {
+	public String getSubject() {
 		return subject;
 	}
-	public void setSubject(int subject) {
+	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	public int getContent() {
+	public String getContent() {
 		return content;
 	}
-	public void setContent(int content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public int getRecruit_end() {

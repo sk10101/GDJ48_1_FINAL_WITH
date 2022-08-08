@@ -6,9 +6,11 @@ import com.with.history.dto.HistoryDTO;
 
 public interface HistoryDAO {
 
-	int sendallCount(String loginId);
-	
 	ArrayList<HistoryDTO> mygrouplist(int cnt, int offset, String loginId);
+
+	int historyallCount(String loginId);
+
+	//ArrayList<HistoryDTO> myglist(String opt, String keyword);
 
 
 }
