@@ -33,6 +33,7 @@
 	   <jsp:include page="../commons/memberSideBar2.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
+	       
 	     
 	   </div>
 	</div>

@@ -26,7 +26,21 @@
         background-color: rgb(249, 249, 249);
         border-radius: 20px 20px 0 0;
     }
-
+    
+	.goodRegister {
+		position: relative;
+		margin: 20px auto;
+		margin: 0 auto;
+		max-width: 180px;
+		text-decoration: none;
+		border-radius: 4px;
+		padding: 10px 20px;
+	    color: rgb(26 18 50 / 100%);
+	    font-size: 18px;
+	    font-weight: 500;
+		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+	}
+	
     div.logo {
         display: inline-block;
         position: absolute;
@@ -58,8 +72,6 @@
         <div class="logo"><a href="#"><img src="/resources/images/logo.png" alt="logo"></a></div>  
         <div class="content">
             <!-- 여기에서 작업 시작하세요 -->
-	<h3>회원가입 페이지</h3>
-	<form action="join.do" method="post"> <!-- 회원가입은 노출될수있으므로 post로. -->
 		<table>
 			<tr>
 				<th>아이디</th>
@@ -82,7 +94,11 @@
 			</tr>
 			<tr>
 				<th>대학교</th>
-				<td><input type="text" name="university_idx"/></td>
+				<td>
+						<input type="text" id="university_name"/>
+					   <button id="empSearch">검색</button>
+				</td>
+				<td class="hidden"><input type="text" id="university_idx"></td>
 			</tr>
 			<tr>
 				<th>연락처</th>
@@ -99,13 +115,55 @@
              </tr>	 -->
 			<tr>
 				<th colspan="2">
-					<input type="submit" value="회원가입"/>
+					<input type="button" value="회원가입" onclick="location.href='/join.do'"/>
+					<input type="button" value="돌아가기" onclick="location.href='/'"/>
 				</th>
 			</tr>
 		</table>
-	</form>
         </div>
     </div>
+    
+ <!-- 대학검색 Modal -->
+<div id="empSearchModal" class="modal fade" role="dialog" data-backdrop="static">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+      <h4 class="modal-title">대학 검색 </h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>        
+      </div>
+      <div class="modal-body" style="width:100%; height:500px; overflow:auto">
+        <table id="emptable" class="table table-striped">
+        <div id="goodList" class="form-inline" >
+		  <select style="width:20%"><option>대학이름</option></select>
+		  <input  class="form-control" type="text" style="width:50%" id="university_idx" display="inline-block"/> 
+		  <!-- <input type="hide" id="university_name"/> -->
+		  <button type="button" id="empsearch" style="width:20%" class="btn btn-default">검색</button> 
+		 </div>
+        	<thead style="text-align:center; font-size:20px;">
+        		<tr><td></td><td>학교</td><td>이름</td><tr>
+        	</thead>
+        	<tbody id="list" style="font-size:20px;">
+        	</tbody>
+        
+        </table>
+        <!-- <button type="button" id="empUp" onclick="empUp()" class="btn btn-default">선택</button> -->
+        
+      </div>
+      <div class="modal-footer" >
+      	<button type="button" id="empUp" onclick="empUp()" class="btn btn-default" >선택</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+      </div>
+    </div>
+
+  </div>
+</div>   
+    
 	<jsp:include page="../commons/memberFooter.jsp"/>
 </body>
+<script>
+
+ 
+</script>
 </html>

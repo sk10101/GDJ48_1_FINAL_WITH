@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.with.board.dao.TaxiDAO">
+
+<select id="allCount" resultType="integer">
+	SELECT 
+	COUNT(bcc.board_idx) 
+	FROM 
+	board_common_column bcc,
+	taxi_board t,
+	member m
+	WHERE
+	bcc.board_idx = t.board_idx AND
+	bcc.hide = 0 AND
+	category_id = '택시게시판' AND
+	m.member_id = bcc.member_id AND
+	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{param1})
+	
+	<!-- SELECT COUNT(*) FROM board_common_column --> 
+</select>
+
+<select id="taxiList" resultType="board">
+	SELECT 
+	bcc.board_idx,
+	bcc.member_id,
+	bcc.hit,
+	bcc.write_date,
+	bcc.subject,
+	bcc.deadline,
+	bcc.appoint_place,
+	bcc.member_cnt,
+	bcc.recruit_end,
+	bcc.hide,
+	t.destination
+	FROM 
+	board_common_column bcc,
+	taxi_board t,
+	member m
+	WHERE
+	bcc.board_idx = t.board_idx AND
+	bcc.hide = 0 AND
+	bcc.category_id = '택시게시판' AND
+	m.member_id = bcc.member_id AND
+	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{param3})
+	ORDER BY bcc.board_idx DESC limit #{param1} offset #{param2}
+</select>
+
+ <update id="updateEnd">
+	UPDATE board_common_column SET recruit_end = if(deadline &lt; now(), '1', '0')
+ 	<!-- UPDATE 문에 if를 넣는 구문 > 마감시간이 현재시간보다 전이라면 recruit_end 는 1이 된다. 아니면 0. -->
+ 	<!-- &lt; = <, &gt; = > -->   
+ </update>
+
+</mapper>

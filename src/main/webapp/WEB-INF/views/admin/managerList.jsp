@@ -32,7 +32,32 @@
 	<div class="content-wrap">
 	   <jsp:include page="../commons/adminSideBar4.jsp"/>
 	   <div class="content">
-	       <!-- 여기에서 작업 시작하세요 -->
+	    <button onclick="location.href='userList'">일반회원</button>
+	   	<button onclick="location.href='adminList'">관리자</button>
+				<form action="search.do" method="post">
+					<input type="text" name="name" value="관리자ID"/>
+					<button>검색</button>
+				</form>
+		<table>
+			<thead>
+				<tr>
+					<th>관리자 아이디</th>
+					<th>이름</th>		
+					<th>연락처</th>
+					<th>성별</th>	
+				</tr>
+			</thead>
+			<tbody>
+			<c:forEach items="${list}" var="admin">
+				<tr>
+					<td>${admin.member_id}</td>
+					<td>${admin.name}</td>
+					<td>${admin.phone}</td>
+					<td>${admin.gender}</td>
+				</tr>
+			</c:forEach>
+			</tbody>
+		</table>
 	     
 	   </div>
 	</div>

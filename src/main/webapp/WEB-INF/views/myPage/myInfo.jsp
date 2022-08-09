@@ -133,8 +133,7 @@
             	</tr>
             </table>
             <br><br>
-            <img src="./resources/images/people.png" alt="people" style="width: 30px; margin-left: 480px;">
-            <p>3</p>
+            <p><img src="./resources/images/people.png" alt="people" style="width: 30px; margin-left: 20px;">${mblist.manner_cnt}</p>
             <br><br>
            	<hr>
            	<br><br>
