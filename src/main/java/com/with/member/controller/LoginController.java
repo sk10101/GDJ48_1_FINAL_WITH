@@ -16,7 +16,7 @@ import com.with.member.dto.MemberDTO;
 import com.with.member.service.LoginService;
 
 @Controller
-@RequestMapping(value="/member/*") 
+/* @RequestMapping(value="/member/*") */ 
 public class LoginController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -24,7 +24,7 @@ public class LoginController {
 	@Autowired LoginService service;
 	
 	//로그인 페이지 이동
-	@RequestMapping(value = "login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginForm() {		
 		return "member/login";
 	}

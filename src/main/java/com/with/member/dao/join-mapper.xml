@@ -6,4 +6,11 @@
 		INSERT INTO member(member_id,university_idx,member_pw,name,gender,email,phone)
 			VALUES (#{member_id},#{university_idx},#{member_pw},#{name},#{gender},#{email},#{phone})
 	</insert>
+	
+	<select id="empSearch" parameterType="String" resultType="com.with.member.dto.MemberDTO">
+		SELECT university_idx,university_name FROM university
+		<where>
+			university_name LIKE CONCAT('%',#{keyword},'%') 
+		</where>	
+	</select>
 </mapper>

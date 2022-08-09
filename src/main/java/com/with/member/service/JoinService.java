@@ -1,5 +1,7 @@
 package com.with.member.service;
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,20 @@ public class JoinService {
 		
 		return mav;
 	}
+
+
+	
+	
+	
+	
+
+	/*
+	 * public ArrayList<MemberDTO> empList() { return dao.empList(); }
+	 * 
+	 * public ArrayList<MemberDTO> empSearch(int university_idx, String
+	 * university_name) { return dao.empSearch(university_idx,university_name); }
+	 */
+
 
 
 }

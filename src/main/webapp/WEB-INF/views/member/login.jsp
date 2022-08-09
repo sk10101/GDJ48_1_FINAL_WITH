@@ -114,7 +114,7 @@
         <div class="logo"><a href="#"><img src="/resources/images/logo.png" alt="logo"></a></div>  
         <div class="content">
             <!-- 여기에서 작업 시작하세요 -->    
-	<form action="/member/login" method="post">
+	<form action="/login" method="post">
 		<table>
 			<tr>
 				<th>ID</th>
