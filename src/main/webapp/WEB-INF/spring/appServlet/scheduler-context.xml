@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd">
+	
+	<!-- 두가지 방식을 혼용하는 것은 위험하다. - 스케줄러가 꼬일 수 있다. -->
+	
+	<!-- 스케줄 등록 방식 1. 어노테이션 방식 -->
+	<!-- <task:annotation-driven/> -->
+	
+	<!-- 스케줄 등록 방식 1. 빈 등록 방식 -->
+	<!-- cron : 매 초/분/시/일/월/요일/년 -->
+	<!-- 1분 마다 마감여부를 확인하도록 설정 -->
+<!-- <bean id="scheduleJob" class="com.with.board.service.DeliSchedulerService"/>
+	
+	<task:scheduled-tasks>
+		<task:scheduled ref="scheduleJob" method="deadline" cron=" */1 * * * * MON-FRI"/>
+	</task:scheduled-tasks>  -->
+
+</beans>

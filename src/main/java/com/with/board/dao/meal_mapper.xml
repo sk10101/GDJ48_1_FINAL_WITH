@@ -3,17 +3,28 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.with.board.dao.MealDAO">
 	<select id="list" resultType="board" parameterType="String">
-	select *from board_common_column bcc
-		WHERE category_id = '밥게시판'
+		SELECT *FROM board_common_column bcc
+		WHERE category_id = '밥게시판' 
 	</select>
+	
+	
+	
+	
+	<select id="detail" resultType="board" parameterType="String">
+		SELECT * FROM board_common_column WHERE board_idx=#{board_idx}
+	</select>
+	
+	<update id="hit" parameterType="String">
+		UPDATE board_common_column SET hit = hit +1 WHERE board_idx=#{board_idx}
+	</update>
 	
 	<insert id="MealWrite" 
 		useGeneratedKeys="true"
 		keyColumn="board_idx"
 		keyProperty="board_idx"
 		parameterType="hashmap">
-		INSERT INTO board_common_column (board_idx,subject, content, gender,appoint_place, member_cnt, deadline)
-			VALUES(#{board_idx},#{subject},#{content},#{gender},#{appoint_place},#{member_cnt},#{deadline})
+		INSERT INTO board_common_column (member_id,category_id,subject, content, gender,appoint_place,appoint_coords, member_cnt, deadline)
+			VALUES(#{member_id},#{subject},#{content},#{gender},#{appoint_place},#{appoint_coords},#{member_cnt},#{deadline})
 	</insert>
 	
 	<insert id="mealFileSave"> 
