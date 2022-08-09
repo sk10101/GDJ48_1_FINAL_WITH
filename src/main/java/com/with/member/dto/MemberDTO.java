@@ -90,4 +90,29 @@ public class MemberDTO {
 		this.hide = hide;
 	}
 	
+	//제한이가 추가한 dto 대학교 테이블
+	//public int university_idx;
+	public String university_name;
+	public String university_location;
+	public String university_addr;
+	public String getUniversity_name() {
+		return university_name;
+	}
+	public void setUniversity_name(String university_name) {
+		this.university_name = university_name;
+	}
+	public String getUniversity_location() {
+		return university_location;
+	}
+	public void setUniversity_location(String university_location) {
+		this.university_location = university_location;
+	}
+	public String getUniversity_addr() {
+		return university_addr;
+	}
+	public void setUniversity_addr(String university_addr) {
+		this.university_addr = university_addr;
+	}
+	
+	
 }
