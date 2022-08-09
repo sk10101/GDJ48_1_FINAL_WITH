@@ -51,7 +51,7 @@ public class TaxiController {
 	public String uploadForm() {
 		return "taxiBoard/uploadForm";
 	}
-	
+	/*
 	@RequestMapping(value = "/taxiUpload")
 	public ModelAndView upload(MultipartFile file, HttpSession session) {		
 		logger.info("upload 요청");
@@ -76,5 +76,5 @@ public class TaxiController {
 		logger.info("삭제 요청 : "+idx);
 		return service.del(idx);
 	}
-	
+	*/
 }
