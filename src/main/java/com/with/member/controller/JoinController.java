@@ -30,7 +30,7 @@ public class JoinController {
 	@RequestMapping(value = "/join.do", method = RequestMethod.POST)
 	public ModelAndView join(@ModelAttribute MemberDTO dto) {
 		logger.info(dto.getMember_id());
-		logger.info(dto.getUniversity_idx());
+		//logger.info(dto.getUniversity_idx());
 		logger.info(dto.getMember_pw());
 		logger.info(dto.getName());
 		logger.info(dto.getGender());

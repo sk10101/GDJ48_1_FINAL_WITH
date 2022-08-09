@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">	
+<mapper namespace="com.with.member.dao.MemberDAO">
+
+	<select id="mblist" resultType="hashmap">
+		SELECT member_id, name, gender, university_idx, phone, email FROM member WHERE member_id = #{param1}
+	</select>
+	
+	<select id="univer" resultType="String">
+		SELECT university_name FROM university WHERE university_idx = #{param1}
+	</select>
+	
+</mapper>

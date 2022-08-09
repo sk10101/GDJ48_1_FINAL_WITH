@@ -10,7 +10,7 @@
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="resources/js/jquery.twbsPagination.js"></script> <!-- 페이징 처리 -->
+	<script type="text/javascript" src="./resources/js/jquery.twbsPagination.js"></script> <!-- 페이징 처리 -->
 </head>
 <style>
     .content-wrap {
@@ -30,17 +30,49 @@
         background-color: rgb(249, 249, 249);
     }
     
+    #table-wrap {
+        max-width: 1040px;
+        width: 100%;
+    }
     
+    .taxiList {
+    	margin: 0 auto;
+    	margin-top: 40px;
+    	border-radius: 20px;
+    	width: 600px;
+    	background-color: #537ef4;
+    	box-shadow: rgba(100, 100, 111, 0.6) 0px 7px 29px 0px;
+    	background-image: linear-gradient(#537ef4, #2196f3);
+    	transition: all 0.3s ease;
+    }
     
-    #taxi-table,th,td {
-    	border: 1px solid gray;
-    	border-collapse: collapse;
-    	padding: 2px 10px;
+    .taxiList:hover {
+        transform: scale(1.03);
+    }
+    
+    .taxiList th, td {
+    	color: #eaeaea;
+    	padding: 3px 15px;
+    	font-size: 14px;
+    }
+    
+    .taxiList tr:first-child > th {
+    	padding-top: 15px;
+    	padding-bottom: 15px;
+    	font-size: 16px;
+    }
+    
+    .taxiList tr:last-child th {
+    	padding-bottom: 15px;
+    }
+    
+    .taxiList tr:last-child td:last-child {
+    	text-align: right;
     }
   
 </style>
 <body>
-	<jsp:include page="../commons/header.jsp"/>
+	<%-- <jsp:include page="../commons/header.jsp"/> --%>
 	<!--
 	<c:choose>
 		<c:when test="회원등급이 일반회원일때">
@@ -52,7 +84,7 @@
 	</c:choose>
 	  -->	
 	<div class="content-wrap">
-		<jsp:include page="../commons/memberSideBar2.jsp"/>
+		<%-- <jsp:include page="../commons/memberSideBar2.jsp"/> --%>
 		<!-- 
 		<c:choose>
 			<c:when test="회원등급이 일반회원일때">
@@ -65,15 +97,18 @@
 		 -->
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-  			<button id="write" onclick="location.href='/recruit/Write.go'">글쓰기</button>
+	       <div id="table-wrap">
+	       
+	       </div>
+  			<button id="write" onclick="location.href='/taxiWrite'">글쓰기</button>
 		    <div class="container">
-		      <nav arial-label="Page navigation" style="text-align:center">
+		      <nav arial-label="Page navigation" style="text-align:center;">
 		         <ul class="pagination" id="pagination"></ul>
 		      </nav>
 		  	</div>
 	   </div>
 	</div>
-	<jsp:include page="../commons/footer.jsp"/>
+	<%-- <jsp:include page="../commons/footer.jsp"/> --%>
 </body>
 <script>
 var currPage = 1;
@@ -94,7 +129,7 @@ function listCall(page){
       dataType:'JSON',
       success:function(data){
          console.log(data);
-         drawList(data.list);
+         drawList(data.taxiList);
          currPage = data.currPage;
          
          //불러오기가 성공되면 플러그인을 이용해 페이징 처리
@@ -117,50 +152,66 @@ function listCall(page){
    });
 }
 
-function drawList(list){
+function drawList(taxiList){
    var content = '';
-   list.forEach(function(taxi){
+   taxiList.forEach(function(taxi){
+	  
+	  // 작성일(타임스탬프)을 날짜 형식으로 변환 
+      var date = new Date(taxi.write_date);
+      var yyyy = date.getFullYear();
+      var mm = date.getMonth() + 1;
+      var dd = date.getDate();
+      
+   	  // 마감시간(타임스탬프)을 날짜 및 시간 형식으로 변환 (해결중)
+      var date1 = new Date(taxi.deadline);
+      var yyyy1 = date1.getFullYear();
+      var mm1 = date1.getMonth() + 1;
+      var dd1 = date1.getDate();
+      var hh1 = date1.getHours();
+      var mm1 = date1.getMinutes();
+      var ss1 = date1.getSeconds();
+      
+      var write_date = yyyy + "-" + mm + "-" + dd;
+      var deadline = yyyy1 + "-" + mm1 + "-" + dd1 + " " + hh1 + ":" + mm1 + ":" + ss1;
+      
+	   
       console.log(taxi);
+      content += '<table class="taxiList">';
       content += '<tr>';
-      content += '<td>'+item.idx+'</td>';
-      content += '<td>'+item.subject+'</td>';
-      content += '<td>'+item.user_name+'</td>';
-      content += '<td>'+item.bHit+'</td>';
+      content += '<th colspan="4">'+taxi.subject+'</th>';
       content += '</tr>';
-      
-      /* content 에 들어갈 코드 */
-      <table>
-		<tr>
-			<th colspan="4">${list.subject}</th>
-		</tr>
-		<tr>
-			<th>출발지</th>
-			<td>${list.appoint_place}</td>
-			<th>작성자</th>
-			<td>${list.member_id}</td>
-		</tr>
-		<tr>
-			<th>도착지</th>
-			<td>${list.destination}</td>
-			<th>작성일</th>
-			<td>${list.write_date}</td>
-		</tr>
-		<tr>
-			<th>마감시간</th>
-			<td>${list.recruit_end}</td>
-			<th>조회수</th>
-			<td>${list.hit}</td>
-		</tr>
-		<tr>
-			<th>인원</th>
-			<td>1/${list.member_cnt}</td>
-			<td colspan="2">${list.deadline}</td>
-		</tr>
-	</table>
-      
+      content += '<tr>';
+      content += '<th>출발지</th>';
+      content += '<td>'+taxi.appoint_place+'</td>';
+      content += '<th>작성자</th>';
+      content += '<td>'+taxi.member_id+'</td>';
+      content += '</tr>';
+      content += '<tr>';
+      content += '<th>도착지</th>';
+      content += '<td>'+taxi.destination+'</td>';
+      content += '<th>작성일</th>';
+      content += '<td>'+write_date+'</td>';
+      content += '</tr>';
+      content += '<tr>';
+      content += '<th>마감시간</th>';
+      content += '<td>'+deadline+'</td>';
+      content += '<th>조회수</th>';
+      content += '<td>'+taxi.hit+'</td>';
+      content += '</tr>';
+      content += '<tr>';
+      content += '<th>인원</th>';
+      content += '<td>현재인원 / '+(taxi.member_cnt + 1)+'</td>';
+      if (taxi.recruit_end == 0) {
+    	  content += '<td colspan="2"><span style="padding: 5px 10px; background-color: #2962ff; border-radius: 5px;">모집중</span></td>';  
+      } else {
+    	  content += '<td colspan="2"><span style="padding: 5px 10px; background-color: #f44336; border-radius: 5px;">마감</span></td>';
+      }
+      content += '</tr>';
+      content += '</table>';
    });
-   $('#list').empty();
-   $('#list').append(content);
+   
+   $('#table-wrap').empty();
+   $('#table-wrap').append(content);
 }
 </script>
 </html>

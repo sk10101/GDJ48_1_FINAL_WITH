@@ -6,8 +6,10 @@ import com.with.board.dto.BoardDTO;
 
 public interface TaxiDAO {
 
-	ArrayList<BoardDTO> taxiList();
+	ArrayList<BoardDTO> taxiList(int cnt, int offset, String loginId);
 
-	int allCount();
+	int allCount(String loginId);
+
+	void updateEnd();
 
 }

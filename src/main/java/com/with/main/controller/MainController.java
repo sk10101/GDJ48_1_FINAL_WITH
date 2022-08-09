@@ -11,11 +11,8 @@ public class MainController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-
-	
 	@RequestMapping(value = "/cc", method = RequestMethod.GET)
 	public String main() {
 		return "/main";
 	}
-
 }
