@@ -7,6 +7,20 @@
 		WHERE category_id = '밥게시판' 
 	</select>
 	
+	<!-- 식사 게시판 페이징 -->
+	<select id="mealList" resultType="board">
+	SELECT bcc.board_idx
+		,subject
+		,appoint_place
+		,member_id
+		,write_date
+		,deadline
+		,hit
+		,member_cnt
+		,recruit_end FROM board_common_column bcc, meal_board mb 
+			WHERE bcc.board_idx = mb.board_idx  AND category_id = '밥게시판'
+				ORDER BY bcc.board_idx desc;
+	</select>
 	
 	
 	
