@@ -24,13 +24,14 @@ public class DeliveryController {
 	
 	@Autowired DeliveryService service;
 	
-	// 택시 게시판 목록 조회
+	// 배달 게시판 목록 조회
 	@RequestMapping(value = "/deliList", method = RequestMethod.GET)
-	public ModelAndView deliList(HttpSession session) {
+	public ModelAndView deliList(HttpSession session, @RequestParam int page) {
 		
 		logger.info("게시판 목록 컨트롤러 접속");
+		logger.info("현재 페이지 : "+page);
 		ModelAndView mav = new ModelAndView();
-		mav = service.deliList();
+		mav = service.deliList(page);
 		
 		return mav;
 	}
@@ -54,7 +55,9 @@ public class DeliveryController {
 		
 		logger.info("검색 목록 컨트롤러 접속");
 		ModelAndView mav = new ModelAndView();
-		mav = service.searchList(option,word);
+		// 검색 하면 page = 1 로 되돌아 가기 위한 변수 생성
+		int page = 1;
+		mav = service.searchList(option,word,page);
 		
 		return mav;
 	}	
@@ -83,6 +86,4 @@ public class DeliveryController {
 		
 		return mav;
 	}
-	
-	
 }

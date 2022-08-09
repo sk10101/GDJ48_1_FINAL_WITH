@@ -1,13 +1,14 @@
 package com.with.board.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.with.board.dto.BoardDTO;
 import com.with.board.dto.PhotoDTO;
 
 public interface DeliveryDAO {
 
-	ArrayList<BoardDTO> deliList();
+	ArrayList<BoardDTO> deliList(HashMap<String, Object> map);
 
 	void upHit(String board_idx);
 	
@@ -26,6 +27,8 @@ public interface DeliveryDAO {
 	void deliFileWrite(String oriFileName, String newFileName, int board_idx, String category);
 
 	ArrayList<PhotoDTO> deliPhotoList(String board_idx, String string);
+
+	ArrayList<BoardDTO> allCount(HashMap<String, Object> map);
 
 
 

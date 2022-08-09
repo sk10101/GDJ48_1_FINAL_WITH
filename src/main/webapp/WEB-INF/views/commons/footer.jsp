@@ -1,14 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<link rel="favicon" href="./resources/images/with_favicon.ico">
-	<title>With</title>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
+
 <style>
     .footer-wrap {
         margin: 0 auto;
@@ -40,15 +33,12 @@
     }
 
 </style>
-<body>
     <div class="footer-wrap">
         <div class="footer">
             <p>Copyright 2022. With<br/>Designed by With<br/>All right reserved.</p>
         </div>
     </div>
-</body>
 <script>
     // 아래 코드는 지우지 마세요
     $(".sidebar").css("height", ($(".content").height() + $(".footer").height()));
 </script>
-</html>
