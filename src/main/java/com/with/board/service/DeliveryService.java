@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.with.board.dao.DeliveryDAO;
 import com.with.board.dto.BoardDTO;
+import com.with.board.dto.PhotoDTO;
 
 
 @Service
@@ -52,7 +53,9 @@ public class DeliveryService {
 		dao.upHit(board_idx);
 		// 게시글 상세보기
 		BoardDTO info = dao.deliDetail(board_idx);
+		ArrayList<PhotoDTO> deliPhotoList = dao.deliPhotoList(board_idx,"배달게시판");
 		mav.addObject("info",info);
+		mav.addObject("deliPhotoList",deliPhotoList);
 		
 		return mav;
 	}
@@ -87,7 +90,7 @@ public class DeliveryService {
 		
 		// 파일을 올리지 않아도 fileSave 가 진행되는 것을 방지하는 조건문
 		if(row > 0 & row2 > 0) {
-			claimFileSave(photos, board_idx, "배달게시글");
+			deliFileSave(photos, board_idx, "배달게시글");
 		}
 		
 		logger.info("성공 여부 : " + row + " / " + row2);
@@ -95,7 +98,7 @@ public class DeliveryService {
 
 	
 	// 파일 업로드 서비스
-	public void claimFileSave(MultipartFile[] photos, int board_idx, String category_id) {
+	public void deliFileSave(MultipartFile[] photos, int board_idx, String category_id) {
 		
 		// 카테고리 번호 전달(1. 공지사항, 2. 건의사항, 3. 답변)
 		String category = category_id;
@@ -116,7 +119,7 @@ public class DeliveryService {
 				
 				try {
 					byte[] arr = photo.getBytes();
-					Path path = Paths.get("C:\\STUDY\\SPRING_ADVANCE\\GDJ48_1_FIANL_WITH\\src\\main\\webapp\\resources\\photo\\" + newFileName);
+					Path path = Paths.get("C:/STUDY/SPRING_ADVANCE/GDJ48_1_FIANL_WITH/src/main/webapp/resources/photo/" + newFileName);
 					// 같은이름의 파일이 나올 수 없기 떄문에 옵션 설정 안해도된다.
 					Files.write(path, arr);
 					logger.info(newFileName + " SAVE OK");

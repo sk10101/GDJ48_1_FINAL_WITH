@@ -73,7 +73,7 @@ public class DeliveryController {
 	
 	
 	// 글쓰기
-	@RequestMapping(value = "/write", method = RequestMethod.POST)
+	@RequestMapping(value = "/write")
 	public ModelAndView write(MultipartFile[] photos, HttpSession session, @ModelAttribute BoardDTO dto, RedirectAttributes rAttr) {
 		logger.info("게시글 작성 컨트롤러 접속");
 		ModelAndView mav = new ModelAndView();
