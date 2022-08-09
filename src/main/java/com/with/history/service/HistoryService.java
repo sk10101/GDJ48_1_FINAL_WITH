@@ -7,10 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.with.board.dto.BoardDTO;
 import com.with.history.dao.HistoryDAO;
-import com.with.history.dto.HistoryDTO;
 
 @Service
 public class HistoryService {
@@ -19,14 +18,13 @@ public class HistoryService {
 	
 	@Autowired HistoryDAO dao;
 
-	public HashMap<String, Object> mygrouplist(HashMap<String, String> params) {
+	public HashMap<String, Object> mygrouplistajax(HashMap<String, String> params, String loginId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int cnt = Integer.parseInt(params.get("cnt"));
 		int page = Integer.parseInt(params.get("page"));
 		logger.info("보여줄 페이지 : " + page);
-		String loginId = params.get("id");
 		
-		int allCnt = dao.historyallCount(loginId);
+		int allCnt = dao.allCount();
 		logger.info("allCnt:" + allCnt);
 		
 		int pages = allCnt%cnt > 0 ? (allCnt/cnt)+1 : (allCnt/cnt);
@@ -45,8 +43,12 @@ public class HistoryService {
 	         offset = 5;
 	      }
 		logger.info("offset : " + offset);
-		ArrayList<HistoryDTO> mygrouplist = dao.mygrouplist(cnt, offset, loginId);
+		ArrayList<BoardDTO> mygrouplist = dao.mygrouplistajax(cnt, offset, loginId);
+		ArrayList<BoardDTO> mygrouplist1 = dao.mygrouplistajax1(cnt, offset, loginId);
+		
+		logger.info("mygrouplist : {}", map.size());
 		map.put("mygrouplist", mygrouplist);
+		map.put("mygrouplist1", mygrouplist);
 		return map;
 		
 		}

@@ -2,13 +2,15 @@ package com.with.history.dao;
 
 import java.util.ArrayList;
 
-import com.with.history.dto.HistoryDTO;
+import com.with.board.dto.BoardDTO;
 
 public interface HistoryDAO {
 
-	ArrayList<HistoryDTO> mygrouplist(int cnt, int offset, String loginId);
+	int allCount();
 
-	int historyallCount(String loginId);
+	ArrayList<BoardDTO> mygrouplistajax(int cnt, int offset, String loginId);
+
+	ArrayList<BoardDTO> mygrouplistajax1(int cnt, int offset, String loginId);
 
 	//ArrayList<HistoryDTO> myglist(String opt, String keyword);
 

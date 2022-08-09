@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.with.history.service.HistoryService;
 
@@ -28,21 +27,24 @@ public class HistoryController {
 		return "myPage/myGroupList";
 	}
 	
+	@RequestMapping("/myApplyList.go")
+	public String myApply(Model model) {
+		return "myPage/myApplyList";
+	}
+	
 	@RequestMapping("/mygrouplist.ajax")
-    @ResponseBody
-    public HashMap<String, Object> mygrouplist(HttpSession session, @RequestParam HashMap<String, String> params) {
+    public  @ResponseBody HashMap<String, Object> mygrouplist(HttpSession session, @RequestParam HashMap<String, String> params) {
        logger.info("리스트 요청 : {}",params);
-		/*
-		 * params.put("member_id","일반회원"); 
-		 * */
+	
 		 String loginId = "일반회원";
 				 
 		session.setAttribute("loginId", "일반회원");
+		params.put("member_id", loginId);
 		 
        
        //String loginId = (String) session.getAttribute("loginId");
        logger.info("로그인 아이디 : "+loginId);
-       return service.mygrouplist(params);
+       return service.mygrouplistajax(params, loginId);
     }
 	
 	
