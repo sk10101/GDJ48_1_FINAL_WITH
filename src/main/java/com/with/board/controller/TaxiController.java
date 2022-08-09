@@ -76,10 +76,4 @@ public class TaxiController {
 		logger.info("삭제 요청 : "+idx);
 		return service.del(idx);
 	}
-<<<<<<< HEAD
-	
 }*/
-=======
-	*/
-}
->>>>>>> origin/master

@@ -1,6 +1,5 @@
 package com.with.member.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +23,8 @@ public class MemberService {
 	public int macnt(String member_id) {
 		return dao.macnt(member_id);
 	}
-	public int average(String member_id, String subin) {
-		return dao.average(member_id,subin);
+	public int average(String member_id, String nameBox) {
+		return dao.average(member_id,nameBox);
 	}
 	
 }

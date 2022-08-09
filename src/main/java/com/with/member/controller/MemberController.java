@@ -1,9 +1,6 @@
 package com.with.member.controller;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,15 +24,22 @@ public class MemberController {
 		String name = service.univer(map.get("university_idx"));
 		int cnt = service.macnt(member_id)/3;
 		float avg[]= new float[4];
-		int yang[]= new int[4]; 
-		String subin[] = {"친절함","응답속도","시간약속"};
+		int result[]= new int[4]; 
+		String nameBox[] = {"친절함","응답속도","시간약속"};
 		for(int i=0;i<3;i++) {
-			yang[i]+=service.average(member_id,subin[i]);
-			yang[3]+=yang[i];
-			avg[i]=yang[i]/cnt;
+			result[i]+=service.average(member_id,nameBox[i]);
+			avg[i]=(float)result[i]/cnt;
+			avg[3]+=avg[i];
 		}
 		map.put("university_idx",name);
 		map.put("manner_cnt",cnt);
+		map.put("avg_One",Math.round(avg[0]*10)/10.0);
+		map.put("avg_Two",Math.round(avg[1]*10)/10.0);
+		map.put("avg_Three",Math.round(avg[2]*10)/10.0);
+		map.put("avg_Four",Math.round((avg[3]/cnt)*10)/10.0);
+		map.put("avg_Five",Math.round(avg[0]*1)/1.0);
+		map.put("avg_Six",Math.round(avg[1]*1)/1.0);
+		map.put("avg_Seven",Math.round(avg[2]*1)/1.0);
 		model.addAttribute("mblist",map);
 		return "myPage/myInfo";
 	}

@@ -12,6 +12,6 @@ public interface MemberDAO {
 
 	int macnt(String member_id);
 
-	int average(String member_id, String subin);
+	int average(String member_id, String nameBox);
 
 }
