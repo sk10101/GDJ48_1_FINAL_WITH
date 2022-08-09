@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.with.board.dao.MealDAO;
 import com.with.board.dto.BoardDTO;
+import com.with.history.dto.HistoryDTO;
 
 @Service
 public class MealService {
@@ -102,6 +103,7 @@ public class MealService {
 		return dao.detail(board_idx);
 	}
 	public HashMap<String, Object> MealList(HashMap<String, String> params) {
+		/*
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		
@@ -178,6 +180,36 @@ public class MealService {
 		logger.info("서비스 체크포인트");
 		return map;
 			
+}
+*/
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int cnt = Integer.parseInt(params.get("cnt"));
+		int page = Integer.parseInt(params.get("page"));
+		logger.info("보여줄 페이지 : " + page);
+	
+		
+		int allCnt = dao.mealallCount();
+		logger.info("allCnt:" + allCnt);
+		
+		int pages = allCnt%cnt > 0 ? (allCnt/cnt)+1 : (allCnt/cnt);
+		logger.info("pages : " + pages);
+		
+		//currPage = pages
+		//currPage가 pages보다 크면 currPage를 pages로 맞춰준다?
+		if(page > pages) {
+			page = pages;
+		}
+		map.put("pages", pages);		//만들 수 있는 최대 페이지 수
+		map.put("currPage", page); //현재 페이지
+
+		int offset = (page-1) * cnt;
+		if(offset == -5) {
+	         offset = 5;
+	      }
+		logger.info("offset : " + offset);
+		ArrayList<BoardDTO> mealList = dao.mealList(cnt, offset);
+		map.put("mealList", mealList);
+		return map;
 }
 }
 	

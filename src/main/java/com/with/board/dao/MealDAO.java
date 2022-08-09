@@ -27,6 +27,10 @@ public interface MealDAO {
 
 	ArrayList<BoardDTO> placeSearch(int cnt, int offset, String word);
 
+	int mealallCount();
+
+	ArrayList<BoardDTO> mealList(int cnt, int offset);
+
 	
 
 	

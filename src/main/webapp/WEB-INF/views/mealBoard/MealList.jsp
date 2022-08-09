@@ -6,6 +6,10 @@
 	<meta charset="UTF-8">
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="resources/js/jquery.twbsPagination.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
