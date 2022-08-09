@@ -25,22 +25,15 @@ public class MemberController {
 		String member_id = "tester";
 		HashMap<String, Object> map = service.mblist(member_id);
 		String name = service.univer(map.get("university_idx"));
-		int cnt = service.macnt(member_id);
-		cnt/=3;
-		float avg = cnt/3;
+		int cnt = service.macnt(member_id)/3;
+		float avg[]= new float[4];
 		int yang[]= new int[4]; 
 		String subin[] = {"친절함","응답속도","시간약속"};
 		for(int i=0;i<3;i++) {
 			yang[i]+=service.average(member_id,subin[i]);
 			yang[3]+=yang[i];
-			logger.info("누적 값 : {}",yang[3]);
+			avg[i]=yang[i]/cnt;
 		}
-		/*logger.info("전체 값 : ",yang[3]);
-		logger.info("친절함 : ",yang[0]);
-		logger.info("응답속도 : ",yang[1]);
-		logger.info("시간약속 : ",yang[2]);
-		avg = yang[3]/cnt;
-		logger.info("전체 평균 : ",avg);*/
 		map.put("university_idx",name);
 		map.put("manner_cnt",cnt);
 		model.addAttribute("mblist",map);

@@ -1,4 +1,4 @@
-package com.with.board.controller;
+/*package com.with.board.controller;
 
 import java.util.HashMap;
 
@@ -77,4 +77,4 @@ public class TaxiController {
 		return service.del(idx);
 	}
 	
-}
+}*/
