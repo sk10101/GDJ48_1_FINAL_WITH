@@ -94,7 +94,6 @@
     }
 
 </style>
-<body>
    <div class="sidebar">
        <ul>
            <li><a href="#"><img src="./resources/images/delivery.png" alt="delivery"><div class="circle"></div>배달</a></li>
@@ -107,5 +106,3 @@
            <li><a class="my" href="#">고객 문의</a></li>
        </ul>
    </div>
-</body>
-</html>

@@ -32,15 +32,17 @@
     }
 
 </style>
-<body>
     <div class="footer-wrap">
         <div class="footer">
             <p>Copyright 2022. With<br/>Designed by With<br/>All right reserved.</p>
         </div>
     </div>
-</body>
 <script>
     // 아래 코드는 지우지 마세요
-	$(".sidebar").css("height", ($(".content").height() + $(".footer").height()));
+	$(".sidebar").css("height", (
+		$(".content").height() + 
+		parseInt($(".content").css("padding-top")) + 
+		parseInt($(".content").css("padding-bottom")) + 
+		$(".footer").height())
+	);
 </script>
-</html>

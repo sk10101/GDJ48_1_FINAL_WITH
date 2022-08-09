@@ -70,7 +70,6 @@
     }
 
 </style>
-<body>
 	<div class="main">
 	    <div class="navbar-top-bg"></div>
 	    <div class="navbar-top">
@@ -80,7 +79,3 @@
 	        <img class="dot" src="./resources/images/dot.png" alt="dot">
 	    </div>
     </div>
-</body>
-<script>
-</script>
-</html>
