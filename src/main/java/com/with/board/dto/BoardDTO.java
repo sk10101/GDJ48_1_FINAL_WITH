@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import org.apache.ibatis.type.Alias;
 
+
 @Alias("board")
 public class BoardDTO {
 	// 게시판 공통 컬럼 (식사)
@@ -14,7 +15,7 @@ public class BoardDTO {
 	private Date write_date;
 	private String subject;
 	private String content;
-	private Date deadline;
+	private String deadline;
 	private String appoint_place;
 	private String appoint_coords_lat;
 	private String appoint_coords_lng;
@@ -65,10 +66,10 @@ public class BoardDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getDeadline() {
+	public String getDeadline() {
 		return deadline;
 	}
-	public void setDeadline(Date deadline) {
+	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
 	public String getAppoint_place() {
@@ -82,6 +83,12 @@ public class BoardDTO {
 	}
 	public void setAppoint_coords_lat(String appoint_coords_lat) {
 		this.appoint_coords_lat = appoint_coords_lat;
+	}
+	public String getAppoint_coords_lng() {
+		return appoint_coords_lng;
+	}
+	public void setAppoint_coords_lng(String appoint_coords_lng) {
+		this.appoint_coords_lng = appoint_coords_lng;
 	}
 	public String getGender() {
 		return gender;
@@ -141,12 +148,8 @@ public class BoardDTO {
 	public void setMin_fund(String min_fund) {
 		this.min_fund = min_fund;
 	}
-	// 경도를 담는 변수
-	public String getAppoint_coords_lng() {
-		return appoint_coords_lng;
-	}
-	public void setAppoint_coords_lng(String appoint_coords_lng) {
-		this.appoint_coords_lng = appoint_coords_lng;
-	}
+	
+	
+	
 	
 }
