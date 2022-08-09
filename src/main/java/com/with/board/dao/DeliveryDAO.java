@@ -12,5 +12,18 @@ public interface DeliveryDAO {
 	
 	BoardDTO deliDetail(String board_idx);
 
+	ArrayList<BoardDTO> searchList(String option, String word);
+
+	void endUpdate();
+
+	int writeBcc(BoardDTO dto);
+
+	int writeDeli(BoardDTO dto);
+
+	int getBoardIdx(BoardDTO dto);
+
+	void deliFileWrite(String oriFileName, String newFileName, int board_idx, String category);
+
+
 
 }
