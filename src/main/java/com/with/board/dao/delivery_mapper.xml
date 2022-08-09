@@ -93,10 +93,14 @@
 			VALUES(#{board_idx}, #{min_delivery}, #{delivery_fee}, #{min_fund})
 	</insert>
 	
-	<insert id="deliFileWrite">
-		INSERT INTO photo(oriFileName, newFileName, post_id,category_id)
-			VALUES(#{param1},#{param2},#{param3},#{param4})
+	<insert id="deliFileWrite" parameterType="photo">
+		INSERT INTO photo(oriFileName, newFileName, board_idx, category_id)
+			VALUES(#{oriFileName},#{newFileName},#{board_idx},#{category_id})
 	</insert>
+	
+	<select id="deliPhotoList" resultType="photo">
+		SELECT * FROM photo WHERE board_idx = #{param1} and category_id = #{param2}
+	</select>
 	
 </mapper>
 

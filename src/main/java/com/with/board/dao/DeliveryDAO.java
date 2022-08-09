@@ -3,6 +3,7 @@ package com.with.board.dao;
 import java.util.ArrayList;
 
 import com.with.board.dto.BoardDTO;
+import com.with.board.dto.PhotoDTO;
 
 public interface DeliveryDAO {
 
@@ -23,6 +24,8 @@ public interface DeliveryDAO {
 	int getBoardIdx(BoardDTO dto);
 
 	void deliFileWrite(String oriFileName, String newFileName, int board_idx, String category);
+
+	ArrayList<PhotoDTO> deliPhotoList(String board_idx, String string);
 
 
 

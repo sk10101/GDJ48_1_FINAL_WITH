@@ -79,10 +79,16 @@
 			</table>
 			<hr>
 			<table>
-				
-				<tr>
-					<td>이미지 추가해야함${info.content}</td>
-				</tr>
+				<c:if test="${deliPhotoList.size()>0}">
+		            <tr>
+		                <th>이미지</th>
+		                <td>
+			                <c:forEach items="${deliPhotoList}" var="path">
+									<img src="/photo/${path.newFileName}" width="500px"/>
+							</c:forEach>
+						</td>
+		            </tr>
+            	</c:if>
 			</table>
 			<hr> 
 			<!-- 아래부터 참여현황 -->
