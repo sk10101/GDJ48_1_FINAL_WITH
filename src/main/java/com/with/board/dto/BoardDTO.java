@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import org.apache.ibatis.type.Alias;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Alias("board")
 public class BoardDTO {
@@ -12,6 +14,8 @@ public class BoardDTO {
 	private String member_id;
 	private String category_id;
 	private int hit;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd" , timezone = "Asia/Seoul")
 	private Date write_date;
 	private String subject;
 	private String content;
