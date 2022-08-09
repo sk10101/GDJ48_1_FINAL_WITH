@@ -120,13 +120,13 @@ public class BoardDTO {
    }
    
    // 택시 게시판 전용 컬럼
-   private String detination;
+   private String destination;
       
-   public String getDetination() {
-      return detination;
+   public String getDestination() {
+      return destination;
    }
-   public void setDetination(String detination) {
-      this.detination = detination;
+   public void setDestination(String destination) {
+      this.destination = destination;
    }
 
    // 배달 게시판 전용 컬럼

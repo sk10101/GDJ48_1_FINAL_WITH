@@ -10,7 +10,7 @@
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="./resources/js/jquery.twbsPagination.js"></script> <!-- 페이징 처리 -->
+	<script type="text/javascript" src="./resources/js/jquery.twbsPagination.js"></script>
 </head>
 <style>
     .content-wrap {
@@ -72,7 +72,7 @@
   
 </style>
 <body>
-	<%-- <jsp:include page="../commons/header.jsp"/> --%>
+	<jsp:include page="../commons/header.jsp"/>
 	<!--
 	<c:choose>
 		<c:when test="회원등급이 일반회원일때">
@@ -84,7 +84,7 @@
 	</c:choose>
 	  -->	
 	<div class="content-wrap">
-		<%-- <jsp:include page="../commons/memberSideBar2.jsp"/> --%>
+		<jsp:include page="../commons/memberSideBar2.jsp"/>
 		<!-- 
 		<c:choose>
 			<c:when test="회원등급이 일반회원일때">
@@ -108,9 +108,10 @@
 		  	</div>
 	   </div>
 	</div>
-	<%-- <jsp:include page="../commons/footer.jsp"/> --%>
+	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script>
+
 var currPage = 1;
 
 listCall(currPage);
