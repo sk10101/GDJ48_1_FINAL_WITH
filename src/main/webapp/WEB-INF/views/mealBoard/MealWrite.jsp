@@ -47,11 +47,11 @@
 			<tr>
 			<tr>
 				<th>성별</th>
-				<td><input type="checkbox" name="gender"/>남자만<input type="checkbox">여자만<input type="checkbox">상관없음</td>
+				<td><input type="checkbox" name="gender"/>남자만&nbsp;&nbsp;<input type="checkbox">여자만&nbsp;&nbsp;<input type="checkbox">상관없음</td>
 			</tr>
 			<tr>
 				<th>약속장소</th>
-				<td><input type="text" name="appoint_place"/> <input type="text" placeholder="주소 검색"></td>
+				<td><input type="text" name="appoint_place"/> <input type="button" value="주소 검색"></td>
 			</tr>
 			<tr>
 				<th>사진</th>
@@ -61,15 +61,15 @@
 				<th>모집인원</th>
 				<td>
 					<select name="option">
+						<option value="1">1</option>
+						<option value="2">2</option>
 						<option value="3">3</option>
-						<option value="3">2</option>
-						<option value="3">1</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
 				<th>마감시간</th>
-				<td><input type="date" name="deadline"/></td>
+				<td><input type="datetime-local" name="deadline"/></td>
 			</tr>
 			<tr>
 			<th colspan="2">
