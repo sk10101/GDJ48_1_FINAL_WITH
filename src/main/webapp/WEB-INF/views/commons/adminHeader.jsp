@@ -41,6 +41,7 @@
         background-color: #f3f3f3;
         border-radius: 20px 20px 0 0;
         position: fixed;
+        z-index: 100;
     }
 
     .navbar-top .logo {

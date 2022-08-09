@@ -4,6 +4,9 @@ import java.sql.Date;
 
 import org.apache.ibatis.type.Alias;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+
 @Alias("board")
 public class BoardDTO {
    // 게시판 공통 컬럼 (식사)
@@ -11,10 +14,12 @@ public class BoardDTO {
    private String member_id;
    private String category_id;
    private int hit;
+   
+   @JsonFormat(pattern = "yyyy-MM-dd" , timezone = "Asia/Seoul")
    private Date write_date;
    private String subject;
    private String content;
-   private Date deadline;
+   private String deadline;
    private String appoint_place;
    private String appoint_coords_lat;
    private String appoint_coords_lng;
@@ -65,10 +70,10 @@ public class BoardDTO {
    public void setContent(String content) {
       this.content = content;
    }
-   public Date getDeadline() {
+   public String getDeadline() {
       return deadline;
    }
-   public void setDeadline(Date deadline) {
+   public void setDeadline(String deadline) {
       this.deadline = deadline;
    }
    public String getAppoint_place() {
@@ -147,5 +152,8 @@ public class BoardDTO {
    public void setMin_fund(String min_fund) {
       this.min_fund = min_fund;
    }
+   
+   
+   
    
 }
