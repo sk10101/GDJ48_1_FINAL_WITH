@@ -81,7 +81,6 @@
 			<table>
 				<c:if test="${deliPhotoList.size()>0}">
 		            <tr>
-		                <th>이미지</th>
 		                <td>
 			                <c:forEach items="${deliPhotoList}" var="path">
 									<img src="/photo/${path.newFileName}" width="500px"/>
@@ -89,6 +88,9 @@
 						</td>
 		            </tr>
             	</c:if>
+            	<tr>
+            		<td>${info.content}</td>
+            	</tr>
 			</table>
 			<hr> 
 			<!-- 아래부터 참여현황 -->
@@ -142,7 +144,6 @@
 	// 지도에 마커를 생성하고 표시한다
 	var marker = new kakao.maps.Marker({
 	    position: new kakao.maps.LatLng(lat, lng), // 마커의 좌표(기본 디폴트 값 설정필요)
-	    draggable : true, // 마커를 드래그 가능하도록 설정한다
 	    map: map // 마커를 표시할 지도 객체
 	});
 	

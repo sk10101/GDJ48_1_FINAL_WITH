@@ -8,7 +8,7 @@
 			SET recruit_end = 1 WHERE deadline <= now()
 	]]> 
 	</update>
-
+	<!-- 페이징 기능 추가로 인한 쿼리 변경으로 주석처리
 	<select id="deliList" resultType="board">
 		SELECT bcc.board_idx
 		,subject
@@ -23,7 +23,7 @@
 			WHERE bcc.board_idx = d.board_idx AND category_id = '배달게시판'
 				ORDER BY bcc.board_idx DESC
 	</select>
-	
+	-->
 	<update id="upHit" parameterType="String">
 		UPDATE board_common_column SET hit = hit+1
 			WHERE board_idx = #{board_idx}
@@ -47,7 +47,7 @@
 		,delivery_fee FROM board_common_column bcc, delivery_board d
 			WHERE bcc.board_idx = #{board_idx} AND bcc.board_idx = d.board_idx
 	</select>
-	
+	<!-- 페이징 기능 추가로 인한 쿼리 변경으로 주석처리
 	<select id="searchList" resultType="board">
 		SELECT bcc.board_idx
 		,subject
@@ -77,7 +77,7 @@
 		</if>
 		ORDER BY bcc.board_idx DESC
 	</select>
-	
+	-->
 	<insert id="writeBcc" parameterType="board">
 		INSERT INTO board_common_column (member_id, category_id, subject, content, deadline, appoint_place, appoint_coords_lat, appoint_coords_lng, gender, member_cnt)
 			VALUES(#{member_id}, '배달게시판', #{subject}, #{content}, DATE_FORMAT(adddate(now(),interval #{deadline} hour),'%Y-%m-%d %H:%i'), #{appoint_place}, '37.45975', '126.95109', #{gender}, #{member_cnt})
@@ -95,13 +95,62 @@
 	
 	<insert id="deliFileWrite" parameterType="photo">
 		INSERT INTO photo(oriFileName, newFileName, board_idx, category_id)
-			VALUES(#{oriFileName},#{newFileName},#{board_idx},#{category_id})
+			VALUES(#{param1},#{param2},#{param3},#{param4})
 	</insert>
 	
 	<select id="deliPhotoList" resultType="photo">
 		SELECT * FROM photo WHERE board_idx = #{param1} and category_id = #{param2}
 	</select>
 	
+	<select id="allCount" resultType="board" parameterType="hashmap">
+	 	SELECT board_idx FROM board_common_column
+			WHERE category_id = '배달게시판'
+				<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('제목')">
+							AND subject LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('약속장소')">
+							AND appoint_place LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('작성자')">
+							AND member_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+	</select>
+	 
+	<select id="deliList" resultType="board" parameterType="hashmap">
+		SELECT bcc.board_idx
+		,subject
+		,appoint_place
+		,member_id
+		,min_delivery
+		,write_date
+		,DATE_FORMAT(deadline,'%Y-%m-%d %H:%i') as deadline
+		,hit
+		,member_cnt
+		,recruit_end FROM board_common_column bcc, delivery_board d
+			WHERE bcc.board_idx = d.board_idx AND category_id = '배달게시판'
+				<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('제목')">
+							AND subject LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('약속장소')">
+							AND appoint_place LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('작성자')">
+							AND member_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+				ORDER BY bcc.board_idx DESC LIMIT #{cnt} OFFSET #{offset}
+	</select>
 </mapper>
 
 
