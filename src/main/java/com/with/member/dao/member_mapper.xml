@@ -11,4 +11,16 @@
 		SELECT university_name FROM university WHERE university_idx = #{param1}
 	</select>
 	
+	<update id="update">
+      UPDATE member SET member_pw=#{param1},phone=#{param2},hide=#{param3} WHERE member_id = #{param4}
+    </update>
+   
+    <select id="macnt" resultType="int">
+    	SELECT count(assessor) FROM manner_assess WHERE member_id = #{param1}
+    </select>
+    
+    <select id="average" resultType="int">
+    	SELECT sum(manner_score) FROM manner_assess WHERE member_id = #{param1} AND category_id = '${param2}'
+    </select>
+    
 </mapper>
