@@ -40,13 +40,18 @@ public class DeliveryController {
 		
 		logger.info("게시판 목록 컨트롤러 접속");
 		
+		// 검색어 저장을 위해 세션 활용
+		if(params.get("word") != "") {
+		session.setAttribute("option", params.get("option"));
+		session.setAttribute("word", params.get("word"));
+		}
 		ModelAndView mav = new ModelAndView();
 		mav = service.deliList(params);
 		
 		return mav;
 	}
 	
-	
+	/* 검색기능 개선으로 인해 주석처리함
 	// 검색 목록 조회
 	@RequestMapping(value = "/searchList", method = RequestMethod.GET)
 	public ModelAndView searchList(HttpSession session, @RequestParam String option, @RequestParam String word) {
@@ -59,8 +64,8 @@ public class DeliveryController {
 		
 		return mav;
 	}	
-	
-	
+	*/
+
 	// 상세보기
 	@RequestMapping(value = "/deliDetail", method = RequestMethod.GET)
 	public ModelAndView deliDetail(HttpSession session, @RequestParam String board_idx) {

@@ -39,8 +39,16 @@ public class DeliveryService {
 		// 페이징 처리
 		HashMap<String, Object> map = new HashMap<String, Object>(); // map 객체화
 		int page = Integer.parseInt(params.get("page"));
+		String option = params.get("option");
+		String word = params.get("word");
 		
 		map.put("page", page); // page 입력
+		// 검색어를 입력했을 때
+		if(word != "") {
+			map.put("word", word); // 검색어 입력
+			map.put("option", option); // 검색 옵션 입력
+		}
+		
 		ArrayList<BoardDTO> deliList = pagination(map);
 		logger.info("게시글의 개수 : "+ deliList.size());
 		mav.addObject("deliList",deliList);
@@ -49,7 +57,7 @@ public class DeliveryService {
 		return mav;
 	}
 	
-	
+	/* 검색기능 개선으로 인해 주석처리함
 	// 검색목록 조회 서비스
 	public ModelAndView searchList(String option, String word, int page) {
 		logger.info("옵션 / 검색어 : " + option + " / " + word);
@@ -70,7 +78,7 @@ public class DeliveryService {
 		
 		return mav;
 	}
-	
+	*/
 	
 	// 상세보기 서비스
 	@Transactional
