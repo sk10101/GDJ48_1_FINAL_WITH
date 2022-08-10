@@ -43,16 +43,14 @@ public class JoinService {
 
 
 	
-	
-	
-	
-
-	/*
-	 * public ArrayList<MemberDTO> empList() { return dao.empList(); }
-	 * 
-	 * public ArrayList<MemberDTO> empSearch(int university_idx, String
-	 * university_name) { return dao.empSearch(university_idx,university_name); }
-	 */
+	  public ArrayList<MemberDTO> empList() { 
+		  return dao.empList();
+	  	}
+	  
+	  public ArrayList<MemberDTO> empSearch(String university_name) {
+		  return dao.empSearch(university_name); 
+	  }
+	 
 
 
 
