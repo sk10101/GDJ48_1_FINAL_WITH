@@ -146,6 +146,19 @@
 </body>
 <script type="text/javascript">
 	var page = 1; // 초기 페이지 번호
+	var word = $('#word').val();
+	var option = $('#option').val();
+	
+	// 페이지 이동시에도 데이터를 가지고 있기 위해 session 을 활용한다
+	sessionStorage.setItem("page", 1); // 초기 페이지 저장
+	sessionStorage.setItem("option", option);
+	sessionStorage.setItem("word", word);
+	
+	// 검색 버튼 클릭했을 때 한 번 초기화
+	$('#searchBtn').on('click',function(){	
+		$("#pagination").twbsPagination('destroy');
+		searchList(currPage);
+	});
 	
 	// 플러그인을 이용해 페이징 처리
 	$("#pagination").twbsPagination({
@@ -156,7 +169,7 @@
 		onPageClick:function(e,page){
 			//console.log(e); //클릭한 페이지와 관련된 이벤트 객체
 			console.log(page); //사용자가 클릭한 페이지
-			location.href = "deliList?page="+page;
+			location.href = "deliList?page="+page+"&option="+option+"&word="+word;
 		}
 	});
 </script>

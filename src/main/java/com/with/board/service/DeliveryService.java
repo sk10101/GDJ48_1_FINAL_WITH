@@ -29,7 +29,7 @@ public class DeliveryService {
 	@Autowired DeliveryDAO dao;
 	
 	// 배달 게시판 목록 조회 서비스
-	public ModelAndView deliList(int page) {
+	public ModelAndView deliList(HashMap<String, String> params) {
 		logger.info("게시글 목록 요청");
 		ModelAndView mav = new ModelAndView("deliveryBoard/DeliList");
 		
@@ -38,7 +38,31 @@ public class DeliveryService {
 		
 		// 페이징 처리
 		HashMap<String, Object> map = new HashMap<String, Object>(); // map 객체화
+		int page = Integer.parseInt(params.get("page"));
+		
 		map.put("page", page); // page 입력
+		ArrayList<BoardDTO> deliList = pagination(map);
+		logger.info("게시글의 개수 : "+ deliList.size());
+		mav.addObject("deliList",deliList);
+		mav.addObject("map",map);
+		
+		return mav;
+	}
+	
+	
+	// 검색목록 조회 서비스
+	public ModelAndView searchList(String option, String word, int page) {
+		logger.info("옵션 / 검색어 : " + option + " / " + word);
+		ModelAndView mav = new ModelAndView("deliveryBoard/DeliList");
+		
+		// 마감 여부 확인 후 업데이트 (스케쥴러 대체)
+		dao.endUpdate();
+		
+		// 페이징 처리
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("page", page); // page 입력
+		map.put("word", word); // 검색어 입력
+		map.put("option", option); // 검색 옵션 입력
 		ArrayList<BoardDTO> deliList = pagination(map);
 		logger.info("게시글의 개수 : "+ deliList.size());
 		mav.addObject("deliList",deliList);
@@ -61,28 +85,6 @@ public class DeliveryService {
 		ArrayList<PhotoDTO> deliPhotoList = dao.deliPhotoList(board_idx,"배달게시판");
 		mav.addObject("info",info);
 		mav.addObject("deliPhotoList",deliPhotoList);
-		
-		return mav;
-	}
-
-	
-	// 검색목록 조회 서비스
-	public ModelAndView searchList(String option, String word, int page) {
-		logger.info("옵션 / 검색어 : " + option + " / " + word);
-		ModelAndView mav = new ModelAndView("deliveryBoard/DeliList");
-		
-		// 마감 여부 확인 후 업데이트 (스케쥴러 대체)
-		dao.endUpdate();
-		
-		// 페이징 처리
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("page", page); // page 입력
-		map.put("word", word); // 검색어 입력
-		map.put("option", option); // 검색 옵션 입력
-		ArrayList<BoardDTO> deliList = pagination(map);
-		logger.info("게시글의 개수 : "+ deliList.size());
-		mav.addObject("deliList",deliList);
-		mav.addObject("map",map);
 		
 		return mav;
 	}
