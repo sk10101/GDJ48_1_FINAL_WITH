@@ -5,7 +5,7 @@
 <mapper namespace="com.with.history.dao.HistoryDAO">
 	
 	
-	<select id="mygList" resultType="com.with.board.dto.BoardDTO">
+	<select id="mygList" resultType="board" parameterType="hashmap">
 		SELECT 
 			board_idx,
 			category_id,
@@ -14,19 +14,33 @@
 			recruit_end 
 		FROM board_common_column
 		WHERE member_id = '일반회원'
+			<if test="word != null and word != ''">
+				<choose>
+					<when test="option.equals('제목')">
+						AND subject LIKE CONCAT('%',#{param3},'%')
+					</when>
+					<when test="option.equals('약속장소')">
+						AND appoint_place LIKE CONCAT('%',#{param3},'%')
+					</when>
+					<when test="option.equals('작성자')">
+						AND member_id LIKE CONCAT('%',#{param3},'%')
+					</when>
+					<otherwise>
+					</otherwise>
+				</choose>
+			</if>
+			
 	</select>
 	
-	<select id="mygList1" resultType="com.with.board.dto.BoardDTO">
-		select count(apply_idx) from apply where status = '대기중' and board_idx = 1;
+	<select id="mygList1" resultType="board" parameterType="hashmap">
+		SELECT count(apply_idx) FROM apply where status = '대기중' AND board_idx = apply_idx
 	</select>
 
-
-<!-- 
-	<select id="allCount" resultType="int">
+	<select id="allCount" resultType="int" parameterType="hashmap">
 		SELECT COUNT(member_id) FROM board_common_column WHERE member_id = '일반회원'
 	</select>
 	
-	
+	<!-- 
 	<select id="mygrouplist" resultType="com.with.history.dto.HistoryDTO">
 	SELECT 
 		b.board_idx,
