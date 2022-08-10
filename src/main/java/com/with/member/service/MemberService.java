@@ -26,5 +26,8 @@ public class MemberService {
 	public int average(String member_id, String nameBox) {
 		return dao.average(member_id,nameBox);
 	}
+	public HashMap<String, Object> madetail(String idx, String nameBox) {
+		return dao.madetail(idx,nameBox);
+	}
 	
 }

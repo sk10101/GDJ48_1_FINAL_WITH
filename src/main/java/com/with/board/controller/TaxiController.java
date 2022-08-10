@@ -40,8 +40,6 @@ public class TaxiController {
 	public String taxiWrite() {
 		return "taxiBoard/TaxiWrite";
 	}
-<<<<<<< HEAD
-	
 	@RequestMapping(value = "/taxiUploadForm")
 	public String uploadForm() {
 		return "taxiBoard/uploadForm";
@@ -72,6 +70,3 @@ public class TaxiController {
 		return service.del(idx);
 	}
 }*/
-=======
-}
->>>>>>> origin/master

@@ -46,17 +46,22 @@
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	     	<table class="myinfo" style="margin-left:180px;">
-            	<thead>
-	            	<tr>
-	            		<th>친절함</th>
-	            		<th>응답속도</th>
-	            		<th>시간약속</th>
-	            		<th>평가일</th>
-	            	</tr>
-            	</thead>
-            	<tbody id="list">
+            	<tr>
+            		<th>친절함</th>
+            		<th>응답속도</th>
+            		<th>시간약속</th>
+            		<th>평가일</th>
+            	</tr>
+				<c:forEach items="${mblist}" var="manner_score">
+					<tr>
+						<td>${bbs.idx}</td>
+						<td><a href="detail?idx=${bbs.idx}">${bbs.subject}</a></td>
+						<td>${bbs.bHit}</td>
+						<td>${bbs.reg_date}</td>
+						<td><a href="delete?idx=${bbs.idx}">삭제</a></td>
+					</tr>
+				</c:forEach>            
             	
-            	</tbody>
             </table>
             <div class="container">
 		      <nav arial-label="Page navigation" style="text-align:center">

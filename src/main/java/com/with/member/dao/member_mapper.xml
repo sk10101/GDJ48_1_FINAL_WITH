@@ -23,4 +23,5 @@
     	SELECT sum(manner_score) FROM manner_assess WHERE member_id = #{param1} AND category_id = '${param2}'
     </select>
     
+    
 </mapper>

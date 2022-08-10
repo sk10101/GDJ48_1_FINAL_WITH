@@ -131,13 +131,12 @@ button {
 				<br><br><br><br><br><br>
 				<p class="score">내 평점</p>
 				<div class="star" style="margin-left : 420px;">
-                    <a href="#">
-					<img src="./resources/images/star.png" alt="star">
-                    <img src="./resources/images/star.png" alt="star">
-                    <img src="./resources/images/star.png" alt="star">
-                    <img src="./resources/images/star.png" alt="star">
-                    <img src="./resources/images/star1.png" alt="star1">                    
-                    </a>
+                    <td>
+                    	<c:forEach var="i" begin="1" end="5">
+							<c:if test="${mblist.avg_Four >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+							<c:if test="${mblist.avg_Four < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+						</c:forEach>
+					</td>
                 </div>
 				<br><br>
 				<p class="score">${mblist.avg_Four}</p>
@@ -145,40 +144,41 @@ button {
 			<table class="myinfo" style="margin-left: 180px;">
 				<tr>
 					<th>친절함</th>
-					<td>
-					<%-- <c:forEach items="${mblist}" var="i" begin="1" end="5"> --%>
-						<c:if test="${mblist.avgFive gt 2}">
-							<img src="./resources/images/star.png" alt="star">	
-						</c:if>
-					<%-- </c:forEach> --%>
+					<td><c:forEach var="i" begin="1" end="5">
+							<c:if test="${mblist.avg_Five >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+							<c:if test="${mblist.avg_Five < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+						</c:forEach>		
 					</td>
 					<td>${mblist.avg_One}</td>
 				</tr>
 				<tr>
 					<th>응답속도</th>
-					<td><span class="star"> ★★★★★ <span>★★★★★</span> <input
-					type="range" oninput="drawStar(this)" value="1" step="1" min="0"
-					max="10">
-				</span></td>
+					<td><c:forEach var="i" begin="1" end="5">
+							<c:if test="${mblist.avg_Six >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+							<c:if test="${mblist.avg_Six < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+						</c:forEach>
+					</td>
 					<td>${mblist.avg_Two}</td>
 				</tr>
 				<tr>
 					<th>시간약속</th>
-					<td><span class="star"> ★★★★★ <span>★★★★★</span> <input
-					type="range" oninput="drawStar(this)" value="1" step="1" min="0"
-					max="10">
-				</span></td>
+					<td><c:forEach var="i" begin="1" end="5">
+							<c:if test="${mblist.avg_Seven >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+							<c:if test="${mblist.avg_Seven < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+						</c:forEach>
+					</td>
 					<td>${mblist.avg_Three}</td>
 				</tr>
 			</table>
 			<br><br>
 			<p>
+				<a href="/mannerDetail.go">
 				<img src="./resources/images/people.png" alt="people"
-					style="width: 30px; margin-left: 20px;">${mblist.manner_cnt}</p>
+					style="width: 30px; margin-left: 20px;">${mblist.manner_cnt}
+				</a>
+			</p>
 			<br><br><hr><br><br>
-			<p>
-				내정보
-				<p>
+			<p>내정보</p>
 				<br><br>
             
 			<form action="/mbUpdate.go" method="POST">

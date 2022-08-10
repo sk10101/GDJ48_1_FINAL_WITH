@@ -14,4 +14,6 @@ public interface MemberDAO {
 
 	int average(String member_id, String nameBox);
 
+	HashMap<String, Object> madetail(String idx, String nameBox);
+
 }

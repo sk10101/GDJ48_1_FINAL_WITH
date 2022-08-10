@@ -31,15 +31,19 @@ public class MemberController {
 			avg[i]=(float)result[i]/cnt;
 			avg[3]+=avg[i];
 		}
+		int num[] = new int[3];
+		for(int i=0;i<3;i++) {
+			num[i]=(int)Math.round(avg[i]*1)/1;
+		}
 		map.put("university_idx",name);
 		map.put("manner_cnt",cnt);
 		map.put("avg_One",Math.round(avg[0]*10)/10.0);
 		map.put("avg_Two",Math.round(avg[1]*10)/10.0);
 		map.put("avg_Three",Math.round(avg[2]*10)/10.0);
 		map.put("avg_Four",Math.round((avg[3]/cnt)*10)/10.0);
-		map.put("avg_Five",Math.round(avg[0]*1)/1.0);
-		map.put("avg_Six",Math.round(avg[1]*1)/1.0);
-		map.put("avg_Seven",Math.round(avg[2]*1)/1.0);
+		map.put("avg_Five",num[0]);
+		map.put("avg_Six",num[1]);
+		map.put("avg_Seven",num[2]);
 		model.addAttribute("mblist",map);
 		return "myPage/myInfo";
 	}
@@ -59,5 +63,12 @@ public class MemberController {
 		return "myPage/myInfo";
 	}
 	
-	
+	@RequestMapping(value = "/mannerDetail.go")
+	public String mannerDetail(Model model) {
+		String idx = "tester";
+		String nameBox[] = {"친절함","응답속도","시간약속"};
+		HashMap<String, Object> map = service.madetail(idx,nameBox[0]);
+		//model.addAttribute("mblist", map);
+		return "myPage/mannerDetail";
+	}
 }
