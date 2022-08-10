@@ -8,10 +8,8 @@ public interface JoinDAO {
 
 	int join(MemberDTO dto);
 
-	ArrayList<MemberDTO> empSearch(String empkeyword);
-
 	ArrayList<MemberDTO> empList();
 
-	ArrayList<MemberDTO> empSearch(int university_idx, String university_name);
+	ArrayList<MemberDTO> empSearch(String university_name);
 
 }
