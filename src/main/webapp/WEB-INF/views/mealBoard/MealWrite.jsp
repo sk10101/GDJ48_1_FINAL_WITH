@@ -56,7 +56,7 @@
 			<tr>
 				<th>약속장소</th>
 				<td><input type="text" name="appoint_place"/> 
-				<input type="button" value="상세위치" onclick="location.href='kakao.go'">
+				<input type="button" value="상세위치" onclick="showPopup()">
 			</tr>
 			<tr>
 				<th>사진</th>
@@ -95,8 +95,8 @@
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script>
-/* function showPopup(){
-    window.open("http://localhost:8080/mealBoard/kakao.jsp","팝업 테스트","width=400px, height=300px, top=10, left=10");
-} */
+ function showPopup(){
+    window.open("kakao.go","팝업 테스트","width=1000, height=1000, top=10, left=10");
+} 
 </script>
 </html>
