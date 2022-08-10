@@ -99,11 +99,11 @@
 	       		<tr>
 	       			<td colspan="4"><hr/></td>
 	       		<tr>
-				<c:if test="${deliPhotoList.size()>0}">
+				<c:if test="${taxiPhotoList.size()>0}">
 		            <tr>
 		                <td>
 			                <c:forEach items="${photo}" var="path">
-									<img src="/photo/${path.newFileName}" width="500px"/>
+									<img src="./resources/photo/${path.newFileName}" width="500px"/>
 							</c:forEach>
 						</td>
 		            </tr>
@@ -142,7 +142,7 @@
 	       		<tr>
 	       			<td>
 		       			<input type="button" value="삭제" onclick="location.href=''"/>
-						<input type="button" value="돌아가기" onclick="location.href='/taxiList'"/>
+						<input type="button" value="돌아가기" onclick="history.back()"/>
 					</td>
 	       		</tr>
 	       </table>
@@ -164,7 +164,7 @@
 	    };
 	
 	// 지도 생성
-	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	var map = new kakao.maps.Map(mapContainer, mapOption);
 	
 	// 지도에 확대 축소 컨트롤을 생성한다
 	var zoomControl = new kakao.maps.ZoomControl();

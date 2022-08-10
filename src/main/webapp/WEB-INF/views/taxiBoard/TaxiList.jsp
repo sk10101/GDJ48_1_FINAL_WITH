@@ -101,6 +101,10 @@
     	margin-left: 130px;
     }
     
+    nav {
+    	text-align: center;
+    	margin-top: 40px;
+    }
   
 </style>
 <body>
@@ -130,7 +134,7 @@
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	       <div class="search">
-		       <form action="/taxiSearchList">
+		       <form action="/taxiList">
 			       <select id="option" name="option">
 						<option value="제목">제목</option>
 						<option value="출발지">출발지</option>
@@ -138,10 +142,11 @@
 						<option value="작성자">작성자</option>
 				   </select>
 				   <input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
-				   <input type="image" class="search-img" alt="search" src="../resources/images/search.png">
+				   <input type="hidden" name="page" value="1"/>
+				   <input id="searchBtn" type="image" class="search-img" alt="search" src="../resources/images/search.png">
 			   </form>
 		   </div>
-	       <input type="button" class="write-button" value="글쓰기" onclick="location.href='write.go'"/>
+	       <input type="button" class="write-button" value="글쓰기" onclick="location.href='/taxiWrite'"/>
 		   <c:forEach items="${taxiList}" var="list">
 	   			<table class="taxiList" onClick="location='/taxiDetail?board_idx=${list.board_idx}'">
 					<tr>
@@ -181,10 +186,38 @@
 					</tr>
 				</table>
 			</c:forEach>
+			<nav aria-label="Page navigation">
+				<ul class="pagination" id="pagination"></ul>
+			</nav>
 		</div>
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
-<script>
-
+<script type="text/javascript">
+	var page = 1; // 초기 페이지 번호
+	var word = $('#word').val();
+	var option = $('#option').val();
+	
+	// 검색 버튼 클릭했을 때 한 번 초기화
+	$('#searchBtn').on('click',function(){	
+		word = $('#word').val();
+		option = $('#option').val();
+		console.log("검색옵션 / 검색어 "+word + " / " + option);
+		$("#pagination").twbsPagination('destroy');
+	});
+	
+	// 플러그인을 이용해 페이징 처리
+	$("#pagination").twbsPagination({
+		startPage:${map.page}, //시작 페이지 (page)
+		totalPages:${map.pages}, //총 페이지(전체 게시물 수 / 한 페이지에 보여줄 게시물 수) (pages)
+		visiblePages: 5, //한 번에 보여줄 페이지 수
+		initiateStartPageClick: false,
+		onPageClick:function(e,page){
+			//console.log(e); //클릭한 페이지와 관련된 이벤트 객체
+			console.log(page); //사용자가 클릭한 페이지
+			// 페이지 이동시에도 데이터를 가지고 있기 위해 session 을 활용한다
+			location.href = "taxiList?page="+page+"&option="+"${sessionScope.option}"+"&word="+"${sessionScope.word}";
+			
+		}
+	});
 </script>
 </html>

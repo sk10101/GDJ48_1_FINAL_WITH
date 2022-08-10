@@ -4,7 +4,7 @@
     
 <mapper namespace="com.with.board.dao.TaxiDAO">
 
-<select id="allCount" resultType="integer">
+<!-- <select id="allCount" resultType="integer">
 	SELECT 
 	COUNT(bcc.board_idx) 
 	FROM 
@@ -17,9 +17,42 @@
 	category_id = '택시게시판' AND
 	m.member_id = bcc.member_id AND
 	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{param1})
+</select> -->
+
+<select id="allCount" resultType="integer" parameterType="hashmap">
+	SELECT 
+	COUNT(bcc.board_idx) 
+	FROM 
+	board_common_column bcc,
+	taxi_board t,
+	member m
+	WHERE
+	bcc.board_idx = t.board_idx AND
+	bcc.hide = 0 AND
+	category_id = '택시게시판' AND
+	m.member_id = bcc.member_id AND
+	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{loginId})
+		<if test="word != null and word != ''">
+			<choose>
+				<when test="option.equals('제목')">
+					AND subject LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('출발지')">
+					AND appoint_place LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('도착지')">
+					AND destination LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('작성자')">
+					AND bcc.member_id LIKE CONCAT('%',#{word},'%')
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
 </select>
 
-<select id="taxiList" resultType="board">
+<!-- <select id="taxiList" resultType="board">
 	SELECT 
 	bcc.board_idx,
 	bcc.member_id,
@@ -43,13 +76,57 @@
 	m.member_id = bcc.member_id AND
 	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{param1})
 	ORDER BY bcc.board_idx DESC
+</select> -->
+
+<select id="taxiList" resultType="board" parameterType="hashmap">
+	SELECT 
+	bcc.board_idx,
+	bcc.member_id,
+	hit,
+	write_date,
+	subject,
+	DATE_FORMAT(bcc.deadline,'%Y-%m-%d %H:%i') as deadline,
+	appoint_place,
+	(member_cnt + 1) as member_cnt,
+	recruit_end,
+	bcc.hide,
+	destination
+	FROM
+	board_common_column bcc,
+	taxi_board t,
+	member m
+	WHERE
+	bcc.board_idx = t.board_idx AND
+	bcc.hide = 0 AND
+	category_id = '택시게시판' AND
+	m.member_id = bcc.member_id AND
+	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{loginId})
+		<if test="word != null and word != ''">
+			<choose>
+				<when test="option.equals('제목')">
+					AND subject LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('출발지')">
+					AND appoint_place LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('도착지')">
+					AND destination LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('작성자')">
+					AND bcc.member_id LIKE CONCAT('%',#{word},'%')
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
+	ORDER BY bcc.board_idx DESC LIMIT #{cnt} OFFSET #{offset}
 </select>
 
  <update id="updateEnd">
 	UPDATE board_common_column SET recruit_end = if(deadline &gt; now(), '0', '1')
  </update>
  
- <select id="taxiSearchList" resultType="board">
+<!--  <select id="taxiSearchList" resultType="board">
 	SELECT 
 	bcc.board_idx,
 	bcc.member_id,
@@ -91,7 +168,7 @@
 		</choose>
 	</if>
 	ORDER BY bcc.board_idx DESC
-</select>
+</select> -->
 
 <update id="taxiUpHit">
 	UPDATE board_common_column SET hit = hit + 1 WHERE board_idx = #{param1}
@@ -121,8 +198,33 @@
 	bcc.board_idx = #{param1} AND t.board_idx = #{param1}
 </select>
 
+<insert id="writeBcc" parameterType="board">
+	INSERT INTO board_common_column 
+	(member_id, category_id, subject, content, deadline, appoint_place, appoint_coords_lat, appoint_coords_lng, gender, member_cnt)
+		VALUES(#{member_id}, '택시게시판', #{subject}, #{content}, DATE_FORMAT(#{deadline},'%Y-%m-%d %H:%i'), #{appoint_place}, '37.45975', '126.95109', #{gender}, #{member_cnt})
+</insert>
+
+<select id="getBoardIdx" resultType="int" parameterType="board">
+	SELECT board_idx 
+	FROM board_common_column
+	WHERE member_id = #{member_id} AND
+	subject = #{subject} AND
+	content = #{content} AND
+	appoint_place = #{appoint_place}
+</select>
+
+<insert id="writeTaxi" parameterType="board">
+	INSERT INTO taxi_board (board_idx, destination)
+	VALUES(#{board_idx}, #{destination})
+</insert>
+
+<insert id="taxiFileWrite" parameterType="photo">
+	INSERT INTO photo(oriFileName, newFileName, board_idx, category_id)
+		VALUES(#{param1},#{param2},#{param3},#{param4})
+</insert>
+
 <select id="taxiPhotoList" resultType="photo">
-	SELECT * FROM photo WHERE board_idx = #{param1} and category_id = '택시게시판'
+	SELECT * FROM photo WHERE board_idx = #{param1} and category_id = #{param2}
 </select>
 
 <select id="taxiCount" resultType="integer">
