@@ -17,23 +17,21 @@
 	category_id = '택시게시판' AND
 	m.member_id = bcc.member_id AND
 	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{param1})
-	
-	<!-- SELECT COUNT(*) FROM board_common_column --> 
 </select>
 
 <select id="taxiList" resultType="board">
 	SELECT 
 	bcc.board_idx,
 	bcc.member_id,
-	bcc.hit,
-	bcc.write_date,
-	bcc.subject,
-	bcc.deadline,
-	bcc.appoint_place,
-	bcc.member_cnt,
-	bcc.recruit_end,
+	hit,
+	write_date,
+	subject,
+	DATE_FORMAT(bcc.deadline,'%Y-%m-%d %H:%i') as deadline,
+	appoint_place,
+	member_cnt,
+	recruit_end,
 	bcc.hide,
-	t.destination
+	destination
 	FROM 
 	board_common_column bcc,
 	taxi_board t,
@@ -41,10 +39,10 @@
 	WHERE
 	bcc.board_idx = t.board_idx AND
 	bcc.hide = 0 AND
-	bcc.category_id = '택시게시판' AND
+	category_id = '택시게시판' AND
 	m.member_id = bcc.member_id AND
-	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{param3})
-	ORDER BY bcc.board_idx DESC limit #{param1} offset #{param2}
+	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{param1})
+	ORDER BY bcc.board_idx DESC
 </select>
 
  <update id="updateEnd">
@@ -52,5 +50,83 @@
  	<!-- UPDATE 문에 if를 넣는 구문 > 마감시간이 현재시간보다 전이라면 recruit_end 는 1이 된다. 아니면 0. -->
  	<!-- &lt; = <, &gt; = > -->   
  </update>
+ 
+ <select id="taxiSearchList" resultType="board">
+	SELECT 
+	bcc.board_idx,
+	bcc.member_id,
+	hit,
+	write_date,
+	subject,
+	DATE_FORMAT(bcc.deadline,'%Y-%m-%d %H:%i') as deadline,
+	appoint_place,
+	member_cnt,
+	recruit_end,
+	bcc.hide,
+	destination
+	FROM 
+	board_common_column bcc,
+	taxi_board t,
+	member m
+	WHERE
+	bcc.board_idx = t.board_idx AND
+	bcc.hide = 0 AND
+	category_id = '택시게시판' AND
+	m.member_id = bcc.member_id AND
+	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{param1})
+	<if test="param2 != null and param2 != ''">
+		<choose>
+			<when test="param2.equals('제목')">
+				AND subject LIKE CONCAT('%',#{param3},'%')
+			</when>
+			<when test="param2.equals('출발지')">
+				AND appoint_place LIKE CONCAT('%',#{param3},'%')
+			</when>
+			<when test="param2.equals('도착지')">
+				AND destination LIKE CONCAT('%',#{param3},'%')
+			</when>
+			<when test="param2.equals('작성자')">
+				AND bcc.member_id LIKE CONCAT('%',#{param3},'%')
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</if>
+	ORDER BY bcc.board_idx DESC
+</select>
+
+<update id="taxiUpHit">
+	UPDATE board_common_column SET hit = hit + 1 WHERE board_idx = #{param1}
+</update>
+
+<select id="taxiDetail" resultType="board">
+	SELECT 
+	bcc.board_idx,
+	member_id,
+	hit,
+	write_date,
+	subject,
+	DATE_FORMAT(bcc.deadline,'%Y-%m-%d %H:%i') as deadline,
+	appoint_place,
+	member_cnt,
+	recruit_end,
+	bcc.hide,
+	destination,
+	gender,
+	appoint_coords_lat,
+	appoint_coords_lng,
+	COUNT(p.member_id)
+	FROM 
+	board_common_column bcc,
+	taxi_board t,
+	WHERE
+	bcc.board_idx = #{param1}
+</select>
+
+<select id="taxiPhotoList" resultType="photo">
+	SELECT * FROM photo WHERE board_idx = #{param1} and category_id = '택시게시판'
+</select>
+
+
 
 </mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+
+	<!-- 트랜잭션을 걸어줄 대상 DB 지정 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	   <property name="dataSource" ref="datasource"/>
+	</bean>
+	
+	<!-- 어떤 방식으로 트랜잭션을 사용할건지 설정 (annotation 으로 구현) -->
+	<!-- 트랜잭션이 실행되는 클래스가 인터페이스를 구현받지 않은 클래스일 경우 proxy-target-class 를 "false" 로 지정해야 한다. -->
+	<tx:annotation-driven proxy-target-class="false"/>
+
+
+</beans>

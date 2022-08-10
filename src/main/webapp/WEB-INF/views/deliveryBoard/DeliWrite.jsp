@@ -107,9 +107,5 @@
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script>
-var dt;
-dt = new Date();
-dt= $("input.dateTime").val();
-console.log(dt);
 </script>
 </html>

@@ -8,9 +8,14 @@
 	</insert>
 	
 	<select id="empSearch" parameterType="String" resultType="com.with.member.dto.MemberDTO">
-		SELECT university_idx,university_name FROM university
+		SELECT university_name FROM university
 		<where>
-			university_name LIKE CONCAT('%',#{keyword},'%') 
+			university_name LIKE CONCAT('%',#{university_name},'%') 
 		</where>	
 	</select>
+	
+	<select id="empList" resultType="com.with.member.dto.MemberDTO">
+		SELECT * FROM university
+	</select>
+	
 </mapper>

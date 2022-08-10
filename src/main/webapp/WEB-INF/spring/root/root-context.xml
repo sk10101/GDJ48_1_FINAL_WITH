@@ -14,4 +14,14 @@
 		</property>
 	</bean>
 	
+	<!-- 서버가 켜지면 읽게되는 설정 파일 -->
+	<!-- Text 파일  -->
+	<!-- Upload File 용량 제한 10mb 설정 -->
+	<!-- Buffer 의 사이즈 10mb 설정 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <property name="defaultEncoding" value="UTF-8"/>
+	    <property name="maxUploadSize" value="10000000"/>
+	    <property name="maxInMemorySize" value="10000000"/>
+	</bean>
+	
 </beans>
