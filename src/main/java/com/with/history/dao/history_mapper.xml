@@ -5,7 +5,7 @@
 <mapper namespace="com.with.history.dao.HistoryDAO">
 	
 	
-	<select id="mygrouplistajax" resultType="com.with.board.dto.BoardDTO">
+	<select id="mygList" resultType="com.with.board.dto.BoardDTO">
 		SELECT 
 			board_idx,
 			category_id,
@@ -14,18 +14,19 @@
 			recruit_end 
 		FROM board_common_column
 		WHERE member_id = '일반회원'
-		ORDER BY board_idx DESC limit #{param1} offset #{param2}
 	</select>
 	
-	<select id="mygrouplistajax1" resultType="com.with.board.dto.BoardDTO">
-		select count(apply_idx) from apply where status = '대기중' AND board_idx = apply_idx;
+	<select id="mygList1" resultType="com.with.board.dto.BoardDTO">
+		select count(apply_idx) from apply where status = '대기중' and board_idx = 1;
 	</select>
 
+
+<!-- 
 	<select id="allCount" resultType="int">
 		SELECT COUNT(member_id) FROM board_common_column WHERE member_id = '일반회원'
 	</select>
 	
-	<!-- 
+	
 	<select id="mygrouplist" resultType="com.with.history.dto.HistoryDTO">
 	SELECT 
 		b.board_idx,

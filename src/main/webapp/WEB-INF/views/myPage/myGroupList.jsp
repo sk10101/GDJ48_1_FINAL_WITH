@@ -56,7 +56,7 @@
 			</form>
 			
 			${msg}
-			<form action="myglist.go" method="get">
+			<form action="mygroupsearch.do" method="get">
 				<fieldset>
 					<select name="opt">
 						<option value="subject">제목</option>
@@ -67,7 +67,7 @@
 				</fieldset>
 			</form>
 
-			<table class="info">
+			<table>
 				<thead>
 					<tr>
 						<th>번호</th>
@@ -80,17 +80,27 @@
 					</tr>
 
 				</thead>
-				<tbody id="mygrouplist">
-
+				<tbody>
+					<c:forEach items="${mygList}" var="his">
+						<tr>
+							<td>${his.board_idx}</td>
+							<td>${his.category_id}</td>
+							<td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}'">${his.subject}</a></td>
+							<td>${his.write_date}</td>
+							<td>${his.member_id}</td>
+							<c:if test="${his.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
+							<c:if test="${his.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
+						</tr>
+					</c:forEach>
 				</tbody>
 
 			</table>
-			<input id="button3" type="button" onclick="close()" value="마감" />
+			<!-- <input id="button3" type="button" onclick="close()" value="마감" />
 			<div class="container">
                <nav arial-label="Page navigation" style="text-align:center">
                <ul class="pagination" id="pagination"></ul>
 				</nav>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<%-- <jsp:include page="../commons/footer.jsp" /> --%>
@@ -103,7 +113,8 @@
 	}
 	 */
 	 
-	 
+
+	 /*
 	 var currPage = 1;
 	 
 	 listCall(currPage);
@@ -152,6 +163,7 @@
 			}
 		});
 	}
+	
 	function drawList(mygrouplist) {
 		var content = '';
 		mygrouplist.forEach(function(item){
@@ -160,7 +172,7 @@
 			content += '<tr>';
 			content += '<td>'+item.board_idx+'</td>';
 			content += '<td>'+item.category_id+'</td>';
-			content += '<td>'+item.subject+'</td>';
+			content += '<td><a href="detail.go?board_idx='+item.board_idx+'&category_id='+item.category_id+'">'+item.subject+'</a></td>';
 			content += '<td>'+date.toLocaleDateString("ko-KR").replace(/\.$/, '')+'</td>';
 			content += '<td>'+item.member_id+'</td>';
 			if (item.recruit_end == 0) {
@@ -173,7 +185,11 @@
 		$('#mygrouplist').empty();
 	    $('#mygrouplist').append(content);
 	}
-
+*/
+	
+	
+	
+	
 	/* $('#all').click(function(){
 	
 	 var $chk = $('input[type="checkbox"]');	//체크박스를 모두 가져옴
