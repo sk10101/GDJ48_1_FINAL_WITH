@@ -48,15 +48,16 @@
 					<tr>
 						<th>성별</th>
 						<td>
-							<input type="radio" name="gender" value="남자만" checked="checked"/>남자만
+							<input type="radio" name="gender" value="남자만"/>남자만
 							<input type="radio" name="gender" value="여자만"/>여자만
-							<input type="radio" name="gender" value="상관없음"/>상관없음
+							<input type="radio" name="gender" value="상관없음" checked="checked"/>상관없음
 						</td>
 					</tr>
 					<tr>
 						<th>수령장소</th>
 						<td>
 							<input type="text" name="appoint_place"/>
+							<input type="button" value="상세위치" onclick="showPopup()">
 						</td>
 					</tr>
 					<tr>
@@ -103,37 +104,14 @@
 					</tr>
 				</table>
 			</form>
-			<!-- 상세위치 설정 부분-->
-			<p>상세위치를 마커로 표시해주세요.</p>
-			<!-- Kakao Map API 부분 -->
-			<div id="deliMap" style="width:500px;height:350px;"></div>
-	      				
-			
-			
 
 	   </div>
 </div>
 </body>
 <script type="text/javascript">
-	var loginId = 'tester';
-	
-	// 로그인한 아이디의 대학교 주소를 가져온다
-	$.ajax({
-		type:'get',
-		url:'detailMarker.ajax',
-		data:{
-			loginId:loginId				
-		},
-		dataType:'json',
-		success:function(data){
-			console.log(data.university_addr);
-			searchMap(data.university_addr);
-			
-		},
-		error:function(e){
-			console.log(e)
-		}
-	});
+	function showPopup(){
+	    window.open("deliKakao.go","팝업 테스트","width=1000, height=1000, top=10, left=10");
+	} 
 </script>
 <jsp:include page="../commons/footer.jsp"/>
 </html>

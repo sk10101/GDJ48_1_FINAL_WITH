@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,10 +102,14 @@ public class DeliveryService {
 	
 	// 글쓰기 서비스
 	@Transactional
-	public void write(MultipartFile[] photos, BoardDTO dto) {
+	public void write(MultipartFile[] photos, BoardDTO dto, HttpSession session) {
 		logger.info("글쓰기 서비스 요청");
 		// 이후에 로그인한 아이디를 담아주는 것으로 변경해야함
 		dto.setMember_id("tester");
+		// session 에 저장한 좌표를 dto 에 담아준다.
+		dto.setAppoint_coords_lat((String) session.getAttribute("lat"));
+		dto.setAppoint_coords_lng((String) session.getAttribute("lng"));
+		
 		// 공통 컬럼 테이블에 작성할 내용
 		int row = dao.writeBcc(dto);
 		// 배달 전용 컬럼 테이블에 작성하기 위해 위에서 작성했던 글의 번호를 가져와야함
