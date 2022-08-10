@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.with.board.dto.BoardDTO;
 import com.with.board.dto.PhotoDTO;
+import com.with.member.dto.MemberDTO;
 
 public interface TaxiDAO {
 
@@ -20,5 +21,9 @@ public interface TaxiDAO {
 	BoardDTO taxiDetail(String board_idx);
 
 	ArrayList<PhotoDTO> taxiPhotoList(String board_idx);
+
+	int taxiCount(String board_idx);
+
+	ArrayList<MemberDTO> taxiParticipant(String board_idx);
 
 }

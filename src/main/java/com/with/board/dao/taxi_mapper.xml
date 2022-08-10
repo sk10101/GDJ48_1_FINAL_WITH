@@ -114,19 +114,30 @@
 	destination,
 	gender,
 	appoint_coords_lat,
-	appoint_coords_lng,
-	COUNT(p.member_id)
+	appoint_coords_lng
 	FROM 
 	board_common_column bcc,
-	taxi_board t,
+	taxi_board t
 	WHERE
-	bcc.board_idx = #{param1}
+	bcc.board_idx = #{param1} AND t.board_idx = #{param1}
 </select>
 
 <select id="taxiPhotoList" resultType="photo">
 	SELECT * FROM photo WHERE board_idx = #{param1} and category_id = '택시게시판'
 </select>
 
+<select id="taxiCount" resultType="integer">
+	SELECT count(*) FROM participant WHERE board_idx = #{param1} and hide = 0;
+</select>
 
+<select id="taxiParticipant" resultType="board">
+	SELECT 
+	p.member_id,
+	gender 
+	FROM 
+	participant p, 
+	member m 
+	WHERE board_idx = #{param1} AND m.member_id = p.member_id AND p.hide = 0;
+</select>
 
 </mapper>

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.with.board.dao.TaxiDAO;
 import com.with.board.dto.BoardDTO;
 import com.with.board.dto.PhotoDTO;
+import com.with.member.dto.MemberDTO;
 
 @Service
 public class TaxiService {
@@ -84,11 +85,23 @@ public class TaxiService {
 			dao.taxiUpHit(board_idx);
 		}
 		
+		// 세션에 "chkHit" name 값과 value 값을 부여한다.
+		session.setAttribute("chkHit", "chkHit");
+		
+		dao.updateEnd();
+		
 		BoardDTO list = dao.taxiDetail(board_idx);
+		list.setMember_cnt(list.getMember_cnt() + 1);
+		
 		ArrayList<PhotoDTO> photo = dao.taxiPhotoList(board_idx);
+		int count = dao.taxiCount(board_idx) + 1;
+		ArrayList<MemberDTO> pt = dao.taxiParticipant(board_idx);
 		
 		mav.addObject("list", list);
 		mav.addObject("photo", photo);
+		mav.addObject("count", count);
+		mav.addObject("pt", pt);
+		mav.setViewName("taxiBoard/TaxiDetail");
 		
 		return mav;
 	}
