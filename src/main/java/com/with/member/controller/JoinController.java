@@ -40,30 +40,21 @@ public class JoinController {
 		logger.info(dto.getGender());
 		logger.info(dto.getEmail());
 		logger.info(dto.getPhone());
-		return service.join(dto);
+		System.out.println("test");
+			return service.join(dto);
 	}	
 	
-	
-	
-	
-	/*
-	 * //대학검색
-	 * 
-	 * @RequestMapping("/cliempSearch.ajax")
-	 * 
-	 * @ResponseBody public ArrayList<MemberDTO> empSearch(@RequestParam int
-	 * university_idx,@RequestParam String university_name) { ArrayList<MemberDTO>
-	 * list = new ArrayList<MemberDTO>();
-	 * 
-	 * return service.empSearch(university_idx,university_name); }
-	 * 
-	 * //모달 뿌려주는 ajax
-	 * 
-	 * @RequestMapping("/cliempList.ajax")
-	 * 
-	 * @ResponseBody public ArrayList<MemberDTO> empList() { ArrayList<MemberDTO>
-	 * list = new ArrayList<MemberDTO>();
-	 * 
-	 * return service.empList(); }
-	 */
+	  //대학검색
+	  @RequestMapping("/cliempSearch.ajax")
+	  @ResponseBody public ArrayList<MemberDTO> empSearch(@RequestParam String keyword) { 
+		  return service.empSearch(keyword); 
+	  }
+	  
+	  //모달 뿌려주는 ajax
+	  @RequestMapping("/cliempList.ajax")
+	  @ResponseBody 
+	  public ArrayList<MemberDTO> empList() { 
+		  return service.empList(); 
+	  }
+	 
 }

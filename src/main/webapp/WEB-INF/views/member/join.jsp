@@ -7,7 +7,8 @@
 	<meta charset="UTF-8">
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
+
 </head>
 <style>
     * {
@@ -68,6 +69,7 @@
 
 </style>
 <body>
+<form action="/join.do" id="test" method="post">
     <div class="main">
         <div class="logo"><a href="#"><img src="/resources/images/logo.png" alt="logo"></a></div>  
         <div class="content">
@@ -95,10 +97,11 @@
 			<tr>
 				<th>대학교</th>
 				<td>
-						<input type="text" id="university_name"/>
-					   <button id="empSearch">검색</button>
+						<input type="hidden" id="university_idx" name='university_idx' />
+						<input type="text" id="university_name" name='university_name' readonly />
+					   <button type="button" id="empSearch" class="btn btn-default">검색</button>
 				</td>
-				<td class="hidden"><input type="text" id="university_idx"></td>
+<!-- 				<td class="hidden"><input type="text" id="university_idx"></td> -->
 			</tr>
 			<tr>
 				<th>연락처</th>
@@ -115,13 +118,14 @@
              </tr>	 -->
 			<tr>
 				<th colspan="2">
-					<input type="button" value="회원가입" onclick="location.href='/join.do'"/>
+					<input type="submit" value="회원가입" />
 					<input type="button" value="돌아가기" onclick="location.href='/'"/>
 				</th>
 			</tr>
 		</table>
         </div>
     </div>
+</form>
     
  <!-- 대학검색 Modal -->
 <div id="empSearchModal" class="modal fade" role="dialog" data-backdrop="static">
@@ -136,13 +140,14 @@
       <div class="modal-body" style="width:100%; height:500px; overflow:auto">
         <table id="emptable" class="table table-striped">
         <div id="goodList" class="form-inline" >
-		  <select style="width:20%"><option>대학이름</option></select>
-		  <input  class="form-control" type="text" style="width:50%" id="university_idx" display="inline-block"/> 
+		<!--   <select style="width:20%"><option>대학이름</option></select> -->
+			<span>대학이름 : </span>
+		  <input  class="form-control" type="text" style="width:50%" id="keyword" name="keyword" display="inline-block"/> 
 		  <!-- <input type="hide" id="university_name"/> -->
 		  <button type="button" id="empsearch" style="width:20%" class="btn btn-default">검색</button> 
 		 </div>
         	<thead style="text-align:center; font-size:20px;">
-        		<tr><td></td><td>학교</td><td>이름</td><tr>
+        		<tr><td></td><td>학교</td><tr>
         	</thead>
         	<tbody id="list" style="font-size:20px;">
         	</tbody>
@@ -156,14 +161,86 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
       </div>
     </div>
-
   </div>
 </div>   
     
 	<jsp:include page="../commons/memberFooter.jsp"/>
 </body>
+<link rel="icon" href="resources/img/icon.png">
+	<link href="../resources/img/goodfavicon.png" rel="icon">
+	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script>
+$("#empSearch").click(function(){
+	       $('#empSearchModal').modal();
+	
+	/* 모달창 띄우고 뿌리기 .  */
+	$.ajax({
+		type:'get',
+		url:'cliempList.ajax',
+		data:{},
+		dataType:'json',
+		success:function(data){
+			drawList(data);
+			
+		},
+		error:function(e){console.log(e)
+			}
+	});	
+	
+	    });
 
- 
+
+/* 담당자 검색 */
+$('#empsearch').on('click',function(){
+
+	
+	$.ajax({
+		type:'get',
+		url:'cliempSearch.ajax',
+		data:{
+				keyword:$("#keyword").val()
+			},
+		dataType:'json',
+		success:function(data){
+			drawList(data);
+		},
+		error:function(e){console.log(e)}
+		
+	});
+});
+
+
+/* 에이잭스 뿌리기 */
+function drawList(list){
+	var content = '';
+	list.forEach(function(item){
+		//console.log(item);
+		content += '<tr>';
+		content += '<td><input type="radio" id="selectUniv" name="selectUniv" value="'+item.university_idx+'" class="'+item.university_name+'" /></td>';
+		content += '<td>'+item.university_name+'</td>';
+		/*
+		content += '<td>'+item.emp_name+'</td>';
+		content += '<td>'+item.emp_phone+'</td>'; 
+		*/
+		content += '</tr>';
+	});
+	$('#list').empty();
+	$('#list').append(content);
+}
+
+/* 직원 등록 */
+function empUp(){
+		$("#university_idx").val($('input[name=selectUniv]:checked').val());		
+		$("#university_name").val($('input[name=selectUniv]:checked').attr("class"));		
+		$('#empSearchModal').modal('hide')
+	}
+	
+	function joinDo(){
+		alert("test");
+		location.href="/join.do";
+	}
+	
 </script>
 </html>
