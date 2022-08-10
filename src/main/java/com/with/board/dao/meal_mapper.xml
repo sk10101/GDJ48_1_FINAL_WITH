@@ -2,14 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.with.board.dao.MealDAO">
-	<select id="list" resultType="board" parameterType="String">
-		SELECT *FROM board_common_column bcc
-		WHERE category_id = '밥게시판' 
-	</select>
-	
-	
-	
-	
+	 <update id="endUpdate">
+	<![CDATA[
+		UPDATE board_common_column 
+			SET recruit_end = 1 WHERE deadline <= now()
+	]]> 
+	</update> 
+
 	<select id="detail" resultType="board" parameterType="String">
 		SELECT * FROM board_common_column WHERE board_idx=#{board_idx}
 	</select>
@@ -18,19 +17,75 @@
 		UPDATE board_common_column SET hit = hit +1 WHERE board_idx=#{board_idx}
 	</update>
 	
-	<insert id="MealWrite" 
-		useGeneratedKeys="true"
-		keyColumn="board_idx"
-		keyProperty="board_idx"
-		parameterType="hashmap">
-		INSERT INTO board_common_column (member_id,category_id,subject, content, gender,appoint_place,appoint_coords, member_cnt, deadline)
-			VALUES(#{member_id},#{subject},#{content},#{gender},#{appoint_place},#{appoint_coords},#{member_cnt},#{deadline})
+	
+			
+	<insert id="writeBcc" parameterType="board"> 
+		INSERT INTO board_common_column (member_id, category_id, subject, content, deadline, appoint_place, appoint_coords_lat, appoint_coords_lng, gender, member_cnt)
+			VALUES(#{member_id}, '밥게시판', #{subject}, #{content}, DATE_FORMAT(adddate(now(),interval #{deadline} hour),'%Y-%m-%d %H:%i'), #{appoint_place}, '37.45975', '126.95109', #{gender}, #{member_cnt})
 	</insert>
 	
-	<insert id="mealFileSave"> 
+	<select id="getBoardIdx" resultType="int" parameterType="board">
+		SELECT board_idx FROM board_common_column
+			WHERE member_id = #{member_id} AND subject = #{subject} AND content = #{content} AND appoint_place = #{appoint_place}
+	</select>
+	
+	<insert id="writeMeal" parameterType="board">
+		INSERT INTO meal_board (board_idx) VALUES (#{board_idx})
+	</insert>
+
+	<insert id="mealFileWrite" parameterType="photo"> 
 		INSERT INTO photo(oriFileName, newFileName, board_idx, category_id)
 		VALUES(#{param1},#{param2},#{param3},#{param4})
 	</insert>
+	
+	<select id="allCount" resultType="board" parameterType="hashmap">
+	 	SELECT board_idx FROM board_common_column
+			WHERE category_id = '밥게시판'
+				<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('제목')">
+							AND subject LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('약속장소')">
+							AND appoint_place LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('작성자')">
+							AND member_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+	</select>
+	
+	<select id="mealList" resultType="board" parameterType="hashmap">
+		SELECT bcc.board_idx
+		,subject
+		,appoint_place
+		,member_id
+		,write_date
+		,DATE_FORMAT(deadline,'%Y-%m-%d %H:%i') as deadline
+		,hit
+		,member_cnt
+		,recruit_end FROM board_common_column bcc, meal_board mb
+			WHERE bcc.board_idx = mb.board_idx AND category_id = '밥게시판'
+				<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('제목')">
+							AND subject LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('약속장소')">
+							AND appoint_place LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('작성자')">
+							AND member_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+				ORDER BY bcc.board_idx DESC LIMIT #{cnt} OFFSET #{offset}
+	</select>
 </mapper>
 
 
