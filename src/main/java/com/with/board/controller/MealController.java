@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.with.board.service.MealService;
@@ -31,27 +32,14 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	public String memberMealMain(Model model) {
 		logger.info("식사 메인페이지 이동");
 		
-//		ArrayList<com.with.board.dto.BoardDTO> list = service.list();
-//		logger.info("리스트 개수 :"+list.size());
-//		model.addAttribute("list", list);		
+		ArrayList<com.with.board.dto.BoardDTO> mealList = service.list();
+		logger.info("리스트 개수 :"+mealList.size());
+		model.addAttribute("mealList", mealList);		
 		
 		return "mealBoard/MealList";
 	}
 	
-	@RequestMapping(value = "/MealList.ajax")
-	@ResponseBody
-	public HashMap<String, Object> MealList(
-			@RequestParam HashMap<String, String> params
-			) {		
-		
-		logger.info("리스트 요청 : {}",params);
-		HashMap<String, Object> MealList = service.MealList(params);
-		
-		logger.info("컨트롤러 체크포인트");
-		
-		
-		return MealList;
-	}
+	
 	
 	
 	
@@ -92,6 +80,17 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		
 		return "redirect:/mealBoard/MealList";
 	}
+	
+	// 검색 목록 조회
+	@RequestMapping(value = "/searchList.go")
+	public ModelAndView searchList(HttpSession session, @RequestParam String option, @RequestParam String word) {
+		
+		logger.info("검색 목록 컨트롤러 접속");
+		ModelAndView mav = new ModelAndView();
+		mav = service.searchList(option,word);
+		
+		return mav;
+		}	
 	
 	
 	

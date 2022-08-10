@@ -2,14 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.with.board.dao.MealDAO">
-	<select id="list" resultType="board" parameterType="String">
+
+	 <select id="list" resultType="board" parameterType="String">
 		SELECT *FROM board_common_column bcc
 		WHERE category_id = '밥게시판' 
-	</select>
+	</select>  
 	
-	<!-- 식사 게시판 페이징 -->
-	<select id="mealList" resultType="board">
-	SELECT bcc.board_idx
+	
+
+	
+	<select id="searchList" resultType="board">
+		SELECT bcc.board_idx
 		,subject
 		,appoint_place
 		,member_id
@@ -18,10 +21,24 @@
 		,hit
 		,member_cnt
 		,recruit_end FROM board_common_column bcc, meal_board mb 
-			WHERE bcc.board_idx = mb.board_idx  AND category_id = '밥게시판'
-				ORDER BY bcc.board_idx desc;
+		WHERE bcc.board_idx = mb.board_idx  AND category_id = '밥게시판'
+		<if test="param2 != null and param2 != ''">
+			<choose>
+				<when test="param1.equals('제목')">
+					AND subject LIKE CONCAT('%',#{param2},'%')
+				</when>
+				<when test="param1.equals('약속장소')">
+					AND appoint_place LIKE CONCAT('%',#{param2},'%')
+				</when>
+				<when test="param1.equals('작성자')">
+					AND member_id LIKE CONCAT('%',#{param2},'%')
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
+		ORDER BY bcc.board_idx DESC	
 	</select>
-	
 	
 	
 	<select id="detail" resultType="board" parameterType="String">

@@ -7,7 +7,7 @@ import com.with.board.dto.BoardDTO;
 
 public interface MealDAO {
 
-	ArrayList<BoardDTO> list();
+	/* ArrayList<BoardDTO> list(); */
 
 	int MealWrite(BoardDTO dto);
 
@@ -17,19 +17,14 @@ public interface MealDAO {
 
 	BoardDTO detail(String board_idx);
 
-	ArrayList<BoardDTO> allCount(HashMap<String, Object> map);
 
-	ArrayList<BoardDTO> MealList(int cnt, int offset);
+//	int allCount(String loginId);
+//
+//	ArrayList<BoardDTO> mealList(int cnt, int offset, String loginId);
 
-	ArrayList<BoardDTO> memberSearch(int cnt, int offset, String word);
+	ArrayList<BoardDTO> searchList(String option, String word);
 
-	ArrayList<BoardDTO> subjectSearch(int cnt, int offset, String word);
-
-	ArrayList<BoardDTO> placeSearch(int cnt, int offset, String word);
-
-	int mealallCount();
-
-	ArrayList<BoardDTO> mealList(int cnt, int offset);
+	ArrayList<BoardDTO> list();
 
 	
 
