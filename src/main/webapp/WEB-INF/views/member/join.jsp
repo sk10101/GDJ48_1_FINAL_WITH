@@ -166,10 +166,10 @@
     
 	<jsp:include page="../commons/memberFooter.jsp"/>
 </body>
-<link rel="icon" href="resources/img/icon.png">
-	<link href="../resources/img/goodfavicon.png" rel="icon">
+	<link rel="icon" href="resources/img/icon.png">
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script>
 $("#empSearch").click(function(){
@@ -189,7 +189,7 @@ $("#empSearch").click(function(){
 			}
 	});	
 	
-	    });
+});
 
 
 /* 담당자 검색 */
@@ -241,6 +241,5 @@ function empUp(){
 		alert("test");
 		location.href="/join.do";
 	}
-	
 </script>
 </html>

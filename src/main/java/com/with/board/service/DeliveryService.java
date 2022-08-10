@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -19,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.with.board.dao.DeliveryDAO;
 import com.with.board.dto.BoardDTO;
 import com.with.board.dto.PhotoDTO;
+import com.with.member.dto.MemberDTO;
 
 
 @Service
@@ -205,5 +205,19 @@ public class DeliveryService {
 		
 		logger.info("페이징 체크포인트");
 		return deliList;
+	}
+
+	public HashMap<String, Object> detailMarker(HashMap<String, String> params) {
+		// 작성자의 대학교 좌표를 구하기 위해 회원이 등록한 대학교의 주소를 가져온다.
+		String loginid = params.get("loginId");
+		
+		HashMap<String, Object> deliMap = new HashMap<String, Object>(); 
+		MemberDTO dto = dao.getUniversityAddr(loginid);
+		String university_addr = dto.getUniversity_addr();
+		deliMap.put("university_addr", university_addr);
+		
+		logger.info("가져온 대학교 주소 : " + university_addr);
+		
+		return deliMap;
 	}
 }

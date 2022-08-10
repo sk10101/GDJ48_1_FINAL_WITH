@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.with.board.dto.BoardDTO;
 import com.with.board.dto.PhotoDTO;
+import com.with.member.dto.MemberDTO;
 
 public interface DeliveryDAO {
 
@@ -29,6 +30,8 @@ public interface DeliveryDAO {
 	ArrayList<PhotoDTO> deliPhotoList(String board_idx, String string);
 
 	ArrayList<BoardDTO> allCount(HashMap<String, Object> map);
+
+	MemberDTO getUniversityAddr(String loginid);
 
 
 
