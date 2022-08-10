@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.with.board.dto.BoardDTO;
 import com.with.board.service.MealService;
 
 @Controller
@@ -57,28 +59,40 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	}
 	
 	
-	// 글 작성 페이지 이동
-	@RequestMapping(value = "/MealWrite.go")
-	public String writeForm( Model model,HttpSession session) {
+	// 글쓰기 페이지 이동
+	@RequestMapping(value = "/MealWrite.go", method = RequestMethod.GET)
+	public ModelAndView writePage(HttpSession session, RedirectAttributes rAttr) {
 		logger.info("글쓰기 페이지 이동");
-			
-		return "mealBoard/MealWrite";
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("mealBoard/MealWrite");
+		
+		return mav;
 	}
 	
-	// 글 작성 + 이미지 파일 업로드
+	// 글쓰기 페이지 이동
+		@RequestMapping(value = "/kakao.go", method = RequestMethod.GET)
+		public ModelAndView kakao(HttpSession session, RedirectAttributes rAttr) {
+			logger.info("글쓰기 페이지 이동");
+			ModelAndView mav = new ModelAndView();
+
+			mav.setViewName("mealBoard/kakao");
+			
+			return mav;
+		}
+	
+	
+	
+	// 글쓰기
 	@RequestMapping(value = "/MealWrite.do")
-	public String MealWrite(MultipartFile[] photos, Model model,HttpSession session,
-			@RequestParam HashMap<String, String> params,RedirectAttributes attr) {
-			
-		 	String loginId = "gustn0055";
-			session.setAttribute("loginId", "gustn0055");
-			params.put("member_id", loginId);
-			logger.info("params{}",params);
-			//service.MealWrite(photos,params);
-			attr.addFlashAttribute("msg", "글 작성 완료.");
-			
+	public ModelAndView write(MultipartFile[] photos, HttpSession session, @ModelAttribute BoardDTO dto, RedirectAttributes rAttr) {
+		logger.info("게시글 작성 컨트롤러 접속");
+		ModelAndView mav = new ModelAndView();
 		
-		return "redirect:/mealBoard/MealList";
+		service.write(photos, dto);
+		mav.setViewName("redirect:/MealList");
+		
+		return mav;
 	}
 	
 	// 검색 목록 조회

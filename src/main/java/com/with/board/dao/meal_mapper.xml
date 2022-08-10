@@ -49,16 +49,23 @@
 		UPDATE board_common_column SET hit = hit +1 WHERE board_idx=#{board_idx}
 	</update>
 	
-	<insert id="MealWrite" 
-		useGeneratedKeys="true"
-		keyColumn="board_idx"
-		keyProperty="board_idx"
-		parameterType="hashmap">
-		INSERT INTO board_common_column (member_id,category_id,subject, content, gender,appoint_place,appoint_coords, member_cnt, deadline)
-			VALUES(#{member_id},#{subject},#{content},#{gender},#{appoint_place},#{appoint_coords},#{member_cnt},#{deadline})
+	
+			
+	<insert id="writeBcc" parameterType="board"> 
+		INSERT INTO board_common_column (member_id, category_id, subject, content, deadline, appoint_place, appoint_coords_lat, appoint_coords_lng, gender, member_cnt)
+			VALUES(#{member_id}, '밥게시판', #{subject}, #{content}, DATE_FORMAT(adddate(now(),interval #{deadline} hour),'%Y-%m-%d %H:%i'), #{appoint_place}, '37.45975', '126.95109', #{gender}, #{member_cnt})
 	</insert>
 	
-	<insert id="mealFileSave"> 
+	<select id="getBoardIdx" resultType="int" parameterType="board">
+		SELECT board_idx FROM board_common_column
+			WHERE member_id = #{member_id} AND subject = #{subject} AND content = #{content} AND appoint_place = #{appoint_place}
+	</select>
+	
+	<insert id="writeMeal" parameterType="board">
+		INSERT INTO meal_board (board_idx) VALUES (#{board_idx})
+	</insert>
+
+	<insert id="mealFileWrite" parameterType="photo"> 
 		INSERT INTO photo(oriFileName, newFileName, board_idx, category_id)
 		VALUES(#{param1},#{param2},#{param3},#{param4})
 	</insert>
