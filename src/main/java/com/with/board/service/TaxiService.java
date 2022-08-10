@@ -59,6 +59,8 @@ public class TaxiService {
 		
 		// 시간 비교를 통해 마감여부를 update 해주는 코드
 		dao.updateEnd();
+		
+		
 		int allcnt = dao.allCount(loginId);
 		
 		// 리스트로 왔을 때 chkHit 세션을 제거해주는 코드
@@ -88,14 +90,19 @@ public class TaxiService {
 		// 세션에 "chkHit" name 값과 value 값을 부여한다.
 		session.setAttribute("chkHit", "chkHit");
 		
-		dao.updateEnd();
-		
 		BoardDTO list = dao.taxiDetail(board_idx);
-		list.setMember_cnt(list.getMember_cnt() + 1);
 		
+		// 사진을 불러오는 코드
 		ArrayList<PhotoDTO> photo = dao.taxiPhotoList(board_idx);
+		
+		// 참여한 인원 수를 불러오는 코드 (본인은 포함해야 하기 때문에 +1)
 		int count = dao.taxiCount(board_idx) + 1;
+		
+		// 참여해있는 인원의 이름, 성별, 연락처를 불러오는 코드
 		ArrayList<MemberDTO> pt = dao.taxiParticipant(board_idx);
+		
+		// 시간 비교를 통해 마감여부를 update 해주는 코드
+		dao.updateEnd();
 		
 		mav.addObject("list", list);
 		mav.addObject("photo", photo);

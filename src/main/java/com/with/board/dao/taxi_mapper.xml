@@ -28,11 +28,11 @@
 	subject,
 	DATE_FORMAT(bcc.deadline,'%Y-%m-%d %H:%i') as deadline,
 	appoint_place,
-	member_cnt,
+	(member_cnt + 1) as member_cnt,
 	recruit_end,
 	bcc.hide,
 	destination
-	FROM 
+	FROM
 	board_common_column bcc,
 	taxi_board t,
 	member m
@@ -46,9 +46,7 @@
 </select>
 
  <update id="updateEnd">
-	UPDATE board_common_column SET recruit_end = if(deadline &lt; now(), '1', '0')
- 	<!-- UPDATE 문에 if를 넣는 구문 > 마감시간이 현재시간보다 전이라면 recruit_end 는 1이 된다. 아니면 0. -->
- 	<!-- &lt; = <, &gt; = > -->   
+	UPDATE board_common_column SET recruit_end = if(deadline &gt; now(), '0', '1')
  </update>
  
  <select id="taxiSearchList" resultType="board">
@@ -60,7 +58,7 @@
 	subject,
 	DATE_FORMAT(bcc.deadline,'%Y-%m-%d %H:%i') as deadline,
 	appoint_place,
-	member_cnt,
+	(member_cnt + 1) as member_cnt,
 	recruit_end,
 	bcc.hide,
 	destination
@@ -108,7 +106,8 @@
 	subject,
 	DATE_FORMAT(bcc.deadline,'%Y-%m-%d %H:%i') as deadline,
 	appoint_place,
-	member_cnt,
+	(member_cnt + 1) as member_cnt,
+	content,
 	recruit_end,
 	bcc.hide,
 	destination,
@@ -130,10 +129,11 @@
 	SELECT count(*) FROM participant WHERE board_idx = #{param1} and hide = 0;
 </select>
 
-<select id="taxiParticipant" resultType="board">
+<select id="taxiParticipant" resultType="member">
 	SELECT 
 	p.member_id,
-	gender 
+	gender,
+	phone 
 	FROM 
 	participant p, 
 	member m 
