@@ -1,5 +1,7 @@
 package com.with.board.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -24,31 +26,32 @@ public class DeliveryController {
 	
 	@Autowired DeliveryService service;
 	
+	// 배달 게시판 목록 페이지 이동
+	@RequestMapping(value = "/deliList.go", method = RequestMethod.GET)
+	public String deliList(HttpSession session) {
+		
+		return "redirect:/deliList?page="+1+"&option="+"&word=";
+	}
+	
+	
 	// 배달 게시판 목록 조회
 	@RequestMapping(value = "/deliList", method = RequestMethod.GET)
-	public ModelAndView deliList(HttpSession session, @RequestParam int page) {
+	public ModelAndView deliList(HttpSession session, @RequestParam HashMap<String, String> params) {
 		
 		logger.info("게시판 목록 컨트롤러 접속");
-		logger.info("현재 페이지 : "+page);
+		
+		// 검색어 저장을 위해 세션 활용
+		if(params.get("word") != "") {
+		session.setAttribute("option", params.get("option"));
+		session.setAttribute("word", params.get("word"));
+		}
 		ModelAndView mav = new ModelAndView();
-		mav = service.deliList(page);
+		mav = service.deliList(params);
 		
 		return mav;
 	}
 	
-	
-	// 상세보기
-	@RequestMapping(value = "/deliDetail", method = RequestMethod.GET)
-	public ModelAndView deliDetail(HttpSession session, @RequestParam String board_idx) {
-		logger.info(board_idx + " 번 글 상세보기 요청 컨트롤러 접속");
-		ModelAndView mav = new ModelAndView();
-		
-		mav = service.deliDetail(board_idx);
-		
-		return mav;
-	}
-	
-	
+	/* 검색기능 개선으로 인해 주석처리함
 	// 검색 목록 조회
 	@RequestMapping(value = "/searchList", method = RequestMethod.GET)
 	public ModelAndView searchList(HttpSession session, @RequestParam String option, @RequestParam String word) {
@@ -61,6 +64,18 @@ public class DeliveryController {
 		
 		return mav;
 	}	
+	*/
+
+	// 상세보기
+	@RequestMapping(value = "/deliDetail", method = RequestMethod.GET)
+	public ModelAndView deliDetail(HttpSession session, @RequestParam String board_idx) {
+		logger.info(board_idx + " 번 글 상세보기 요청 컨트롤러 접속");
+		ModelAndView mav = new ModelAndView();
+		
+		mav = service.deliDetail(board_idx);
+		
+		return mav;
+	}
 	
 	
 	// 글쓰기 페이지 이동
