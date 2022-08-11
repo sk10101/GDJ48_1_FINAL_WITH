@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.with.board.dto.BoardDTO;
+import com.with.member.dto.MemberDTO;
 
 public interface MealDAO {
 	
@@ -26,6 +27,8 @@ public interface MealDAO {
 
 
 	ArrayList<BoardDTO> allCount(HashMap<String, Object> map);
+
+	MemberDTO getUniversityAddr(String loginid);
 
 
 	

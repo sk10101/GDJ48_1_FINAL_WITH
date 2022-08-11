@@ -33,7 +33,7 @@
 	   <jsp:include page="../commons/memberSideBar3.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	     <form action="MealWrite.do" method="post">
+	     <form action="MealWrite.do" method="post" enctype="multipart/form-data">
 	<h3>글쓰기</h3>
 		<table>
 			<tr>
@@ -55,7 +55,7 @@
 			</tr>
 			<tr>
 				<th>약속장소</th>
-				<td><input type="text" name="appoint_place"/> 
+				<td><input type="text" id="pInput" name="appoint_place"/>
 				<input type="button" value="상세위치" onclick="showPopup()">
 			</tr>
 			<tr>
@@ -96,7 +96,9 @@
 </body>
 <script>
  function showPopup(){
-    window.open("kakao.go","팝업 테스트","width=1000, height=1000, top=10, left=10");
+    window.open("mealkakao.go","팝업 테스트","width=1000, height=1000, top=10, left=10");
 } 
+ 
+ 
 </script>
 </html>

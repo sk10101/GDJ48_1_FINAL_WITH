@@ -90,6 +90,11 @@
 							<c:if test="${his.applyNo ne 0}"><td><span style="font-color:black;">${his.applyNo}</span></td></c:if>
 							<c:if test="${his.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
 							<c:if test="${his.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
+							
+							<!-- <c:if test="${sessionScope.loginId eq his.member_id}">
+						       <input id="board_del" type="button" value="삭제" onclick="location.href='detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}'" />
+						    </c:if> -->
+						    
 						</tr>
 				</tbody>
 					</c:forEach>

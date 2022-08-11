@@ -64,6 +64,7 @@ public class HistoryService {
 		int allCnt = 0;
 		// 한 페이지에 보여줄 게시글의 수 map 에 입력
 		map.put("cnt", cnt);
+		
 		ArrayList<BoardDTO> allCount = dao.allCount(map);
 		allCnt = allCount.size();
 		logger.info("allCnt : " + allCnt);

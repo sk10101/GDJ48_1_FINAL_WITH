@@ -45,7 +45,8 @@ public class TaxiService {
 		
 		// 리스트로 왔을 때 chkHit 세션을 제거해주는 코드
 		// 해당 코드가 있어야만 Detail 에 다시 접근했을 때 조회수 기능을 실행할 수 있다.
-		session.removeAttribute("chkHit");
+		// history.back() 을 사용하기 때문에 아래 코드는 먹히지 않음
+//		session.removeAttribute("chkHit");
 		
 		// 페이징 처리
 		HashMap<String, Object> map = new HashMap<String, Object>(); // map 객체화
@@ -101,15 +102,18 @@ public class TaxiService {
 		String loginId = (String) session.getAttribute("loginId");
 		
 		// 세션을 확인하는 코드
-		String chk = (String) session.getAttribute("chkHit");
+		// history.back() 을 사용하기 때문에 아래 코드는 먹히지 않음
+//		String chk = (String) session.getAttribute("chkHit");
 		
 		// 세션에 값이 없으면 조회수 기능이 실행된다.
-		if(chk == null) {
-			dao.taxiUpHit(board_idx);
-		}
+//		if(chk == null) {
+//			dao.taxiUpHit(board_idx);
+//		}
+		
+		dao.taxiUpHit(board_idx);
 		
 		// 세션에 "chkHit" name 값과 value 값을 부여한다.
-		session.setAttribute("chkHit", "chkHit");
+//		session.setAttribute("chkHit", "chkHit");
 		
 		BoardDTO list = dao.taxiDetail(board_idx);
 		
@@ -182,7 +186,7 @@ public class TaxiService {
 				
 				try {
 					byte[] arr = photo.getBytes();
-					Path path = Paths.get("/Users/hyunmin/GDJ48_1_FINAL_WITH/src/main/webapp/resources/photo" + newFileName);
+					Path path = Paths.get("/Users/hyunmin/GDJ48_1_FINAL_WITH/src/main/webapp/resources/photo/" + newFileName);
 					// 같은이름의 파일이 나올 수 없기 떄문에 옵션 설정 안해도된다.
 					Files.write(path, arr);
 					logger.info(newFileName + " SAVE OK");
@@ -197,7 +201,7 @@ public class TaxiService {
 		
 	}
 	
-	// 페이징 담당 메서드
+		// 페이징 담당 메서드
 		public ArrayList<BoardDTO> pagination(HashMap<String, Object> map, HttpSession session) {
 			
 			session.setAttribute("loginId", "일반회원");
@@ -220,9 +224,7 @@ public class TaxiService {
 			map.put("cnt", cnt);
 			map.put("loginId", loginId);
 					
-//			ArrayList<BoardDTO> allCount = dao.allCount(map, loginId);
 			allCnt = dao.allCount(map);
-//			allCnt = allCount.size();
 			logger.info("allCnt : " + allCnt);
 			
 			// 검색결과가 없다면 SQL 문 오류가 뜨는 현상이 있음

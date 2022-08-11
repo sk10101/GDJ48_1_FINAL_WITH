@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -96,7 +97,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
 	//  kakao
-		@RequestMapping(value = "/kakao.go", method = RequestMethod.GET)
+		@RequestMapping(value = "/mealkakao.go", method = RequestMethod.GET)
 		public ModelAndView kakao(HttpSession session, RedirectAttributes rAttr) {
 			logger.info("글쓰기 페이지 이동");
 			ModelAndView mav = new ModelAndView();
@@ -105,6 +106,32 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 			return mav;
 		}
+		
+		// 상세위치 모달 ajax
+		@RequestMapping("/mealMarker.ajax")
+		@ResponseBody public HashMap<String, Object> detailMarker(HttpSession session, @RequestParam HashMap<String, String> params) {
+			logger.info("상세위치 마커 컨트롤러 접속");
+			logger.info("로그인한 아이디 : " + params.get("loginId"));
+			
+			HashMap<String, Object> mealMap = service.detailMarker(params);
+			
+			return mealMap;
+		}
+		
+		// 카카오 팝업 창에서 가져온 좌표를 잠시 세션에 보관
+		@RequestMapping(value = "/getCoord", method = RequestMethod.GET)
+		public void getCoords(HttpSession session, @RequestParam HashMap<String, String> params) {
+			logger.info("가져온 좌표 : " + params.get("lat") + "," + params.get("lng"));
+			// 혹시 남아있을지 모를 session 을 비워준다
+			session.removeAttribute("lat");
+			session.removeAttribute("lng");
+			// 세션에 좌표를 보관한다
+			session.setAttribute("lat", params.get("lat"));
+			session.setAttribute("lng", params.get("lng"));
+			
+		}
+		
+		 
 	
 	
 	

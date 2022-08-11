@@ -114,7 +114,7 @@
         <div class="logo"><a href="#"><img src="/resources/images/logo.png" alt="logo"></a></div>  
         <div class="content">
             <!-- 여기에서 작업 시작하세요 -->    
-	<form action="/login" method="post">
+	<form action="login.do" method="post">
 		<table>
 			<tr>
 				<th>ID</th>
@@ -131,7 +131,21 @@
 				</th>
 			</tr>
 		</table>
-	</form>          
+	</form>   
+				<div class="text-center">
+				<h3 class="mb-3">다른 계정으로 로그인</h3>
+
+				<div class="d-flex justify-content-center">
+				
+					<!-- 네이버 -->
+					<div id="naverIdLogin" class="p-2"></div>
+	
+					<!-- 카카오 -->
+					<!-- <a id="kakao-login-btn"></a> -->
+					<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=b8239aad28fc4b4100b8f469df9c704f&redirect_uri=http://localhost:8080/kakaoLogin&response_type=code">
+						<img src="/resources/images/kakao_login_large_narrow.png" style="height:60px">
+					</a>
+				</div>       
         </div>
     </div>
 	<jsp:include page="../commons/memberFooter.jsp"/>

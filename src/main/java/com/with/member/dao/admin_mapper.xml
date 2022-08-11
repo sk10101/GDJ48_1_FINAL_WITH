@@ -6,7 +6,7 @@
 	<select id="userList" resultType="member">
 		SELECT m.member_id, m.name, u.university_name, m.gender, m.certficate_chk 
 		FROM university u, MEMBER m 
-		WHERE m.university_idx = u.university_idx;
+		WHERE m.university_idx = u.university_idx AND member_class = '일반회원';
 	</select>
 
 	<select id="userDetail" resultType="member" parameterType="String">
@@ -38,6 +38,10 @@
 			<if test="!param2.equals('') and param1 == 'university'">university_name LIKE CONCAT('%', #{param2}, '%') AND m.university_idx = u.university_idx</if>
 			<if test="!param2.equals('') and param1 == 'certficate'">certficate_chk LIKE CONCAT('%', #{param2}, '%') AND m.university_idx = u.university_idx</if>
 		</where>
+	</select>
+	
+	<select id="allCount" resultType="Integer">
+		SELECT COUNT(member_id) FROM member WHERE member_class = '일반회원';
 	</select>
 	
 </mapper>

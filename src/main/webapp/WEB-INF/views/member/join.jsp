@@ -84,6 +84,7 @@
 			<tr>
 				<th>비밀번호</th>
 				<td><input type="password" name="member_pw" id="member_pw" placeholder="비밀번호 입력"/></td> <!--   어떤 패스워드넣었는지 확인하려고 text 타입으로.. -->
+				<td>* 8 ~ 15자 입력 </td>
 			</tr>
 			<tr>
 			<!-- onkeyup="JS function" 입력이 되었을 때, -->
@@ -394,9 +395,9 @@ $(function(){
 숫자 (0~9) or 알파벳 (a~z, A~Z) 으로 시작하며 중간에 -_. 문자가 있을 수 있으며 그 후 숫자 (0~9) or 알파벳 (a~z, A~Z)이 올 수도 있고 연달아 올 수도 있고 없을 수도 있다. 
 @ 는 반드시 존재하며 . 도 반드시 존재하고 a~z, A~Z 의 문자가 2,3개 존재하고 i = 대소문자 구분 안한다.
 		*/
-	   var pw_rule1 = /^(?=.*[a-zA-Z]).{4,50}$/; 
-	   var pw_rule2 = /^[a-zA-Z\d]{4,50}$/;
-	   var pw_rule3 = /^[\d]{4,50}$/;
+		//특수문자 / 문자 / 숫자 포함 형태의 8~15자리 이내의 암호 정규식 ( 3 가지 조합)
+
+	   var pw_rule =/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 	   var email_rule =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	   // var tel_rule = /^\d{2,3}-\d{3,4}-\d{4}$/; 전화번호용
 	    
@@ -419,12 +420,11 @@ $(function(){
 	   if ($("#member_pw").val() == null || $("#member_pw").val() == "") {
 	      alert("비밀번호를 입력해주세요.");
 	      $("#member_pw").focus();
-	    
-	      return false;
-	      }
-	   
-	   if(!pw_rule1.test($("#member_pw").val())||!pw_rule2.test($("#member_pw").val())||pw_rule3.test($("#member_pw").val())) {
-		    alert("비밀번호는 한글을 제외한 4자리 이상이어야 합니다.");
+		    return false;
+       }  
+
+	 	if(!pw_rule.test($("#member_pw").val()))  {
+		    alert("비밀번호는 8 ~ 16자 영문, 숫자, 특수문자를 최소 한가지씩 조합해야 합니다.");
 		    $("#member_pw").focus();
 		    return false;
 	       }
