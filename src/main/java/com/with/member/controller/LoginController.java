@@ -30,7 +30,7 @@ public class LoginController {
 	private HttpSession session;
 	
 	//로그인 페이지 이동
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = {"/login","/"}, method = RequestMethod.GET)
 	public String loginForm() {		
 		return "member/login";
 	}
