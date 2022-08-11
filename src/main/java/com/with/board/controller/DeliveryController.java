@@ -137,7 +137,7 @@ public class DeliveryController {
 		logger.info("로그인한 아이디 : " + member_id);
 		ModelAndView mav = new ModelAndView();
 		
-		service.applyDeli(member_id,board_idx);
+		service.applyDeli(rAttr,member_id,board_idx,investment);
 		
 		mav.setViewName("redirect:/deliDetail?board_idx="+board_idx);
 		
@@ -146,7 +146,17 @@ public class DeliveryController {
 	
 	
 	// 참가한 회원 강퇴하는 기능
-	
+	@RequestMapping(value = "/deliBan", method = RequestMethod.GET)
+	public ModelAndView deliBan(HttpSession session, RedirectAttributes rAttr, @RequestParam String member_id, @RequestParam String board_idx) {
+		logger.info("로그인한 아이디 : " + member_id);
+		ModelAndView mav = new ModelAndView();
+		
+		mav = service.deliBan(member_id,board_idx);
+		
+		mav.setViewName("redirect:/deliDetail?board_idx="+board_idx);
+		
+		return mav;
+	}
 	
 	
 }

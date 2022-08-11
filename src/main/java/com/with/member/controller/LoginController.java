@@ -38,7 +38,7 @@ public class LoginController {
 		
 		String loginId = service.login(id, pw);
 		
-		String msg = "아이디 혹은 비번이 틀렸습니다";
+		String msg = "아이디 혹은 비밀번호가 틀렸습니다";
 		String page = "login";
 		
 		if(loginId != null ) {

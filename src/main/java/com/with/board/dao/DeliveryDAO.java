@@ -33,7 +33,15 @@ public interface DeliveryDAO {
 
 	ArrayList<BoardDTO> partList(String board_idx);
 
-	void applyDeli(String member_id, String board_idx);
+	void applyDeli(String member_id, String board_idx, String investment);
+
+	int isApplied(String member_id, String board_idx);
+
+	int isRejected(String member_id, String board_idx);
+
+	int isBanned(String member_id, String board_idx);
+
+	void deliBan(String member_id, String board_idx);
 
 
 

@@ -120,8 +120,28 @@
 	
 	<insert id="applyDeli" parameterType="board">
 		INSERT INTO apply (board_idx, member_id, investment)
-			VALUES(#{board_idx}, #{min_delivery}, #{delivery_fee}, #{min_fund})
+			VALUES(#{param2}, #{param1}, #{param3})
 	</insert>
+	
+	<select id="isApplied" resultType="int">
+		SELECT COUNT(apply_idx) FROM apply
+			WHERE member_id = #{param1} AND board_idx = #{param2} AND status IN('대기중','수락')
+	</select>
+	
+	<select id="isRejected" resultType="int">
+		SELECT COUNT(apply_idx) FROM apply
+			WHERE member_id = #{param1} AND board_idx = #{param2} AND status = '거절'
+	</select>
+	
+	<select id="isBanned" resultType="int">
+		SELECT COUNT(pt_idx) FROM participant
+			WHERE member_id = #{param1} AND board_idx = #{param2} AND hide=1
+	</select>
+	
+	<update id="deliBan">
+		UPDATE participant SET hide = 1
+			WHERE member_id = #{param1} AND board_idx = #{param2}
+	</update>
 </mapper>
 
 
