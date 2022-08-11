@@ -80,8 +80,8 @@
 		       		<tr>
 	  			    	<th>교육분야</th> <!-- recruit 테이블의 recruit_field 에 값을 insert 해줘야함 -->
 		    			<td colspan="3">
-					      <label><input type="radio" name="gender" value="남자"/> 남자만</label>
-					      <label><input type="radio" name="gender" value="여자"/> 여자만</label>
+					      <label><input type="radio" name="gender" value="남자만"/> 남자만</label>
+					      <label><input type="radio" name="gender" value="여자만"/> 여자만</label>
 					      <label><input type="radio" name="gender" value="상관없음" checked/> 상관없음</label>
 		    			</td>
 				    </tr>
