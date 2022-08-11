@@ -14,31 +14,61 @@
 			recruit_end 
 		FROM board_common_column
 		WHERE member_id = '일반회원'
-			<if test="word != null and word != ''">
-				<choose>
-					<when test="option.equals('제목')">
-						AND subject LIKE CONCAT('%',#{param3},'%')
-					</when>
-					<when test="option.equals('약속장소')">
-						AND appoint_place LIKE CONCAT('%',#{param3},'%')
-					</when>
-					<when test="option.equals('작성자')">
-						AND member_id LIKE CONCAT('%',#{param3},'%')
-					</when>
-					<otherwise>
-					</otherwise>
-				</choose>
-			</if>
-			
-	</select>
+		
+	</select> 
 	
 	<select id="mygList1" resultType="board" parameterType="hashmap">
-		SELECT count(apply_idx) FROM apply where status = '대기중' AND board_idx = apply_idx
+		SELECT count(a.member_id) FROM apply a, board_common_column b where a.status = '대기중' AND a.board_idx = 1 AND b.member_id != a.member_id ;
 	</select>
 
-	<select id="allCount" resultType="int" parameterType="hashmap">
-		SELECT COUNT(member_id) FROM board_common_column WHERE member_id = '일반회원'
+
+	<select id="allCount" resultType="board" parameterType="hashmap">
+		SELECT COUNT(board_idx) FROM board_common_column WHERE member_id = '일반회원' and (category_id = '밥게시판' OR category_id = '배달게시판' or category_id = '택시게시판')
+			<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('제목')">
+							AND subject LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('이용 서비스')">
+							AND category_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('상태')">
+							AND recruit_end LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+				<!-- ORDER BY board_idx DESC LIMIT #{cnt} OFFSET #{offset} -->
 	</select>
+
+	<select id="mygList2" resultType="board" parameterType="hashmap">
+		SELECT 
+			board_idx,
+			category_id,
+			subject,
+			write_date,
+			recruit_end 
+		FROM board_common_column
+		WHERE member_id = '일반회원'
+		<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('제목')">
+							AND subject LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('이용 서비스')">
+							AND category_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('상태')">
+							AND recruit_end LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+			ORDER BY board_idx DESC LIMIT #{cnt} OFFSET #{offset}
+	</select>
+
 	
 	<!-- 
 	<select id="mygrouplist" resultType="com.with.history.dto.HistoryDTO">

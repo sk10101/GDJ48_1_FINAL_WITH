@@ -1,5 +1,7 @@
 package com.with.history.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -27,22 +29,34 @@ public class HistoryController {
 	  @RequestMapping("/myApplyList.go") public String myApply(Model model) {
 	 return "myPage/myApplyList"; }
 	 
+	// 이용 내역 목록 페이지 이동
+		@RequestMapping(value = "/mygList.go", method = RequestMethod.GET)
+		public String deliList(HttpSession session) {
+			
+			return "redirect:/mygList?page="+1+"&option="+"&word=";
+		}
 	
 	
-	@RequestMapping(value = "/mygList", method = RequestMethod.GET)
-	public ModelAndView mygList(HttpSession session) {
-		int page = 1;
-		String word = "제목";
-		logger.info("이용내역 목록 조회");
-		logger.info("현재 페이지 : "+page);
-		session.setAttribute("loginId", "일반회원"); 
-		String loginId = (String) session.getAttribute("loginId");
-		ModelAndView mav = new ModelAndView();
-		mav = service.mygList(loginId, page, word);
-		return mav;
-	}
+	   @RequestMapping(value = "/mygList")
+	   public ModelAndView mygList(HttpSession session, @RequestParam HashMap<String, String> params) {
+	      logger.info("이용내역 목록 조회");
+	      
+	   // 검색어 저장을 위해 세션 활용
+			if(params.get("word") != "") {
+			session.setAttribute("option", params.get("option"));
+			session.setAttribute("word", params.get("word"));
+			}
+	      
+	       session.setAttribute("loginId", "일반회원"); 
+	       String loginId = (String) session.getAttribute("loginId");
+	      ModelAndView mav = new ModelAndView();
+	      mav = service.mygList(params, loginId);
+	      return mav;
+	   }
 	
-
+	   
+	   
+/*
 	// 검색 목록 조회
 	@RequestMapping(value = "/mygroupsearch", method = RequestMethod.GET)
 	public ModelAndView mygroupsearch(HttpSession session, @RequestParam String option, @RequestParam String keyword) {
@@ -51,13 +65,13 @@ public class HistoryController {
 		ModelAndView mav = new ModelAndView();
 		// 검색 하면 page = 1 로 되돌아 가기 위한 변수 생성
 		logger.info(option+" : "+keyword+" 검색");
-		
-		mav = service.mygroupsearch(option, keyword);
+		int page = 1;
+		mav = service.mygroupsearch(option, keyword, page);
 		
 		return mav;
 	}	
 	
-	
+	*/
 	
 	
 	

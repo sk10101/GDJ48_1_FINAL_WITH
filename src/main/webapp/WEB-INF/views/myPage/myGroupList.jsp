@@ -55,16 +55,15 @@
 				</table>
 			</form>
 			
-			<form action="mygroupsearch">
-				<fieldset>
+			<form action="mygList2">
 					<select id="option" name="option">
 						<option value="제목">제목</option>
-						<option value="약속장소">이용 서비스</option>
-						<option value="작성자">상태</option>
+						<option value="이용 서비스">이용 서비스</option>
+						<option value="상태">상태</option>
 					</select> 
-					<input type="text" name="keyword"/>
-           			<button>검색</button>
-				</fieldset>
+					<input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
+			   <input type="hidden" name="page" value="1"/>
+           			<button id="searchBtn">검색</button>
 			</form>
 
 			<table>
@@ -80,16 +79,17 @@
 					</tr>
 
 				</thead>
-					<c:forEach items="${mygList}" var="his">
+					<c:forEach items="${mygList2}" var="his">
 				<tbody class="mygList">
 						<tr>
 							<td>${his.board_idx}</td>
 							<td>${his.category_id}</td>
 							<td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}'">${his.subject}</a></td>
 							<td>${his.write_date}</td>
-							<td>${his.member_id}</td>
 							<c:if test="${his.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
 							<c:if test="${his.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
+							<td><c:forEach items="${mygList1}" var="hist">${hist.member_id}
+							</c:forEach></td>
 						</tr>
 				</tbody>
 					</c:forEach>
@@ -105,19 +105,30 @@
 	</div>
 	<!--<jsp:include page="../commons/footer.jsp" />-->
 </body>
-<script>
-var page = 1; // 초기 페이지 번호
-
+<script type="text/javascript">
+	var page = 1; // 초기 페이지 번호
+	var word = $('#word').val();
+	var option = $('#option').val();
+	
+	// 검색 버튼 클릭했을 때 한 번 초기화
+	$('#searchBtn').on('click',function(){	
+		word = $('#word').val();
+		option = $('#option').val();
+		console.log("검색옵션 / 검색어 "+word + " / " + option);
+		$("#pagination").twbsPagination('destroy');
+	});
+	
 // 플러그인을 이용해 페이징 처리
-$("#pagination").twbsPagination({
-	startPage:${map.page},//시작 페이지 (page)
-	totalPages:${map.pages},//총 페이지(전체 게시물 수 / 한 페이지에 보여줄 게시물 수) (pages)
-	visiblePages: 5, //한 번에 보여줄 페이지 수
-	initiateStartPageClick: false,
-	onPageClick:function(e,page){
-		//console.log(e); //클릭한 페이지와 관련된 이벤트 객체
-		console.log(page); //사용자가 클릭한 페이지
-		location.href = "mygList?page="+page;
+	$("#pagination").twbsPagination({
+		startPage:${map.page}, //시작 페이지 (page)
+		totalPages:${map.pages}, //총 페이지(전체 게시물 수 / 한 페이지에 보여줄 게시물 수) (pages)
+		visiblePages: 5, //한 번에 보여줄 페이지 수
+		initiateStartPageClick: false,
+		onPageClick:function(e,page){
+			//console.log(e); //클릭한 페이지와 관련된 이벤트 객체
+			console.log(page); //사용자가 클릭한 페이지
+			// 페이지 이동시에도 데이터를 가지고 있기 위해 session 을 활용한다
+			location.href = "mygList?page="+page+"&option="+"${sessionScope.option}"+"&word="+"${sessionScope.word}";
 	}
 });
 	/*var msg = "${msg}";

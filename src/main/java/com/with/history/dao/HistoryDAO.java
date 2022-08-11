@@ -15,12 +15,18 @@ public interface HistoryDAO {
 
 	ArrayList<BoardDTO> mygroupsearch(String opt, String keyword);
 */
-	ArrayList<BoardDTO> mygList(String loginId, HashMap<String, Object> map, int page);
 
-	ArrayList<BoardDTO> mygList1(String loginId, String string);
 
+	
+	
+
+	ArrayList<BoardDTO> mygList(String loginId, HashMap<String, Object> map);
+
+	ArrayList<BoardDTO> mygList1(String loginId, HashMap<String, Object> map);
 
 	ArrayList<BoardDTO> allCount(HashMap<String, Object> map);
+
+	ArrayList<BoardDTO> mygList2(HashMap<String, Object> map);
 
 	
 
