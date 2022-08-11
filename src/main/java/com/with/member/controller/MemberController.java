@@ -3,13 +3,18 @@ package com.with.member.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.with.member.dto.MannerDTO;
 import com.with.member.service.MemberService;
@@ -42,7 +47,7 @@ public class MemberController {
 		map.put("avg_One",Math.round(avg[0]*10)/10.0);
 		map.put("avg_Two",Math.round(avg[1]*10)/10.0);
 		map.put("avg_Three",Math.round(avg[2]*10)/10.0);
-		map.put("avg_Four",Math.round((avg[3]/cnt)*10)/10.0);
+		map.put("avg_Four",Math.round((avg[3]/3)*10)/10.0);
 		map.put("avg_Five",num[0]);
 		map.put("avg_Six",num[1]);
 		map.put("avg_Seven",num[2]);
@@ -64,19 +69,17 @@ public class MemberController {
 		service.update(member_pw,phone,hide,member_id);
 		return "myPage/myInfo";
 	}
-	
 	@RequestMapping(value = "/mannerDetail.go")
-	public String mannerDetail(Model model) {
-		String idx = "tester";
-		String nameBox[] = {"친절함","응답속도","시간약속"};
-		ArrayList<MannerDTO> name = service.madatail(idx,nameBox[0]);
-		model.addAttribute("name1",name);
-		name = service.madatail(idx,nameBox[1]);
-		model.addAttribute("name2",name);
-		name = service.madatail(idx,nameBox[2]);
-		model.addAttribute("name3",name);		
-		//model.addAttribute("mblist", map);
-		//HashMap<String, Object> map = service.madetail(idx,nameBox[0]);
-		return "myPage/mannerDetail";
+	public String deliList(HttpSession session) {
+		return "redirect:/mannerDetail?page="+1;
+	}
+	
+	
+	@RequestMapping(value = "/mannerDetail")
+	public ModelAndView mannerDetail(@RequestParam int page) {
+		String idx = "tester";	
+		ModelAndView mav = new ModelAndView();
+		mav = service.madetail(idx,page);
+		return mav;
 	}
 }
