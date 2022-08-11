@@ -10,7 +10,7 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=303e3eb3eab9c15e38c80a5c6f8d0caf&libraries=services"></script>
 </head>
-<style>
+<style type="text/css">
     .content-wrap {
     	max-width: 1200px;
     	width: 100%;
@@ -34,6 +34,67 @@
     	color:white;
     	background-color:#2962ff;
     }
+    #banner_online {
+    height: 270px;
+    width: 350px;
+    border: 1px solid black;
+    box-shadow: 3px 3px 7px 1px grey;
+    background-color: white;
+    z-index: 9999;
+    margin-left: 36%;
+    margin-top: 6%;
+    display: none;
+    position: fixed;
+}
+#banner_online h2 {
+    text-align: center;
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+#banner_online p .second {
+    margin-left: 6px;
+}
+
+.pop_content {
+    font-size: 13px;
+    margin-left: 20px;
+}
+
+#banner_online_how {
+    height: 78px;
+    width: 444px;
+    margin-left: 28px;
+    border: 1px solid #82bf77;
+    margin-top: 22px;
+}
+
+#banner_online_how h3 {
+    font-size: 12px;
+    margin-left: 6px;
+    margin-top: 16px;
+}
+
+#close_button {
+    float: right;
+    margin-top: -3px;
+}
+
+.p_bottom {
+    margin-left: 30px;
+}
+
+#modal {
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 99;
+  display: none;
+}
+    
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -108,46 +169,37 @@
 			<input type="hidden" id="lng" value="${info.appoint_coords_lng}"/>
 			<div id="map" style="width:500px;height:350px;"></div>
 			
+			<button type="button" id="openModalPop">참여신청</button>
 			<div id= "modal"> 
 			</div>
 			    <div id = "banner_online">
 			        <div id="close_button" style ="cursor: pointer;"> 
-			           <img src="C:\Users\pc\Desktop\보연\Learn_WEB\windowclose_104378.png">
+			           <img src="C:\Users\GDJ48\Documents\GDJ48_1_FINAL_WITH\src\main\webapp\resources\photo\1660187018727.png">
 			       </div>
-			       <h2>CATEGORIES</h2>
+			       <h2>참여신청</h2>
 			       <div class="pop_content">
-			           <p>1) Algorithm</p>
-			           <p>2) 영어공부</P>
-			           <p>3) Deep Learning</p>
-			           <p>4) Web</p>
-			           <p class="p_bottom">- spring</p>
-			           <p class="p_bottom">- javaScript</p>
+			          <form action="">
+			          <table>
+			          	<th>내 연락처</th>
+			          	<td><input type="text" placeholder="010-0000-0000"></td>
+			          	<td><input type="submit" value="보내기"></td>
+			       	  </table>
+			       	  </form>	
 			       </div>
 			   </div>
 			
-			<button type="button" id="openModalPop">참여신청</button>
-<%-- 			<input type="button" value="참여신청" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/><br>
- --%>			<input type="button" value="삭제" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/>
+			
+<%-- 			<input type="button" value="참여신청" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/>
+ --%>			<br>
+ 			<input type="button" value="삭제" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/>
 			<input type="button" value="돌아가기" onclick="history.back()"/>
 			
-	   </div>
-	</div>
+	
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script type="text/javascript">
 
-$(document).ready(function() {
 
-    $("#openModalPop").click(function() {
-        $("#banner_online").fadeIn();
-        $("#modal").fadeIn();
-    });
-
-    $("#close_button").click(function(){
-        $("#banner_online").fadeOut();
-        $("#modal").fadeOut();
-    });
-});
 
 	var lat = $("#lat").val(); // 위도
 	var lng = $("#lng").val(); // 경도
@@ -176,5 +228,17 @@ $(document).ready(function() {
 	    map: map // 마커를 표시할 지도 객체
 	});
 	
+	$(document).ready(function() {
+
+	    $("#openModalPop").click(function() {
+	        $("#banner_online").fadeIn();
+	        $("#modal").fadeIn();
+	    });
+
+	    $("#close_button").click(function(){
+	        $("#banner_online").fadeOut();
+	        $("#modal").fadeOut();
+	    });
+	});	
 </script>
 </html>

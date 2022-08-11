@@ -34,6 +34,9 @@ public interface MealDAO {
 	BoardDTO mealDetail(String board_idx);
 
 	ArrayList<PhotoDTO> mealPhotoList(String board_idx, String string);
+
+
+	void mealApply(HashMap<String, String> params, String loginId);
 	
 
 

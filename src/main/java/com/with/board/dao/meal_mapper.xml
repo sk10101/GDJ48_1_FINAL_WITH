@@ -109,6 +109,18 @@
 		SELECT university_addr, m.university_idx FROM university u, member m
 			WHERE m.university_idx = u.university_idx AND member_id = #{loginId}
 	</select>
+	
+	
+	
+	<insert id="mealApply" 
+		useGeneratedKeys="true"
+		keyColumn="apply_idx"
+		keyProperty="apply_idx"
+		parameterType="hashmap">
+		INSERT INTO reply(board_idx,member_id,apply_date,investment, status)
+			VALUES(#{board_idx},#{member_id},now(),#{investment}#{status})
+	</insert>
+		
 </mapper>
 
 

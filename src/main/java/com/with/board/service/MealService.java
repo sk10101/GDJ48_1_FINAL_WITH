@@ -211,6 +211,14 @@ public class MealService {
 
 
 
+	public void mealApply(HashMap<String, String> params, String loginId) {
+		logger.info("phone number 요청");
+		dao.mealApply(params,loginId);
+		
+	}
+
+
+
 
 
 

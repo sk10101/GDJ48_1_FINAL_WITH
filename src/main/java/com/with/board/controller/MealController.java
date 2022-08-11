@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -132,6 +133,23 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 		}
 		
+		
+		@RequestMapping(value = "/mealApply")
+		public String mealApply( Model model,HttpSession session,
+			@RequestParam HashMap<String, String> params,RedirectAttributes attr, @RequestParam String board_idx) {
+			
+			session.setAttribute("loginId", "son");
+			String loginId =(String) session.getAttribute("loginId");
+			
+		
+			logger.info("params{}",params);
+			service.mealApply(params,loginId);
+			attr.addFlashAttribute("msg", "success");
+			
+		
+		return "redirect:/mealDetail?board_idx=board_idx";
+	}
+	
 		 
 	
 	
