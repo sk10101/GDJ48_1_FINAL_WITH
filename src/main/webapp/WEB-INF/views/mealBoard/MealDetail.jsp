@@ -107,15 +107,48 @@
 			<input type="hidden" id="lat" value="${info.appoint_coords_lat}"/>
 			<input type="hidden" id="lng" value="${info.appoint_coords_lng}"/>
 			<div id="map" style="width:500px;height:350px;"></div>
-			<input type="button" value="참여신청" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/><br>
-			<input type="button" value="삭제" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/>
+			
+			<div id= "modal"> 
+			</div>
+			    <div id = "banner_online">
+			        <div id="close_button" style ="cursor: pointer;"> 
+			           <img src="C:\Users\pc\Desktop\보연\Learn_WEB\windowclose_104378.png">
+			       </div>
+			       <h2>CATEGORIES</h2>
+			       <div class="pop_content">
+			           <p>1) Algorithm</p>
+			           <p>2) 영어공부</P>
+			           <p>3) Deep Learning</p>
+			           <p>4) Web</p>
+			           <p class="p_bottom">- spring</p>
+			           <p class="p_bottom">- javaScript</p>
+			       </div>
+			   </div>
+			
+			<button type="button" id="openModalPop">참여신청</button>
+<%-- 			<input type="button" value="참여신청" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/><br>
+ --%>			<input type="button" value="삭제" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/>
 			<input type="button" value="돌아가기" onclick="history.back()"/>
 			
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
-<script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+    $("#openModalPop").click(function() {
+        $("#banner_online").fadeIn();
+        $("#modal").fadeIn();
+    });
+
+    $("#close_button").click(function(){
+        $("#banner_online").fadeOut();
+        $("#modal").fadeOut();
+    });
+});
+
 	var lat = $("#lat").val(); // 위도
 	var lng = $("#lng").val(); // 경도
 	
