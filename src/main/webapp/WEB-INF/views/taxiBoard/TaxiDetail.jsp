@@ -74,8 +74,73 @@
     
     .ptList {
     	text-align: center;
-    	
     }
+    
+    
+    
+    
+    
+    #banner_online {
+	    height: 270px;
+	    width: 350px;
+	    border: 1px solid black;
+	    box-shadow: 3px 3px 7px 1px grey;
+	    background-color: white;
+	    z-index: 9999;
+	    left: 540px;
+	    top: 30%;
+	    display: none;
+	    position: fixed;
+	}
+	
+	#banner_online h2 {
+	    text-align: center;
+	    font-size: 17px;
+	    margin-bottom: 10px;
+	}
+	
+	#banner_online p .second {
+	    margin-left: 6px;
+	}
+	
+	.pop_content {
+	    font-size: 13px;
+	    margin-left: 20px;
+	}
+	
+	#banner_online_how {
+	    height: 78px;
+	    width: 444px;
+	    margin-left: 28px;
+	    border: 1px solid #82bf77;
+	    margin-top: 22px;
+	}
+	
+	#banner_online_how h3 {
+	    font-size: 12px;
+	    margin-left: 6px;
+	    margin-top: 16px;
+	}
+	
+	#close_button {
+	    float: right;
+	    margin-top: -3px;
+	}
+	
+	.p_bottom {
+	    margin-left: 30px;
+	}
+	
+	#modal {
+	  position:fixed;
+	  width:100%;
+	  height:100%;
+	  background:rgba(0, 0, 0, 0.5);
+	  top: 0;
+	  left: 0;
+	  z-index: 99;
+	  display: none;
+	}
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -83,10 +148,36 @@
 	   <jsp:include page="../commons/memberSideBar2.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
+	       
+	       <!-- 모달팝업창 -->
+ 	       <form action="/taxiApplyDo" method="post">
+			   <div id= "modal"> 
+			   </div>
+			   <div id="banner_online">
+			      <div id="close_button" style ="cursor: pointer;"> 
+			            <a id="close_button">&times;</a>
+			      </div>
+			      <h2>참여신청</h2>
+			      <div class="pop_content">
+			          <table>
+			          	<tr>
+			          		<th>연락처 :</th>
+			          		<td><input type="text" name="phone" value="${phone}" readonly/></td>
+			          	</tr>
+			          	<tr>
+			          		<th><input type="submit" value="보내기"></th>
+			          	</tr>
+			          </table>
+			      </div>
+			   </div>
+		   </form>
+		   <!-- 모발팝업 끝 -->
+	       
+	       
 	       <p id="subject">${list.subject}</p>
 	       <table>
 	       		<tr>
-	       			<input type="hidden" name="${list.board_idx}"/>
+	       			<input type="hidden" name="board_idx" value="${list.board_idx}"/>
 	       			<%-- <th colspan="4" style="font-size: 20px; background-color: #537ef4;">${list.subject}</th> --%>
 	       		</tr>
 	       		<tr>
@@ -168,13 +259,13 @@
 	       		</tr>
 	       		<tr>
 	       			<td colspan="4" style="text-align: center">
-						<input type="button" value="참여신청" onclick="location.href=''"/>
+						<input id="apply-button" type="button" value="참여신청"/>
 					</td>
 	       		</tr>
 	       		<tr>
 	       			<td colspan="4" style="text-align: center">
 		       			<input type="button" value="삭제" onclick="location.href=''"/>
-						<input type="button" value="돌아가기" onclick="history.back()"/>
+						<input type="button" value="돌아가기" onclick="location.href='/taxiList?page=${sessionScope.page}&option=${sessionScope.option}&word=${sessionScope.word}'"/>
 					</td>
 	       		</tr>
 	       </table>
@@ -186,7 +277,7 @@
 	var lat = $("#lat").val(); // 위도
 	var lng = $("#lng").val(); // 경도
 	
-	console.log(lat,lng);
+ 	console.log(lat,lng);
 	//지도를 그리기 위한 옵션 설정
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = {
@@ -209,6 +300,42 @@
 	    position: new kakao.maps.LatLng(lat, lng), // 마커의 좌표(기본 디폴트 값 설정필요)
 	    map: map // 마커를 표시할 지도 객체
 	});
+	
+	
+	// 모달팝업
+	$(document).ready(function() {
+	    $("#apply-button").click(function() {
+	        $("#banner_online").show();
+	    });
+
+	    $("#close_button").click(function(){
+	        $("#banner_online").fadeOut();
+	        $("#modal").fadeOut();
+	    });
+	});
+	
+	
+/* 	// 이미지 지도에 표시할 마커입니다
+	// 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
+	var markers = [
+	    {
+	        position: new kakao.maps.LatLng(lat, lng)
+	    },
+	    {
+	        position: new kakao.maps.LatLng(lat, lng), 
+	        text: '여기서 만나요!' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
+	    }
+	];
+	
+	var staticMapContainer  = document.getElementById('map'), // 이미지 지도를 표시할 div  
+    staticMapOption = { 
+        center: new kakao.maps.LatLng(lat, lng), // 이미지 지도의 중심좌표
+        level: 3, // 이미지 지도의 확대 레벨
+        marker: markers // 이미지 지도에 표시할 마커 
+    };    
+
+	// 이미지 지도를 생성합니다
+	var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption); */
 
 </script>
 </html>
