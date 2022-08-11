@@ -1,6 +1,7 @@
 package com.with.member.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +19,12 @@ public class AdminService {
 
 	@Autowired AdminDAO dao;
 	
-	public ModelAndView userList() {
+	public ModelAndView userList(HashMap<String, String> params) {
 		logger.info("유저 목록 조회 서비스");
 		ModelAndView mav = new ModelAndView("admin/userList");
-		ArrayList<MemberDTO> list = dao.userList();
-		mav.addObject("list", list);
+		
+		ArrayList<MemberDTO> list = dao.userList(params);
+		mav.addObject("list", list);		
 		return mav;
 	}
 
@@ -66,5 +68,7 @@ public class AdminService {
 		mav.addObject("list", list);
 		return mav;
 	}
+
+	
 	
 }

@@ -27,8 +27,15 @@ public class BoardDTO {
    private int member_cnt;
    private int recruit_end;
    private int hide;
+   private int apply_idx;
    
-   public int getBoard_idx() {
+   public int getApply_idx() {
+	return apply_idx;
+}
+public void setApply_idx(int apply_idx) {
+	this.apply_idx = apply_idx;
+}
+public int getBoard_idx() {
       return board_idx;
    }
    public void setBoard_idx(int board_idx) {

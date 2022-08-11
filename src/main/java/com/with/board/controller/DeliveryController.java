@@ -54,7 +54,7 @@ public class DeliveryController {
 		return mav;
 	}
 	
-
+	
 	// 상세보기
 	@RequestMapping(value = "/deliDetail", method = RequestMethod.GET)
 	public ModelAndView deliDetail(HttpSession session, @RequestParam String board_idx) {
