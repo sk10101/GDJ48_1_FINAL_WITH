@@ -77,9 +77,10 @@
 						<th>상태</th>
 						<th></th>
 					</tr>
-
 				</thead>
-					<c:forEach items="${mygList}" var="his">
+				
+				<c:forEach items="${mygList}" var="his">
+				
 				<tbody class="mygList">
 						<tr>
 							<td>${his.board_idx}</td>
@@ -97,7 +98,7 @@
 						    
 						</tr>
 				</tbody>
-					</c:forEach>
+				</c:forEach>
 
 			</table>
 			<!-- <input id="button3" type="button" onclick="close()" value="마감" />-->

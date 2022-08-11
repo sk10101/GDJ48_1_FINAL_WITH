@@ -15,7 +15,7 @@
 			(SELECT count(a.apply_idx) FROM apply a where a.status = '대기중' AND b.board_idx = a.board_idx) as applyNo 
 		FROM board_common_column b
 		WHERE b.member_id = '일반회원'
-		<if test="word != null and word != ''">
+		<if test="word != null and word != '' and word != ' '">
 					<choose>
 						<when test="option.equals('제목')">
 							AND subject LIKE CONCAT('%',#{word},'%')

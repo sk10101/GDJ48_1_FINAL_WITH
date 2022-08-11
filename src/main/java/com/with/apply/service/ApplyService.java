@@ -31,7 +31,13 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		   
 		   map.put("page", page); // page 입력
 		   // 검색어를 입력했을 때
-		   if(word != "") {
+		   if(word != "") {   
+               if(word.indexOf("모집")== 0 || word.indexOf("모") == 0 || word.indexOf("모집중") == 0) {
+                  word = "0";
+               }else if(word.indexOf("마")== 0 || word.indexOf("마감")== 0) {
+                  word = "1";
+               }
+			   
 			   map.put("word", word); // 검색어 입력
 			   map.put("option", option); // 검색 옵션 입력
 		   }
@@ -46,6 +52,32 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		
 	}
 	
+	public ModelAndView deliApplyList(HashMap<String, String> params, String loginId) {
+		logger.info("내가 만든 목록 요청");
+	      ModelAndView mav = new ModelAndView("myPage/deliApplyList");
+	      
+	   // 페이징 처리
+			HashMap<String, Object> map = new HashMap<String, Object>(); // map 객체화
+			int page = Integer.parseInt(params.get("page"));
+			String option = params.get("option");
+			String word = params.get("word");
+			
+			map.put("page", page); // page 입력
+			// 검색어를 입력했을 때
+			if(word != "") {   
+				map.put("word", word); // 검색어 입력
+				map.put("option", option); // 검색 옵션 입력
+			}
+			
+		
+	      ArrayList<BoardDTO> deliApplyList = pagination(map);
+	      logger.info("게시글의 개수 : "+ deliApplyList.size());
+	      mav.addObject("mygList",deliApplyList);
+	      mav.addObject("map",map);
+	      
+	      return mav;
+	}
+	
 	private ArrayList<BoardDTO> pagination(HashMap<String, Object> map) {
 		int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
 		
@@ -57,6 +89,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		logger.info("검색 옵션 / 검색어 : " + map.get("option") + " / " + map.get("word"));
 		
 		ArrayList<BoardDTO> myApplyList = new ArrayList<BoardDTO>();
+		ArrayList<BoardDTO> deliApplyList = new ArrayList<BoardDTO>();
 		
 		// 총 게시글의 개수(allCnt) / 페이지당 보여줄 개수(cnt) = 생성할 수 있는 총 페이지 수(pages)
 		int allCnt = 0;
@@ -89,6 +122,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		map.put("currPage", page); // 현재 페이지
 		
 		myApplyList = dao.myApplyList(map);
+		myApplyList = dao.deliApplyList(map);
 		
 	
 		logger.info("페이징 체크포인트");
