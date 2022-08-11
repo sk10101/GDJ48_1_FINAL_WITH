@@ -1,6 +1,9 @@
 package com.with.member.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.with.member.dto.MannerDTO;
 
 public interface MemberDAO {
 
@@ -14,6 +17,6 @@ public interface MemberDAO {
 
 	int average(String member_id, String nameBox);
 
-	HashMap<String, Object> madetail(String idx, String nameBox);
+	ArrayList<MannerDTO> madetail(String idx);
 
 }

@@ -1,5 +1,6 @@
 package com.with.member.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.with.member.dto.MannerDTO;
 import com.with.member.service.MemberService;
 
 @Controller
@@ -67,7 +69,9 @@ public class MemberController {
 	public String mannerDetail(Model model) {
 		String idx = "tester";
 		String nameBox[] = {"친절함","응답속도","시간약속"};
-		HashMap<String, Object> map = service.madetail(idx,nameBox[0]);
+		//ArrayList<MannerDTO> name = service.madatail(idx);
+		//model.addAttribute("mbdate",date);
+		//HashMap<String, Object> map = service.madetail(idx,nameBox[0]);
 		//model.addAttribute("mblist", map);
 		return "myPage/mannerDetail";
 	}

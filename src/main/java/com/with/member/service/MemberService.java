@@ -1,11 +1,13 @@
 package com.with.member.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.with.member.dao.MemberDAO;
+import com.with.member.dto.MannerDTO;
 
 @Service
 public class MemberService {
@@ -26,8 +28,7 @@ public class MemberService {
 	public int average(String member_id, String nameBox) {
 		return dao.average(member_id,nameBox);
 	}
-	public HashMap<String, Object> madetail(String idx, String nameBox) {
-		return dao.madetail(idx,nameBox);
+	public ArrayList<MannerDTO> madatail(String idx) {
+		return dao.madetail(idx);
 	}
-	
 }
