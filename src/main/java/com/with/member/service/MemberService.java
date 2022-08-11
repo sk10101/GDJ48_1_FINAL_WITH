@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.with.member.dao.MemberDAO;
+import com.with.member.dto.MannerDTO;
 
 @Service
 public class MemberService {
@@ -24,8 +25,10 @@ public class MemberService {
 	public int macnt(String member_id) {
 		return dao.macnt(member_id);
 	}
-	public int average(String member_id, String subin) {
-		return dao.average(member_id,subin);
+	public int average(String member_id, String nameBox) {
+		return dao.average(member_id,nameBox);
 	}
-	
+	public ArrayList<MannerDTO> madatail(String idx, String nameBox) {
+		return dao.madetail(idx,nameBox);
+	}
 }

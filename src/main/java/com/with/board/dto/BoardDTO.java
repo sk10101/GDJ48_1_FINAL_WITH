@@ -162,5 +162,4 @@ public int getBoard_idx() {
    
    
    
-   
 }
