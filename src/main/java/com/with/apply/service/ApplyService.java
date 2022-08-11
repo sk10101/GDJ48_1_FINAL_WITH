@@ -1,4 +1,4 @@
-package com.with.history.service;
+package com.with.apply.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,45 +9,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.with.apply.dao.ApplyDAO;
 import com.with.board.dto.BoardDTO;
-import com.with.history.dao.HistoryDAO;
 
 @Service
-public class HistoryService {
+public class ApplyService {
 
-	Logger logger = LoggerFactory.getLogger(this.getClass());
+Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@Autowired HistoryDAO dao;
+	@Autowired ApplyDAO dao;
 
-
-//내가 만든 모임
-	   public ModelAndView mygList(HashMap<String, String > params, String loginId) {
-		      logger.info("내가 만든 목록 요청");
-		      ModelAndView mav = new ModelAndView("myPage/myGroupList");
-		      
+	public ModelAndView myApplyList(HashMap<String, String> params, String loginId) {
+			logger.info("내가 참여한 목록 요청");
+		   ModelAndView mav = new ModelAndView("myPage/myApplyList");
+		   
 		   // 페이징 처리
-				HashMap<String, Object> map = new HashMap<String, Object>(); // map 객체화
-				int page = Integer.parseInt(params.get("page"));
-				String option = params.get("option");
-				String word = params.get("word");
-				
-				map.put("page", page); // page 입력
-				// 검색어를 입력했을 때
-				if(word != "") {
-					map.put("word", word); // 검색어 입력
-					map.put("option", option); // 검색 옵션 입력
-				}
-				
-			
-		      ArrayList<BoardDTO> mygList = pagination(map);
-		      logger.info("게시글의 개수 : "+ mygList.size());
-		      mav.addObject("mygList",mygList);
-		      mav.addObject("map",map);
-		      
-		      return mav;
+		   HashMap<String, Object> map = new HashMap<String, Object>(); // map 객체화
+		   int page = Integer.parseInt(params.get("page"));
+		   String option = params.get("option");
+		   String word = params.get("word");
+		   
+		   map.put("page", page); // page 입력
+		   // 검색어를 입력했을 때
+		   if(word != "") {
+			   map.put("word", word); // 검색어 입력
+			   map.put("option", option); // 검색 옵션 입력
 		   }
-	  
-
+		   
+		   
+		   ArrayList<BoardDTO> myApplyList = pagination(map);
+		   logger.info("게시글의 개수 : "+ myApplyList.size());
+		   mav.addObject("myApplyList",myApplyList);
+		   mav.addObject("map",map);
+		   
+		   return mav;
+		
+	}
+	
 	private ArrayList<BoardDTO> pagination(HashMap<String, Object> map) {
 		int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
 		
@@ -58,7 +56,7 @@ public class HistoryService {
 		logger.info("보여줄 페이지 : " + map.get("page"));
 		logger.info("검색 옵션 / 검색어 : " + map.get("option") + " / " + map.get("word"));
 		
-		ArrayList<BoardDTO> mygList = new ArrayList<BoardDTO>();
+		ArrayList<BoardDTO> myApplyList = new ArrayList<BoardDTO>();
 		
 		// 총 게시글의 개수(allCnt) / 페이지당 보여줄 개수(cnt) = 생성할 수 있는 총 페이지 수(pages)
 		int allCnt = 0;
@@ -90,17 +88,11 @@ public class HistoryService {
 		map.put("offset", offset);
 		map.put("currPage", page); // 현재 페이지
 		
-		mygList = dao.mygList(map);
+		myApplyList = dao.myApplyList(map);
 		
 	
 		logger.info("페이징 체크포인트");
-		return mygList;
+		return myApplyList;
 	}
-	
-	
-	
-
-
-
 	
 }
