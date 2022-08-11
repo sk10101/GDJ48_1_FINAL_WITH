@@ -1,5 +1,7 @@
 package com.with.member.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -35,23 +37,26 @@ public class LoginController {
 	
 	//로그인
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(HttpServletRequest request, Model model) {		
+	public String login(HttpServletRequest request, Model model, HttpSession session) {		
 		logger.info("로그인 하기");
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
 		
-		String loginId = service.login(id, pw);
-		/* String member_class=service.getMbClass(id,pw); */
-		logger.info("로그인한 아이디 : "+loginId);
+		MemberDTO loginDto = service.login(id, pw);
+		String loginId = loginDto.getMember_id();
+		String member_class = loginDto.getMember_class();  
+		
+		logger.info("로그인한 아이디 : "+ loginId);
+		logger.info("회원등급 : "+ member_class);
 		
 		String msg = "아이디 혹은 비밀번호가 틀렸습니다";
-		String page = "login";
+		String page = "member/login";
 		
-		if(loginId != null) {
-			HttpSession session = request.getSession();
+		if(loginId != null && member_class != null) {
 			session.setAttribute("loginId", loginId);
-			/* session.setAttribute("member_class", member_class); */
-			msg = loginId + "님 환영합니다";			
+			session.setAttribute("member_class", member_class);
+			
+			msg = loginId + " (" + member_class + ") 님 환영합니다";			
 			page = "main";			
 		} else {			
 			model.addAttribute("msg", msg);

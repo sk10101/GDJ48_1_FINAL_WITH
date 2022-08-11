@@ -33,47 +33,26 @@ public class LoginService {
 	@Autowired
 	LoginDAO dao;
 
-	@Autowired
-	private HttpSession session;
-
-	public String login(String id, String pw) {
+	public MemberDTO login(String id, String pw) {
 		logger.info("로그인 서비스");
-
+		
+		MemberDTO dto = new MemberDTO();
 		String hashPw = dao.login(id,pw);
 		String loginId = null;
+		String member_class = null;
 
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		if (encoder.matches(pw, hashPw)) {
 			loginId = id;
+			member_class = dao.getMbClass(id);
 		}
-
-		return loginId;
+		
+		dto.setMember_id(loginId);
+		dto.setMember_class(member_class);
+		
+		return dto;
 
 	}
-
-	
-	
-	
-	/*
-	 * public String getMbClass(String id, String pw) {
-	 * 
-	 * logger.info("로그인 서비스2");
-	 * 
-	 * String hashPw = dao.getMbClass(id,pw); String member_class = null;
-	 * 
-	 * BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-	 * if(encoder.matches(pw, hashPw)) {
-	 * 
-	 * member_class = ; } }
-	 * 
-	 * 
-	 * return member_class;
-	 */
-	 
-	 
-	  
-	  
-	 
 
 	/*
 	 * // member(admin)Main으로 돌아가기
