@@ -38,6 +38,54 @@
     div#map {
     	border : 3px solid #2962ff;
     }
+    /* 아래부터 모달 팝업 css */
+    #banner_online {
+	    height: 270px;
+	    width: 350px;
+	    border: 1px solid black;
+	    box-shadow: 3px 3px 7px 1px grey;
+	    background-color: white;
+	    z-index: 9999;
+	    margin-left: 36%;
+	    margin-top: 6%;
+	    display: none;
+	    position: absolute;
+	    top: 250px;
+	    left: 180px;
+	}
+	
+	#banner_online h2 {
+	    text-align: left;
+	    color: white;
+	    font-size: 17px;
+	    margin-bottom: 10px;
+	    background-color: #2962ff;
+	}
+	
+	.pop_content {
+	    font-size: 13px;
+	    margin-left: 20px;
+	}
+	
+	#banner_online_how {
+	    height: 78px;
+	    width: 444px;
+	    margin-left: 28px;
+	    border: 1px solid #82bf77;
+	    margin-top: 22px;
+	}
+	
+	#banner_online_how h3 {
+	    font-size: 12px;
+	    margin-left: 6px;
+	    margin-top: 16px;
+	}
+	
+	#close_button {
+	    float: right;
+	    margin-top: -3px;
+	}
+	
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -54,7 +102,7 @@
 					<td>작성자 : ${info.member_id}</td>
 				</tr>
 				<tr>
-					<td>모인금액 : (모은금액) / ${info.min_delivery}</td>
+					<td>최소주문금액 : ${info.min_delivery}</td>
 					<td>작성일 : ${info.write_date}</td>
 				</tr>
 				<tr>
@@ -63,7 +111,7 @@
 				</tr>
 				<tr>
 					<td>마감시간 : ${info.deadline}</td>
-					<td>인원 : (현재 인원) / ${info.member_cnt}</td>
+					<td>인원 : ${partList.size() + 1} / ${info.member_cnt + 1}</td>
 				</tr>
 				<tr>
 				</tr>
@@ -106,22 +154,59 @@
 					<th>평가</th>
 					<c:if test="${info.member_id eq 'tester'}"><th>강퇴</th></c:if>
 				</tr>
+				<c:if test="${partList.size() eq 0}">
+					<tr><td colspan="5">참여한 회원이 없습니다.</td></tr>			
+				</c:if>
 				<c:forEach items="${partList}" var="part">
-					
+					<tr>
+						<td>${part.member_id}</td>
+						<td>${part.gender}</td>
+						<td>${part.investment}</td>
+						<td>${part.phone}</td>
+						<td><c:if test="true"><input type="button" value="평가하기"/></c:if></td>
+						<td><c:if test="${info.member_id eq 'tester'}"><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></c:if></td>
+					</tr>
 				</c:forEach>
 			</table>
 			<!-- 아래부터 Kakao Map API 구역 -->
 			<input type="hidden" id="lat" value="${info.appoint_coords_lat}"/>
 			<input type="hidden" id="lng" value="${info.appoint_coords_lng}"/>
 			<div id="map" style="width:500px;height:350px;"></div>
-			<input type="button" value="참여신청" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/><br>
+			<c:if test="${info.recruit_end eq 0}">
+				<button id="deliPop">참여신청</button><br/>
+			</c:if>
 			<input type="button" value="삭제" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/>
 			<input type="button" value="돌아가기" onclick="history.back()"/>
 	   </div>
 	</div>
+	<!-- 아래부터 참여 신청 모달 부분 -->
+	<div id ="banner_online">
+        <div id="close_button" style ="cursor: pointer;"> 
+            <a id="close_button">&times;</a>
+        </div>
+        <h2>참여신청</h2>
+        <div class="pop_content">
+        	<form action="applyDeli">
+	           내 연락처 <input type="text" value="010-1111-1111" readonly/><br/>
+	           투자 금액 <input type="text" name="investment" placeholder="최소 투자 금액 : ${info.min_fund}" /><br/>
+	           <input type="hidden" name="member_id" value="test2"/>
+	           <input type="hidden" name="board_idx" value="${info.board_idx}"/>
+	           <input type="submit" value="보내기" style="text-align: right;"/>
+        	</form>
+        </div>
+    </div>
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
-<script>
+<script type="text/javascript">
+    $("#deliPop").click(function() {
+        $("#banner_online").show();
+    });
+
+    $("#close_button").click(function(){
+        $("#banner_online").fadeOut();
+        $("#modal").fadeOut();
+    });
+	
 	var lat = $("#lat").val(); // 위도
 	var lng = $("#lng").val(); // 경도
 	

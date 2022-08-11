@@ -113,8 +113,15 @@
 	</select>
 	
 	<select id="partList" parameterType="String" resultType="board">
-		SELECT 
+		SELECT p.member_id, m.gender, a.investment, m.phone FROM participant p, member m, apply a
+			WHERE p.board_idx = #{board_idx} AND a.board_idx = #{board_idx} AND a.status = '수락' 
+			AND a.member_id = p.member_id AND p.hide = 0 AND p.member_id = m.member_id AND a.member_id = m.member_id
 	</select>
+	
+	<insert id="applyDeli" parameterType="board">
+		INSERT INTO apply (board_idx, member_id, investment)
+			VALUES(#{board_idx}, #{min_delivery}, #{delivery_fee}, #{min_fund})
+	</insert>
 </mapper>
 
 

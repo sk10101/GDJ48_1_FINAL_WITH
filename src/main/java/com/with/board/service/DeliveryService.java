@@ -73,9 +73,10 @@ public class DeliveryService {
 		ArrayList<PhotoDTO> deliPhotoList = dao.deliPhotoList(board_idx,"배달게시판");
 		mav.addObject("info",info);
 		mav.addObject("deliPhotoList",deliPhotoList);
-		
 		// 참여자 목록 조회
-		partList(board_idx);
+		ArrayList<BoardDTO> partList = partList(board_idx);
+		mav.addObject("partList",partList);
+		
 		
 		return mav;
 	}
@@ -213,6 +214,13 @@ public class DeliveryService {
 		logger.info("참여 회원 목록 서비스");
 		
 		return dao.partList(board_idx);
+	}
+
+
+	public void applyDeli(String member_id, String board_idx) {
+		logger.info("배달 게시글 참여 신청 서비스");
+		
+		dao.applyDeli(member_id,board_idx);
 	}
 
 }

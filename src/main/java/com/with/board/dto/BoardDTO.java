@@ -176,6 +176,16 @@ public int getBoard_idx() {
    public void setPhone(String phone) {
 	   this.phone = phone;
    }
+   
+   // 신청목록 테이블 DTO
+   private String investment;
+
+   public String getInvestment() {
+	   return investment;
+   }
+   public void setInvestment(String investment) {
+	   this.investment = investment;
+   }
 	   
    
 }

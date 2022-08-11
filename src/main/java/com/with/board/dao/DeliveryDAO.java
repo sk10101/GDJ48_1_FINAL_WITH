@@ -33,6 +33,8 @@ public interface DeliveryDAO {
 
 	ArrayList<BoardDTO> partList(String board_idx);
 
+	void applyDeli(String member_id, String board_idx);
+
 
 
 }
