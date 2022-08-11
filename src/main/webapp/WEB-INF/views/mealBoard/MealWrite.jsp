@@ -33,7 +33,7 @@
 	   <jsp:include page="../commons/memberSideBar3.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	     <form action="MealWrite.do" method="post">
+	     <form action="MealWrite.do" method="post" enctype="multipart/form-data">
 	<h3>글쓰기</h3>
 		<table>
 			<tr>

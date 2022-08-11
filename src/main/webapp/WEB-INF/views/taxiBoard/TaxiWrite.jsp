@@ -89,7 +89,7 @@
 		       			<th>출발지</th>
 		       			<td>
 			       			<input type="text" name="appoint_place" maxlength="66" required/>
-			       			<input type="button" value="상세위치" onclick=""/>
+			       			<input type="button" value="상세위치" onclick="showPopup()">
 		       			</td>
 		       		</tr>
 				    <tr>
@@ -131,6 +131,9 @@
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script>
+function showPopup(){
+    window.open("taxiKakaoGo","팝업 테스트","width=1000, height=1000, top=10, left=10");
+}
 
 /* 타임피커 관련 스크립트 */
 $('#datetimepicker').datetimepicker({

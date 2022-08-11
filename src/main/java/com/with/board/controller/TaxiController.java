@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -58,8 +59,19 @@ public class TaxiController {
 	
 	// 택시 글쓰기
 	@RequestMapping(value = "/taxiWriteDo")
-	public ModelAndView taxiWriteDo(MultipartFile[] photos, HttpSession session, @ModelAttribute BoardDTO dto, RedirectAttributes rAttr) {
+	public ModelAndView taxiWriteDo(MultipartFile[] photos, HttpSession session, @ModelAttribute BoardDTO dto) {
 		return service.taxiWrite(photos, dto);
 	}
+	
+	// 카카오 팝업 창 이동
+	@RequestMapping(value = "/taxiKakao.go", method = RequestMethod.GET)
+	public ModelAndView kakao(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("taxiBoard/kakao");
+		
+		return mav;
+	}
+	
 	
 }

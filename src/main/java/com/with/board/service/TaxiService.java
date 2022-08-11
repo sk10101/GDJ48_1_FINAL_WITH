@@ -110,6 +110,8 @@ public class TaxiService {
 //			dao.taxiUpHit(board_idx);
 //		}
 		
+		dao.taxiUpHit(board_idx);
+		
 		// 세션에 "chkHit" name 값과 value 값을 부여한다.
 //		session.setAttribute("chkHit", "chkHit");
 		
