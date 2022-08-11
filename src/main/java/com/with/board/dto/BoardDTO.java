@@ -27,14 +27,7 @@ public class BoardDTO {
    private int member_cnt;
    private int recruit_end;
    private int hide;
-   private int apply_idx;
    
-   public int getApply_idx() {
-	return apply_idx;
-}
-public void setApply_idx(int apply_idx) {
-	this.apply_idx = apply_idx;
-}
 public int getBoard_idx() {
       return board_idx;
    }
@@ -159,6 +152,48 @@ public int getBoard_idx() {
    public void setMin_fund(String min_fund) {
       this.min_fund = min_fund;
    }
+   
+   // 내가만든모임 전용 dto
+   private int applyNo;
+   private int apply_idx;
+   
+   public int getApply_idx() {
+	return apply_idx;
+}
+   public void setApply_idx(int apply_idx) {
+	this.apply_idx = apply_idx;
+}
+	public int getApplyNo() {
+		return applyNo;
+	}
+	public void setApplyNo(int applyNo) {
+		this.applyNo = applyNo;
+}
+	//내가 참여한 모임 전용 dto
+	private String investment;
+	private String status;
+	private Date apply_date;
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+	public Date getApply_date() {
+		return apply_date;
+	}
+	public void setApply_date(Date apply_date) {
+		this.apply_date = apply_date;
+	}
+	public String getInvestment() {
+		return investment;
+	}
+	public void setInvestment(String investment) {
+		this.investment = investment;
+	}
    
    // 참여자 테이블 전용 DTO
    private int pt_idx;

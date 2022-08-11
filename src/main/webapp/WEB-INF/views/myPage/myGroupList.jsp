@@ -55,21 +55,21 @@
 				</table>
 			</form>
 			
-			<form action="mygList2">
+			<form action="mygList">
 					<select id="option" name="option">
 						<option value="제목">제목</option>
 						<option value="이용 서비스">이용 서비스</option>
 						<option value="상태">상태</option>
 					</select> 
 					<input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
-			   <input type="hidden" name="page" value="1"/>
+			   		<input type="hidden" name="page" value="1"/>
            			<button id="searchBtn">검색</button>
 			</form>
 
 			<table>
 				<thead>
 					<tr>
-						<th>번호</th>
+						<th>글번호</th>
 						<th>이용 서비스</th>
 						<th>제목</th>
 						<th>작성일</th>
@@ -79,17 +79,22 @@
 					</tr>
 
 				</thead>
-					<c:forEach items="${mygList2}" var="his">
+					<c:forEach items="${mygList}" var="his">
 				<tbody class="mygList">
 						<tr>
 							<td>${his.board_idx}</td>
 							<td>${his.category_id}</td>
-							<td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}'">${his.subject}</a></td>
-							<td>${his.write_date}</td>
+							<td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.subject}</a></td>
+							<td>${his.write_date}</td> 
+							<c:if test="${his.applyNo eq 0}"><td></td></c:if>
+							<c:if test="${his.applyNo ne 0}"><td><span style="font-color:black;">${his.applyNo}</span></td></c:if>
 							<c:if test="${his.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
 							<c:if test="${his.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
-							<td><c:forEach items="${mygList1}" var="hist">${hist.member_id}
-							</c:forEach></td>
+							
+							<!-- <c:if test="${sessionScope.loginId eq his.member_id}">
+						       <input id="board_del" type="button" value="삭제" onclick="location.href='detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}'" />
+						    </c:if> -->
+						    
 						</tr>
 				</tbody>
 					</c:forEach>
@@ -131,6 +136,22 @@
 			location.href = "mygList?page="+page+"&option="+"${sessionScope.option}"+"&word="+"${sessionScope.word}";
 	}
 });
+/* 
+	function searchList(page){
+	       var word = $('#word').val();
+
+	       var option = $('#option').val();
+	         
+	       
+	       
+	       if(option == '제한내역' && (word.indexOf('대출') == 0 || word.indexOf('연체') == 0)){
+	          word = "5";
+	       }else if(word.indexOf('예약') == 0 ||word.indexOf('만료') == 0){
+	          word = "6";
+	       }
+	 }
+	        */
+	       
 	/*var msg = "${msg}";
 
 	if (msg != "") {

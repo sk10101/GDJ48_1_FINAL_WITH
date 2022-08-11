@@ -76,6 +76,6 @@ public class JoinController {
 			logger.info("이메일 중복 체크 : "+chkEmail);
 			return service.EmailOverlay(chkEmail);
 		}
-	  
+
 
 }

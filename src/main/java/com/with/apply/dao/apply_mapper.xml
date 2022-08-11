@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.with.apply.dao.ApplyDAO">
+<select id="myApplyList" resultType="board" parameterType="hashmap">
+		SELECT 
+			b.board_idx,
+			b.category_id,
+			b.subject,
+			a.investment,
+			a.apply_date, 
+			a.status,
+			b.recruit_end 
+		FROM board_common_column b, apply a, participant p
+		WHERE p.member_id = 'son' and a.member_id != b.member_id and b.board_idx = p.board_idx and a.member_id = p.member_id and a.board_idx = p.board_idx 
+		<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('제목')">
+							AND subject LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('이용 서비스')">
+							AND category_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('신청상태')">
+							AND status LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('마감상태')">
+							AND recruit_end LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+			ORDER BY board_idx DESC LIMIT #{cnt} OFFSET #{offset}
+	</select> 
+	
+	
+	<select id="allCount" resultType="board" parameterType="hashmap">
+		SELECT p.board_idx FROM participant p, board_common_column b, apply a  where p.member_id = 'son' and a.member_id != b.member_id and b.board_idx = p.board_idx and a.member_id = p.member_id and a.board_idx = p.board_idx	
+			<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('제목')">
+							AND subject LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('이용 서비스')">
+							AND category_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('신청상태')">
+							AND status LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('마감상태')">
+							AND recruit_end LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+	</select>
+	
+	</mapper>
