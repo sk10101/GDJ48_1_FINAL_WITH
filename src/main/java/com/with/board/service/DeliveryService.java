@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.with.board.dao.DeliveryDAO;
 import com.with.board.dto.BoardDTO;
 import com.with.board.dto.PhotoDTO;
+import com.with.member.dto.MemberDTO;
 
 
 @Service
@@ -57,28 +59,6 @@ public class DeliveryService {
 		return mav;
 	}
 	
-	/* 검색기능 개선으로 인해 주석처리함
-	// 검색목록 조회 서비스
-	public ModelAndView searchList(String option, String word, int page) {
-		logger.info("옵션 / 검색어 : " + option + " / " + word);
-		ModelAndView mav = new ModelAndView("deliveryBoard/DeliList");
-		
-		// 마감 여부 확인 후 업데이트 (스케쥴러 대체)
-		dao.endUpdate();
-		
-		// 페이징 처리
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("page", page); // page 입력
-		map.put("word", word); // 검색어 입력
-		map.put("option", option); // 검색 옵션 입력
-		ArrayList<BoardDTO> deliList = pagination(map);
-		logger.info("게시글의 개수 : "+ deliList.size());
-		mav.addObject("deliList",deliList);
-		mav.addObject("map",map);
-		
-		return mav;
-	}
-	*/
 	
 	// 상세보기 서비스
 	@Transactional
@@ -100,10 +80,14 @@ public class DeliveryService {
 	
 	// 글쓰기 서비스
 	@Transactional
-	public void write(MultipartFile[] photos, BoardDTO dto) {
+	public void write(MultipartFile[] photos, BoardDTO dto, HttpSession session) {
 		logger.info("글쓰기 서비스 요청");
 		// 이후에 로그인한 아이디를 담아주는 것으로 변경해야함
 		dto.setMember_id("tester");
+		// session 에 저장한 좌표를 dto 에 담아준다.
+		dto.setAppoint_coords_lat((String) session.getAttribute("lat"));
+		dto.setAppoint_coords_lng((String) session.getAttribute("lng"));
+		
 		// 공통 컬럼 테이블에 작성할 내용
 		int row = dao.writeBcc(dto);
 		// 배달 전용 컬럼 테이블에 작성하기 위해 위에서 작성했던 글의 번호를 가져와야함
@@ -205,5 +189,19 @@ public class DeliveryService {
 		
 		logger.info("페이징 체크포인트");
 		return deliList;
+	}
+
+	public HashMap<String, Object> detailMarker(HashMap<String, String> params) {
+		// 작성자의 대학교 좌표를 구하기 위해 회원이 등록한 대학교의 주소를 가져온다.
+		String loginid = params.get("loginId");
+		
+		HashMap<String, Object> deliMap = new HashMap<String, Object>(); 
+		MemberDTO dto = dao.getUniversityAddr(loginid);
+		String university_addr = dto.getUniversity_addr();
+		deliMap.put("university_addr", university_addr);
+		
+		logger.info("가져온 대학교 주소 : " + university_addr);
+		
+		return deliMap;
 	}
 }

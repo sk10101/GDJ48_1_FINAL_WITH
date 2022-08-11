@@ -47,20 +47,25 @@
 			<tr>
 			<tr>
 				<th>성별</th>
-				<td><input type="checkbox" name="gender"/>남자만&nbsp;&nbsp;<input type="checkbox">여자만&nbsp;&nbsp;<input type="checkbox">상관없음</td>
+				<td>
+					<input type="radio" name="gender" value="남자만"/>남자만
+					<input type="radio" name="gender" value="여자만"/>여자만
+					<input type="radio" name="gender" value="상관없음"  checked="checked"/>상관없음
+				</td>
 			</tr>
 			<tr>
 				<th>약속장소</th>
-				<td><input type="text" name="appoint_place"/> <input type="button" value="주소 검색"></td>
+				<td><input type="text" name="appoint_place"/> 
+				<input type="button" value="상세위치" onclick="showPopup()">
 			</tr>
 			<tr>
 				<th>사진</th>
-				<td><input type="file" name="photo"/></td>
+				<td><input type="file" name="photo" multiple="multiple"/></td>
 			</tr>
 			<tr>
 				<th>모집인원</th>
 				<td>
-					<select name="option">
+					<select name="member_cnt">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -68,13 +73,20 @@
 				</td>
 			</tr>
 			<tr>
-				<th>마감시간</th>
-				<td><input type="datetime-local" name="deadline"/></td>
+				<th>모집시간</th>
+				<td>
+					<select name="deadline">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+					</select> 시간
+				</td>
 			</tr>
 			<tr>
-			<th colspan="2">
-				<button>등록</button>
-			</th>
+			<td colspan="2">
+				<input type="submit" value="등록"/>
+				<input type="button" value="back"/>
+			</td>
 			</tr>
 		</table>
 	</form>
@@ -83,5 +95,8 @@
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script>
+ function showPopup(){
+    window.open("kakao.go","팝업 테스트","width=1000, height=1000, top=10, left=10");
+} 
 </script>
 </html>
