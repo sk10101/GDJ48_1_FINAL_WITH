@@ -83,8 +83,6 @@ function displayMarker(place) {
         window.opener.location.reload(place.place_name);
         window.close();
     });
-    
-    
 
 
     

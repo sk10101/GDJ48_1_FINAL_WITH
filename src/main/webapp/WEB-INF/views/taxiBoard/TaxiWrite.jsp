@@ -132,7 +132,7 @@
 </body>
 <script>
 function showPopup(){
-    window.open("deliKakao.go","팝업 테스트","width=1000, height=1000, top=10, left=10");
+    window.open("taxiKakaoGo","팝업 테스트","width=1000, height=1000, top=10, left=10");
 }
 
 /* 타임피커 관련 스크립트 */
