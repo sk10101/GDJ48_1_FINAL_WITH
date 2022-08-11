@@ -28,7 +28,7 @@ public class MemberService {
 	public int average(String member_id, String nameBox) {
 		return dao.average(member_id,nameBox);
 	}
-	public ArrayList<MannerDTO> madatail(String idx) {
-		return dao.madetail(idx);
+	public ArrayList<MannerDTO> madatail(String idx, String nameBox) {
+		return dao.madetail(idx,nameBox);
 	}
 }

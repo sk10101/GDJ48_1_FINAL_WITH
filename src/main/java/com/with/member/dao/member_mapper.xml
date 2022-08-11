@@ -24,6 +24,6 @@
     </select>
     
     <select id="madetail" resultType="manner">
-    	SELECT sum(manner_score) FROM manner_assess WHERE member_id = #{param1} AND category_id = '${param2}'
+    	SELECT manner_score FROM manner_assess WHERE member_id = #{param1} AND category_id = #{param2} ORDER BY assess_date DESC;
     </select>
 </mapper>

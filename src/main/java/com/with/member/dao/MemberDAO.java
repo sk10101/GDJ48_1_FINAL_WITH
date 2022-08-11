@@ -17,6 +17,6 @@ public interface MemberDAO {
 
 	int average(String member_id, String nameBox);
 
-	ArrayList<MannerDTO> madetail(String idx);
+	ArrayList<MannerDTO> madetail(String idx, String nameBox);
 
 }

@@ -52,14 +52,11 @@
             		<th>시간약속</th>
             		<th>평가일</th>
             	</tr>
-				<%-- <c:forEach items="${mbdate}">
+				<c:forEach items="${name1}" var="manner">
 					<tr>
-						<td>1</td>
-						<td>1</td>
-						<td>1</td>
-						<td>${mbdate.assess_date}</td>
+						<td>${manner.manner_score}</td>
 					</tr>
-				</c:forEach> --%>            
+				</c:forEach>            
             </table>
 	   </div>
 	</div>

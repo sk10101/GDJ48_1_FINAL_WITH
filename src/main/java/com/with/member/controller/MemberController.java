@@ -69,10 +69,14 @@ public class MemberController {
 	public String mannerDetail(Model model) {
 		String idx = "tester";
 		String nameBox[] = {"친절함","응답속도","시간약속"};
-		//ArrayList<MannerDTO> name = service.madatail(idx);
-		//model.addAttribute("mbdate",date);
-		//HashMap<String, Object> map = service.madetail(idx,nameBox[0]);
+		ArrayList<MannerDTO> name = service.madatail(idx,nameBox[0]);
+		model.addAttribute("name1",name);
+		name = service.madatail(idx,nameBox[1]);
+		model.addAttribute("name2",name);
+		name = service.madatail(idx,nameBox[2]);
+		model.addAttribute("name3",name);		
 		//model.addAttribute("mblist", map);
+		//HashMap<String, Object> map = service.madetail(idx,nameBox[0]);
 		return "myPage/mannerDetail";
 	}
 }

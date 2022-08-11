@@ -61,7 +61,6 @@ public class TaxiController {
 	public String taxiWrite() {
 		return "taxiBoard/TaxiWrite";
 	}
-<<<<<<< HEAD
 	@RequestMapping(value = "/taxiUploadForm")
 	public String uploadForm() {
 		return "taxiBoard/uploadForm";
@@ -92,14 +91,3 @@ public class TaxiController {
 		return service.del(idx);
 	}
 }*/
-=======
-	
-	// 택시 글쓰기
-	@RequestMapping(value = "/taxiWriteDo")
-	public ModelAndView taxiWriteDo(MultipartFile[] photos, HttpSession session, @ModelAttribute BoardDTO dto, RedirectAttributes rAttr) {
-		return service.taxiWrite(photos, dto);
-	}
-	
-	
-}
->>>>>>> origin/master
