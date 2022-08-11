@@ -7,7 +7,10 @@
 	<meta charset="UTF-8">
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="resources/js/jquery.twbsPagination.js"></script>
 </head>
 <style>
     .content-wrap {
@@ -18,6 +21,7 @@
 
     .content {
         display: inline-block;
+        
         margin-left: 160px;
         margin-top: 100px;
         max-width: 1040px;
@@ -28,9 +32,9 @@
     }
 </style>
 <body>
-	<jsp:include page="../commons/adminHeader.jsp"/>
+	<%-- <jsp:include page="../commons/adminHeader.jsp"/> --%>
 	<div class="content-wrap">
-	   <jsp:include page="../commons/adminSideBar4.jsp"/>
+	  <%-- <jsp:include page="../commons/adminSideBar4.jsp"/> --%>
 	   <div class="content">
 	   	<button onclick="location.href='userList'">일반회원</button>
 	   	<button onclick="location.href='adminList'">관리자</button>  
@@ -42,6 +46,7 @@
 					<option value="certficate">인증여부</option>
 				</select>
 				<input type="text" name="keyword"/>
+				
 				<button>검색</button>
 			</form>
 		<table>
@@ -67,63 +72,28 @@
 			</c:forEach>
 			</tbody>
 		</table>
-		<!-- <div class="container">
+		<div class="container">
 		    <nav arial-label="Page navigation" style="text-align:center">
 		        <ul class="pagination" id="pagination"></ul>
 		    </nav>
-		</div> -->
+		</div>
 	   </div>
 	</div>
-	<jsp:include page="../commons/footer.jsp"/>
+	<%-- <jsp:include page="../commons/footer.jsp"/> --%>
 </body>
-<script>
-/* var currPage = 1;
+<script type="text/javascript">
+var page = 1;
 
-listCall(currPage);
-//페이징 처리
-$('#pagePerNum').on('change',function(){
-     console.log("currPage: " + currPage);
-  //페이지당 보여줄 수 변경시 계산된 페이지 적용이 안된다.(플러그인의 문제)
-  //페이지당 보여줄 수 변경시 기존 페이지 요소를 없애고 다시 만들어 준다.
-     $("#pagination").twbsPagination('destroy');
-        listCall(currPage); 
-});
+$("#pagination").twbsPagination({
+	startPage:${map.page}, //시작 페이지 (page)
+	totalPages:${map.pages}, //총 페이지(전체 게시물 수 / 한 페이지에 보여줄 게시물 수) (pages)
+	visiblePages: 5, //한 번에 보여줄 페이지 수
+	initiateStartPageClick: false,
+	onPageClick:function(e,page){
+		//console.log(e); //클릭한 페이지와 관련된 이벤트 객체
+		console.log(page); //사용자가 클릭한 페이지
+		// 페이지 이동시에도 데이터를 가지고 있기 위해 session 을 활용한다
+		location.href = "userList?page="+page;
 
-//리스트 call 과정
-function listCall(page) {
-  //var id = $('#일반회원').val()
-  var pagePerNum = 10;
-  console.log("속성값 : " + pagePerNum);
-  console.log("param page : " + page);
-  $.ajax({
-     type:'GET',
-     url:'/mygrouplist.ajax',
-     data:{
-        cnt : pagePerNum,
-        page : page
-        //id : id
-     },
-     dataType:'JSON',
-      success:function(data){
-          console.log(data);
-        drawList(data.mygrouplist);
-        currPage = data.currPage;
-        $("#pagination").twbsPagination({
-              startPage:data.currPage,//시작 페이지
-              totalPages: data.pages,//총 페이지(전체 게시물 수 / 한 페이지에 보여줄 게시물 수)
-               visiblePages: 5,//한번에 보여줄 페이지 수[1][2][3][4][5]
-               onPageClick:function(e,page){
-                   //console.log(e);//클릭한 페이지와 관련된 이벤츠 객체
-                   console.log(page);//사용자가 클릭한 페이지
-                   currPage = page;
-                   listCall(page);
-               }
-        });
-     },
-     error:function(e) {
-        console.log(e);
-     }
-  });
-} */
 </script>
 </html>

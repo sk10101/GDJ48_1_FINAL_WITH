@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.with.report.dao.ReportDAO">
+
+	<select id="reportlist" resultType="report">
+	SELECT r.report_idx, b.category_id, b.subject, r.reporter_id, r.report_date, r.report_content, r.report_admin, r.status
+	FROM report r, board_common_column b
+	WHERE r.board_idx = b.board_idx
+	</select>
+
+</mapper>

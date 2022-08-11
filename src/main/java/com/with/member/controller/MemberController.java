@@ -1,9 +1,7 @@
 package com.with.member.controller;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.with.member.dto.MannerDTO;
 import com.with.member.service.MemberService;
 
 @Controller
@@ -25,24 +24,28 @@ public class MemberController {
 		String member_id = "tester";
 		HashMap<String, Object> map = service.mblist(member_id);
 		String name = service.univer(map.get("university_idx"));
-		int cnt = service.macnt(member_id);
-		cnt/=3;
-		float avg = cnt/3;
-		int yang[]= new int[4]; 
-		String subin[] = {"친절함","응답속도","시간약속"};
+		int cnt = service.macnt(member_id)/3;
+		float avg[]= new float[4];
+		int result[]= new int[4]; 
+		String nameBox[] = {"친절함","응답속도","시간약속"};
 		for(int i=0;i<3;i++) {
-			yang[i]+=service.average(member_id,subin[i]);
-			yang[3]+=yang[i];
-			logger.info("누적 값 : {}",yang[3]);
+			result[i]+=service.average(member_id,nameBox[i]);
+			avg[i]=(float)result[i]/cnt;
+			avg[3]+=avg[i];
 		}
-		/*logger.info("전체 값 : ",yang[3]);
-		logger.info("친절함 : ",yang[0]);
-		logger.info("응답속도 : ",yang[1]);
-		logger.info("시간약속 : ",yang[2]);
-		avg = yang[3]/cnt;
-		logger.info("전체 평균 : ",avg);*/
+		int num[] = new int[3];
+		for(int i=0;i<3;i++) {
+			num[i]=(int)Math.round(avg[i]*1)/1;
+		}
 		map.put("university_idx",name);
 		map.put("manner_cnt",cnt);
+		map.put("avg_One",Math.round(avg[0]*10)/10.0);
+		map.put("avg_Two",Math.round(avg[1]*10)/10.0);
+		map.put("avg_Three",Math.round(avg[2]*10)/10.0);
+		map.put("avg_Four",Math.round((avg[3]/cnt)*10)/10.0);
+		map.put("avg_Five",num[0]);
+		map.put("avg_Six",num[1]);
+		map.put("avg_Seven",num[2]);
 		model.addAttribute("mblist",map);
 		return "myPage/myInfo";
 	}
@@ -62,5 +65,18 @@ public class MemberController {
 		return "myPage/myInfo";
 	}
 	
-	
+	@RequestMapping(value = "/mannerDetail.go")
+	public String mannerDetail(Model model) {
+		String idx = "tester";
+		String nameBox[] = {"친절함","응답속도","시간약속"};
+		ArrayList<MannerDTO> name = service.madatail(idx,nameBox[0]);
+		model.addAttribute("name1",name);
+		name = service.madatail(idx,nameBox[1]);
+		model.addAttribute("name2",name);
+		name = service.madatail(idx,nameBox[2]);
+		model.addAttribute("name3",name);		
+		//model.addAttribute("mblist", map);
+		//HashMap<String, Object> map = service.madetail(idx,nameBox[0]);
+		return "myPage/mannerDetail";
+	}
 }

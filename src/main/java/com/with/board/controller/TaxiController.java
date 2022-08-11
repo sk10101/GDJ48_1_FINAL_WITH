@@ -1,4 +1,4 @@
-package com.with.board.controller;
+/*package com.with.board.controller;
 
 import java.util.HashMap;
 
@@ -61,12 +61,33 @@ public class TaxiController {
 	public String taxiWrite() {
 		return "taxiBoard/TaxiWrite";
 	}
-	
-	// 택시 글쓰기
-	@RequestMapping(value = "/taxiWriteDo")
-	public ModelAndView taxiWriteDo(MultipartFile[] photos, HttpSession session, @ModelAttribute BoardDTO dto, RedirectAttributes rAttr) {
-		return service.taxiWrite(photos, dto);
+	@RequestMapping(value = "/taxiUploadForm")
+	public String uploadForm() {
+		return "taxiBoard/uploadForm";
+	}
+	/*
+	@RequestMapping(value = "/taxiUpload")
+	public ModelAndView upload(MultipartFile file, HttpSession session) {		
+		logger.info("upload 요청");
+		return service.fileUpload(file, session);
 	}
 	
+	@RequestMapping(value = "/taxiFileDelete")
+	@ResponseBody
+	public HashMap<String, Object> fileDelete(
+			@RequestParam String fileName, HttpSession session) {		
+		logger.info(fileName+ "삭제 요청");
+		return service.fileDelete(fileName, session);
+	}
 	
-}
+	@RequestMapping(value = "/taxiWriteDo", method = RequestMethod.POST)
+	public ModelAndView write(BoardDTO dto, HttpSession session) {
+		return service.write(dto, session);
+	}
+	
+	@RequestMapping(value = "/taxiDel/{idx}")
+	public ModelAndView del(@PathVariable String idx) {		
+		logger.info("삭제 요청 : "+idx);
+		return service.del(idx);
+	}
+}*/

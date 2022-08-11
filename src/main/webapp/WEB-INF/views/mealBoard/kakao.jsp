@@ -10,9 +10,12 @@
 <style></style>
 </head>
 <body>
+<form action=""></form>
+<th>검색</th>
+<td><input type="text"id="search" placeholder="키워드를 검색하세요"><input type="button" value="검색" onclick="search()"></td>
 
-<input type="text" id="search"/>
-<input type="button" value="검색" onclick="search()"> 
+
+<input type="submit" value="완료"> 
 
 <div id="map" style="width:100%;height:350px;"></div>
 
@@ -34,9 +37,9 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 var ps = new kakao.maps.services.Places(); 
 
 function search(){
-	
+   
 // 키워드로 장소를 검색합니다
-ps.keywordSearch(document.getElementById('search').value, placesSearchCB);	
+ps.keywordSearch(document.getElementById('search').value, placesSearchCB);   
 }
  
 
@@ -68,7 +71,7 @@ function displayMarker(place) {
     });
 
     // 마커에 클릭이벤트를 등록합니다
-    kakao.maps.event.addListener(marker, 'click', function(child) {
+    kakao.maps.event.addListener(marker, 'click', function() {
         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
         infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
         infowindow.open(map, marker);
@@ -77,9 +80,8 @@ function displayMarker(place) {
 
        // place.place_name
         alert("place : "+place.place_name);
-	    opener.search();
-	
-	    window.close();
+        window.opener.location.reload(place.place_name);
+        window.close();
     });
     
     
