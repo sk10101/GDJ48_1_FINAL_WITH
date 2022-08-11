@@ -113,8 +113,35 @@
 	</select>
 	
 	<select id="partList" parameterType="String" resultType="board">
-		SELECT 
+		SELECT p.member_id, m.gender, a.investment, m.phone FROM participant p, member m, apply a
+			WHERE p.board_idx = #{board_idx} AND a.board_idx = #{board_idx} AND a.status = '수락' 
+			AND a.member_id = p.member_id AND p.hide = 0 AND p.member_id = m.member_id AND a.member_id = m.member_id
 	</select>
+	
+	<insert id="applyDeli" parameterType="board">
+		INSERT INTO apply (board_idx, member_id, investment)
+			VALUES(#{param2}, #{param1}, #{param3})
+	</insert>
+	
+	<select id="isApplied" resultType="int">
+		SELECT COUNT(apply_idx) FROM apply
+			WHERE member_id = #{param1} AND board_idx = #{param2} AND status IN('대기중','수락')
+	</select>
+	
+	<select id="isRejected" resultType="int">
+		SELECT COUNT(apply_idx) FROM apply
+			WHERE member_id = #{param1} AND board_idx = #{param2} AND status = '거절'
+	</select>
+	
+	<select id="isBanned" resultType="int">
+		SELECT COUNT(pt_idx) FROM participant
+			WHERE member_id = #{param1} AND board_idx = #{param2} AND hide=1
+	</select>
+	
+	<update id="deliBan">
+		UPDATE participant SET hide = 1
+			WHERE member_id = #{param1} AND board_idx = #{param2}
+	</update>
 </mapper>
 
 

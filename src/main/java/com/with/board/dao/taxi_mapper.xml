@@ -201,7 +201,7 @@
 <insert id="writeBcc" parameterType="board">
 	INSERT INTO board_common_column 
 	(member_id, category_id, subject, content, deadline, appoint_place, appoint_coords_lat, appoint_coords_lng, gender, member_cnt)
-		VALUES(#{member_id}, '택시게시판', #{subject}, #{content}, DATE_FORMAT(#{deadline},'%Y-%m-%d %H:%i'), #{appoint_place}, '37.45975', '126.95109', #{gender}, #{member_cnt})
+		VALUES(#{member_id}, '택시게시판', #{subject}, #{content}, DATE_FORMAT(#{deadline},'%Y-%m-%d %H:%i'), #{appoint_place}, #{appoint_coords_lat}, #{appoint_coords_lng}, #{gender}, #{member_cnt})
 </insert>
 
 <select id="getBoardIdx" resultType="int" parameterType="board">
@@ -238,8 +238,20 @@
 	phone 
 	FROM 
 	participant p, 
-	member m 
+	member m
 	WHERE board_idx = #{param1} AND m.member_id = p.member_id AND p.hide = 0;
+</select>
+
+<select id="univFind" resultType="string">
+	SELECT university_addr FROM university u, member m WHERE m.member_id = #{param1} AND m.university_idx = u.university_idx
+</select>
+
+<select id="findPhone" resultType="string">
+	SELECT phone FROM member WHERE member_id = #{param1}
+</select>
+
+<select id="recruitEnd" resultType="int">
+	SELECT recruit_end FROM board_common_column WHERE board_idx = #{param1}
 </select>
 
 </mapper>

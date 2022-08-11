@@ -20,13 +20,10 @@ public interface HistoryDAO {
 	
 	
 
-	ArrayList<BoardDTO> mygList(String loginId, HashMap<String, Object> map);
-
-	ArrayList<BoardDTO> mygList1(String loginId, HashMap<String, Object> map);
 
 	ArrayList<BoardDTO> allCount(HashMap<String, Object> map);
 
-	ArrayList<BoardDTO> mygList2(HashMap<String, Object> map);
+	ArrayList<BoardDTO> mygList(HashMap<String, Object> map);
 
 	
 

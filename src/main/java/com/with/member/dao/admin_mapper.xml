@@ -3,10 +3,32 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.with.member.dao.AdminDAO">
 
-	<select id="userList" resultType="member">
-		SELECT m.member_id, m.name, u.university_name, m.gender, m.certficate_chk 
-		FROM university u, MEMBER m 
-		WHERE m.university_idx = u.university_idx AND member_class = '일반회원';
+	<select id="userList" resultType="member" parameterType="hashmap">
+		SELECT m.member_id, m.name, u.university_name, m.gender, m.certficate_chk, m.phone, m.member_class 
+		FROM university u, member m 
+		WHERE m.university_idx = u.university_idx AND member_class = #{member_class}
+		<if test="member_class.equals('관리자') and word != null and word != ''">
+			AND member_id LIKE CONCAT('%',#{word},'%')
+		</if>
+		<if test="member_class.equals('일반회원') and word != null and word != ''"  >
+			<choose>
+				<when test="option.equals('id')">
+					AND m.member_id LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('name')">
+					AND m.name LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('university')">
+					AND u.university_name LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('certficate')">
+					AND certficate_chk LIKE CONCAT('%',#{word},'%')
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>	
+				LIMIT #{cnt} OFFSET #{offset}
 	</select>
 
 	<select id="userDetail" resultType="member" parameterType="String">
@@ -14,34 +36,32 @@
 		FROM university u, MEMBER m
 		WHERE member_id = #{member_id} AND m.university_idx = u.university_idx;
 	</select>
-
-	<select id="adminList" resultType="member">
-		SELECT member_id, name, phone, gender 
-		FROM member WHERE member_class = '관리자회원';
-	</select>
 	
 	<update id="pass" parameterType="String">
 		UPDATE member SET certficate_chk = 1 WHERE member_id = #{member_id};
 	</update>
 	
-	<select id="search" resultType="member">
-		SELECT member_id, name, phone, gender 
-		FROM member WHERE member_class = '관리자회원' AND member_id = #{param1};
+	<select id="allCount" resultType="member" parameterType="hashmap">
+		SELECT member_id FROM member m, university u WHERE member_class = #{member_class} AND m.university_idx = u.university_idx 
+		<if test="word != null and word != ''">
+			<choose>
+				<when test="option.equals('id')">
+					AND member_id LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('name')">
+					AND name LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('university')">
+					AND university_name LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('certficate')">
+					AND certficate_chk LIKE CONCAT('%',#{word},'%')
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
 	</select>
-	
-	<select id="usersearch" resultType="member">
-		SELECT m.member_id, m.name, u.university_name, m.gender, m.certficate_chk 
-		FROM university u, MEMBER m 
-		<where>
-			<if test="!param2.equals('') and param1 == 'id'">member_id LIKE CONCAT('%', #{param2}, '%') AND m.university_idx = u.university_idx</if>
-			<if test="!param2.equals('') and param1 == 'name'">name LIKE CONCAT('%', #{param2}, '%') AND m.university_idx = u.university_idx</if>
-			<if test="!param2.equals('') and param1 == 'university'">university_name LIKE CONCAT('%', #{param2}, '%') AND m.university_idx = u.university_idx</if>
-			<if test="!param2.equals('') and param1 == 'certficate'">certficate_chk LIKE CONCAT('%', #{param2}, '%') AND m.university_idx = u.university_idx</if>
-		</where>
-	</select>
-	
-	<select id="allCount" resultType="Integer">
-		SELECT COUNT(member_id) FROM member WHERE member_class = '일반회원';
-	</select>
+
 	
 </mapper>
