@@ -122,7 +122,7 @@
 								<td>작성자 : ${bbs.member_id}</td>
 							</tr>
 							<tr>
-								<td>모인금액 : (모은금액) / ${bbs.min_delivery}</td>
+								<td>최소주문금액 : ${bbs.min_delivery}</td>
 								<td>작성일 : ${bbs.write_date}</td>
 							</tr>
 							<tr>
