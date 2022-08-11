@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.with.board.dao.MealDAO;
 import com.with.board.dto.BoardDTO;
+import com.with.board.dto.PhotoDTO;
 import com.with.member.dto.MemberDTO;
 
 
@@ -53,14 +56,16 @@ public class MealService {
 		return mav;
 	}
 	
-	 
 	
-	
-	// 글쓰기 서비스
-	public void write(MultipartFile[] photos, BoardDTO dto) {
+
+	@Transactional
+	public void write(MultipartFile[] photos, BoardDTO dto,HttpSession session) {
 		logger.info("글쓰기 서비스 요청");
 		// 이후에 로그인한 아이디를 담아주는 것으로 변경해야함
 		dto.setMember_id("id_test");
+		// session 에 저장한 좌표를 dto 에 담아준다.
+		dto.setAppoint_coords_lat((String) session.getAttribute("lat"));
+		dto.setAppoint_coords_lng((String) session.getAttribute("lng"));
 		// 공통 컬럼 테이블에 작성할 내용
 		int row = dao.writeBcc(dto);
 		// 밥 전용 컬럼 테이블에 작성하기 위해 위에서 작성했던 글의 번호를 가져와야함
@@ -75,11 +80,11 @@ public class MealService {
 		}
 		
 		logger.info("성공 여부 : " + row + " / " + row2);
-	}
 		
-	
-	
+	}
 
+
+	
 	
 	
 	// 파일 업로드 서비스
@@ -105,7 +110,7 @@ public class MealService {
 					
 					try {
 						byte[] arr = photo.getBytes();
-						Path path = Paths.get("C:\\STUDY\\SPRING_ADVANCE\\GDJ48_1_FINAL_WITH\\src\\main\\webapp\\resources\\photo\\" + newFileName);
+						Path path = Paths.get("C:\\Users\\GDJ48\\Documents\\GDJ48_1_FINAL_WITH\\src\\main\\webapp\\resources\\photo\\" + newFileName);
 						// 같은이름의 파일이 나올 수 없기 떄문에 옵션 설정 안해도된다.
 						Files.write(path, arr);
 						logger.info(newFileName + " SAVE OK");
@@ -119,13 +124,24 @@ public class MealService {
 			}
 			
 		}
-	
-	
-	public BoardDTO detail(String board_idx) {
+		
+	public ModelAndView mealDetail(String board_idx) {
 		logger.info("상세보기 서비스 요청");
+		ModelAndView mav = new ModelAndView("mealBoard/MealDetail");
+		
+		// 조회수 올리기
 		dao.hit(board_idx);
-		return dao.detail(board_idx);
+		// 게시글 상세보기
+		BoardDTO info = dao.mealDetail(board_idx);
+		ArrayList<PhotoDTO> mealPhotoList = dao.mealPhotoList(board_idx,"밥게시판");
+		mav.addObject("info",info);
+		mav.addObject("mealPhotoList",mealPhotoList);
+		
+		return mav;
 	}
+	
+	
+	
 
 
 
@@ -192,6 +208,24 @@ public class MealService {
 		
 		return deliMap;
 	}
+
+
+
+
+
+
+
+	
+
+
+
+
+	
+
+
+
+
+	
 }
 
 

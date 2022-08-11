@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.with.board.dto.BoardDTO;
+import com.with.board.dto.PhotoDTO;
 import com.with.member.dto.MemberDTO;
 
 public interface MealDAO {
@@ -12,9 +13,9 @@ public interface MealDAO {
 	
 	void hit(String board_idx);
 	
+	
 
-	BoardDTO detail(String board_idx);
-
+	
 	void endUpdate();
 
 	int writeBcc(BoardDTO dto);
@@ -29,6 +30,12 @@ public interface MealDAO {
 	ArrayList<BoardDTO> allCount(HashMap<String, Object> map);
 
 	MemberDTO getUniversityAddr(String loginid);
+
+	BoardDTO mealDetail(String board_idx);
+
+	ArrayList<PhotoDTO> mealPhotoList(String board_idx, String string);
+	
+
 
 
 	

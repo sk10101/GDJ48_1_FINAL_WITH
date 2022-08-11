@@ -9,8 +9,22 @@
 	]]> 
 	</update> 
 
-	<select id="detail" resultType="board" parameterType="String">
-		SELECT * FROM board_common_column WHERE board_idx=#{board_idx}
+	<select id="mealDetail" parameterType="String" resultType="board">
+		SELECT bcc.board_idx
+		,subject
+		,appoint_place
+		,member_id
+		,write_date
+		,DATE_FORMAT(deadline,'%Y-%m-%d %H:%i') as deadline
+		,hit
+		,member_cnt
+		,recruit_end
+		,gender
+		,content
+		,appoint_coords_lat
+		,appoint_coords_lng
+		 FROM board_common_column bcc, meal_board mb
+			WHERE bcc.board_idx = #{board_idx} AND bcc.board_idx = mb.board_idx
 	</select>
 	
 	<update id="hit" parameterType="String">
@@ -21,7 +35,7 @@
 			
 	<insert id="writeBcc" parameterType="board"> 
 		INSERT INTO board_common_column (member_id, category_id, subject, content, deadline, appoint_place, appoint_coords_lat, appoint_coords_lng, gender, member_cnt)
-			VALUES(#{member_id}, '밥게시판', #{subject}, #{content}, DATE_FORMAT(adddate(now(),interval #{deadline} hour),'%Y-%m-%d %H:%i'), #{appoint_place}, '37.45975', '126.95109', #{gender}, #{member_cnt})
+			VALUES(#{member_id}, '밥게시판', #{subject}, #{content}, DATE_FORMAT(#{deadline},'%Y-%m-%d %H:%i'), #{appoint_place}, '37.45975', '126.95109', #{gender}, #{member_cnt})
 	</insert>
 	
 	<select id="getBoardIdx" resultType="int" parameterType="board">
@@ -37,6 +51,10 @@
 		INSERT INTO photo(oriFileName, newFileName, board_idx, category_id)
 		VALUES(#{param1},#{param2},#{param3},#{param4})
 	</insert>
+	
+	<select id="mealPhotoList" resultType="photo">
+		SELECT * FROM photo WHERE board_idx = #{param1} and category_id = #{param2}
+	</select>
 	
 	<select id="allCount" resultType="board" parameterType="hashmap">
 	 	SELECT board_idx FROM board_common_column
