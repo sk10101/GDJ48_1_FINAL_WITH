@@ -52,11 +52,18 @@
             		<th>시간약속</th>
             		<th>평가일</th>
             	</tr>
+            	<div>
 				<c:forEach items="${name1}" var="manner">
 					<tr>
 						<td>${manner.manner_score}</td>
 					</tr>
-				</c:forEach>            
+				</c:forEach> 
+				<c:forEach items="${name2}" var="manner">
+					<tr>
+						<td>${manner.manner_score}</td>
+					</tr>
+				</c:forEach>           
+				</div>
             </table>
 	   </div>
 	</div>
