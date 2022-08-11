@@ -66,4 +66,21 @@ public class MannerDTO {
 		this.manner_score = manner_score;
 	}
 	
+	private int kindness;
+	private int time;
+
+	public int getKindness() {
+		return kindness;
+	}
+	public void setKindness(int kindness) {
+		this.kindness = kindness;
+	}
+	public int getTime() {
+		return time;
+	}
+	public void setTime(int time) {
+		this.time = time;
+	}
+	
+	
 }
