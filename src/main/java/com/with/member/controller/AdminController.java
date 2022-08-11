@@ -1,5 +1,7 @@
 package com.with.member.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.parsing.GenericTokenParser;
@@ -9,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.with.member.service.AdminService;
@@ -21,12 +25,19 @@ public class AdminController {
 	
 	@Autowired AdminService service;
 	
+	@RequestMapping(value = "/userList.go", method = RequestMethod.GET)
+	public String userlist(HttpSession session) {
+		
+		return "redirect:/userList?page="+1;
+	}
+	
 	//회원 목록 리스트
 	@RequestMapping(value = "/userList")
-	public ModelAndView userlist(HttpSession session) {
+	public ModelAndView userlist(HttpSession session, @RequestParam HashMap<String, String> params) {
 		logger.info("유저 목록 조회");
+		logger.info(params.get("page"));
 		ModelAndView mav = new ModelAndView();
-		mav = service.userList();
+		mav = service.userList(params);
 		return mav;
 	}
 	
@@ -71,4 +82,7 @@ public class AdminController {
 		logger.info(opt+" : "+keyword+" 검색");
 		return service.usersearch(opt, keyword);
 	}
+	
+	
+	
 }
