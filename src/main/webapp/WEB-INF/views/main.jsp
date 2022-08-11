@@ -309,7 +309,7 @@
         <div class="sidebar">
             <ul>
                 <li><a href="/deliList.go"><img src="./resources/images/delivery.png" alt="delivery"><div class="circle"></div>배달</a></li>
-                <li><a href="/taxiList"><img src="./resources/images/taxi.png" alt="taxi"><div class="circle"></div>택시</a></li>
+                <li><a href="/taxiListGo"><img src="./resources/images/taxi.png" alt="taxi"><div class="circle"></div>택시</a></li>
                 <li><a href="/MealList"><img class="eating" src="./resources/images/eating.png" alt="eating"><div class="circle"></div>식사</a></li>
                 <li><div class="line"></div></li>
                 <li><a class="my" href="/myInfo">내 정보</a></li>

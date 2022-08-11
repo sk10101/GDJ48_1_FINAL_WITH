@@ -31,7 +31,7 @@ public class LoginController {
 	
 	//로그인 페이지 이동
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginForm() {		
+	public String loginForm() {
 		return "member/login";
 	}
 	
