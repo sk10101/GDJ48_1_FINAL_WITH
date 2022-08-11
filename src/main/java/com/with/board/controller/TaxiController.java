@@ -44,18 +44,12 @@ public class TaxiController {
 		return service.taxiList(session, params);
 	}
 	
-//	// 택시게시판 목록(검색)
-//	@RequestMapping(value = "/taxiSearchList", method = RequestMethod.GET)
-//	public ModelAndView taxiSearchList(HttpSession session, @RequestParam String option, @RequestParam String word) {
-//		return service.taxiSearchList(session, option, word);
-//	}
-	
 	// 택시 상세보기
 	@RequestMapping(value = "/taxiDetail", method = RequestMethod.GET)
 	public ModelAndView taxiDetail(HttpSession session, @RequestParam String board_idx) {
 		return service.taxiDetail(session, board_idx);
 	}
-	
+
 	// 택시 글쓰기 이동
 	@RequestMapping(value = "/taxiWrite", method = RequestMethod.GET)
 	public String taxiWrite() {
@@ -67,6 +61,5 @@ public class TaxiController {
 	public ModelAndView taxiWriteDo(MultipartFile[] photos, HttpSession session, @ModelAttribute BoardDTO dto, RedirectAttributes rAttr) {
 		return service.taxiWrite(photos, dto);
 	}
-	
 	
 }
