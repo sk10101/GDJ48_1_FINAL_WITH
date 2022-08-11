@@ -35,7 +35,7 @@
 	
 	<insert id="writeBcc" parameterType="board">
 		INSERT INTO board_common_column (member_id, category_id, subject, content, deadline, appoint_place, appoint_coords_lat, appoint_coords_lng, gender, member_cnt)
-			VALUES(#{member_id}, '배달게시판', #{subject}, #{content}, DATE_FORMAT(adddate(now(),interval #{deadline} hour),'%Y-%m-%d %H:%i'), #{appoint_place}, #{appoint_coords_lat}, #{appoint_coords_lng}, #{gender}, #{member_cnt})
+			VALUES(#{member_id}, '배달게시판', #{subject}, #{content}, DATE_FORMAT(#{deadline},'%Y-%m-%d %H:%i'), #{appoint_place}, #{appoint_coords_lat}, #{appoint_coords_lng}, #{gender}, #{member_cnt})
 	</insert>
 	
 	<select id="getBoardIdx" resultType="int" parameterType="board">

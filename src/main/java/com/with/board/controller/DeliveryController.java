@@ -54,20 +54,6 @@ public class DeliveryController {
 		return mav;
 	}
 	
-	/* 검색기능 개선으로 인해 주석처리함
-	// 검색 목록 조회
-	@RequestMapping(value = "/searchList", method = RequestMethod.GET)
-	public ModelAndView searchList(HttpSession session, @RequestParam String option, @RequestParam String word) {
-		
-		logger.info("검색 목록 컨트롤러 접속");
-		ModelAndView mav = new ModelAndView();
-		// 검색 하면 page = 1 로 되돌아 가기 위한 변수 생성
-		int page = 1;
-		mav = service.searchList(option,word,page);
-		
-		return mav;
-	}	
-	*/
 
 	// 상세보기
 	@RequestMapping(value = "/deliDetail", method = RequestMethod.GET)
@@ -130,6 +116,7 @@ public class DeliveryController {
 		
 		return mav;
 	}
+	
 	
 	// 카카오 팝업 창에서 가져온 좌표를 잠시 세션에 보관
 	@RequestMapping(value = "/getCoords", method = RequestMethod.GET)
