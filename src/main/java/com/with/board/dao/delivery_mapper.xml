@@ -111,6 +111,10 @@
 		SELECT university_addr, m.university_idx FROM university u, member m
 			WHERE m.university_idx = u.university_idx AND member_id = #{loginId}
 	</select>
+	
+	<select id="partList" parameterType="String" resultType="board">
+		SELECT 
+	</select>
 </mapper>
 
 
