@@ -80,7 +80,7 @@
 		<c:when test="${dto.certficate_chk eq 0}"><input type="submit" value="인증완료"></c:when>
 		<c:when test="${dto.certficate_chk eq 1}"><input type="hidden"></c:when>
 		</c:choose>
-		<input type="button" onclick="location.href='userList'" value="돌아가기"/>
+		<input type="button" onclick="location.href='userList.go'" value="돌아가기"/>
 		</form>
 	   </div>
 	</div>

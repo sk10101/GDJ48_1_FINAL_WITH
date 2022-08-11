@@ -7,18 +7,12 @@ import com.with.member.dto.MemberDTO;
 
 public interface AdminDAO {
 
-	ArrayList<MemberDTO> userList(HashMap<String, String> params);
+	ArrayList<MemberDTO> userList(HashMap<String, Object> map);
 
 	MemberDTO userDetail(String member_id);
 
-	ArrayList<MemberDTO> adminList();
-
 	void pass(String member_id);
 
-	ArrayList<MemberDTO> search(String name);
-
-	ArrayList<MemberDTO> usersearch(String opt, String keyword);
-
-	int allCount();
+	ArrayList<MemberDTO> allCount(HashMap<String, Object> map);
 
 }
