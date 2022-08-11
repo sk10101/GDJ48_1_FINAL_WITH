@@ -128,6 +128,6 @@ public class DeliveryController {
 		// 세션에 좌표를 보관한다
 		session.setAttribute("lat", params.get("lat"));
 		session.setAttribute("lng", params.get("lng"));
-		
 	}
+	
 }

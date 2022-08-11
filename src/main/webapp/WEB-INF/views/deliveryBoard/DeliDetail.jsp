@@ -106,6 +106,9 @@
 					<th>평가</th>
 					<c:if test="${info.member_id eq 'tester'}"><th>강퇴</th></c:if>
 				</tr>
+				<c:forEach items="${partList}" var="part">
+					
+				</c:forEach>
 			</table>
 			<!-- 아래부터 Kakao Map API 구역 -->
 			<input type="hidden" id="lat" value="${info.appoint_coords_lat}"/>
@@ -114,7 +117,6 @@
 			<input type="button" value="참여신청" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/><br>
 			<input type="button" value="삭제" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/>
 			<input type="button" value="돌아가기" onclick="history.back()"/>
-			
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>
