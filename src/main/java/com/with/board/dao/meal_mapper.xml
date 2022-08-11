@@ -86,6 +86,11 @@
 				</if>
 				ORDER BY bcc.board_idx DESC LIMIT #{cnt} OFFSET #{offset}
 	</select>
+	
+	<select id="getUniversityAddr" parameterType="String" resultType="member">
+		SELECT university_addr, m.university_idx FROM university u, member m
+			WHERE m.university_idx = u.university_idx AND member_id = #{loginId}
+	</select>
 </mapper>
 
 

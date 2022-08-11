@@ -4,8 +4,8 @@
 <mapper namespace="com.with.member.dao.JoinDAO">
 	<insert id="join" parameterType="com.with.member.dto.MemberDTO">
    INSERT INTO member(member_id,university_idx,member_pw,name,gender,email,phone)
-         VALUES (#{member_id},(SELECT university_idx FROM university WHERE university_name = 
-         #{university_name}),#{member_pw},#{name},#{gender},#{email},#{phone})
+         VALUES (#{member_id},(SELECT university_idx FROM university WHERE university_name = #{university_name})
+         ,#{member_pw},#{name},#{gender},#{email},#{phone})
 	</insert>
 	
 	<select id="empSearch" parameterType="String" resultType="com.with.member.dto.MemberDTO">
