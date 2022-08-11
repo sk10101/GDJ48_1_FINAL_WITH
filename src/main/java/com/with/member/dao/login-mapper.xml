@@ -7,7 +7,7 @@
  	</select>
  	
  	<select id="getMbClass" resultType="String">
-		SELECT member_class FROM member WHERE member_id = #{param1} AND member_pw= #{param2};	
+		SELECT member_class FROM member WHERE member_id = #{param1};	
  	</select>
  	
  	<select id="kakaoNumber" parameterType="com.with.member.dto.KakaoDTO" resultType="com.with.member.dto.KakaoDTO">

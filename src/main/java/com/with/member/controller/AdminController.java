@@ -28,25 +28,24 @@ public class AdminController {
 	@RequestMapping(value = "/userList.go", method = RequestMethod.GET)
 	public String userlist(HttpSession session) {
 		
-		return "redirect:/userList?page="+1;
+		return "redirect:/userList?page="+1+"&option=''"+"&word=''";
 	}
 	
 	//회원 목록 리스트
-	@RequestMapping(value = "/userList")
+	@RequestMapping(value = "/userList", method = RequestMethod.GET)
 	public ModelAndView userlist(HttpSession session, @RequestParam HashMap<String, String> params) {
 		logger.info("유저 목록 조회");
-		logger.info(params.get("page"));
+		session.removeAttribute("option");
+		session.removeAttribute("word");
+		
+		if(params.get("word") != "") {
+			session.setAttribute("option",params.get("option")); 
+			session.setAttribute("word", params.get("word"));
+			}
+		logger.info(params.get("member_class"));
+		session.setAttribute("member_class", params.get("member_class"));
 		ModelAndView mav = new ModelAndView();
 		mav = service.userList(params);
-		return mav;
-	}
-	
-	//관리자 목록 리스트
-	@RequestMapping(value = "/adminList")
-	public ModelAndView adminList(HttpSession session) {
-		logger.info("관리자 목록 조회");
-		ModelAndView mav = new ModelAndView();
-		mav = service.adminList();
 		return mav;
 	}
 	
@@ -65,24 +64,8 @@ public class AdminController {
 	public String  pass(HttpSession session, @RequestParam String member_id) {
 		logger.info(member_id+"회원 대학교 인증 요청");
 		service.pass(member_id);
-		return "redirect:/userList";
+		return "redirect:/userList.go";
 	}
-	
-	//관리자 ID검색 
-	@RequestMapping(value = "/search.do")
-	public ModelAndView search(HttpSession session, @RequestParam String name) {
-		logger.info(name+" : 관리자ID검색 요청");
-		return service.search(name);
-	}
-	
-	//회원 목록 검색 리스트
-	@RequestMapping(value = "/usersearch.do")
-	public ModelAndView usersearch(HttpSession session, @RequestParam String opt, @RequestParam String keyword) {
-		logger.info("유저 목록 검색");
-		logger.info(opt+" : "+keyword+" 검색");
-		return service.usersearch(opt, keyword);
-	}
-	
 	
 	
 }
