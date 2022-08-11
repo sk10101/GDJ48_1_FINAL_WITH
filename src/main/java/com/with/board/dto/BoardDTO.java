@@ -160,6 +160,22 @@ public int getBoard_idx() {
       this.min_fund = min_fund;
    }
    
-   
+   // 참여자 테이블 전용 DTO
+   private int pt_idx;
+   private String phone;
+
+   public int getPt_idx() {
+		return pt_idx;
+   }
+   public void setPt_idx(int pt_idx) {
+	   this.pt_idx = pt_idx;
+   }
+   public String getPhone() {
+	   return phone;
+   }
+   public void setPhone(String phone) {
+	   this.phone = phone;
+   }
+	   
    
 }
