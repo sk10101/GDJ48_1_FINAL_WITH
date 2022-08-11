@@ -12,4 +12,9 @@ public interface JoinDAO {
 
 	ArrayList<MemberDTO> empSearch(String university_name);
 
+	void memberFileWrite(String oriFileName, String newFileName, String member_id);
+
+	String IdOverlay(String chkId);
+
+	String EmailOverlay(String chkEmail);
 }
