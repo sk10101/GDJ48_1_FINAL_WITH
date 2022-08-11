@@ -74,6 +74,7 @@
     
     .ptList {
     	text-align: center;
+    	
     }
 </style>
 <body>
