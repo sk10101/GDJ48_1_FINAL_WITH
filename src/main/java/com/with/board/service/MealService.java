@@ -4,96 +4,120 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.with.board.dao.MealDAO;
 import com.with.board.dto.BoardDTO;
+
 
 @Service
 public class MealService {
 	@Autowired MealDAO dao;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	public ArrayList<BoardDTO> list() {
-		logger.info("리스트 요청 서비스");
-		return dao.list();
+
+	public ModelAndView mealList(HashMap<String, String> params) {
+		logger.info("게시글 목록 요청");
+		ModelAndView mav = new ModelAndView("mealBoard/MealList");
 		
-	}
-	/*
-	public void MealWrite(MultipartFile[] photos, HashMap<String, String> params) {
-		try {
-			logger.info("식사 게시판 글쓰기 서비스 요청");
-			
-			BoardDTO dto = new BoardDTO();
-			dto.setAppoint_place(params.get("appoint_place"));
-			dto.setMember_id(params.get("member_id"));
-			dto.setCategory_id(params.get("category_id"));
-			dto.setSubject(params.get("subject"));
-			dto.setContent(params.get("content"));
-			dto.setGender(params.get("gender"));
-			dto.setAppoint_coords(params.get("appoint_coords"));
-			dto.setMember_cnt(Integer.parseInt(params.get("option")));
-		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	        String strDate = params.get("Deadline");
-	        Date date = sdf.parse(strDate);
-	        			 
-			    		
-			
-			int row = dao.MealWrite(dto);
-			logger.info(row + "글 작성 성공");
-			
-			int board_idx = dto.getBoard_idx();
-			logger.info("방금 넣은 글 번호 : "+board_idx);
-			logger.info("photos : "+ photos);
-			
-			if(row > 0) {
-				mealFileSave(photos, board_idx, 1);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		// 마감 여부 확인 후 업데이트 (스케쥴러 대체)
+		dao.endUpdate();
+		
+		// 페이징 처리
+		HashMap<String, Object> map = new HashMap<String, Object>(); // map 객체화
+		int page = Integer.parseInt(params.get("page"));
+		String option = params.get("option");
+		String word = params.get("word");
+		
+		map.put("page", page); // page 입력
+		// 검색어를 입력했을 때
+		if(word != "") {
+			map.put("word", word); // 검색어 입력
+			map.put("option", option); // 검색 옵션 입력
 		}
 		
+		ArrayList<BoardDTO> mealList = pagination(map);
+		logger.info("게시글의 개수 : "+ mealList.size());
+		mav.addObject("mealList",mealList);
+		mav.addObject("map",map);
 		
+		return mav;
 	}
-	*/
-	private void mealFileSave(MultipartFile[] photos, int board_idx, int category_id) {
-		for(MultipartFile photo : photos) {
-			String oriFileName = photo.getOriginalFilename();
+	
+	 
+	
+	
+	// 글쓰기 서비스
+	public void write(MultipartFile[] photos, BoardDTO dto) {
+		logger.info("글쓰기 서비스 요청");
+		// 이후에 로그인한 아이디를 담아주는 것으로 변경해야함
+		dto.setMember_id("id_test");
+		// 공통 컬럼 테이블에 작성할 내용
+		int row = dao.writeBcc(dto);
+		// 밥 전용 컬럼 테이블에 작성하기 위해 위에서 작성했던 글의 번호를 가져와야함
+		int board_idx = dao.getBoardIdx(dto);
+		dto.setBoard_idx(board_idx);
+		// 밥 전용 컬럼 테이블에 작성할 내용
+		int row2 = dao.writeMeal(dto);
+		
+		// 파일을 올리지 않아도 fileSave 가 진행되는 것을 방지하는 조건문
+		if(row > 0 & row2 > 0) {
+			mealFileSave(photos, board_idx, "밥게시판");
+		}
+		
+		logger.info("성공 여부 : " + row + " / " + row2);
+	}
+		
+	
+	
+
+	
+	
+	// 파일 업로드 서비스
+		@Transactional
+		public void mealFileSave(MultipartFile[] photos, int board_idx, String category_id) {
 			
-			if(!oriFileName.equals("")) {
-				logger.info("업로드 진행");
+			// 카테고리 번호 전달(1. 공지사항, 2. 건의사항, 3. 답변)
+			String category = category_id;
+			
+			// 이미지 파일 업로드
+			for (MultipartFile photo : photos) {
+				String oriFileName = photo.getOriginalFilename();
 				
-				String ext = oriFileName.substring(oriFileName.lastIndexOf(".")).toLowerCase();
-				
-				String newFileName = System.currentTimeMillis() + ext;
-				
-				logger.info(oriFileName+ "===>" + newFileName);
-				
-				
-				try {
-					byte[] arr = photo.getBytes();
-					Path path = Paths.get("C:\\Users\\GDJ48\\Documents\\GDJ48_1_FINAL_WITH\\src\\main\\webapp\\resources\\photo\\" + newFileName);
-					Files.write(path, arr);
-					logger.info(newFileName + "저장 완료");
-					dao.mealFileWrite(oriFileName,newFileName,board_idx, category_id);
-				} catch (IOException e) {
-					e.printStackTrace();
+				// 이미지 파일을 업로드 안했을 때를 제외하기 위한 조건문 처리
+				if(!oriFileName.equals("")) {
+					logger.info("업로드 진행");
+					// 확장자 추출
+					String ext = oriFileName.substring(oriFileName.lastIndexOf(".")).toLowerCase();
+					// 새 파일 이름으로 업로드 당시 시간을 붙인다.
+					String newFileName = System.currentTimeMillis() + ext;
+					
+					logger.info(oriFileName + " ===> " + newFileName);
+					
+					try {
+						byte[] arr = photo.getBytes();
+						Path path = Paths.get("C:\\STUDY\\SPRING_ADVANCE\\GDJ48_1_FINAL_WITH\\src\\main\\webapp\\resources\\photo\\" + newFileName);
+						// 같은이름의 파일이 나올 수 없기 떄문에 옵션 설정 안해도된다.
+						Files.write(path, arr);
+						logger.info(newFileName + " SAVE OK");
+						// 4. 업로드 후 photo 테이블에 데이터 입력
+						dao.mealFileWrite(oriFileName,newFileName,board_idx,category);
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
-			}	
+			}
+			
 		}
-		//
-		
-		
-	}
 	
 	
 	public BoardDTO detail(String board_idx) {
@@ -101,29 +125,26 @@ public class MealService {
 		dao.hit(board_idx);
 		return dao.detail(board_idx);
 	}
-	public HashMap<String, Object> MealList(HashMap<String, String> params) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
+
+
+
+	private ArrayList<BoardDTO> pagination(HashMap<String, Object> map) {
+		int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
+		int page = (int) map.get("page");
+		String option = (String) map.get("option");
+		String word = (String) map.get("word");
 		
+		logger.info("보여줄 페이지 : " + map.get("page"));
+		logger.info("검색 옵션 / 검색어 : " + map.get("option") + " / " + map.get("word"));
 		
-		int cnt = Integer.parseInt(params.get("cnt"));
-		int page = Integer.parseInt(params.get("page"));
-		String option = params.get("option");
-		String word = params.get("word");
-		logger.info("서비스 리스트 요청 : {}", params);
-		logger.info("보여줄 페이지 : " + page);
-		
-		ArrayList<BoardDTO> searchList = new ArrayList<BoardDTO>();
+		ArrayList<BoardDTO> mealList = new ArrayList<BoardDTO>();
 		
 		// 총 게시글의 개수(allCnt) / 페이지당 보여줄 개수(cnt) = 생성할 수 있는 총 페이지 수(pages)
 		int allCnt = 0;
 		
+		// 한 페이지에 보여줄 게시글의 수 map 에 입력
 		map.put("cnt", cnt);
 		
-		if (word != null && word != "") {
-			map.put("word", word);
-			map.put("option", option);
-		}
-		// 출력할 게시글의 개수를 세어준다.
 		ArrayList<BoardDTO> allCount = dao.allCount(map);
 		allCnt = allCount.size();
 		logger.info("allCnt : " + allCnt);
@@ -134,52 +155,34 @@ public class MealService {
 			allCnt = 1;
 		}
 		
-		
 		int pages = allCnt%cnt != 0 ? (allCnt/cnt)+1 : (allCnt/cnt);
-		
 		logger.info("pages : " + pages);
+		
 		if (page > pages) {
 			page = pages;
 		}
-		map.put("pages", pages); // 최대 페이지 수
 		
+		map.put("pages", pages); // 최대 페이지 수
 		int offset = cnt * (page-1);
+		logger.info("offset : "+offset);
 		
 		map.put("offset", offset);
 		map.put("currPage", page); // 현재 페이지
 		
-		logger.info("offset : "+offset);
-		//검색 관련 설정하는 조건문
-		if(word == null || word.equals("")) {
-			ArrayList<BoardDTO> MealList = dao.MealList(cnt, offset);
-			
-			map.put("MealList", MealList);
-		} else {
-			
-			  logger.info("검색어 (옵션) : " + word+ " (" + option + ")");
-			  
-			  // 검색 옵션에 따라 SQL 문이 달라지기 때문에 조건문으로 분리했음 
-			  if(option.equals("아이디")) { 
-				  searchList= dao.memberSearch(cnt,offset,word); 
-				  logger.info("회원 옵션 설정"); 
-			  }  else if(option.equals("제목")){ 
-				  searchList = dao.subjectSearch(cnt,offset,word);
-			  	  logger.info("제목 옵션 설정"); 
-			  }else {
-				  searchList = dao.placeSearch(cnt,offset,word);
-			  	  logger.info("약속장소 옵션 설정"); 
-			  }
-			 
-			
-			logger.info("검색결과 건수 : " +searchList.size());
-			map.put("penaltyList", searchList);
-			
-		}
-		logger.info("서비스 체크포인트");
-		return map;
-			
+		mealList = dao.mealList(map);
+		
+		logger.info("페이징 체크포인트");
+		return mealList;
+	}
 }
-}
+
+
+
+
+
+
+	
+
 	
 	
 

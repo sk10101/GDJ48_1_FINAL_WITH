@@ -101,20 +101,21 @@
 	 -->
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	       <form action="searchList">
+	       <form action="deliList">
 		       <select id="option" name="option">
 					<option value="제목">제목</option>
 					<option value="약속장소">약속장소</option>
 					<option value="작성자">작성자</option>
 			   </select>
 			   <input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
-			   <input type="submit" value="검색"/>		
+			   <input type="hidden" name="page" value="1"/>
+			   <button id="searchBtn">검색</button>		
 		   </form>
 	       <input type="button" value="글쓰기" onclick="location.href='write.go'"/>
 					<c:forEach items="${deliList}" var="bbs">
-				     	<table class="deliList">
+				     	<table class="deliList" onClick="location='deliDetail?board_idx=${bbs.board_idx}'">
 							<tr>
-								<td colspan="2"><a href="deliDetail?board_idx=${bbs.board_idx}" style="color:black;">${bbs.subject}</a></td>
+								<td colspan="2">${bbs.subject}</td>
 							</tr>
 							<tr>
 								<td>약속장소 : ${bbs.appoint_place}</td>
@@ -147,6 +148,12 @@
 <script type="text/javascript">
 	var page = 1; // 초기 페이지 번호
 	
+	// 검색 버튼 클릭했을 때 한 번 초기화
+	$('#searchBtn').on('click',function(){
+		
+		$("#pagination").twbsPagination('destroy');
+	});
+	
 	// 플러그인을 이용해 페이징 처리
 	$("#pagination").twbsPagination({
 		startPage:${map.page}, //시작 페이지 (page)
@@ -156,7 +163,9 @@
 		onPageClick:function(e,page){
 			//console.log(e); //클릭한 페이지와 관련된 이벤트 객체
 			console.log(page); //사용자가 클릭한 페이지
-			location.href = "deliList?page="+page;
+			// 페이지 이동시에도 데이터를 가지고 있기 위해 session 을 활용한다
+			location.href = "deliList?page="+page+"&option="+"${sessionScope.option}"+"&word="+"${sessionScope.word}";
+			
 		}
 	});
 </script>

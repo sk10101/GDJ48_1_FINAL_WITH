@@ -6,26 +6,37 @@ import java.util.HashMap;
 import com.with.board.dto.BoardDTO;
 
 public interface MealDAO {
-
-	ArrayList<BoardDTO> list();
-
-	int MealWrite(BoardDTO dto);
-
-	void mealFileWrite(String oriFileName, String newFileName, int board_idx, int category_id);
-
+	
+	ArrayList<BoardDTO> mealList(HashMap<String, Object> map);
+	
 	void hit(String board_idx);
+	
 
 	BoardDTO detail(String board_idx);
 
+	void endUpdate();
+
+	int writeBcc(BoardDTO dto);
+	
+	int writeMeal(BoardDTO dto);
+	
+	int getBoardIdx(BoardDTO dto);
+
+	void mealFileWrite(String oriFileName, String newFileName, int board_idx, String category);
+
+
 	ArrayList<BoardDTO> allCount(HashMap<String, Object> map);
 
-	ArrayList<BoardDTO> MealList(int cnt, int offset);
 
-	ArrayList<BoardDTO> memberSearch(int cnt, int offset, String word);
+	
 
-	ArrayList<BoardDTO> subjectSearch(int cnt, int offset, String word);
 
-	ArrayList<BoardDTO> placeSearch(int cnt, int offset, String word);
+	
+
+
+
+
+	
 
 	
 

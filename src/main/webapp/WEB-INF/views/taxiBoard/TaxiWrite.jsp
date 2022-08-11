@@ -6,8 +6,10 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
+	<link rel="stylesheet" type="text/css" href="./resources/css/jquery.datetimepicker.css">
 	<title>With</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="./resources/js/jquery.datetimepicker.full.min.js"></script>
 </head>
 <style>
     .content-wrap {
@@ -55,18 +57,6 @@
    		background-color: #2962ff;
    		color: #eaeaea;
    }
-   
-   #editable{
-		width: 99%;
-		height: 150px;
-		border: 1px solid gray;
-		border-radius: 10px;
-		margin: 5px;
-		overflow: auto;
-		padding : 5px;
-		text-align: left;
-	}
-    
 
 </style>
 <body>
@@ -75,7 +65,7 @@
 	   <jsp:include page="../commons/memberSideBar2.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	       <form action="/taxiWrite" method="post">
+	       <form action="/taxiWriteDo" method="post" enctype="multipart/form-data">
 		       <table id="writeTable">
 		       		<tr>
 		       			<th>제목</th>
@@ -84,11 +74,7 @@
 		       		<tr>
 		       			<th>내용</th>
 	   					<td>
-							<!-- html 태그를 인식 하기 위해 div 사용 (type="text"나 textarea 는 html 을 그냥 글자취급) -->
-							<div id="editable" contenteditable="true"></div>
-							<!-- 하지만 div 는 서버에 값을 전송 할 수 없다. -->
-							<!-- 결국엔 div 의 내용을 input 에 담아 서버에 전송할 예정 -->
-							<input type="hidden" name="content" id="content"/>
+							<input type="text" name="content" placeholder="500자 이내" maxlength="333" required/>
 						</td>
 		       		</tr>
 		       		<tr>
@@ -108,12 +94,12 @@
 		       		</tr>
 				    <tr>
 		       			<th>도착지</th>
-		       			<td><input type="text" name="appoint_place" maxlength="66" required/></td>
+		       			<td><input type="text" name="destination" maxlength="66" required/></td>
 		       		</tr>
 		   			<tr>
 		   				<th>사진</th>
 						<td colspan="2">
-							<input type="button" value="파일 업로드" onclick="fileUp()"/>					
+							<input type="file" name="photos" multiple="multiple"/>					
 						</td>
 					</tr>
 		       		<tr>
@@ -129,55 +115,38 @@
 	   				<tr>
 		   				<th>마감시간</th>
 						<td>
-							<input type="datetime-local" name="deadline" required/>					
+							<input id="datetimepicker" type="text" name="deadline" required/>
 						</td>
 					</tr>
 			        <tr>
 			            <th colspan="2">
-			               <input type="button" value="등록" onclick="save()"/>
-			               <input type="button" value="돌아가기" onclick="location.href='/taxiList'"/>
+			               <input type="submit" value="등록"/>
+			               <input type="button" value="돌아가기" onclick="history.back()"/>
 			            </th>
 			        </tr>  
 		       </table>
-		       
 	       </form>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script>
-function save(){
-	$('#content a').removeAttr('onclick');
-	$('#content').val($('#editable').html());
-	$('form').submit();
-}
 
+/* 타임피커 관련 스크립트 */
+$('#datetimepicker').datetimepicker({
+	format: 'Y-m-d H:i',
+	lang: 'kr',
+	mask:true,
+	minDate:'-1970/01/01',
+	maxDate:'+1970/01/07',
+ 	allowTimes:[
+	  '00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00', '03:30', '04:00', '04:30', '05:00',
+	  '05:30', '06:00', '06:30', '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30',
+	  '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00',
+	  '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30',
+	  '22:00', '22:30', '23:00', '23:30'
+	]	  
+});
 
-function fileUp(){
-	window.open('taxiUploadForm','','width=400, height=100');
-}
-
-function del(elem){
-	console.log(elem);
-	// id 에서 삭제할 파일명을 추출
-	var id = $(elem).attr("id")
-	var fileName = id.substring(id.lastIndexOf("/")+1);
-	console.log(fileName);
-	//해당 파일 삭제 요청
-	$.ajax({
-		url:'fileDelete',
-		type:'get',
-		data:{'fileName':fileName},
-		dataType:'json',
-		success:function(data){
-			console.log(data);
-			// a 태그를 포함한 img 태그를 삭제
-			$(elem).remove();
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});
-}
 </script>
 </html>
