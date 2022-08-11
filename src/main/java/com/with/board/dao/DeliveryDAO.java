@@ -15,8 +15,6 @@ public interface DeliveryDAO {
 	
 	BoardDTO deliDetail(String board_idx);
 
-	ArrayList<BoardDTO> searchList(String option, String word);
-
 	void endUpdate();
 
 	int writeBcc(BoardDTO dto);

@@ -6,10 +6,10 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
+	<link rel="stylesheet" type="text/css" href="./resources/css/jquery.datetimepicker.css">
 	<title>With</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=303e3eb3eab9c15e38c80a5c6f8d0caf&libraries=services"></script>
-	
+	<script src="./resources/js/jquery.datetimepicker.full.min.js"></script>
 </head>
 <style>
     .content-wrap {
@@ -48,15 +48,16 @@
 					<tr>
 						<th>성별</th>
 						<td>
-							<input type="radio" name="gender" value="남자만" checked="checked"/>남자만
+							<input type="radio" name="gender" value="남자만"/>남자만
 							<input type="radio" name="gender" value="여자만"/>여자만
-							<input type="radio" name="gender" value="상관없음"/>상관없음
+							<input type="radio" name="gender" value="상관없음" checked="checked"/>상관없음
 						</td>
 					</tr>
 					<tr>
 						<th>수령장소</th>
 						<td>
 							<input type="text" name="appoint_place"/>
+							<input type="button" value="상세위치" onclick="showPopup()">
 						</td>
 					</tr>
 					<tr>
@@ -76,11 +77,7 @@
 					<tr>
 						<th>모집시간</th>
 						<td>
-							<select name="deadline">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-							</select> 시간
+							<input id="datetimepicker" type="text" name="deadline" required/>
 						</td>
 					</tr>
 					<tr>
@@ -103,36 +100,29 @@
 					</tr>
 				</table>
 			</form>
-			<!-- 상세위치 설정 부분-->
-			<p>상세위치를 마커로 표시해주세요.</p>
-			<!-- Kakao Map API 부분 -->
-			<div id="deliMap" style="width:500px;height:350px;"></div>
-	      				
-			
-			
 
 	   </div>
 </div>
 </body>
 <script type="text/javascript">
-	var loginId = 'tester';
+	function showPopup(){
+	    window.open("deliKakao.go","팝업 테스트","width=1000, height=1000, top=10, left=10");
+	}
 	
-	// 로그인한 아이디의 대학교 주소를 가져온다
-	$.ajax({
-		type:'get',
-		url:'detailMarker.ajax',
-		data:{
-			loginId:loginId				
-		},
-		dataType:'json',
-		success:function(data){
-			console.log(data.university_addr);
-			searchMap(data.university_addr);
-			
-		},
-		error:function(e){
-			console.log(e)
-		}
+	/* 타임피커 관련 스크립트 */
+	$('#datetimepicker').datetimepicker({
+		format: 'Y-m-d H:i',
+		lang: 'kr',
+		mask:true,
+		minDate:'-1970/01/01',
+		maxDate:'+1970/01/07',
+	 	allowTimes:[
+		  '00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00', '03:30', '04:00', '04:30', '05:00',
+		  '05:30', '06:00', '06:30', '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30',
+		  '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00',
+		  '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30',
+		  '22:00', '22:30', '23:00', '23:30'
+		]	  
 	});
 </script>
 <jsp:include page="../commons/footer.jsp"/>
