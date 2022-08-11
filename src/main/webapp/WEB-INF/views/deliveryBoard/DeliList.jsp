@@ -113,9 +113,9 @@
 		   </form>
 	       <input type="button" value="글쓰기" onclick="location.href='write.go'"/>
 					<c:forEach items="${deliList}" var="bbs">
-				     	<table class="deliList">
+				     	<table class="deliList" onClick="location='deliDetail?board_idx=${bbs.board_idx}'">
 							<tr>
-								<td colspan="2"><a href="deliDetail?board_idx=${bbs.board_idx}" style="color:black;">${bbs.subject}</a></td>
+								<td colspan="2">${bbs.subject}</td>
 							</tr>
 							<tr>
 								<td>약속장소 : ${bbs.appoint_place}</td>
@@ -147,14 +147,10 @@
 </body>
 <script type="text/javascript">
 	var page = 1; // 초기 페이지 번호
-	var word = $('#word').val();
-	var option = $('#option').val();
 	
 	// 검색 버튼 클릭했을 때 한 번 초기화
-	$('#searchBtn').on('click',function(){	
-		word = $('#word').val();
-		option = $('#option').val();
-		console.log("검색옵션 / 검색어 "+word + " / " + option);
+	$('#searchBtn').on('click',function(){
+		
 		$("#pagination").twbsPagination('destroy');
 	});
 	

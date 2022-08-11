@@ -1,5 +1,6 @@
 package com.with.board.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -12,12 +13,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.with.board.dto.BoardDTO;
 import com.with.board.service.DeliveryService;
+import com.with.member.dto.MemberDTO;
 
 @Controller
 public class DeliveryController {
@@ -42,8 +45,8 @@ public class DeliveryController {
 		
 		// 검색어 저장을 위해 세션 활용
 		if(params.get("word") != "") {
-		session.setAttribute("option", params.get("option"));
-		session.setAttribute("word", params.get("word"));
+			session.setAttribute("option", params.get("option"));
+			session.setAttribute("word", params.get("word"));
 		}
 		ModelAndView mav = new ModelAndView();
 		mav = service.deliList(params);
@@ -100,5 +103,17 @@ public class DeliveryController {
 		mav.setViewName("redirect:/deliList");
 		
 		return mav;
+	}
+	
+	
+	// 상세위치 모달 ajax
+	@RequestMapping("/detailMarker.ajax")
+	@ResponseBody public HashMap<String, Object> detailMarker(HttpSession session, @RequestParam HashMap<String, String> params) {
+		logger.info("상세위치 마커 컨트롤러 접속");
+		logger.info("로그인한 아이디 : " + params.get("loginId"));
+		
+		HashMap<String, Object> deliMap = service.detailMarker(params);
+		
+		return deliMap;
 	}
 }

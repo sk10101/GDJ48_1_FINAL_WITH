@@ -8,6 +8,8 @@
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=303e3eb3eab9c15e38c80a5c6f8d0caf&libraries=services"></script>
+	
 </head>
 <style>
     .content-wrap {
@@ -55,7 +57,6 @@
 						<th>수령장소</th>
 						<td>
 							<input type="text" name="appoint_place"/>
-							<input type="button" value="상세위치" onclick="/write.go"/>
 						</td>
 					</tr>
 					<tr>
@@ -102,10 +103,37 @@
 					</tr>
 				</table>
 			</form>
+			<!-- 상세위치 설정 부분-->
+			<p>상세위치를 마커로 표시해주세요.</p>
+			<!-- Kakao Map API 부분 -->
+			<div id="deliMap" style="width:500px;height:350px;"></div>
+	      				
+			
+			
+
 	   </div>
-	</div>
-	<jsp:include page="../commons/footer.jsp"/>
+</div>
 </body>
-<script>
+<script type="text/javascript">
+	var loginId = 'tester';
+	
+	// 로그인한 아이디의 대학교 주소를 가져온다
+	$.ajax({
+		type:'get',
+		url:'detailMarker.ajax',
+		data:{
+			loginId:loginId				
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data.university_addr);
+			searchMap(data.university_addr);
+			
+		},
+		error:function(e){
+			console.log(e)
+		}
+	});
 </script>
+<jsp:include page="../commons/footer.jsp"/>
 </html>
