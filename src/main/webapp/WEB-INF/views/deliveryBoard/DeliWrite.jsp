@@ -39,11 +39,11 @@
 				<table>
 					<tr>
 						<th>제목</th>
-						<td><input type="text" name="subject" placeholder="30자 이내"/></td>
+						<td><input type="text" name="subject" placeholder="30자 이내" required/></td>
 					</tr>
 					<tr>
 						<th>내용</th>
-						<td><input type="text" name="content" placeholder="500자 이내"/></td>
+						<td><input type="text" name="content" placeholder="500자 이내" required/></td>
 					</tr>
 					<tr>
 						<th>성별</th>
@@ -56,13 +56,13 @@
 					<tr>
 						<th>수령장소</th>
 						<td>
-							<input type="text" name="appoint_place"/>
+							<input type="text" name="appoint_place" required/>
 							<input type="button" value="상세위치" onclick="showPopup()">
 						</td>
 					</tr>
 					<tr>
 						<th>사진</th>
-						<td><input type="file" name="photos" multiple="multiple"/></td>
+						<td><input type="file" name="photos" multiple="multiple" required/></td>
 					</tr>
 					<tr>
 						<th>모집인원</th>
@@ -82,15 +82,15 @@
 					</tr>
 					<tr>
 						<th>최소주문금액</th>
-						<td><input type="text" name="min_delivery"/>원</td>
+						<td><input type="text" name="min_delivery" required/>원</td>
 					</tr>
 					<tr>
 						<th>인당 최소<br>투자금액</th>
-						<td><input type="text" name="min_fund"/>원</td>
+						<td><input type="text" name="min_fund" required/>원</td>
 					</tr>
 					<tr>
 						<th>배달료</th>
-						<td><input type="text" name="delivery_fee"/>원</td>
+						<td><input type="text" name="delivery_fee" required/>원</td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -105,6 +105,11 @@
 </div>
 </body>
 <script>
+	var msg = "${msg}"
+		if (msg != "") {
+			alert(msg);
+	}
+
 	function showPopup(){
 	    window.open("deliKakao.go","팝업 테스트","width=1000, height=1000, top=10, left=10");
 	}

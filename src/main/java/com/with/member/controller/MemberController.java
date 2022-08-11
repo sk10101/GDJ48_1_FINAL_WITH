@@ -82,4 +82,9 @@ public class MemberController {
 		mav = service.madetail(idx,page);
 		return mav;
 	}
+	@RequestMapping(value = "/blockUserList")
+	public String blockUser(Model model) {
+		return "/myPage/blockUserList";
+	}
+	
 }

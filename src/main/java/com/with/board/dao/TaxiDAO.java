@@ -42,5 +42,13 @@ public interface TaxiDAO {
 
 	ArrayList<BoardDTO> taxiList(HashMap<String, Object> map);
 
+	String univFind(String loginId);
+
+	String findPhone(String loginId);
+
+	int recruitEnd(String board_idx);
+
+	int taxiApply(String board_idx);
+
 
 }

@@ -122,7 +122,7 @@
 								<td>작성자 : ${bbs.member_id}</td>
 							</tr>
 							<tr>
-								<td>모인금액 : (모은금액) / ${bbs.min_delivery}</td>
+								<td>최소주문금액 : ${bbs.min_delivery}</td>
 								<td>작성일 : ${bbs.write_date}</td>
 							</tr>
 							<tr>
@@ -130,7 +130,7 @@
 								<td>조회수 : ${bbs.hit}</td>
 							</tr>
 							<tr>
-								<td>인원 : (현재 인원) / ${bbs.member_cnt}</td>
+								<td>인원 : (현재 인원) / ${bbs.member_cnt + 1}</td>
 								<c:if test="${bbs.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
 								<c:if test="${bbs.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
 							</tr>

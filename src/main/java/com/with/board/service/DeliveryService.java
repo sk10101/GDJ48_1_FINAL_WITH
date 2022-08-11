@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.with.board.dao.DeliveryDAO;
 import com.with.board.dto.BoardDTO;
@@ -73,9 +74,10 @@ public class DeliveryService {
 		ArrayList<PhotoDTO> deliPhotoList = dao.deliPhotoList(board_idx,"배달게시판");
 		mav.addObject("info",info);
 		mav.addObject("deliPhotoList",deliPhotoList);
-		
 		// 참여자 목록 조회
-		partList(board_idx);
+		ArrayList<BoardDTO> partList = partList(board_idx);
+		mav.addObject("partList",partList);
+		
 		
 		return mav;
 	}
@@ -213,6 +215,37 @@ public class DeliveryService {
 		logger.info("참여 회원 목록 서비스");
 		
 		return dao.partList(board_idx);
+	}
+
+
+	public void applyDeli(RedirectAttributes rAttr, String member_id, String board_idx, String investment) {
+		logger.info("배달 게시글 참여 신청 서비스");
+		// 이미 신청했을 때, 방장이 수락했을 때
+		if(dao.isApplied(member_id,board_idx) > 0) {
+			rAttr.addFlashAttribute("msg","이미 수락 대기중이거나 수락된 신청입니다.");
+		}
+		// 해당 글에 신청했다가 거절당한 이력이 있을 때
+		else if(dao.isRejected(member_id,board_idx) > 0) {
+			rAttr.addFlashAttribute("msg","이미 거절된 신청입니다.");
+		}
+		// 해당 글에서 강퇴당하거나 스스로 나간 이력이 있을 때
+		else if(dao.isBanned(member_id,board_idx) > 0) {
+			rAttr.addFlashAttribute("msg","이미 모임에서 나간 이력이 있습니다.");
+		} else {
+			logger.info("모임 참여 신청 성공");
+			dao.applyDeli(member_id,board_idx,investment);
+		}
+		
+		
+	}
+
+
+	public ModelAndView deliBan(String member_id, String board_idx) {
+		logger.info("참여 회원 강퇴 서비스");
+		ModelAndView mav = new ModelAndView();
+		dao.deliBan(member_id,board_idx);
+		
+		return mav;
 	}
 
 }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.with.board.dao.TaxiDAO;
 import com.with.board.dto.BoardDTO;
@@ -45,8 +46,8 @@ public class TaxiService {
 		
 		// 리스트로 왔을 때 chkHit 세션을 제거해주는 코드
 		// 해당 코드가 있어야만 Detail 에 다시 접근했을 때 조회수 기능을 실행할 수 있다.
-		// history.back() 을 사용하기 때문에 아래 코드는 먹히지 않음
-//		session.removeAttribute("chkHit");
+		// history.back() 을 사용한다면 아래 코드는 먹히지 않음
+		session.removeAttribute("chkHit");
 		
 		// 페이징 처리
 		HashMap<String, Object> map = new HashMap<String, Object>(); // map 객체화
@@ -69,32 +70,6 @@ public class TaxiService {
 		return mav;
 	}
 
-//	public ModelAndView taxiSearchList(HttpSession session, String option, String word) {
-//		ModelAndView mav = new ModelAndView();
-//		
-//		session.setAttribute("loginId", "일반회원");
-//		// 임시부여한 session 으로 테스트중
-//		String loginId = (String) session.getAttribute("loginId");
-//		
-//		// 나와 같은 대학교에 재학중인 유저의 게시글을 불러오는 코드 
-//		ArrayList<BoardDTO> list = dao.taxiSearchList(loginId, option, word);
-//		
-//		// 시간 비교를 통해 마감여부를 update 해주는 코드
-//		dao.updateEnd();
-//		
-//		
-//		int allcnt = dao.allCount(loginId);
-//		
-//		// 리스트로 왔을 때 chkHit 세션을 제거해주는 코드
-//		// 해당 코드가 있어야만 Detail 에 다시 접근했을 때 조회수 기능을 실행할 수 있다.
-//		session.removeAttribute("chkHit");
-//		
-//		mav.addObject("taxiList", list);
-//		mav.setViewName("taxiBoard/TaxiList");
-//		
-//		return mav;
-//	}
-
 	@Transactional
 	public ModelAndView taxiDetail(HttpSession session, String board_idx) {
 		ModelAndView mav = new ModelAndView();
@@ -103,19 +78,19 @@ public class TaxiService {
 		
 		// 세션을 확인하는 코드
 		// history.back() 을 사용하기 때문에 아래 코드는 먹히지 않음
-//		String chk = (String) session.getAttribute("chkHit");
+		String chk = (String) session.getAttribute("chkHit");
 		
 		// 세션에 값이 없으면 조회수 기능이 실행된다.
-//		if(chk == null) {
-//			dao.taxiUpHit(board_idx);
-//		}
+		if(chk == null) {
+			dao.taxiUpHit(board_idx);
+		}
 		
-		dao.taxiUpHit(board_idx);
-		
-		// 세션에 "chkHit" name 값과 value 값을 부여한다.
-//		session.setAttribute("chkHit", "chkHit");
+		session.setAttribute("chkHit", "chkHit");
 		
 		BoardDTO list = dao.taxiDetail(board_idx);
+		
+		// 로그인 회원의 연락처를 불러오는 코드
+		String phone = dao.findPhone(loginId);
 		
 		// 사진을 불러오는 코드
 		ArrayList<PhotoDTO> photo = dao.taxiPhotoList(board_idx, "택시게시판");
@@ -133,17 +108,23 @@ public class TaxiService {
 		mav.addObject("photo", photo);
 		mav.addObject("count", count);
 		mav.addObject("pt", pt);
+		mav.addObject("phone", phone);
 		mav.setViewName("taxiBoard/TaxiDetail");
 		
 		return mav;
 	}
 
 	@Transactional
-	public ModelAndView taxiWrite(MultipartFile[] photos, BoardDTO dto) {
+	public ModelAndView taxiWrite(MultipartFile[] photos, BoardDTO dto, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
 		// 이후에 로그인한 아이디를 담아주는 것으로 변경해야함
 		dto.setMember_id("일반회원");
+		
+		// session 에 저장한 좌표를 dto 에 담아준다.
+		dto.setAppoint_coords_lat((String) session.getAttribute("lat"));
+		dto.setAppoint_coords_lng((String) session.getAttribute("lng"));
+		
 		// 공통 컬럼 테이블에 작성할 내용
 		int row = dao.writeBcc(dto);
 		// 택시 전용 컬럼 테이블에 작성하기 위해 위에서 작성했던 글의 번호를 가져와야함
@@ -251,6 +232,53 @@ public class TaxiService {
 			
 			logger.info("페이징 체크포인트");
 			return taxiList;
+		}
+
+		public ModelAndView taxiKakao(HttpSession session) {
+			ModelAndView mav = new ModelAndView();
+			
+			session.setAttribute("loginId", "일반회원");
+			
+			String loginId = (String) session.getAttribute("loginId");
+			
+			String univ = dao.univFind(loginId);
+			logger.info("대학교 주소: " + univ);
+			
+			mav.addObject("univ", univ);
+			mav.setViewName("taxiBoard/kakao");
+			return mav;
+		}
+
+		public ModelAndView taxiApply(HttpSession session, HashMap<String, String> params, RedirectAttributes rAttr) {
+			ModelAndView mav = new ModelAndView();
+			
+			String board_idx = params.get("board_idx");
+			
+			// 신청하기 전 마감여부를 마지막으로 업데이트하는 코드
+			dao.updateEnd();
+			
+			// 마감여부를 불러오는 코드
+			int recruitEnd = dao.recruitEnd(board_idx);
+			logger.info("마감여부 : " + recruitEnd);
+			
+			String msg = "";
+			
+			if (recruitEnd == 1) {
+				msg = "이미 마감된 모임입니다.";
+				rAttr.addFlashAttribute("msg", msg);
+			}
+			
+			// 이미 신청했을 때, 방장이 수락했을 때 > "이미 수락 대기중이거나 수락된 신청입니다."
+			// 해당 글에 신청했다가 거절당한 이력이 있을 때 > "이미 거절된 신청입니다."
+			 // 해당 글에서 강퇴당하거나 스스로 나간 이력이 있을 때 > "이미 모임에서 나간 이력이 있습니다."
+			
+
+			
+//			int row = dao.taxiApply(board_idx);
+			
+			// 진행중 ..............
+			
+			return mav;
 		}
 
 }
