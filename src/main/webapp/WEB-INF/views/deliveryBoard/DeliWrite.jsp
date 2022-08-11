@@ -104,7 +104,7 @@
 	   </div>
 </div>
 </body>
-<script type="text/javascript">
+<script>
 	function showPopup(){
 	    window.open("deliKakao.go","팝업 테스트","width=1000, height=1000, top=10, left=10");
 	}

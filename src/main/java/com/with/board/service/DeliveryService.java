@@ -74,10 +74,13 @@ public class DeliveryService {
 		mav.addObject("info",info);
 		mav.addObject("deliPhotoList",deliPhotoList);
 		
+		// 참여자 목록 조회
+		partList(board_idx);
+		
 		return mav;
 	}
 
-	
+
 	// 글쓰기 서비스
 	@Transactional
 	public void write(MultipartFile[] photos, BoardDTO dto, HttpSession session) {
@@ -204,4 +207,12 @@ public class DeliveryService {
 		
 		return deliMap;
 	}
+
+	
+	private ArrayList<BoardDTO> partList(String board_idx) {
+		logger.info("참여 회원 목록 서비스");
+		
+		return dao.partList(board_idx);
+	}
+
 }

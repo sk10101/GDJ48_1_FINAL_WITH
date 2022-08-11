@@ -31,6 +31,8 @@ public interface DeliveryDAO {
 
 	MemberDTO getUniversityAddr(String loginid);
 
+	ArrayList<BoardDTO> partList(String board_idx);
+
 
 
 }
