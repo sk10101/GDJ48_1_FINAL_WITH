@@ -31,10 +31,13 @@
     
     table {
     	width: 100%;
+    	box-shadow: rgba(100, 100, 111, 0.6) 0px 7px 29px 0px;
+    	border-radius: 20px;
     }
     
-    table,th,td {
-    	border: 1px solid black;
+    table th,td {
+    	border: none;
+    	padding: 7px 10px;
     }
     
     #gender {
@@ -44,6 +47,35 @@
     #people {
     	width: 30px;
     }
+    
+    #subject {
+    	padding: 15px 15px;
+    	color: #eaeaea;
+    	border-radius: 10px;
+    	background-color: #537ef4;
+    	font-size: 20px;
+    	margin-bottom: 30px;
+    }
+    
+    #report {
+    	border: none; 
+    	font-size: 14px; 
+    	padding: 3px 10px; 
+    	border-radius: 5px; 
+    	background-color: #e53935; 
+    	color: #eaeaea;
+    }
+    
+    #report-img {
+    	width: 30px;
+    	position: relative;
+    	top: 8px;
+    }
+    
+    .ptList {
+    	text-align: center;
+    	
+    }
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -51,10 +83,11 @@
 	   <jsp:include page="../commons/memberSideBar2.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
+	       <p id="subject">${list.subject}</p>
 	       <table>
 	       		<tr>
 	       			<input type="hidden" name="${list.board_idx}"/>
-	       			<th>${list.subject}</th>
+	       			<%-- <th colspan="4" style="font-size: 20px; background-color: #537ef4;">${list.subject}</th> --%>
 	       		</tr>
 	       		<tr>
 	       			<th>출발지 : </th>
@@ -81,12 +114,12 @@
 	       		<tr>
 					<c:if test="${list.recruit_end eq 0}">
 						<td colspan="4" style="text-align: right">
-							<span style="padding: 3px 10px; border-radius: 5px; background-color: #2962ff">모집중</span>
+							<span style="padding: 3px 10px; border-radius: 5px; background-color: #2962ff; color: #eaeaea;">모집중</span>
 						</td>
 					</c:if>
 					<c:if test="${list.recruit_end eq 1}">
 						<td colspan="4" style="text-align: right">
-							<span style="padding: 3px 10px; border-radius: 5px; background-color: #e53935">마감</span>
+							<span style="padding: 3px 10px; border-radius: 5px; background-color: #e53935; color: #eaeaea;">마감</span>
 						</td>
 					</c:if>
 	       		</tr>
@@ -94,14 +127,17 @@
 	       			<th>
 	       				<img id="gender" src="./resources/images/gender.png" alt="gender"/> ${list.gender}
 	       			</th>
-	       			<td colspan="3" style="text-align: right"><input type="button" value="신고" onclick="location.href='/report?idx=${list.board_idx}'"/></td>
+	       			<td colspan="3" style="text-align: right;">
+	       				<img id="report-img" src="./resources/images/report.png" alt="report"/>
+	       				<input id="report" type="button" value="신고" onclick="location.href='/report?idx=${list.board_idx}'"/>
+	       			</td>
 	       		</tr>
 	       		<tr>
-	       			<td colspan="4"><hr/></td>
+	       			<td colspan="4"><br/><br/><hr/><br/><br/></td>
 	       		<tr>
-				<c:if test="${taxiPhotoList.size()>0}">
+				<c:if test="${photo.size()>0}">
 		            <tr>
-		                <td>
+		                <td colspan="4" style="text-align: center">
 			                <c:forEach items="${photo}" var="path">
 									<img src="./resources/photo/${path.newFileName}" width="500px"/>
 							</c:forEach>
@@ -109,38 +145,34 @@
 		            </tr>
             	</c:if>
 	       		<tr>
-	       			<td colspan="4">${list.content}</td>
+	       			<td colspan="4" style="padding: 40px 30px;">${list.content}</td>
 	       		</tr>
-	       </table>
-	       <table>
 	       		<tr>
-	       			<th><img id="people" src="./resources/images/people.png" alt="people"/> 참여현황</th>
+	       			<th colspan="4"><img id="people" src="./resources/images/people.png" alt="people"/> 참여현황</th>
 	       		</tr>
 	       		<tr>
 		       		<c:forEach items="${pt}" var="pt">
-			       			<td>${pt.member_id}</td>
-			       			<td>${pt.gender}</td>
-			       			<td>${pt.phone}</td>
-			       			<td><input type="button" class="manner" value="평가하기" onclick="location.href='mannerDo'"/></td>
+			       			<td class="ptList">${pt.member_id}</td>
+			       			<td class="ptList">${pt.gender}</td>
+			       			<td class="ptList">${pt.phone}</td>
+			       			<td class="ptList"><input type="button" class="manner" value="평가하기" onclick="location.href='mannerDo'"/></td>
 		       		</c:forEach>
 	       		</tr>
-	       </table>
-	       <table>
 	       		<tr>
-	       			<td>
+	       			<td colspan="4">
 						<!-- 아래부터 Kakao Map API 구역 -->
 						<input type="hidden" id="lat" value="${list.appoint_coords_lat}"/>
 						<input type="hidden" id="lng" value="${list.appoint_coords_lng}"/>
-						<div id="map" style="width:500px;height:350px;"></div>	       			
+						<div id="map" style="width:700px; height:350px; margin: 0 auto;"></div>	       			
 	       			</td>
 	       		</tr>
 	       		<tr>
-	       			<td>
+	       			<td colspan="4" style="text-align: center">
 						<input type="button" value="참여신청" onclick="location.href=''"/>
 					</td>
 	       		</tr>
 	       		<tr>
-	       			<td>
+	       			<td colspan="4" style="text-align: center">
 		       			<input type="button" value="삭제" onclick="location.href=''"/>
 						<input type="button" value="돌아가기" onclick="history.back()"/>
 					</td>

@@ -80,8 +80,8 @@
 		       		<tr>
 	  			    	<th>교육분야</th> <!-- recruit 테이블의 recruit_field 에 값을 insert 해줘야함 -->
 		    			<td colspan="3">
-					      <label><input type="radio" name="gender" value="남자"/> 남자만</label>
-					      <label><input type="radio" name="gender" value="여자"/> 여자만</label>
+					      <label><input type="radio" name="gender" value="남자만"/> 남자만</label>
+					      <label><input type="radio" name="gender" value="여자만"/> 여자만</label>
 					      <label><input type="radio" name="gender" value="상관없음" checked/> 상관없음</label>
 		    			</td>
 				    </tr>
@@ -89,7 +89,7 @@
 		       			<th>출발지</th>
 		       			<td>
 			       			<input type="text" name="appoint_place" maxlength="66" required/>
-			       			<input type="button" value="상세위치" onclick=""/>
+			       			<input type="button" value="상세위치" onclick="showPopup()">
 		       			</td>
 		       		</tr>
 				    <tr>
@@ -131,6 +131,9 @@
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script>
+function showPopup(){
+    window.open("taxiKakaoGo","팝업 테스트","width=1000, height=1000, top=10, left=10");
+}
 
 /* 타임피커 관련 스크립트 */
 $('#datetimepicker').datetimepicker({
