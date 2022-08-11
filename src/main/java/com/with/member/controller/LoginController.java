@@ -72,7 +72,7 @@ public class LoginController {
 	  @RequestMapping(value="logout", method=RequestMethod.GET)
 	  public String logout(HttpSession session) { 
 		  session.invalidate(); 
-		  return "main"; 
+		  return "redirect:/login"; 
 		  }
 	 
 	  // 카카오 로그인 토큰 받기

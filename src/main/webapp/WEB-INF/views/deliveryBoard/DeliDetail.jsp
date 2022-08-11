@@ -152,7 +152,7 @@
 					<th>금액</th>
 					<th>연락처</th>
 					<th>평가</th>
-					<c:if test="${info.member_id eq 'tester'}"><th>강퇴</th></c:if>
+					<c:if test="${info.member_id eq sessionScope.loginId}"><th>강퇴</th></c:if>
 				</tr>
 				<c:if test="${partList.size() eq 0}">
 					<tr><td colspan="5">참여한 회원이 없습니다.</td></tr>			
@@ -164,7 +164,7 @@
 						<td>${part.investment}</td>
 						<td>${part.phone}</td>
 						<td><c:if test="true"><input type="button" value="평가하기"/></c:if></td>
-						<td><c:if test="${info.member_id eq 'tester'}"><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></c:if></td>
+						<td><c:if test="${info.member_id eq sessionScope.loginId}"><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></c:if></td>
 					</tr>
 				</c:forEach>
 			</table>
