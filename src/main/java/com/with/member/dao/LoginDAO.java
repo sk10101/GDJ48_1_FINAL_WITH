@@ -14,7 +14,7 @@ public interface LoginDAO {
 
 	KakaoDTO kakaoNumber(KakaoDTO userInfo);
 
-	String getMbClass(String id, String pw);
+	String getMbClass(String id);
 
 	
 

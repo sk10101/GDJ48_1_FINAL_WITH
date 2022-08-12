@@ -211,6 +211,7 @@ public int getBoard_idx() {
    public void setPhone(String phone) {
 	   this.phone = phone;
    }
+  
 	   
    
 }

@@ -4,89 +4,116 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>With</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=303e3eb3eab9c15e38c80a5c6f8d0caf&libraries=services"></script>
 
 <style></style>
 </head>
 <body>
-<form action=""></form>
-<th>검색</th>
-<td><input type="text"id="search" placeholder="키워드를 검색하세요"><input type="button" value="검색" onclick="search()"></td>
 
+<input type="text" id="search"/>
+<input type="button" value="검색" onclick="search()"> 
+<form action="/taxiGetCoords" id="getCoords">
+	<input type="hidden" id="lat" name="lat" value=""/>
+	<input type="hidden" id="lng" name="lng" value=""/>
+	<div id="taxiMap" style="width:1000px;height:800px;"></div>
+	<input type="submit" value="확인" id="close_button">
+</form>
 
-<input type="submit" value="완료"> 
-
-<div id="map" style="width:100%;height:350px;"></div>
-
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=502f29438dec8c47b28f94e6dff67dc4&libraries=services"></script>
 <script>
-// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
-var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = {
-        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };  
+var lat;
+var lng;
 
-// 지도를 생성합니다    
-var map = new kakao.maps.Map(mapContainer, mapOption); 
+// 가져온 대학교 주소
+var univAddr = "${univ}";
+console.log(univAddr);
 
-// 장소 검색 객체를 생성합니다
-var ps = new kakao.maps.services.Places(); 
+	searchMap(univAddr);
+
+var mapContainer = document.getElementById('taxiMap'); // 지도를 표시할 div
+var mapOption = {
+        center: new kakao.maps.LatLng(37.45975, 126.95109), // 지도의 중심좌표
+        level: 3, // 지도의 확대 레벨
+        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도의 종류
+    };
+
+// 지도 생성
+var map = new kakao.maps.Map(mapContainer, mapOption);
+
+// 지도에 확대 축소 컨트롤을 생성한다
+var zoomControl = new kakao.maps.ZoomControl();
+
+// 지도의 우측에 확대 축소 컨트롤을 추가한다
+map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
 function search(){
-   
-// 키워드로 장소를 검색합니다
-ps.keywordSearch(document.getElementById('search').value, placesSearchCB);   
-}
- 
-
-// 키워드 검색 완료 시 호출되는 콜백함수 입니다
-function placesSearchCB (data, status, pagination) {
-    if (status === kakao.maps.services.Status.OK) {
-
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        var bounds = new kakao.maps.LatLngBounds();
-
-        for (var i=0; i<data.length; i++) {
-            displayMarker(data[i]);    
-            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-        }       
-
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        map.setBounds(bounds);
-    } 
+	// 키워드로 장소를 검색합니다
+	searchMap($("#search").val()) 
 }
 
-// 지도에 마커를 표시하는 함수입니다
-function displayMarker(place) {
+
+
+function searchMap(addrKeyword) {
+	// 장소 검색 객체를 생성합니다
+	var ps = new kakao.maps.services.Places(); 
+
+	// 키워드로 장소를 검색합니다
+	ps.keywordSearch(addrKeyword, placesSearchCB);
+
+	// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+	function placesSearchCB (data, status, pagination) { 
+	    if (status === kakao.maps.services.Status.OK) {
+
+	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+	        // LatLngBounds 객체에 좌표를 추가합니다
+	        var bounds = new kakao.maps.LatLngBounds();
+
+	        for (var i=0; i<data.length; i++) {
+	            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+	        }
+
+	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+	        map.setBounds(bounds);
+	    } 
+	} 
+}
+
+// 좌표 객체 초기화
+var marker = new kakao.maps.Marker({
+	// position: new kakao.maps.LatLng(37.45975, 126.95109), // 마커의 좌표(기본 디폴트 값 설정필요)
+    map: map // 마커를 표시할 지도 객체
+});
+
+// 클릭한 위치의 좌표를 가져오고 마커를 찍어주는 함수
+kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
     
-    // 마커를 생성하고 지도에 표시합니다
-    var marker = new kakao.maps.Marker({
-        map: map,
-        position: new kakao.maps.LatLng(place.y, place.x) 
-    });
-
-    // 마커에 클릭이벤트를 등록합니다
-    kakao.maps.event.addListener(marker, 'click', function() {
-        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-        infowindow.open(map, marker);
-        
-       
-
-       // place.place_name
-        alert("place : "+place.place_name);
-        window.opener.location.reload(place.place_name);
-        window.close();
-    });
-
-
+    // 클릭한 위도, 경도 정보를 가져옵니다 
+    var latlng = mouseEvent.latLng;
     
-}
+    // DB 에 담기위해 경도 위도를 반환 한다. (Number 형식)
+    lat = latlng.getLat();
+    lng = latlng.getLng();
+    console.log(lat.toString(),lng.toString()); // (yyy xxx) 형식
+    
+    // 마커 위치를 클릭한 위치로 옮깁니다
+    marker.setPosition(latlng);
+    
+    // 마커 위치를 찍은 곳으로 지도의 중심을 이동 (이건 쓸지 말지 고려해봐야 할듯...)
+    // map.setCenter(latlng);
+    
+    // 위도 경도를 위의 input 에 입력
+    $("#lat").val(lat);
+    $("#lng").val(lng);
+});
+
+$("#close_button").click(function(){
+	$('#getCoords').submit();
+	setTimeout(function() {
+		window.close();
+	 }, 10);
+});
 </script>
 </body>
 </html>
