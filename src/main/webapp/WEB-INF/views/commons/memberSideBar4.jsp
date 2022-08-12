@@ -94,7 +94,7 @@
            <li><div class="line"></div></li>
            <li><a class="my" href="/myInfo">내 정보</a></li>
            <li><a class="my" href="#">이용내역</a></li>
-           <li><a class="my" href="/blockUserList">차단 회원 관리</a></li>
+           <li><a class="my" href="/blockUserList.go">차단 회원 관리</a></li>
            <li><a class="my" href="#">고객 문의</a></li>
        </ul>
    </div>

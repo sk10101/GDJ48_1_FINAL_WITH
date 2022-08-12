@@ -210,6 +210,14 @@ public int getBoard_idx() {
 	   this.phone = phone;
    }
   
-	   
+   // 배달 게시판 참여자 수(방장제외) 값 넣는 dto
+   private String partNo;
+
+	public String getPartNo() {
+		return partNo;
+	}
+	public void setPartNo(String partNo) {
+		this.partNo = partNo;
+	}
    
 }

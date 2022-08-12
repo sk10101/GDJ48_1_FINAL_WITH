@@ -221,7 +221,8 @@
 	       			</th>
 	       			<td colspan="3" style="text-align: right;">
 	       				<img id="report-img" src="./resources/images/report.png" alt="report"/>
-	       				<input id="report" type="button" value="신고" onclick="location.href='/report?idx=${list.board_idx}'"/>
+	       				<!-- 신고하기위해 살짝 수정함 -제한- -->
+	       				<input id="report" type="button" value="신고" onclick="reportPop()"/>
 	       			</td>
 	       		</tr>
 	       		<tr>
@@ -338,5 +339,10 @@
 	// 이미지 지도를 생성합니다
 	var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption); */
 
+	<!-- 신고하기위해 추가함 -제한- -->
+	function reportPop(){
+		window.open('reportWrite.go?board_idx=${info.board_idx}','report','width=1000, height=600, top=200, left=500')
+	}
+	
 </script>
 </html>

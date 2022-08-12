@@ -30,7 +30,7 @@ public class DeliveryController {
 	@Autowired DeliveryService service;
 	
 	// 배달 게시판 목록 페이지 이동
-	@RequestMapping(value = "/deliList.go", method = RequestMethod.GET)
+	@RequestMapping(value = "/deliListGo", method = RequestMethod.GET)
 	public String deliList(HttpSession session) {
 		
 		return "redirect:/deliList?page="+1+"&option="+"&word=";
@@ -61,14 +61,14 @@ public class DeliveryController {
 		logger.info(board_idx + " 번 글 상세보기 요청 컨트롤러 접속");
 		ModelAndView mav = new ModelAndView();
 		
-		mav = service.deliDetail(board_idx);
+		mav = service.deliDetail(board_idx,session);
 		
 		return mav;
 	}
 	
 	
 	// 글쓰기 페이지 이동
-	@RequestMapping(value = "/write.go", method = RequestMethod.GET)
+	@RequestMapping(value = "/writeGo", method = RequestMethod.GET)
 	public ModelAndView writePage(HttpSession session, RedirectAttributes rAttr) {
 		logger.info("글쓰기 페이지 이동");
 		ModelAndView mav = new ModelAndView();
@@ -86,7 +86,7 @@ public class DeliveryController {
 		ModelAndView mav = new ModelAndView();
 		
 		service.write(photos, dto, session);
-		mav.setViewName("redirect:/deliList.go");
+		mav.setViewName("redirect:/deliListGo");
 		// 사용했던 세션을 비워주기
 		session.removeAttribute("lat");
 		session.removeAttribute("lng");
@@ -96,19 +96,19 @@ public class DeliveryController {
 	
 	
 	// 상세위치 모달 ajax
-	@RequestMapping("/detailMarker.ajax")
-	@ResponseBody public HashMap<String, Object> detailMarker(HttpSession session, @RequestParam HashMap<String, String> params) {
+	@RequestMapping("/getUnivAddr")
+	@ResponseBody public HashMap<String, Object> getUnivAddr(HttpSession session, @RequestParam HashMap<String, String> params) {
 		logger.info("상세위치 마커 컨트롤러 접속");
 		logger.info("로그인한 아이디 : " + params.get("loginId"));
 		
-		HashMap<String, Object> deliMap = service.detailMarker(params);
+		HashMap<String, Object> deliMap = service.getUnivAddr(params);
 		
 		return deliMap;
 	}
 	
 	
 	// 카카오 팝업 창 이동
-	@RequestMapping(value = "/deliKakao.go", method = RequestMethod.GET)
+	@RequestMapping(value = "/deliKakaoMap", method = RequestMethod.GET)
 	public ModelAndView kakao(HttpSession session, RedirectAttributes rAttr) {
 		ModelAndView mav = new ModelAndView();
 
@@ -159,4 +159,16 @@ public class DeliveryController {
 	}
 	
 	
+	// 참가한 회원 강퇴하는 기능
+	@RequestMapping(value = "/deliDelete", method = RequestMethod.GET)
+	public ModelAndView deliDelete(HttpSession session, RedirectAttributes rAttr, @RequestParam String board_idx) {
+		logger.info("삭제하려는 게시글 번호 : " + board_idx);
+		ModelAndView mav = new ModelAndView();
+		
+		mav = service.deliDelete(board_idx);
+		
+		mav.setViewName("redirect:/deliListGo");
+		
+		return mav;
+	}
 }

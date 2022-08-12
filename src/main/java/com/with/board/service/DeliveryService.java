@@ -53,6 +53,7 @@ public class DeliveryService {
 		}
 		
 		ArrayList<BoardDTO> deliList = pagination(map);
+		
 		logger.info("게시글의 개수 : "+ deliList.size());
 		mav.addObject("deliList",deliList);
 		mav.addObject("map",map);
@@ -63,7 +64,7 @@ public class DeliveryService {
 	
 	// 상세보기 서비스
 	@Transactional
-	public ModelAndView deliDetail(String board_idx) {
+	public ModelAndView deliDetail(String board_idx, HttpSession session) {
 		logger.info("상세보기 서비스 요청");
 		ModelAndView mav = new ModelAndView("deliveryBoard/DeliDetail");
 		
@@ -76,8 +77,15 @@ public class DeliveryService {
 		mav.addObject("deliPhotoList",deliPhotoList);
 		// 참여자 목록 조회
 		ArrayList<BoardDTO> partList = partList(board_idx);
-		mav.addObject("partList",partList);
 		
+		mav.addObject("partList",partList);
+		// + 글쓰기에 성공했을 때 참여자 목록에 방장 본인을 동시에 넣어준다.
+		ArrayList<MemberDTO> partMaster = dao.partMaster(info.getMember_id());
+		// 참여자 명단에 로그인한 아이디가 있는지 확인한다.
+		int partMemberChk = dao.partMemberChk((String) session.getAttribute("loginId"),board_idx);
+		logger.info("해당 방의 참여자 입니까? : " + partMemberChk);
+		mav.addObject("partMemberChk",partMemberChk);
+		mav.addObject("partMaster",partMaster);
 		
 		return mav;
 	}
@@ -109,7 +117,7 @@ public class DeliveryService {
 		logger.info("성공 여부 : " + row + " / " + row2);
 	}
 
-	
+
 	// 파일 업로드 서비스
 	@Transactional
 	public void deliFileSave(MultipartFile[] photos, int board_idx, String category_id) {
@@ -196,12 +204,12 @@ public class DeliveryService {
 		return deliList;
 	}
 
-	public HashMap<String, Object> detailMarker(HashMap<String, String> params) {
+	public HashMap<String, Object> getUnivAddr(HashMap<String, String> params) {
 		// 작성자의 대학교 좌표를 구하기 위해 회원이 등록한 대학교의 주소를 가져온다.
 		String loginid = params.get("loginId");
 		
 		HashMap<String, Object> deliMap = new HashMap<String, Object>(); 
-		MemberDTO dto = dao.getUniversityAddr(loginid);
+		MemberDTO dto = dao.getUnivAddr(loginid);
 		String university_addr = dto.getUniversity_addr();
 		deliMap.put("university_addr", university_addr);
 		
@@ -244,6 +252,19 @@ public class DeliveryService {
 		logger.info("참여 회원 강퇴 서비스");
 		ModelAndView mav = new ModelAndView();
 		dao.deliBan(member_id,board_idx);
+		
+		return mav;
+	}
+
+
+	public ModelAndView deliDelete(String board_idx) {
+		logger.info("배달 게시글 삭제 서비스");
+		ModelAndView mav = new ModelAndView();
+		
+		// 신청자 > 0 인 경우
+		// 참여자 > 0 인 경우
+		// 글상태 = '마감' 인 경우
+		// dao.deliDelete(board_idx);
 		
 		return mav;
 	}

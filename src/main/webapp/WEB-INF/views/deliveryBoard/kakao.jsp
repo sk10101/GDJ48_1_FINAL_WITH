@@ -29,7 +29,7 @@
 	// 로그인한 아이디의 대학교 주소를 가져온다
 	$.ajax({
 		type:'get',
-		url:'detailMarker.ajax',
+		url:'getUnivAddr',
 		data:{
 			loginId:loginId				
 		},
@@ -124,7 +124,7 @@
 		$('#getCoords').submit();
 		setTimeout(function() { 
 			window.close();
-		 }, 10);
+		 }, 5);
     });
 	
 </script>
