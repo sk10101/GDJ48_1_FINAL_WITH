@@ -23,7 +23,7 @@ public class HistoryController {
 
 	@Autowired HistoryService service;
 
-	@RequestMapping("/") public String sendHistory(Model model) { 
+	@RequestMapping("/myGroupList") public String sendHistory(Model model) { 
 		return "myPage/myGroupList";
 	}
 
@@ -33,7 +33,7 @@ public class HistoryController {
 
 	
 
-	// 이용 내역 목록 페이지 이동
+	//내가 만든 모임 목록 페이지 이동
 	@RequestMapping(value = "/mygList.go", method = RequestMethod.GET)
 	public String deliList(HttpSession session) {
 
@@ -41,17 +41,17 @@ public class HistoryController {
 	}
 
 
-	@RequestMapping(value = "/mygList")
+	@RequestMapping(value = "/mygList", method = RequestMethod.GET)
 	public ModelAndView mygList(HttpSession session, @RequestParam HashMap<String, String> params) {
 		logger.info("이용내역 목록 조회");
-
-		// 검색어 저장을 위해 세션 활용
-		/*if(params.get("word") != "") {*/
+		session.removeAttribute("option");
+		session.removeAttribute("word");
 		
-			session.setAttribute("page", params.get("page"));
+		// 검색어 저장을 위해 세션 활용
+		if(params.get("word") != "") {
 			session.setAttribute("option", params.get("option"));
 			session.setAttribute("word", params.get("word"));
-		//}
+		}
 		params.put("member_id", "일반회원");
 		session.setAttribute("loginId", "일반회원"); 
 		String loginId = (String) session.getAttribute("loginId");

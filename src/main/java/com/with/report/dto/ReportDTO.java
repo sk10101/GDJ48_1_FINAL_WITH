@@ -69,6 +69,7 @@ public class ReportDTO {
 	//공통 게시판 테이블
 	public String member_id;
 	public String category_id;
+	public String subject;
 	public String getMember_id() {
 		return member_id;
 	}
@@ -81,7 +82,12 @@ public class ReportDTO {
 	public void setCategory_id(String category_id) {
 		this.category_id = category_id;
 	}
-	
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
 	
 	
 }

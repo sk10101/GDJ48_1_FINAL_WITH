@@ -4,9 +4,14 @@
 <mapper namespace="com.with.report.dao.ReportDAO">
 
 	<select id="reportlist" resultType="report">
-	SELECT r.report_idx, b.category_id, b.subject, r.reporter_id, r.report_date, r.report_content, r.report_admin, r.status
+	SELECT r.report_idx, b.board_idx, b.category_id, b.subject, r.reporter_id, r.report_date, r.report_content, r.report_admin, r.status
 	FROM report r, board_common_column b
 	WHERE r.board_idx = b.board_idx
 	</select>
+
+	<insert id="reportsend" parameterType="hashmap">
+		INSERT INTO report (board_idx, reporter_id, report_content)
+		VALUE (#{board_idx}, 'test2', #{report_content})
+	</insert>
 
 </mapper>
