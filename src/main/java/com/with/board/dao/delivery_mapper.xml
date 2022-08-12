@@ -184,6 +184,11 @@
 	<delete id="photoDel">
 		DELETE FROM photo WHERE board_idx = #{param1} and category_id = '배달게시판'
 	</delete>
+	
+	<select id="getCategory" resultType="String">
+		SELECT category_id FROM board_common_column
+			WHERE board_idxx = #{param1}
+	</select>
 </mapper>
 
 

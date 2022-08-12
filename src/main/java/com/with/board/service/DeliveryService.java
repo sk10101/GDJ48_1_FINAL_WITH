@@ -307,7 +307,17 @@ public class DeliveryService {
 	         deliPhotoList.clear();
 			*/
 		}
-		
+		// 어떤 게시글에서 삭제버튼을 눌렀는지 확인하기 위해 카테고리를 가져온다.
+		String category = dao.getCategory(board_idx);
+		// 카테고리 별로 요청명을 달리하여 보내진다.
+		if(category.equals("배달게시판")) {
+			mav.setViewName("redirect:/deliListGo");
+		} else if (category.equals("밥게시판")) {
+			mav.setViewName("redirect:/mealList.go");
+		} else if (category.equals("택시게시판")) {
+			mav.setViewName("redirect:/texiListGo.go");
+		}
+			
 		return mav;
 	}
 

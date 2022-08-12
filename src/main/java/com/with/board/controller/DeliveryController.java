@@ -159,7 +159,7 @@ public class DeliveryController {
 	}
 	
 	
-	// 배달 게시글 삭제
+	// 배달, 택시, 식사 게시글 삭제
 	@RequestMapping(value = "/deliDelete", method = RequestMethod.GET)
 	public ModelAndView deliDelete(HttpSession session, RedirectAttributes rAttr, @RequestParam String board_idx) {
 		logger.info("삭제하려는 게시글 번호 : " + board_idx);
@@ -167,7 +167,7 @@ public class DeliveryController {
 		
 		mav = service.deliDelete(rAttr,board_idx);
 		
-		mav.setViewName("redirect:/deliListGo");
+		
 		
 		return mav;
 	}

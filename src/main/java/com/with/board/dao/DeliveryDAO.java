@@ -59,6 +59,8 @@ public interface DeliveryDAO {
 
 	void applyMaster(String member_id, int board_idx);
 
+	String getCategory(String board_idx);
+
 
 
 
