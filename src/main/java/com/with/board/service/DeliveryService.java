@@ -53,6 +53,9 @@ public class DeliveryService {
 		}
 		
 		ArrayList<BoardDTO> deliList = pagination(map);
+		
+		// 
+		
 		logger.info("게시글의 개수 : "+ deliList.size());
 		mav.addObject("deliList",deliList);
 		mav.addObject("map",map);
@@ -196,12 +199,12 @@ public class DeliveryService {
 		return deliList;
 	}
 
-	public HashMap<String, Object> detailMarker(HashMap<String, String> params) {
+	public HashMap<String, Object> getUnivAddr(HashMap<String, String> params) {
 		// 작성자의 대학교 좌표를 구하기 위해 회원이 등록한 대학교의 주소를 가져온다.
 		String loginid = params.get("loginId");
 		
 		HashMap<String, Object> deliMap = new HashMap<String, Object>(); 
-		MemberDTO dto = dao.getUniversityAddr(loginid);
+		MemberDTO dto = dao.getUnivAddr(loginid);
 		String university_addr = dto.getUniversity_addr();
 		deliMap.put("university_addr", university_addr);
 		

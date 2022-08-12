@@ -29,7 +29,7 @@ public interface DeliveryDAO {
 
 	ArrayList<BoardDTO> allCount(HashMap<String, Object> map);
 
-	MemberDTO getUniversityAddr(String loginid);
+	MemberDTO getUnivAddr(String loginid);
 
 	ArrayList<BoardDTO> partList(String board_idx);
 

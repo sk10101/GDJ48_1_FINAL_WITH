@@ -111,7 +111,7 @@
 			   <input type="hidden" name="page" value="1"/>
 			   <button id="searchBtn">검색</button>		
 		   </form>
-	       <input type="button" value="글쓰기" onclick="location.href='write.go'"/>
+	       <input type="button" value="글쓰기" onclick="location.href='writeGo'"/>
 					<c:forEach items="${deliList}" var="bbs">
 				     	<table class="deliList" onClick="location='deliDetail?board_idx=${bbs.board_idx}'">
 							<tr>
