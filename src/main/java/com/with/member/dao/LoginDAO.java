@@ -16,6 +16,14 @@ public interface LoginDAO {
 
 	String getMbClass(String id);
 
+	String idFind(String name, String email);
+
+	String pwFind(String id, String email);
+
+	boolean newPw(String id, String pw);
+
+
+
 	
 
 }
