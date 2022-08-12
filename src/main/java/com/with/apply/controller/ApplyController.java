@@ -61,22 +61,7 @@ public class ApplyController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/deliApplyList")
-	public ModelAndView deliApplyList(HttpSession session, @RequestParam HashMap<String, String> params) {
-		logger.info("이용내역 목록 조회");
-		
-		// 검색어 저장을 위해 세션 활용
-		if(params.get("word") != "") {
-			session.setAttribute("option", params.get("option"));
-			session.setAttribute("word", params.get("word"));
-		}
-		params.put("member_id", "일반회원");
-		session.setAttribute("loginId", "일반회원"); 
-		String loginId = (String) session.getAttribute("loginId");
-		ModelAndView mav = new ModelAndView();
-		mav = service.deliApplyList(params, loginId);
-		return mav;
-	}
+
 	
 	
 	

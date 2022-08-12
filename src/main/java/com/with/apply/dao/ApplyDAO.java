@@ -11,6 +11,4 @@ public interface ApplyDAO {
 
 	ArrayList<BoardDTO> myApplyList(HashMap<String, Object> map);
 
-	ArrayList<BoardDTO> deliApplyList(HashMap<String, Object> map);
-
 }

@@ -41,7 +41,7 @@ public class HistoryController {
 	}
 
 
-	@RequestMapping(value = "/mygList")
+	@RequestMapping(value = "/mygList", method = RequestMethod.GET)
 	public ModelAndView mygList(HttpSession session, @RequestParam HashMap<String, String> params) {
 		logger.info("이용내역 목록 조회");
 

@@ -113,14 +113,10 @@
 </body>
 <script type="text/javascript">
 	var page = 1; // 초기 페이지 번호
-	var word = $('#word').val();
-	var option = $('#option').val();
 	
 	// 검색 버튼 클릭했을 때 한 번 초기화
 	$('#searchBtn').on('click',function(){	
-		word = $('#word').val();
-		option = $('#option').val();
-		console.log("검색옵션 / 검색어 "+word + " / " + option);
+		
 		$("#pagination").twbsPagination('destroy');
 	});
 	
