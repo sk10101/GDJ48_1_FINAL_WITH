@@ -58,9 +58,60 @@
         <div class="logo"><a href="#"><img src="./resources/images/logo.png" alt="logo"></a></div>  
         <div class="content">
             <!-- 여기에서 작업 시작하세요 -->
-
-        </div>
+	<h3 id="title">PW 찾기</h3>
+	<table class="idFindTable">
+		<tr>
+			<th class="col1">비밀번호</th>
+			<td class="FindCol2">
+				<input type="password" name="userPw"  id = "id"  placeholder="변경할 비밀번호"/>
+			</td>
+		</tr>	
+		<tr>
+			<th class="col1">비밀번호확인</th>
+			<td class="FindCol2">
+				<input type="password" name="pwChk" id ="PasswordChk" placeholder="변경할 비밀번호" />
+			</td>
+		</tr>
+	</table>
+		<div class="FindBtn-area">
+			<button class="FindBtn" type="button" onclick="pwUpdate()">수정</button>
+			<button class="FindBtn" type="button" onclick="location.href='./login.go'">취소</button>
+		</div>           
+      </div>
     </div>
 	<jsp:include page="../commons/memberFooter.jsp"/>
 </body>
+<script>
+var userId =""; // 비밀번호 변경화면으로 바뀌었을때 아이디값이 필요
+
+$("#pwUpdate").click(function(){
+	  if($( "input[name='userPw']").val()=="" ||  pwdCheck == 0 ){//비밀번호 입력 확인
+			alert("비밀 번호를 확인 해 주세요");
+			$("input[name='userPw']").focus();//포커스 이동
+		}else if($("input[name='pwChk']").val()!=$("input[name='userPw']").val() || pwdCheck == 0 ){//비밀번호가 서로 일치하는지 확인
+			alert("비밀번호 일치 확인 해주세요");
+			$("input[name='pwChk']").focus();//포커스 이동
+		}else{
+	  $.ajax({
+		  url: "./newPw",
+		  type: "post",
+		  dataType: "json",
+		  data: {
+			 "pw": $("input[name='userPw']").val(), 
+			 "id" : userId
+		  },
+		  success:function(d){
+			  if(d.success){
+				  alert("비밀번호 변경이 완료되었습니다.");
+				  location.href="./";
+			  }else{
+				  alert("비밀번호 변경 실패");
+			  }
+		  }  
+	  });
+	}
+});
+
+
+</script>
 </html>

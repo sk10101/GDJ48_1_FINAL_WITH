@@ -196,4 +196,25 @@ public class LoginService {
 		return dao.kakaoNumber(userInfo);
 	}
 
+	//아이디 찾기
+	public String idFind(String name, String email) {
+		String idFind = dao.idFind(name,email); 
+		logger.info("아이디 :"+idFind);
+		
+		return idFind;
+	}
+	
+	//비밀번호 찾기
+	public String pwFind(String id, String email) {
+		String pwFind = dao.pwFind(id,email);
+		
+		return pwFind;
+	}
+
+	  public boolean newPw(String id, String pw) { 
+		  boolean success =dao.newPw(id,pw); 
+		  return success; 
+	  }
+	 
+
 }
