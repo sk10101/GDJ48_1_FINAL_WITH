@@ -18,7 +18,8 @@ public class ApplyService {
 Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired ApplyDAO dao;
-
+	
+	//내가 참가한 모임
 	public ModelAndView myApplyList(HashMap<String, String> params, String loginId) {
 			logger.info("내가 참여한 목록 요청");
 		   ModelAndView mav = new ModelAndView("myPage/myApplyList");
@@ -31,7 +32,13 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		   
 		   map.put("page", page); // page 입력
 		   // 검색어를 입력했을 때
-		   if(word != "") {
+		   if(word != "") {   
+               if(word.indexOf("모집")== 0 || word.indexOf("모") == 0 || word.indexOf("모집중") == 0) {
+                  word = "0";
+               }else if(word.indexOf("마")== 0 || word.indexOf("마감")== 0) {
+                  word = "1";
+               }
+			   
 			   map.put("word", word); // 검색어 입력
 			   map.put("option", option); // 검색 옵션 입력
 		   }
@@ -93,6 +100,41 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 		logger.info("페이징 체크포인트");
 		return myApplyList;
+	}
+
+	public ModelAndView totalApplyList(HashMap<String, String> params) {
+		logger.info("참가 신청 목록 조회 서비스");
+		
+		String category_id = "";
+		if(params.get("category_id") != null) {
+			if(params.get("category_id").equals("배달게시판")) {
+				category_id = params.get("category_id");
+			}else if(params.get("category_id").equals("밥게시판")) {
+				category_id = params.get("category_id");
+			}else if(params.get("category_id").equals("택시게시판")) {
+				category_id = params.get("category_id");
+			}
+		}
+
+		String pagePath = "";
+		if(category_id.equals("배달게시판")) {
+			pagePath = "myPage/deliApplyList";
+		}else if (category_id.equals("밥게시판")) {
+			pagePath = "myPage/mealApplyList";
+		}else if (category_id.equals("택시게시판")) {
+			pagePath = "myPage/taxiApplyList";
+		}
+		ModelAndView mav = new ModelAndView(pagePath);
+		
+		// 페이징 처리
+		HashMap<String, Object> map = new HashMap<String, Object>(); // map 객체화
+		int page = Integer.parseInt(params.get("page"));
+		String option = params.get("option");
+		String word = params.get("word");
+		logger.info(params.get("category_id"));
+		
+		
+		return null;
 	}
 	
 }

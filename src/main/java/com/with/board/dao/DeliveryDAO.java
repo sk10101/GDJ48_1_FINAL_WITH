@@ -29,7 +29,7 @@ public interface DeliveryDAO {
 
 	ArrayList<BoardDTO> allCount(HashMap<String, Object> map);
 
-	MemberDTO getUniversityAddr(String loginid);
+	MemberDTO getUnivAddr(String loginid);
 
 	ArrayList<BoardDTO> partList(String board_idx);
 
@@ -42,6 +42,11 @@ public interface DeliveryDAO {
 	int isBanned(String member_id, String board_idx);
 
 	void deliBan(String member_id, String board_idx);
+
+	ArrayList<MemberDTO> partMaster(String member_id);
+
+	int partMemberChk(String member_id, String board_idx);
+
 
 
 
