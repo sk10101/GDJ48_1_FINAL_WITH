@@ -9,7 +9,7 @@
 			b.category_id,
 			b.subject,
 			a.investment,
-			a.apply_date, 
+			DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date, 
 			a.status,
 			b.recruit_end 
 		FROM board_common_column b, apply a, participant p

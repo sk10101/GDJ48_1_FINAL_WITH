@@ -172,7 +172,7 @@ public int getBoard_idx() {
 	//내가 참여한 모임 전용 dto
 	private String investment;
 	private String status;
-	private Date apply_date;
+	private String apply_date;
 	
 	public String getStatus() {
 		return status;
@@ -180,12 +180,10 @@ public int getBoard_idx() {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-
-	public Date getApply_date() {
+	public String getApply_date() {
 		return apply_date;
 	}
-	public void setApply_date(Date apply_date) {
+	public void setApply_date(String apply_date) {
 		this.apply_date = apply_date;
 	}
 	public String getInvestment() {
