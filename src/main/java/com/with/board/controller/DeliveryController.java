@@ -131,7 +131,7 @@ public class DeliveryController {
 	}
 
 	
-	// 참가신청하기 기능
+	// 참여 신청
 	@RequestMapping(value = "/applyDeli", method = RequestMethod.GET)
 	public ModelAndView applyDeli(HttpSession session, RedirectAttributes rAttr, @RequestParam String member_id, @RequestParam String board_idx, @RequestParam String investment) {
 		logger.info("로그인한 아이디 : " + member_id);
@@ -145,7 +145,7 @@ public class DeliveryController {
 	}
 	
 	
-	// 참가한 회원 강퇴하는 기능
+	// 참여한 회원 강퇴
 	@RequestMapping(value = "/deliBan", method = RequestMethod.GET)
 	public ModelAndView deliBan(HttpSession session, RedirectAttributes rAttr, @RequestParam String member_id, @RequestParam String board_idx) {
 		logger.info("로그인한 아이디 : " + member_id);
@@ -159,15 +159,15 @@ public class DeliveryController {
 	}
 	
 	
-	// 참가한 회원 강퇴하는 기능
+	// 배달, 택시, 식사 게시글 삭제
 	@RequestMapping(value = "/deliDelete", method = RequestMethod.GET)
 	public ModelAndView deliDelete(HttpSession session, RedirectAttributes rAttr, @RequestParam String board_idx) {
 		logger.info("삭제하려는 게시글 번호 : " + board_idx);
 		ModelAndView mav = new ModelAndView();
 		
-		mav = service.deliDelete(board_idx);
+		mav = service.deliDelete(rAttr,board_idx);
 		
-		mav.setViewName("redirect:/deliListGo");
+		
 		
 		return mav;
 	}

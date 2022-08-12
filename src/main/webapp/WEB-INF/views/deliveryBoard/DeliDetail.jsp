@@ -86,6 +86,21 @@
 	    margin-top: -3px;
 	}
 	
+	.eye {
+        position: absolute;
+        z-index: 1;
+        width: 27px;
+        right: 665px;
+        top: 105px;
+    }
+    
+    .eye {
+        position: absolute;
+        z-index: 1;
+        width: 27px;
+        right: 665px;
+        top: 105px;
+    }
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -93,6 +108,7 @@
 	   <jsp:include page="../commons/memberSideBar1.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
+	     	<c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${info.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
 	     	<table>
 	     		<tr>
 	     			<td class='subject'>${info.subject}</td>
@@ -162,7 +178,7 @@
 					<tr>
 						<td>${ptm.member_id}</td>
 						<td>${ptm.gender}</td>
-						<td>방장투자금액 디폴트값</td>
+						<td>0000</td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>
 						<c:if test="${partMemberChk > 0}"><td></td></c:if>
 						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId}"><td><input type="button" value="평가하기"/></td></c:if>
@@ -199,7 +215,7 @@
         <h2>참여신청</h2>
         <div class="pop_content">
         	<form action="applyDeli">
-	           내 연락처 <input type="text" value="010-1111-1111" readonly/><br/>
+	           내 연락처 <input type="text" value="010-1234-5678" readonly/><br/>
 	           투자 금액 <input type="text" name="investment" placeholder="최소 투자 금액 : ${info.min_fund}" required/><br/>
 	           <input type="hidden" name="member_id" value="id_test"/>
 	           <input type="hidden" name="board_idx" value="${info.board_idx}"/>

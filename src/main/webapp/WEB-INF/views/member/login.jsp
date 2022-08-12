@@ -133,6 +133,8 @@
 		</table>
 	</form>   
 				<div class="text-center">
+				<div id="idfind"><a href="idFind">아이디 찾기</a></div>
+				<div id="pwfind"><a href="pwFind">비밀번호 찾기</a></div>
 				<h3 class="mb-3">다른 계정으로 로그인</h3>
 
 				<div class="d-flex justify-content-center">

@@ -57,17 +57,15 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
 	
-	// detail 
-	@RequestMapping(value = "/MealDetail", method = RequestMethod.GET)
-	public String detail(Model model, @RequestParam String board_idx) {
-		logger.info("식사 메인페이지 이동");
-
-		logger.info(board_idx+" 번 상세보기");
-		com.with.board.dto.BoardDTO info = service.detail(board_idx);
-		model.addAttribute("info", info);
-	
+	// detail MealDetail
+	@RequestMapping(value = "/mealDetail", method = RequestMethod.GET)
+	public ModelAndView mealDetail(HttpSession session, @RequestParam String board_idx) {
+		logger.info(board_idx + " 번 글 상세보기 요청 컨트롤러 접속");
+		ModelAndView mav = new ModelAndView();
 		
-		return "mealBoard/MealDetail";
+		mav = service.mealDetail(board_idx);
+		
+		return mav;
 	}
 	
 	
@@ -89,8 +87,12 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		logger.info("게시글 작성 컨트롤러 접속");
 		ModelAndView mav = new ModelAndView();
 		
-		service.write(photos, dto);
-		mav.setViewName("redirect:/MealList");
+		service.write(photos, dto, session);
+		mav.setViewName("redirect:/mealList.go");
+		
+		// 사용했던 세션을 비워주기
+		session.removeAttribute("lat");
+		session.removeAttribute("lng");
 		
 		return mav;
 	}
@@ -131,6 +133,19 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 		}
 		
+		// 밥 게시판 참가 신청 
+		@RequestMapping(value = "/mealApply")
+		public ModelAndView applyDeli(HttpSession session, RedirectAttributes rAttr, @RequestParam String member_id, @RequestParam String board_idx) {
+			logger.info("로그인한 아이디 : " + member_id);
+			ModelAndView mav = new ModelAndView();
+			
+			service.mealApply(rAttr,member_id,board_idx);
+			
+			mav.setViewName("redirect:/mealDetail?board_idx="+board_idx);
+			
+			return mav;
+		}
+	
 		 
 	
 	

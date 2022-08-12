@@ -116,8 +116,11 @@
 	
 	// 검색 버튼 클릭했을 때 한 번 초기화
 	$('#searchBtn').on('click',function(){	
+		word = $('#word').val();
 		
-		$("#pagination").twbsPagination('destroy');
+		option = $('#option').val();
+		console.log("검색옵션 / 검색어 "+word + " / " + option);
+		
 	});
 	
 // 플러그인을 이용해 페이징 처리
