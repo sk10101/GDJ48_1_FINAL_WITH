@@ -37,16 +37,18 @@ public class ApplyController {
 		}
 	
 		//배달 참여 신청자 목록
-		@RequestMapping(value = "/deliApplyList.go", method = RequestMethod.GET)
+		@RequestMapping(value = "/totalApplyList.go", method = RequestMethod.GET)
 		public String deliApplyList(HttpSession session) {
 			
-			return "redirect:/deliApplyList?page="+1+"&option="+"&word=";
+			return "redirect:/totalApplyList?page="+1+"&option="+"&word=";
 		}
 		
 	
-	@RequestMapping(value = "/myApplyList")
+	@RequestMapping(value = "/myApplyList", method = RequestMethod.GET)
 	public ModelAndView myApplyList(HttpSession session, @RequestParam HashMap<String, String> params) {
 		logger.info("이용내역 목록 조회");
+		session.removeAttribute("option");
+		session.removeAttribute("word");
 		
 		// 검색어 저장을 위해 세션 활용
 		if(params.get("word") != "") {
@@ -58,6 +60,30 @@ public class ApplyController {
 		String loginId = (String) session.getAttribute("loginId");
 		ModelAndView mav = new ModelAndView();
 		mav = service.myApplyList(params, loginId);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/totalApplyList", method = RequestMethod.GET)
+	public ModelAndView totalApplyList(HttpSession session, @RequestParam HashMap<String, String> params) {
+		logger.info("참여 신청자 조회");
+		session.removeAttribute("option");
+		session.removeAttribute("word");
+		
+		// 검색어 저장을 위해 세션 활용
+		if(params.get("word") != "") {
+			session.setAttribute("option", params.get("option"));
+			session.setAttribute("word", params.get("word"));
+		}
+		
+		//params.put("member_id", "son");
+		//session.setAttribute("loginId", "son"); 
+		//String loginId = (String) session.getAttribute("loginId");
+		
+		
+		logger.info(params.get("category_id"));
+		session.setAttribute("category_id", params.get("category_id"));
+		ModelAndView mav = new ModelAndView();
+		mav = service.totalApplyList(params);
 		return mav;
 	}
 	

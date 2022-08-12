@@ -17,6 +17,14 @@ public class MemberDTO {
 	private Date reg_date;
 	private int certficate_chk;
 	private int hide;
+	/* 회원 차단 */
+	private String block_member;
+	public String getBlock_member() {
+		return block_member;
+	}
+	public void setBlock_member(String block_member) {
+		this.block_member = block_member;
+	}
 	public String getMember_id() {
 		return member_id;
 	}

@@ -39,7 +39,6 @@ public class HistoryService {
 		               }else if(word.indexOf("마")== 0 || word.indexOf("마감")== 0) {
 		                  word = "1";
 		               }
-
 					map.put("word", word); // 검색어 입력
 					map.put("option", option); // 검색 옵션 입력
 				}

@@ -73,6 +73,67 @@
     .container {
     	text-align: center;
     }
+<style>
+    .content-wrap {
+    	max-width: 1200px;
+    	width: 100%;
+    	margin: 0 auto;
+    }
+
+    .content {
+        display: inline-block;
+        margin-left: 160px;
+        margin-top: 100px;
+        max-width: 1040px;
+        width: 100%;
+        min-height: 680px;
+        /* background-color: #f4f4f4; */
+        background-color: rgb(249, 249, 249);
+    }
+    
+    a {
+    	text-decoration : none;
+    	color : black;
+    }
+    
+     .deliList {
+	   	margin: 0 auto;
+	   	margin-top: 40px;
+	   	border-radius: 20px;
+	   	width: 600px;
+	   	background-color: #537ef4;
+	   	box-shadow: rgba(100, 100, 111, 0.6) 0px 7px 29px 0px;
+	   	background-image: linear-gradient(#537ef4, #2196f3);
+	   	transition: all 0.3s ease;
+    }
+    
+    .deliList:hover {
+        transform: scale(1.03);
+    }
+    
+    .deliList th, td {
+    	color: #eaeaea;
+    	padding: 3px 15px;
+    	font-size: 14px;
+    }
+    
+    .deliList tr:first-child > th {
+    	padding-top: 15px;
+    	padding-bottom: 15px;
+    	font-size: 16px;
+    }
+    
+    .deliList tr:last-child th {
+    	padding-bottom: 15px;
+    }
+    
+    .deliList tr:last-child td:last-child {
+    	text-align: right;
+    }
+    
+    .container {
+    	text-align: center;
+    }
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -100,7 +161,7 @@
 	 -->
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	       <form action="mealList">
+	       <form action="deliList">
 		       <select id="option" name="option">
 					<option value="제목">제목</option>
 					<option value="약속장소">약속장소</option>
@@ -111,51 +172,45 @@
 			   <button id="searchBtn">검색</button>		
 		   </form>
 	       <input type="button" value="글쓰기" onclick="location.href='MealWrite.go'"/>
-	     	<table class="mealList">
-		     	<tbody>
 					<c:forEach items="${mealList}" var="meal">
-						<tr>
-							<td colspan="2"><a href="MealDetail?board_idx=${meal.board_idx}" style="color:black;">${meal.subject}</a></td>
-						</tr>
-						<tr>
-							<td>약속장소 : ${meal.appoint_place}</td>
-							<td>작성자 : ${meal.member_id}</td>
-						</tr>
-						<tr>
-							<td>마감시간 : ${meal.deadline}</td>
-							<td>작성일 : ${meal.write_date}</td>
-						</tr>
-						<tr>
-							<td>인원 : (현재 인원) / ${meal.member_cnt}</td>
-							<td>조회수 : ${meal.hit}</td>
-						</tr>
-						<tr>
+				     	<table class="mealList" onClick="location='mealDetail?board_idx=${meal.board_idx}'">
+							<tr>
+								<td colspan="2">${meal.subject}</td>
+							</tr>
+							<tr>
+								<td>약속장소 : ${meal.appoint_place}</td>
+								<td>작성자 : ${meal.member_id}</td>
+							</tr>
+							<tr>
+								<td>마감시간 : ${meal.deadline}</td>
+								<td>작성일 : ${meal.write_date}</td>
+							</tr>
+							<tr>
+								<td>인원 : (현재 인원) / ${meal.member_cnt}</td>
+								<td>조회수 : ${meal.hit}</td>
+							</tr>
+							<tr>
 							<td></td>
 							<c:if test="${meal.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
 							<c:if test="${meal.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
 						</tr>
+						</table>
 					</c:forEach>
-				</tbody>
-			</table>
-			<div class="container">
-				<nav aria-label="Page navigation">
-					<ul class="pagination" id="pagination"></ul>
-				</nav>
-			</div>
+				<div class="container">
+					<nav aria-label="Page navigation">
+						<ul class="pagination" id="pagination"></ul>
+					</nav>
+				</div>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script type="text/javascript">
 	var page = 1; // 초기 페이지 번호
-	var word = $('#word').val();
-	var option = $('#option').val();
 	
 	// 검색 버튼 클릭했을 때 한 번 초기화
-	$('#searchBtn').on('click',function(){	
-		word = $('#word').val();
-		option = $('#option').val();
-		console.log("검색옵션 / 검색어 "+word + " / " + option);
+	$('#searchBtn').on('click',function(){
+		
 		$("#pagination").twbsPagination('destroy');
 	});
 	

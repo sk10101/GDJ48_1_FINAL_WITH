@@ -1,6 +1,7 @@
 package com.with.report.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,4 +26,18 @@ public class ReportService {
 		mav.addObject("list", list);
 		return mav;
 	}
-}
+	
+	public void reportsend(HashMap<String, String> params) {
+		logger.info("게시글 신고 서비스");
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("board_idx", params.get("board_idx"));
+		if(params.get("check").equals("기타")) {
+			map.put("report_content", params.get("textbox"));
+		} else {
+			map.put("report_content", params.get("check"));			
+		}
+		dao.reportsend(map);
+		}
+	}
+
+
