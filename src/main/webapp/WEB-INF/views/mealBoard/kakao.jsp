@@ -22,7 +22,7 @@
 
 
 <script>
-	var loginId = 'tester';
+	var loginId = "${sessionScope.loginId}";
 	var lat;
 	var lng;
 	

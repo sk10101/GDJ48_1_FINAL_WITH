@@ -14,7 +14,7 @@
 
 <input type="text" id="search"/>
 <input type="button" value="검색" onclick="search()"> 
-<form action="/taxiGetCoords" id="getCoords">
+<form action="taxiGetCoords" id="getCoords">
 	<input type="hidden" id="lat" name="lat" value=""/>
 	<input type="hidden" id="lng" name="lng" value=""/>
 	<div id="taxiMap" style="width:1000px;height:800px;"></div>
