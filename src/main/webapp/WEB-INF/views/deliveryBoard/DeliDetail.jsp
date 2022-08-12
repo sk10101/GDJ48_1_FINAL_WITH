@@ -122,7 +122,8 @@
 				</tr>
 				<tr>
 					<td><img alt="성별제한" src="../resources/images/gender.png" style="width:20px; height:20px;"> ${info.gender}</td>
-					<td><span style="border:1px solid black; background-color:red;">신고</span></td>
+					<!-- 신고하기위해 살짝 수정함 -제한- -->
+					<td><a href="#" onclick="reportPop()"><span style="border:1px solid black; background-color:red;">신고</span></a></td> 
 				</tr>
 			</table>
 			<hr>
@@ -238,6 +239,11 @@
 	    position: new kakao.maps.LatLng(lat, lng), // 마커의 좌표(기본 디폴트 값 설정필요)
 	    map: map // 마커를 표시할 지도 객체
 	});
+	
+	<!-- 신고하기위해 추가함 -제한- -->
+	function reportPop(){
+		window.open('reportWrite.go?board_idx=${info.board_idx}','report','width=1000, height=600, top=200, left=500')
+	}
 	
 </script>
 </html>
