@@ -269,7 +269,7 @@ public class DeliveryService {
 		if(dao.applyCnt(board_idx) > 0) {
 			rAttr.addFlashAttribute("msg","이미 모임에 참여신청한 회원이 있습니다.");
 		}
-		// 참여자 > 0 인 경우
+		// 참여자 > 1 인 경우
 		else if(dao.partCnt(board_idx) > 1) {
 			rAttr.addFlashAttribute("msg","이미 모임에 참여한 회원이 있습니다.");
 		}
@@ -280,10 +280,12 @@ public class DeliveryService {
 			// 위 세 경우에 모두 해당되지 않아야 글 삭제가 가능하도록 조건 설정함 
 			BoardDTO dto = new BoardDTO();
 			// 해당 board_idx 에 사진이 있는지 확인 (동시에 이름확보)
+			int delCount = dao.deliDelete(board_idx);
+			
+			/* 사진을 삭제하면 블라인드 게시판에서 사진을 확인못하는 상황이 발생... 일단 사진 삭제기능은 빼는 걸로
 			ArrayList<PhotoDTO> deliPhotoList = dao.deliPhotoList(board_idx, "배달게시판");
 		    logger.info(board_idx + " 번 게시물에 업로드된 사진 수 : " + deliPhotoList.size());
 			
-			int delCount = dao.deliDelete(board_idx);
 			
 			// 글을 지울 때 사진이 있다면 사진도 함께 지워줘야 한다
 			if(delCount > 0 && deliPhotoList.size() > 0) {
@@ -303,7 +305,7 @@ public class DeliveryService {
 			}
 			 // 이미지를 지워도 파일이름이 남아있어서 비워줌
 	         deliPhotoList.clear();
-			
+			*/
 		}
 		
 		return mav;

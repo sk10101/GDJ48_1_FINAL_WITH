@@ -86,6 +86,13 @@
 	    margin-top: -3px;
 	}
 	
+	.eye {
+        position: absolute;
+        z-index: 1;
+        width: 27px;
+        right: 25px;
+        top: 60px;
+    }
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
