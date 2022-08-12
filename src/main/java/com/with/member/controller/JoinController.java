@@ -33,7 +33,7 @@ public class JoinController {
 	}
 	
 	//회원가입 정보 저장
-	@RequestMapping(value = "/join.do", method = RequestMethod.POST)
+	@RequestMapping(value = "main/join.do", method = RequestMethod.POST)
 	public ModelAndView join(MultipartFile[] photos, @ModelAttribute MemberDTO dto) {
 		logger.info(dto.getMember_id());
 		//logger.info(dto.getUniversity_idx());

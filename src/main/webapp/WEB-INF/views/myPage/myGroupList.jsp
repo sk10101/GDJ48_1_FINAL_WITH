@@ -77,9 +77,10 @@
 						<th>상태</th>
 						<th></th>
 					</tr>
-
 				</thead>
-					<c:forEach items="${mygList}" var="his">
+				
+				<c:forEach items="${mygList}" var="his">
+				
 				<tbody class="mygList">
 						<tr>
 							<td>${his.board_idx}</td>
@@ -97,7 +98,7 @@
 						    
 						</tr>
 				</tbody>
-					</c:forEach>
+				</c:forEach>
 
 			</table>
 			<!-- <input id="button3" type="button" onclick="close()" value="마감" />-->
@@ -112,14 +113,10 @@
 </body>
 <script type="text/javascript">
 	var page = 1; // 초기 페이지 번호
-	var word = $('#word').val();
-	var option = $('#option').val();
 	
 	// 검색 버튼 클릭했을 때 한 번 초기화
 	$('#searchBtn').on('click',function(){	
-		word = $('#word').val();
-		option = $('#option').val();
-		console.log("검색옵션 / 검색어 "+word + " / " + option);
+		
 		$("#pagination").twbsPagination('destroy');
 	});
 	

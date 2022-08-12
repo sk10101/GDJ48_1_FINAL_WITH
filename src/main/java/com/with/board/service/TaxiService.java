@@ -257,10 +257,26 @@ public class TaxiService {
 			// 신청하기 전 마감여부를 마지막으로 업데이트하는 코드
 			dao.updateEnd();
 			
+			// 마감여부를 불러오는 코드
 			int recruitEnd = dao.recruitEnd(board_idx);
 			logger.info("마감여부 : " + recruitEnd);
 			
-			int row = dao.taxiApply(board_idx);
+			String msg = "";
+			
+			if (recruitEnd == 1) {
+				msg = "이미 마감된 모임입니다.";
+				rAttr.addFlashAttribute("msg", msg);
+			}
+			
+			// 이미 신청했을 때, 방장이 수락했을 때 > "이미 수락 대기중이거나 수락된 신청입니다."
+			// 해당 글에 신청했다가 거절당한 이력이 있을 때 > "이미 거절된 신청입니다."
+			 // 해당 글에서 강퇴당하거나 스스로 나간 이력이 있을 때 > "이미 모임에서 나간 이력이 있습니다."
+			
+
+			
+//			int row = dao.taxiApply(board_idx);
+			
+			// 진행중 ..............
 			
 			return mav;
 		}

@@ -162,6 +162,7 @@
 			          <table>
 			          	<tr>
 			          		<th>연락처 :</th>
+			          		<td><input type="hidden" name="member_id" value="일반회원" readonly/></td>
 			          		<td><input type="text" name="phone" value="${phone}" readonly/></td>
 			          	</tr>
 			          	<tr>
@@ -177,7 +178,7 @@
 	       <p id="subject">${list.subject}</p>
 	       <table>
 	       		<tr>
-	       			<input type="hidden" name="board_idx" value="${list.board_idx}"/>
+	       			<%-- <input type="hidden" name="board_idx" value="${list.board_idx}"/> --%>
 	       			<%-- <th colspan="4" style="font-size: 20px; background-color: #537ef4;">${list.subject}</th> --%>
 	       		</tr>
 	       		<tr>
