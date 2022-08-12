@@ -150,7 +150,7 @@
 	       <!-- 여기에서 작업 시작하세요 -->
 	       
 	       <!-- 모달팝업창 -->
- 	       <form action="/taxiApplyDo" method="post">
+ 	       <form action="taxiApplyDo" method="post">
 			   <div id= "modal"> 
 			   </div>
 			   <div id="banner_online">
@@ -161,8 +161,9 @@
 			      <div class="pop_content">
 			          <table>
 			          	<tr>
-			          		<th>연락처 :</th>
-			          		<td><input type="hidden" name="member_id" value="일반회원" readonly/></td>
+			          		<th>내 연락처 :</th>
+			          		<td><input type="hidden" name="board_idx" value="${list.board_idx}"/></td>
+			          		<td><input type="hidden" name="member_id" value="${list.member_id}"/></td>
 			          		<td><input type="text" name="phone" value="${phone}" readonly/></td>
 			          	</tr>
 			          	<tr>
@@ -275,6 +276,14 @@
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script>
+
+	var msg = "${msg}";
+	
+	if(msg != "") {
+		alert(msg);
+	}
+	
+
 	var lat = $("#lat").val(); // 위도
 	var lng = $("#lng").val(); // 경도
 	

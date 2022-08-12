@@ -48,7 +48,14 @@ public interface TaxiDAO {
 
 	int recruitEnd(String board_idx);
 
-	int taxiApply(String board_idx);
+	int taxiApply(HashMap<String, Object> params);
 
+	int chkStatus(HashMap<String, Object> params);
+
+	int ptTaxi(BoardDTO dto);
+
+	int chkReject(HashMap<String, Object> params);
+
+	int chkElim(HashMap<String, Object> params);
 
 }
