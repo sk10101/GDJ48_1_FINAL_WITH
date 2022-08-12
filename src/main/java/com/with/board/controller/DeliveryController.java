@@ -61,7 +61,7 @@ public class DeliveryController {
 		logger.info(board_idx + " 번 글 상세보기 요청 컨트롤러 접속");
 		ModelAndView mav = new ModelAndView();
 		
-		mav = service.deliDetail(board_idx);
+		mav = service.deliDetail(board_idx,session);
 		
 		return mav;
 	}
@@ -159,4 +159,16 @@ public class DeliveryController {
 	}
 	
 	
+	// 참가한 회원 강퇴하는 기능
+	@RequestMapping(value = "/deliDelete", method = RequestMethod.GET)
+	public ModelAndView deliDelete(HttpSession session, RedirectAttributes rAttr, @RequestParam String board_idx) {
+		logger.info("삭제하려는 게시글 번호 : " + board_idx);
+		ModelAndView mav = new ModelAndView();
+		
+		mav = service.deliDelete(board_idx);
+		
+		mav.setViewName("redirect:/deliListGo");
+		
+		return mav;
+	}
 }

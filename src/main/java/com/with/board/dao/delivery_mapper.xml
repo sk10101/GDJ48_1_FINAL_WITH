@@ -87,7 +87,9 @@
 		,DATE_FORMAT(deadline,'%Y-%m-%d %H:%i') as deadline
 		,hit
 		,member_cnt
-		,recruit_end FROM board_common_column bcc, delivery_board d
+		,recruit_end 
+		,(SELECT COUNT(pt_idx) FROM participant p WHERE bcc.board_idx = p.board_idx AND p.hide = 0) as partNo
+		FROM board_common_column bcc, delivery_board d
 			WHERE bcc.board_idx = d.board_idx AND category_id = '배달게시판'
 				<if test="word != null and word != ''">
 					<choose>
@@ -113,9 +115,10 @@
 	</select>
 	
 	<select id="partList" parameterType="String" resultType="board">
-		SELECT p.member_id, m.gender, a.investment, m.phone FROM participant p, member m, apply a
-			WHERE p.board_idx = #{board_idx} AND a.board_idx = #{board_idx} AND a.status = '수락' 
-			AND a.member_id = p.member_id AND p.hide = 0 AND p.member_id = m.member_id AND a.member_id = m.member_id
+			SELECT p.member_id, m.gender, a.investment, m.phone FROM participant p, member m, apply a
+				WHERE p.board_idx = #{board_idx} AND a.board_idx = #{board_idx}
+				AND a.member_id = p.member_id AND p.hide = 0 AND p.member_id = m.member_id AND a.member_id = m.member_id
+					ORDER BY pt_idx ASC
 	</select>
 	
 	<insert id="applyDeli" parameterType="board">
@@ -142,6 +145,21 @@
 		UPDATE participant SET hide = 1
 			WHERE member_id = #{param1} AND board_idx = #{param2}
 	</update>
+	
+	<insert id="applyMaster">
+		INSERT INTO participant (member_id, board_idx)
+			VALUES(#{param1},#{param2})
+	</insert>
+	<!-- 방장의 정보만 가져와서 따로 출력 -->
+	<select id="partMaster" parameterType="String" resultType="member">
+		SELECT member_id, gender, phone FROM member
+			WHERE member_id = #{member_id}
+	</select>
+	<!-- 로그인한 아이디가 참여자 명단에 있는지 확인 -->
+	<select id="partMemberChk" resultType="int">
+		SELECT COUNT(pt_idx) FROM participant
+			WHERE member_id = #{param1} AND hide = 0 AND board_idx = #{param2}
+	</select>
 </mapper>
 
 

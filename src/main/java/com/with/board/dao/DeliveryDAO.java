@@ -43,6 +43,11 @@ public interface DeliveryDAO {
 
 	void deliBan(String member_id, String board_idx);
 
+	ArrayList<MemberDTO> partMaster(String member_id);
+
+	int partMemberChk(String member_id, String board_idx);
+
+
 
 
 }

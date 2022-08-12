@@ -62,7 +62,7 @@
 					</tr>
 					<tr>
 						<th>사진</th>
-						<td><input type="file" name="photos" multiple="multiple" required/></td>
+						<td><input type="file" name="photos" multiple="multiple"/></td>
 					</tr>
 					<tr>
 						<th>모집인원</th>

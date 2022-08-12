@@ -124,7 +124,7 @@
 		$('#getCoords').submit();
 		setTimeout(function() { 
 			window.close();
-		 }, 10);
+		 }, 5);
     });
 	
 </script>

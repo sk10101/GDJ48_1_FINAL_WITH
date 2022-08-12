@@ -111,7 +111,7 @@
 				</tr>
 				<tr>
 					<td>마감시간 : ${info.deadline}</td>
-					<td>인원 : ${partList.size() + 1} / ${info.member_cnt + 1}</td>
+					<td>인원 : ${partList.size()} / ${info.member_cnt + 1}</td>
 				</tr>
 				<tr>
 				</tr>
@@ -150,21 +150,32 @@
 					<th>아이디</th>
 					<th>성별</th>
 					<th>금액</th>
-					<th>연락처</th>
-					<th>평가</th>
+					<c:if test="${partMemberChk > 0}"><th>연락처</th></c:if>
+					<c:if test="${partMemberChk > 0}"><th>평가</th></c:if>
 					<c:if test="${info.member_id eq sessionScope.loginId}"><th>강퇴</th></c:if>
 				</tr>
 				<c:if test="${partList.size() eq 0}">
 					<tr><td colspan="5">참여한 회원이 없습니다.</td></tr>			
 				</c:if>
+				<c:forEach items="${partMaster}" var="ptm">
+					<tr>
+						<td>${ptm.member_id}</td>
+						<td>${ptm.gender}</td>
+						<td>방장투자금액 디폴트값</td>
+						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>
+						<c:if test="${partMemberChk > 0}"><td></td></c:if>
+						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId}"><td><input type="button" value="평가하기"/></td></c:if>
+						<td></td>
+					</tr>
+				</c:forEach>
 				<c:forEach items="${partList}" var="part">
 					<tr>
 						<td>${part.member_id}</td>
 						<td>${part.gender}</td>
 						<td>${part.investment}</td>
-						<td>${part.phone}</td>
-						<td><c:if test="true"><input type="button" value="평가하기"/></c:if></td>
-						<td><c:if test="${info.member_id eq sessionScope.loginId}"><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></c:if></td>
+						<c:if test="${partMemberChk > 0}"><td>${part.phone}</td></c:if>
+						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}"><td><input type="button" value="평가하기"/></td></c:if>
+						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId }"><td><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
 					</tr>
 				</c:forEach>
 			</table>
@@ -175,7 +186,7 @@
 			<c:if test="${info.recruit_end eq 0}">
 				<button id="deliPop">참여신청</button><br/>
 			</c:if>
-			<input type="button" value="삭제" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/>
+			<input type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
 			<input type="button" value="돌아가기" onclick="history.back()"/>
 	   </div>
 	</div>
