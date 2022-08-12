@@ -62,7 +62,7 @@
 					</tr>
 					<tr>
 						<th>사진</th>
-						<td><input type="file" name="photos" multiple="multiple" required/></td>
+						<td><input type="file" name="photos" multiple="multiple"/></td>
 					</tr>
 					<tr>
 						<th>모집인원</th>
@@ -111,7 +111,7 @@
 	}
 
 	function showPopup(){
-	    window.open("deliKakao.go","팝업 테스트","width=1000, height=1000, top=10, left=10");
+	    window.open("deliKakaoMap","팝업 테스트","width=1000, height=1000, top=10, left=10");
 	}
 	
 	/* 타임피커 관련 스크립트 */

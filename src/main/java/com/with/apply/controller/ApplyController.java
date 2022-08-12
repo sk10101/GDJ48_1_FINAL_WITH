@@ -27,13 +27,22 @@ public class ApplyController {
 		return "myPage/myGroupList"; 
 	}
 	
-	// 이용 내역 목록 페이지 이동
+	
+	
+	// 내가 참가한 모임 페이지 이동
 		@RequestMapping(value = "/myApplyList.go", method = RequestMethod.GET)
-		public String deliList(HttpSession session) {
+		public String myApplyList(HttpSession session) {
 
 			return "redirect:/myApplyList?page="+1+"&option="+"&word=";
 		}
 	
+		//배달 참여 신청자 목록
+		@RequestMapping(value = "/deliApplyList.go", method = RequestMethod.GET)
+		public String deliApplyList(HttpSession session) {
+			
+			return "redirect:/deliApplyList?page="+1+"&option="+"&word=";
+		}
+		
 	
 	@RequestMapping(value = "/myApplyList")
 	public ModelAndView myApplyList(HttpSession session, @RequestParam HashMap<String, String> params) {
@@ -51,6 +60,8 @@ public class ApplyController {
 		mav = service.myApplyList(params, loginId);
 		return mav;
 	}
+	
+
 	
 	
 	

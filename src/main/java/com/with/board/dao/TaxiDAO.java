@@ -48,5 +48,7 @@ public interface TaxiDAO {
 
 	int recruitEnd(String board_idx);
 
+	int taxiApply(String board_idx);
+
 
 }

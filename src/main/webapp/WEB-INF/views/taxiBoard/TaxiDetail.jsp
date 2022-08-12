@@ -162,6 +162,7 @@
 			          <table>
 			          	<tr>
 			          		<th>연락처 :</th>
+			          		<td><input type="hidden" name="member_id" value="일반회원" readonly/></td>
 			          		<td><input type="text" name="phone" value="${phone}" readonly/></td>
 			          	</tr>
 			          	<tr>
@@ -177,7 +178,7 @@
 	       <p id="subject">${list.subject}</p>
 	       <table>
 	       		<tr>
-	       			<input type="hidden" name="board_idx" value="${list.board_idx}"/>
+	       			<%-- <input type="hidden" name="board_idx" value="${list.board_idx}"/> --%>
 	       			<%-- <th colspan="4" style="font-size: 20px; background-color: #537ef4;">${list.subject}</th> --%>
 	       		</tr>
 	       		<tr>
@@ -220,7 +221,8 @@
 	       			</th>
 	       			<td colspan="3" style="text-align: right;">
 	       				<img id="report-img" src="./resources/images/report.png" alt="report"/>
-	       				<input id="report" type="button" value="신고" onclick="location.href='/report?idx=${list.board_idx}'"/>
+	       				<!-- 신고하기위해 살짝 수정함 -제한- -->
+	       				<input id="report" type="button" value="신고" onclick="reportPop()"/>
 	       			</td>
 	       		</tr>
 	       		<tr>
@@ -337,5 +339,10 @@
 	// 이미지 지도를 생성합니다
 	var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption); */
 
+	<!-- 신고하기위해 추가함 -제한- -->
+	function reportPop(){
+		window.open('reportWrite.go?board_idx=${info.board_idx}','report','width=1000, height=600, top=200, left=500')
+	}
+	
 </script>
 </html>

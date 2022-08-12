@@ -69,7 +69,7 @@
 
 </style>
 <body>
-<form action="/join.do" id="test" method="post" enctype="multipart/form-data">
+<form action="main/join.do" id="test" method="post" enctype="multipart/form-data">
     <div class="main">
         <div class="logo"><a href="#"><img src="/resources/images/logo.png" alt="logo"></a></div>  
         <div class="content">

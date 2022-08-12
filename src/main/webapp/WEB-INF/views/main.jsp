@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<link rel="favicon" href="./resources/images/with_favicon.ico">
-	<title>With</title>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <meta charset="UTF-8">
+   <link rel="favicon" href="./resources/images/with_favicon.ico">
+   <title>With</title>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
     * {
@@ -302,14 +302,14 @@
         <div class="navbar-top-bg"></div>
         <div class="navbar-top">
             <a href="/"><img class="logo" src="./resources/images/logo.png" alt="logo"></a>
-            <p><a href="#">${sessionScope.loginId}님 환영합니다.</a> &nbsp; | &nbsp; <a href="logout">로그아웃</a></p>
+            <p><a href="#">${sessionScope.loginId}(${sessionScope.member_class}) 님 환영합니다.</a> &nbsp; | &nbsp; <a href="logout">로그아웃</a></p>
             <a href="#"><img class="bell" src="./resources/images/bell.png" alt="bell"></a>
             <img class="dot" src="./resources/images/dot.png" alt="dot">
         </div>
         <div class="sidebar">
             <ul>
-                <li><a href="/deliList.go"><img src="./resources/images/delivery.png" alt="delivery"><div class="circle"></div>배달</a></li>
-                <li><a href="/taxiList"><img src="./resources/images/taxi.png" alt="taxi"><div class="circle"></div>택시</a></li>
+                <li><a href="/deliListGo"><img src="./resources/images/delivery.png" alt="delivery"><div class="circle"></div>배달</a></li>
+                <li><a href="/taxiListGo"><img src="./resources/images/taxi.png" alt="taxi"><div class="circle"></div>택시</a></li>
                 <li><a href="/MealList"><img class="eating" src="./resources/images/eating.png" alt="eating"><div class="circle"></div>식사</a></li>
                 <li><div class="line"></div></li>
                 <li><a class="my" href="/myInfo">내 정보</a></li>
@@ -403,7 +403,7 @@
     </div>
 </body>
 <script>
-	/* 아래 코드는 지우지 마세요 */
+   /* 아래 코드는 지우지 마세요 */
     $(".sidebar").css("height", ($(".content").height() + $(".footer").height()));
 </script>
 </html>

@@ -86,6 +86,10 @@ public class TaxiController {
 		session.setAttribute("lng", params.get("lng"));
 	}
 	
+	// 택시 모임 참여신청
+	// RedirectAttributes 를 사용하는 이유 ? addFlashAttribute 는 일회성이므로 리다이렉트 후 새로고침하게 되면 파라미터가 소멸된다.
+	// 즉, alert 로 메시지를 띄어야할 때 쓰기 좋음
+	// 새로고침할때마다 alert 이 계속해서 뜨는 것을 막을 수 있음.
 	@RequestMapping(value = "/taxiApplyDo", method = RequestMethod.POST)
 	public ModelAndView taxiApplyDo
 	(HttpSession session,
