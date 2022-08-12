@@ -33,7 +33,12 @@ public class HistoryService {
 				
 				map.put("page", page); // page 입력
 				// 검색어를 입력했을 때
-				if(word != "") {
+				if(word != "") {	
+					if(word.indexOf("모집")== 0) {
+						word = "0";
+					}else if(word.indexOf("마감")== 0) {
+						word = "1";
+					}
 					map.put("word", word); // 검색어 입력
 					map.put("option", option); // 검색 옵션 입력
 				}

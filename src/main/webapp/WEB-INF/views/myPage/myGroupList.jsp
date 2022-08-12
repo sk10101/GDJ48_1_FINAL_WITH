@@ -118,6 +118,7 @@
 	// 검색 버튼 클릭했을 때 한 번 초기화
 	$('#searchBtn').on('click',function(){	
 		word = $('#word').val();
+		
 		option = $('#option').val();
 		console.log("검색옵션 / 검색어 "+word + " / " + option);
 		$("#pagination").twbsPagination('destroy');
