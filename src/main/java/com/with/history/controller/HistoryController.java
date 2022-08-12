@@ -33,7 +33,7 @@ public class HistoryController {
 
 	
 
-	// 이용 내역 목록 페이지 이동
+	//내가 만든 모임 목록 페이지 이동
 	@RequestMapping(value = "/mygList.go", method = RequestMethod.GET)
 	public String deliList(HttpSession session) {
 
@@ -44,7 +44,9 @@ public class HistoryController {
 	@RequestMapping(value = "/mygList", method = RequestMethod.GET)
 	public ModelAndView mygList(HttpSession session, @RequestParam HashMap<String, String> params) {
 		logger.info("이용내역 목록 조회");
-
+		session.removeAttribute("option");
+		session.removeAttribute("word");
+		
 		// 검색어 저장을 위해 세션 활용
 		if(params.get("word") != "") {
 			session.setAttribute("option", params.get("option"));
