@@ -133,22 +133,18 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 		}
 		
-		
+		// 밥 게시판 참가 신청 
 		@RequestMapping(value = "/mealApply")
-		public String mealApply( Model model,HttpSession session,
-			@RequestParam HashMap<String, String> params,RedirectAttributes attr, @RequestParam String board_idx) {
+		public ModelAndView applyDeli(HttpSession session, RedirectAttributes rAttr, @RequestParam String member_id, @RequestParam String board_idx) {
+			logger.info("로그인한 아이디 : " + member_id);
+			ModelAndView mav = new ModelAndView();
 			
-			session.setAttribute("loginId", "son");
-			String loginId =(String) session.getAttribute("loginId");
+			service.mealApply(rAttr,member_id,board_idx);
 			
-		
-			logger.info("params{}",params);
-			service.mealApply(params,loginId);
-			attr.addFlashAttribute("msg", "success");
+			mav.setViewName("redirect:/mealDetail?board_idx="+board_idx);
 			
-		
-		return "redirect:/mealDetail?board_idx=board_idx";
-	}
+			return mav;
+		}
 	
 		 
 	

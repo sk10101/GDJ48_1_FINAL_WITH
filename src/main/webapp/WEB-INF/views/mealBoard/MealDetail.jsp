@@ -94,6 +94,16 @@
   z-index: 99;
   display: none;
 }
+#modal {
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 99;
+  display: none;
+}
     
 </style>
 <body>
@@ -158,48 +168,61 @@
 				<tr>
 					<th>아이디</th>
 					<th>성별</th>
-					<th>금액</th>
 					<th>연락처</th>
 					<th>평가</th>
-					<c:if test="${info.member_id eq 'tester'}"><th>강퇴</th></c:if>
+					<c:if test="${info.member_id eq 'id_test'}"><th>강퇴</th></c:if>
 				</tr>
+				<c:if test="${partList.size() eq 0}">
+					<tr><td colspan="5">참여한 회원이 없습니다.</td></tr>			
+				</c:if>
+				<c:forEach items="${partList}" var="part">
+					<tr>
+						<td>${part.member_id}</td>
+						<td>${part.gender}</td>
+						<td>${part.phone}</td>
+						<c:if test="${part.member_id ne sessionScope.loginId}">
+						<c:if test="true"><td><input type="button" value="평가하기"/></c:if></td>		
+						<c:if test="${info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></c:if></td>
+						</c:if>	
+					</tr>
+				</c:forEach>
 			</table>
 			<!-- 아래부터 Kakao Map API 구역 -->
 			<input type="hidden" id="lat" value="${info.appoint_coords_lat}"/>
 			<input type="hidden" id="lng" value="${info.appoint_coords_lng}"/>
 			<div id="map" style="width:500px;height:350px;"></div>
-			
-			<button type="button" id="openModalPop">참여신청</button>
-			<div id= "modal"> 
-			</div>
-			    <div id = "banner_online">
-			        <div id="close_button" style ="cursor: pointer;"> 
-			           <img src="C:\Users\GDJ48\Documents\GDJ48_1_FINAL_WITH\src\main\webapp\resources\photo\1660187018727.png">
-			       </div>
-			       <h2>참여신청</h2>
-			       <div class="pop_content">
-			          <form action="">
-			          <table>
-			          	<th>내 연락처</th>
-			          	<td><input type="text" placeholder="010-0000-0000"></td>
-			          	<td><input type="submit" value="보내기"></td>
-			       	  </table>
-			       	  </form>	
-			       </div>
-			   </div>
-			
-			
-<%-- 			<input type="button" value="참여신청" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/>
- --%>			<br>
- 			<input type="button" value="삭제" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/>
+			<c:if test="${info.recruit_end eq 0}">
+				<button id="openModalPop">참여신청</button><br/>
+			</c:if>
+			<input type="button" value="삭제" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/>
 			<input type="button" value="돌아가기" onclick="history.back()"/>
-			
+	   </div>
+	</div>
+	<!-- 아래부터 참여 신청 모달 부분 -->
+	<div id="modal">
+	</div>
+	<div id ="banner_online">
+        <div id="close_button" style ="cursor: pointer;"> 
+            <a id="close_button">&times;</a>
+        </div>
+        <h2>참여신청</h2>
+        <div class="pop_content">
+        	<form action="mealApply">
+	           내 연락처 <input type="text" value="010-1111-1111" readonly/><br/>
+	           <input type="hidden" name="member_id" value="id_test"/>
+	           <input type="hidden" name="board_idx" value="${info.board_idx}"/>
+	           <input type="submit" value="보내기" style="text-align: right;"/>
+        	</form>
+        </div>
+    </div>
 	
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script type="text/javascript">
-
-
+	var msg = "${msg}"
+		if (msg != "") {
+			alert(msg);
+	}
 
 	var lat = $("#lat").val(); // 위도
 	var lng = $("#lng").val(); // 경도

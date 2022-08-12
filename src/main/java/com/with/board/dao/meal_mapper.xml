@@ -111,16 +111,23 @@
 	</select>
 	
 	
-	
 	<insert id="mealApply" 
 		useGeneratedKeys="true"
 		keyColumn="apply_idx"
 		keyProperty="apply_idx"
-		parameterType="hashmap">
-		INSERT INTO reply(board_idx,member_id,apply_date,investment, status)
-			VALUES(#{board_idx},#{member_id},now(),#{investment}#{status})
+		parameterType="board">
+		INSERT INTO apply (board_idx, member_id)
+			VALUES(#{param2}, #{param1})
 	</insert>
 		
+	<select id="partList" parameterType="String" resultType="board">
+		SELECT p.member_id, m.gender, m.phone FROM participant p, member m, apply a
+			WHERE p.board_idx = #{board_idx} AND a.board_idx = #{board_idx} AND a.status = '수락' 
+			AND a.member_id = p.member_id AND p.hide = 0 AND p.member_id = m.member_id AND a.member_id = m.member_id
+	</select>
+	
+
+	
 </mapper>
 
 

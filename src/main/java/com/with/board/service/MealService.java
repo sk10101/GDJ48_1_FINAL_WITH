@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.with.board.dao.MealDAO;
 import com.with.board.dto.BoardDTO;
@@ -136,13 +137,18 @@ public class MealService {
 		ArrayList<PhotoDTO> mealPhotoList = dao.mealPhotoList(board_idx,"밥게시판");
 		mav.addObject("info",info);
 		mav.addObject("mealPhotoList",mealPhotoList);
-		
+		// 참여자 목록 조회
+		ArrayList<BoardDTO> partList = partList(board_idx);
+		mav.addObject("partList",partList);
 		return mav;
 	}
 	
-	
-	
 
+	private ArrayList<BoardDTO> partList(String board_idx) {
+		logger.info("참여 회원 목록 서비스");
+		
+		return dao.partList(board_idx);
+	}
 
 
 	private ArrayList<BoardDTO> pagination(HashMap<String, Object> map) {
@@ -196,7 +202,7 @@ public class MealService {
 
 
 	public HashMap<String, Object> detailMarker(HashMap<String, String> params) {
-		// 작성자의 대학교 좌표를 구하기 위해 회원이 등록한 대학교의 주소를 가져온다.
+		// loginId의 대학교 좌표를 구하기 위해 회원이 등록한 대학교의 주소를 가져온다.
 		String loginid = params.get("loginId");
 		
 		HashMap<String, Object> deliMap = new HashMap<String, Object>(); 
@@ -211,12 +217,18 @@ public class MealService {
 
 
 
-	public void mealApply(HashMap<String, String> params, String loginId) {
-		logger.info("phone number 요청");
-		dao.mealApply(params,loginId);
-		
+	public void mealApply(RedirectAttributes rAttr, String member_id, String board_idx) {
+		logger.info("밥 서비스 참가신청 서비스 도착");
+		dao.mealApply(member_id,board_idx);
+		rAttr.addFlashAttribute("msg", "모임 참여 신청 성공");
 	}
 
+
+
+
+
+
+	
 
 
 
