@@ -33,8 +33,6 @@ public class TaxiService {
 	public ModelAndView taxiList(HttpSession session, HashMap<String, String> params) {
 		ModelAndView mav = new ModelAndView();
 		
-		session.setAttribute("loginId", "일반회원");
-		// 임시부여한 session 으로 테스트중
 		String loginId = (String) session.getAttribute("loginId");
 		
 		// 나와 같은 대학교에 재학중인 유저의 게시글을 불러오는 코드
@@ -73,7 +71,6 @@ public class TaxiService {
 	@Transactional
 	public ModelAndView taxiDetail(HttpSession session, String board_idx) {
 		ModelAndView mav = new ModelAndView();
-		session.setAttribute("loginId", "일반회원");
 		String loginId = (String) session.getAttribute("loginId");
 		
 		// 세션을 확인하는 코드
@@ -96,7 +93,7 @@ public class TaxiService {
 		ArrayList<PhotoDTO> photo = dao.taxiPhotoList(board_idx, "택시게시판");
 		
 		// 참여한 인원 수를 불러오는 코드 (본인은 포함해야 하기 때문에 +1)
-		int count = dao.taxiCount(board_idx) + 1;
+		int count = dao.taxiCount(board_idx);
 		
 		// 참여해있는 인원의 이름, 성별, 연락처를 불러오는 코드
 		ArrayList<MemberDTO> pt = dao.taxiParticipant(board_idx);
@@ -118,8 +115,9 @@ public class TaxiService {
 	public ModelAndView taxiWrite(MultipartFile[] photos, BoardDTO dto, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
-		// 이후에 로그인한 아이디를 담아주는 것으로 변경해야함
-		dto.setMember_id("일반회원");
+		String loginId = (String) session.getAttribute("loginId");
+		
+		dto.setMember_id(loginId);
 		
 		// session 에 저장한 좌표를 dto 에 담아준다.
 		dto.setAppoint_coords_lat((String) session.getAttribute("lat"));
@@ -132,13 +130,15 @@ public class TaxiService {
 		dto.setBoard_idx(board_idx);
 		// 택시 전용 컬럼 테이블에 작성할 내용
 		int row2 = dao.writeTaxi(dto);
+		// 방장도 참가자 테이블 들어가야함
+		int row3 = dao.ptTaxi(dto);
 		
 		// 파일을 올리지 않아도 fileSave 가 진행되는 것을 방지하는 조건문
-		if(row > 0 & row2 > 0) {
+		if(row > 0 & row2 > 0 & row3 > 0) {
 			taxiFileSave(photos, board_idx, "택시게시판");
 		}
 		
-		logger.info("성공 여부 : " + row + " / " + row2);
+		logger.info("성공 여부 : " + row + " / " + row2 + " / " + row3);
 		
 		mav.setViewName("redirect:/taxiListGo");
 		
@@ -185,7 +185,6 @@ public class TaxiService {
 		// 페이징 담당 메서드
 		public ArrayList<BoardDTO> pagination(HashMap<String, Object> map, HttpSession session) {
 			
-			session.setAttribute("loginId", "일반회원");
 			String loginId = (String) session.getAttribute("loginId");
 			
 			int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
@@ -237,8 +236,6 @@ public class TaxiService {
 		public ModelAndView taxiKakao(HttpSession session) {
 			ModelAndView mav = new ModelAndView();
 			
-			session.setAttribute("loginId", "일반회원");
-			
 			String loginId = (String) session.getAttribute("loginId");
 			
 			String univ = dao.univFind(loginId);
@@ -249,10 +246,17 @@ public class TaxiService {
 			return mav;
 		}
 
-		public ModelAndView taxiApply(HttpSession session, HashMap<String, String> params, RedirectAttributes rAttr) {
+		public ModelAndView taxiApply(HttpSession session, HashMap<String, Object> params, RedirectAttributes rAttr) {
 			ModelAndView mav = new ModelAndView();
 			
-			String board_idx = params.get("board_idx");
+			String loginId = (String) session.getAttribute("loginId");
+			
+			String board_idx = (String) params.get("board_idx");
+//			String member_id = params.get("member_id");
+//			String phone = params.get("phone");
+			
+			params.put("loginId", loginId);
+			
 			
 			// 신청하기 전 마감여부를 마지막으로 업데이트하는 코드
 			dao.updateEnd();
@@ -261,23 +265,33 @@ public class TaxiService {
 			int recruitEnd = dao.recruitEnd(board_idx);
 			logger.info("마감여부 : " + recruitEnd);
 			
-			String msg = "";
+			// 대기중 또는 수락 상태의 신청 데이터가 있는지 확인해주는 코드
+			int chkStatus = dao.chkStatus(params);
+			logger.info("대기중 또는 수락 상태의 데이터 수 : " + chkStatus);
+			
+			// 해당 글에 신청했다가 거절당한 이력이 있을 때
+			int chkReject = dao.chkReject(params);
+			
+			// 해당 글에서 강퇴당하거나 스스로 나간 이력이 있을 때
+			int chkElim = dao.chkElim(params);
 			
 			if (recruitEnd == 1) {
-				msg = "이미 마감된 모임입니다.";
-				rAttr.addFlashAttribute("msg", msg);
+				rAttr.addFlashAttribute("msg", "이미 마감된 모임입니다.");
+			} else if (chkStatus > 0) {
+				rAttr.addFlashAttribute("msg", "이미 수락 대기중이거나 수락된 신청입니다.");
+			} else if (chkReject > 0) {
+				rAttr.addFlashAttribute("msg", "이미 거절된 신청입니다.");
+			} else if (chkElim > 0) {
+				rAttr.addFlashAttribute("msg", "이미 모임에서 나간 이력이 있습니다.");
+			}
+			else {
+				int row = dao.taxiApply(params);
+				rAttr.addFlashAttribute("msg", "신청을 완료했습니다.");
 			}
 			
-			// 이미 신청했을 때, 방장이 수락했을 때 > "이미 수락 대기중이거나 수락된 신청입니다."
-			// 해당 글에 신청했다가 거절당한 이력이 있을 때 > "이미 거절된 신청입니다."
-			 // 해당 글에서 강퇴당하거나 스스로 나간 이력이 있을 때 > "이미 모임에서 나간 이력이 있습니다."
+			mav.setViewName("redirect:/taxiDetail?board_idx=" + board_idx);
 			
-
-			
-//			int row = dao.taxiApply(board_idx);
-			
-			// 진행중 ..............
-			
+			// 참여자 0, 신청자 0, 마감여부 0 일 경우에만 삭제 가능
 			return mav;
 		}
 

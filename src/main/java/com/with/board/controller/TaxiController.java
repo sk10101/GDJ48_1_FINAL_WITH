@@ -93,7 +93,7 @@ public class TaxiController {
 	@RequestMapping(value = "/taxiApplyDo", method = RequestMethod.POST)
 	public ModelAndView taxiApplyDo
 	(HttpSession session,
-	@RequestParam HashMap<String, String> params,
+	@RequestParam HashMap<String, Object> params,
 	RedirectAttributes rAttr) {
 		return service.taxiApply(session, params, rAttr);
 	}

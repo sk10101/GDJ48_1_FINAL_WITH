@@ -150,7 +150,7 @@
 	       <!-- 여기에서 작업 시작하세요 -->
 	       
 	       <!-- 모달팝업창 -->
- 	       <form action="/taxiApplyDo" method="post">
+ 	       <form action="taxiApplyDo" method="post">
 			   <div id= "modal"> 
 			   </div>
 			   <div id="banner_online">
@@ -161,8 +161,9 @@
 			      <div class="pop_content">
 			          <table>
 			          	<tr>
-			          		<th>연락처 :</th>
-			          		<td><input type="hidden" name="member_id" value="일반회원" readonly/></td>
+			          		<th>내 연락처 :</th>
+			          		<td><input type="hidden" name="board_idx" value="${list.board_idx}"/></td>
+			          		<td><input type="hidden" name="member_id" value="${list.member_id}"/></td>
 			          		<td><input type="text" name="phone" value="${phone}" readonly/></td>
 			          	</tr>
 			          	<tr>
@@ -221,7 +222,8 @@
 	       			</th>
 	       			<td colspan="3" style="text-align: right;">
 	       				<img id="report-img" src="./resources/images/report.png" alt="report"/>
-	       				<input id="report" type="button" value="신고" onclick="location.href='/report?idx=${list.board_idx}'"/>
+	       				<!-- 신고하기위해 살짝 수정함 -제한- -->
+	       				<input id="report" type="button" value="신고" onclick="reportPop()"/>
 	       			</td>
 	       		</tr>
 	       		<tr>
@@ -275,6 +277,14 @@
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script>
+
+	var msg = "${msg}";
+	
+	if(msg != "") {
+		alert(msg);
+	}
+	
+
 	var lat = $("#lat").val(); // 위도
 	var lng = $("#lng").val(); // 경도
 	
@@ -338,5 +348,10 @@
 	// 이미지 지도를 생성합니다
 	var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption); */
 
+	<!-- 신고하기위해 추가함 -제한- -->
+	function reportPop(){
+		window.open('reportWrite.go?board_idx=${info.board_idx}','report','width=1000, height=600, top=200, left=500')
+	}
+	
 </script>
 </html>

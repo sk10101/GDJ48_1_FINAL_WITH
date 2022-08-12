@@ -1,9 +1,7 @@
 package com.with.member.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,11 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.with.member.dto.MannerDTO;
 import com.with.member.service.MemberService;
 
 @Controller
@@ -25,8 +21,8 @@ public class MemberController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(value = "/myInfo")
-	public String myInfo(Model model) {
-		String member_id = "tester";
+	public String myInfo(Model model, HttpSession session) {
+		String member_id = (String) session.getAttribute("loginId");
 		HashMap<String, Object> map = service.mblist(member_id);
 		String name = service.univer(map.get("university_idx"));
 		int cnt = service.macnt(member_id)/3;
@@ -55,36 +51,51 @@ public class MemberController {
 		return "myPage/myInfo";
 	}
 	@RequestMapping(value = "/mbUpdate.go")
-	public String mbUpgo(Model model) {
-		String idx = "tester";
-		HashMap<String, Object> map = service.mblist(idx);
+	public String mbUpgo(Model model, HttpSession session) {
+		String member_id = (String) session.getAttribute("loginId");
+		HashMap<String, Object> map = service.mblist(member_id);
 		model.addAttribute("mblist", map);
 		return "myPage/myInfoUpdate";
 	}
 	
 	@RequestMapping(value = "/mbUpdate.do")
 	public String mbUpdate(Model model, @RequestParam String member_pw,
-			@RequestParam String phone, @RequestParam int hide) {
-		String member_id = "tester";
+			@RequestParam String phone, @RequestParam int hide, HttpSession session) {
+		String member_id = (String) session.getAttribute("loginId");
 		service.update(member_pw,phone,hide,member_id);
 		return "myPage/myInfo";
 	}
 	@RequestMapping(value = "/mannerDetail.go")
-	public String deliList(HttpSession session) {
+	public String deliList() {
 		return "redirect:/mannerDetail?page="+1;
 	}
 	
 	
 	@RequestMapping(value = "/mannerDetail")
-	public ModelAndView mannerDetail(@RequestParam int page) {
-		String idx = "tester";	
+	public ModelAndView mannerDetail(@RequestParam int page, HttpSession session) {
+		String member_id = (String) session.getAttribute("loginId");
 		ModelAndView mav = new ModelAndView();
-		mav = service.madetail(idx,page);
+		mav = service.madetail(member_id,page);
 		return mav;
 	}
+	
+	@RequestMapping(value = "/blockUserList.go")
+	public String blockUserGo() {
+		return "redirect:/blockUserList?page="+1;
+	}
+	
 	@RequestMapping(value = "/blockUserList")
-	public String blockUser(Model model) {
-		return "/myPage/blockUserList";
+	public ModelAndView blockUser(@RequestParam HashMap<String, Object> params, HttpSession session) {
+		String member_id = (String) session.getAttribute("loginId");
+		ModelAndView mav = new ModelAndView();
+		mav = service.blockList(member_id,params);
+		return mav;
+	}
+	@RequestMapping(value = "/blockDelete")
+	public String blockDelete(HttpSession session, @RequestParam String name) {
+		String member_id = (String) session.getAttribute("loginId");
+		service.blockDelete(member_id,name);
+		return "redirect:/blockUserList?page="+1;
 	}
 	
 }

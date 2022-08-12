@@ -228,7 +228,7 @@
 </select>
 
 <select id="taxiCount" resultType="integer">
-	SELECT count(*) FROM participant WHERE board_idx = #{param1} and hide = 0;
+	SELECT count(*) FROM participant WHERE board_idx = #{param1} and hide = 0
 </select>
 
 <select id="taxiParticipant" resultType="member">
@@ -239,7 +239,8 @@
 	FROM 
 	participant p, 
 	member m
-	WHERE board_idx = #{param1} AND m.member_id = p.member_id AND p.hide = 0;
+	WHERE board_idx = #{param1} AND m.member_id = p.member_id AND p.hide = 0
+	ORDER BY pt_idx DESC
 </select>
 
 <select id="univFind" resultType="string">
@@ -253,5 +254,25 @@
 <select id="recruitEnd" resultType="int">
 	SELECT recruit_end FROM board_common_column WHERE board_idx = #{param1}
 </select>
+
+<insert id="taxiApply" parameterType="hashmap">
+	INSERT INTO apply(board_idx, member_id) VALUES(#{board_idx}, #{loginId})
+</insert>
+
+<select id="chkStatus" resultType="int" parameterType="hashmap">
+	SELECT COUNT(*) FROM apply WHERE board_idx = #{board_idx} AND member_id = #{loginId} AND status IN('대기중', '수락') 
+</select>
+
+<select id="chkReject" resultType="int" parameterType="hashmap">
+	SELECT COUNT(*) FROM apply WHERE board_idx = #{board_idx} AND member_id = #{loginId} AND status = '거절'
+</select>
+
+<select id="chkElim" resultType="int" parameterType="hashmap">
+	SELECT COUNT(*) FROM participant WHERE board_idx = #{board_idx} AND member_id = #{loginId} AND hide = 1
+</select>
+
+<insert id="ptTaxi" parameterType="hashmap">
+	INSERT INTO participant(member_id, board_idx) VALUES(#{member_id}, #{board_idx})
+</insert>
 
 </mapper>

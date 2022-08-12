@@ -23,6 +23,15 @@
 		select * from kakao_table where k_name=#{nickname} and k_email=#{email}
 	</select>		
  	
+	<select id="idFind" parameterType="java.util.HashMap" resultType="String">
+ 		SELECT member_id FROM member WHERE name=#{param1} AND email=#{param2}
+ 	</select> 
  	
+ 	<select id="pwFind" parameterType="java.util.HashMap" resultType="String">
+ 		SELECT member_pw FROM member WHERE member_id=#{param1} AND email=#{param2}
+ 	</select>
  	
+	<update id="newPw">
+			UPDATE member SET member_pw=#{param2} WHERE member_id=#{param1}	 
+	</update> 	 
 </mapper>

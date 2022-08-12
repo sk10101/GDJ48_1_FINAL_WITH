@@ -3,12 +3,12 @@ package com.with.member.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.with.board.dto.BoardDTO;
 import com.with.member.dto.MannerDTO;
+import com.with.member.dto.MemberDTO;
 
 public interface MemberDAO {
 
-	HashMap<String, Object> mblist(String idx);
+	HashMap<String, Object> mblist(String member_id);
 
 	String univer(Object object);
 
@@ -21,5 +21,11 @@ public interface MemberDAO {
 	ArrayList<MannerDTO> madetail(HashMap<String, Object> map);
 
 	int allCount(String idx);
+
+	int blockCount(String idx);
+	
+	ArrayList<MemberDTO> blockList(HashMap<String, Object> map);
+
+	void blockDelete(String member_id, String block_member);
 
 }

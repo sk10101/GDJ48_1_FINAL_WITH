@@ -141,7 +141,8 @@
 				</tr>
 				<tr>
 					<td><img alt="성별제한" src="../resources/images/gender.png" style="width:20px; height:20px;"> ${info.gender}</td>
-					<td><span style="border:1px solid black; background-color:red;">신고</span></td>
+					<!-- 신고하기위해 살짝 수정함 -제한- -->
+					<td><a href="#" onclick="reportPop()"><span style="border:1px solid black; background-color:red;">신고</span></a></td>
 				</tr>
 			</table>
 			<hr>
@@ -263,5 +264,12 @@
 	        $("#modal").fadeOut();
 	    });
 	});	
+<script>
+
+<!-- 신고하기위해 추가함 -제한- -->
+function reportPop(){
+	window.open('reportWrite.go?board_idx=${info.board_idx}','report','width=1000, height=600, top=200, left=500')
+}
+
 </script>
 </html>
