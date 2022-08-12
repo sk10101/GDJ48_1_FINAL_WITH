@@ -23,18 +23,25 @@
     	SELECT sum(manner_score) FROM manner_assess WHERE member_id = #{param1} AND category_id = '${param2}'
     </select>
     
-    <!-- <select id="madetail" resultType="manner">
-    	SELECT (SELECT manner_score FROM manner_assess ma2 WHERE member_id = #{param1} AND category_id = '친절함' AND ma2.assess_date = ma1.assess_date) AS 'kindness',(SELECT manner_score FROM manner_assess ma2 WHERE member_id = #{param1} AND category_id = '시간약속' AND ma2.assess_date = ma1.assess_date) AS 'time',manner_score,assess_date FROM manner_assess ma1
-		WHERE member_id = #{param1} AND category_id = '응답속도' ORDER BY assess_date DESC
-    </select> -->
-    
     <select id="madetail" resultType="manner" parameterType="hashmap">
     	SELECT (SELECT manner_score FROM manner_assess ma2 WHERE member_id = #{idx} AND category_id = '친절함' AND ma2.assess_date = ma1.assess_date) AS 'kindness',(SELECT manner_score FROM manner_assess ma2 WHERE member_id = #{idx} AND category_id = '시간약속' AND ma2.assess_date = ma1.assess_date) AS 'time',manner_score,assess_date FROM manner_assess ma1
-		WHERE member_id = #{idx} AND category_id = '응답속도' ORDER BY assess_date  DESC LIMIT #{cnt} OFFSET #{offset}
+		WHERE member_id = #{idx} AND category_id = '응답속도' ORDER BY assess_date DESC LIMIT #{cnt} OFFSET #{offset}
+    </select>
+    
+    <select id="blockList" resultType="member" parameterType="hashmap">
+    	select block_member from block where member_id=#{idx} LIMIT #{cnt} OFFSET #{offset}
     </select>
     
     <select id="allCount" resultType="int">
 	 	SELECT count(member_id) FROM manner_assess WHERE member_id = #{param1}
 	</select>
    
+   <select id="blockCount" resultType="int">
+	 	SELECT count(member_id) FROM block WHERE member_id = #{param1}
+	</select>
+	
+	<delete id="blockDelete">
+		DELETE FROM block WHERE member_id=#{param1} AND block_member=#{param2};
+	</delete>
+	
 </mapper>
