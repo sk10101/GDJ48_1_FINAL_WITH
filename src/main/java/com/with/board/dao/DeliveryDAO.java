@@ -47,6 +47,18 @@ public interface DeliveryDAO {
 
 	int partMemberChk(String member_id, String board_idx);
 
+	int applyCnt(String board_idx);
+
+	int partCnt(String board_idx);
+
+	int isEnd(String board_idx);
+
+	int deliDelete(String board_idx);
+
+	void photoDel(String board_idx);
+
+	void applyMaster(String member_id, int board_idx);
+
 
 
 

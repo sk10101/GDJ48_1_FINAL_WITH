@@ -162,7 +162,7 @@
 					<tr>
 						<td>${ptm.member_id}</td>
 						<td>${ptm.gender}</td>
-						<td>방장투자금액 디폴트값</td>
+						<td>0000</td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>
 						<c:if test="${partMemberChk > 0}"><td></td></c:if>
 						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId}"><td><input type="button" value="평가하기"/></td></c:if>
