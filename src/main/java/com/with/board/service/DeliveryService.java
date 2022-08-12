@@ -47,7 +47,7 @@ public class DeliveryService {
 		
 		map.put("page", page); // page 입력
 		// 검색어를 입력했을 때
-		if(word != "") {
+		if(word != "" && word != " ") {
 			map.put("word", word); // 검색어 입력
 			map.put("option", option); // 검색 옵션 입력
 		}
@@ -88,7 +88,7 @@ public class DeliveryService {
 	public void write(MultipartFile[] photos, BoardDTO dto, HttpSession session) {
 		logger.info("글쓰기 서비스 요청");
 		// 이후에 로그인한 아이디를 담아주는 것으로 변경해야함
-		dto.setMember_id("tester");
+		dto.setMember_id((String) session.getAttribute("loginId"));
 		// session 에 저장한 좌표를 dto 에 담아준다.
 		dto.setAppoint_coords_lat((String) session.getAttribute("lat"));
 		dto.setAppoint_coords_lng((String) session.getAttribute("lng"));

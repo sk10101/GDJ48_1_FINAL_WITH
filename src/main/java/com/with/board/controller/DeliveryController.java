@@ -44,7 +44,7 @@ public class DeliveryController {
 		logger.info("게시판 목록 컨트롤러 접속");
 		
 		// 검색어 저장을 위해 세션 활용
-		if(params.get("word") != "") {
+		if(params.get("word") != "" || params.get("word") != " ") {
 			session.setAttribute("option", params.get("option"));
 			session.setAttribute("word", params.get("word"));
 		}
