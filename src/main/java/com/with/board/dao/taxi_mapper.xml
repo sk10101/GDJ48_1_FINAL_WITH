@@ -240,7 +240,7 @@
 	participant p, 
 	member m
 	WHERE board_idx = #{param1} AND m.member_id = p.member_id AND p.hide = 0
-	ORDER BY pt_idx DESC
+	ORDER BY pt_idx
 </select>
 
 <select id="univFind" resultType="string">
@@ -269,6 +269,10 @@
 
 <select id="chkElim" resultType="int" parameterType="hashmap">
 	SELECT COUNT(*) FROM participant WHERE board_idx = #{board_idx} AND member_id = #{loginId} AND hide = 1
+</select>
+
+<select id="chkGender" resultType="String" parameterType="hashmap">
+	SELECT gender FROM member WHERE member_id = #{loginId}
 </select>
 
 <insert id="ptTaxi" parameterType="hashmap">

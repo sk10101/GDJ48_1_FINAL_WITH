@@ -141,6 +141,10 @@
 	  z-index: 99;
 	  display: none;
 	}
+	
+	#crown {
+		width: 20px;
+	}
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -162,6 +166,7 @@
 			          <table>
 			          	<tr>
 			          		<th>내 연락처 :</th>
+			          		<td><input type="hidden" name="gender" value="${list.gender}"/></td>
 			          		<td><input type="hidden" name="board_idx" value="${list.board_idx}"/></td>
 			          		<td><input type="hidden" name="member_id" value="${list.member_id}"/></td>
 			          		<td><input type="text" name="phone" value="${phone}" readonly/></td>
@@ -244,14 +249,32 @@
 	       		<tr>
 	       			<th colspan="4"><img id="people" src="./resources/images/people.png" alt="people"/> 참여현황</th>
 	       		</tr>
-	       		<tr>
-		       		<c:forEach items="${pt}" var="pt">
-			       			<td class="ptList">${pt.member_id}</td>
-			       			<td class="ptList">${pt.gender}</td>
-			       			<td class="ptList">${pt.phone}</td>
-			       			<td class="ptList"><input type="button" class="manner" value="평가하기" onclick="location.href='mannerDo'"/></td>
-		       		</c:forEach>
-	       		</tr>
+	       		<c:forEach items="${pt}" var="pt">
+		       		<tr>
+	       				<th class="ptList">
+	       					<c:if test="${pt.member_id eq list.member_id}">
+	       						<img id="crown" src="./resources/images/crown.png" alt="crown"/>
+	       					</c:if>
+	       					${pt.member_id}
+	       				</th>
+		       			<td class="ptList">${pt.gender}</td>
+		       			<%-- <c:if test="${sessionScope.loginId eq pt.member_id}"> --%>
+		       				<td class="ptList">${pt.phone}</td>
+		       			<%-- </c:if> --%>	
+		       			<!-- 내 아이디가 참여인원에 들어가 있어야 평가하기가 보여야 한다. -->
+		       			<!-- 마감된 글에서만 평가하기가 보여야 한다. -->
+		       			<!-- 한번 평가했다면 버튼은 사라져야한다. (해야할 것) -->
+	       				<c:if test="${sessionScope.loginId eq pt.member_id and list.recruit_end == 1}">
+		       				<td class="ptList"><input type="button" class="manner" value="평가하기" onclick="location.href='/mannerDo?member_id=${pt.member_id}'"/></td>
+		       			</c:if>
+	       				<!-- 강퇴 열 방장빼고는 아예 못보게 한다. -->
+	       				<c:if test="${sessionScope.loginId eq list.member_id}">
+		       				<td class="ptList">
+		       					<input type="button" class="elim" value="강퇴" onclick="location.href='/elimDo?member_id=${pt.member_id}'" <c:if test="${pt.member_id eq list.member_id}">hidden</c:if>/>
+      						</td>
+		       			</c:if>
+		       		</tr>	
+	       		</c:forEach>
 	       		<tr>
 	       			<td colspan="4">
 						<!-- 아래부터 Kakao Map API 구역 -->
@@ -262,7 +285,10 @@
 	       		</tr>
 	       		<tr>
 	       			<td colspan="4" style="text-align: center">
-						<input id="apply-button" type="button" value="참여신청"/>
+	       				<!--  모집중 and 본인이 작성한 글이 아니라면 참여신청 버튼이 노출된다. -->
+	       				<c:if test="${list.recruit_end == 0 and sessionScope.loginId ne list.member_id}">
+							<input id="apply-button" type="button" value="참여신청"/>
+						</c:if>
 					</td>
 	       		</tr>
 	       		<tr>

@@ -58,4 +58,8 @@ public interface TaxiDAO {
 
 	int chkElim(HashMap<String, Object> params);
 
+	int chkSuper(HashMap<String, Object> params);
+
+	String chkGender(HashMap<String, Object> params);
+
 }
