@@ -92,11 +92,10 @@ public class MemberService {
 
 	public ModelAndView blockList(String member_id, HashMap<String, Object> params) {
 		ModelAndView mav = new ModelAndView("myPage/blockUserList");
-		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<MemberDTO> name = blockPagination(member_id, params);
 		logger.info("게시글의 개수 : " + name.size());
 		mav.addObject("name", name);
-		mav.addObject("map", map);
+		mav.addObject("map", params);
 		return mav;
 	}
 	
@@ -116,6 +115,7 @@ public class MemberService {
 			allCnt = 1;
 		}
 		String word = (String) map.get("word");
+		logger.info("word의 값 : "+word);
 		if(word != "") {
 			map.put("word", word); // 검색어 입력
 		}

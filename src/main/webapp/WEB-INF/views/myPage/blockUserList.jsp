@@ -53,9 +53,10 @@
 	       <!-- 여기에서 작업 시작하세요 -->
 	       <form action="blockUserList">
 			   <input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
-			   <input type="hidden" name="page" value=1/>
+			   <input type="hidden" name="page" value="1"/>
 			   <button id="searchBtn">검색</button>		
 		   </form>
+		   
 	     <table class="myinfo" style="margin-left:180px;">
             	<tr>
             		<th>차단 대상 ID</th>
@@ -78,14 +79,7 @@
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script type="text/javascript">
-	var page = 1; // 초기 페이지 번호
-	
-	// 검색 버튼 클릭했을 때 한 번 초기화
-	$('#searchBtn').on('click',function(){
-		
-		$("#pagination").twbsPagination('destroy');
-	});
-	
+	var page = 1; // 초기 페이지 번호	
 	// 플러그인을 이용해 페이징 처리
 	$("#pagination").twbsPagination({
 		startPage:${map.page}, //시작 페이지 (page)

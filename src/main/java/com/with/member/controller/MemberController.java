@@ -97,5 +97,8 @@ public class MemberController {
 		service.blockDelete(member_id,name);
 		return "redirect:/blockUserList?page="+1;
 	}
-	
+	@RequestMapping(value = "/inqueryList.go")
+	public String inqueryListgo() {
+		return "redirect:/inqueryList?page="+1;
+	}
 }

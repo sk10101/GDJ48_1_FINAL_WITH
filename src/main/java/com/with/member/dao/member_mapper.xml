@@ -29,7 +29,10 @@
     </select>
     
     <select id="blockList" resultType="member" parameterType="hashmap">
-    	select block_member from block where member_id=#{idx} LIMIT #{cnt} OFFSET #{offset}
+    	select block_member from block where member_id=#{idx}
+    	<if test="word != null and word != ''">
+    		AND block_member LIKE CONCAT('%',#{word},'%')
+    	</if> LIMIT #{cnt} OFFSET #{offset}
     </select>
     
     <select id="allCount" resultType="int">
