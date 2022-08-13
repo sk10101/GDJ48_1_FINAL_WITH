@@ -187,7 +187,7 @@
 	
 	<select id="getCategory" resultType="String">
 		SELECT category_id FROM board_common_column
-			WHERE board_idxx = #{param1}
+			WHERE board_idx = #{param1}
 	</select>
 </mapper>
 

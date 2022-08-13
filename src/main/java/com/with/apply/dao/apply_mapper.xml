@@ -58,4 +58,93 @@
 				</if>
 	</select>
 	
+	<select id="deliApplyList" resultType="board" parameterType="hashmap">
+	SELECT 
+		a.member_id,
+		a.investment,
+		p.penalty_idx,
+		a.apply_date,
+		m.manner_score,
+		a.status
+	FROM apply a, manner_assess m, penalty p, board_common_column b
+	WHERE b.board_idx = a.board_idx AND m.member_id = a.member_id AND a.status = '대기중'
+		<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('제목')">
+							AND subject LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('아이디')">
+							AND member_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+			ORDER BY a.board_idx DESC LIMIT #{cnt} OFFSET #{offset}
+	</select> 
+	
+	<select id="deliallCount" resultType="board" parameterType="hashmap">
+		SELECT a.member_id 
+		FROM apply a, manner_assess m, penalty p, board_common_column b, delivery_board d
+		WHERE a.member_id != b.member_id AND d.board_idx = a.board_idx AND a.member_id = m.member_id
+
+			<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('제목')">
+							AND subject LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('아이디')">
+							AND member_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+	</select>
+	
+	
+	<select id="taxiApplyList" resultType="board" parameterType="hashmap">
+	SELECT 
+		a.member_id,
+		p.penalty_idx,
+		a.apply_date,
+		m.manner_score,
+		b.category_id,
+		a.status
+	FROM apply a, manner_assess m, penalty p, board_common_column b
+	WHERE b.board_idx = a.board_idx AND m.member_id = a.member_id AND a.status = '대기중'
+		<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('제목')">
+							AND subject LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('아이디')">
+							AND member_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+			ORDER BY a.board_idx DESC LIMIT #{cnt} OFFSET #{offset}
+	</select> 
+	
+	<select id="taxiallCount" resultType="board" parameterType="hashmap">
+		SELECT a.member_id 
+		FROM apply a, manner_assess m, penalty p, board_common_column b, taxi_board t
+		WHERE a.member_id != b.member_id AND t.board_idx = a.board_idx AND a.member_id = m.member_id
+
+			<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('제목')">
+							AND subject LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('아이디')">
+							AND member_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+	</select>
+	
 	</mapper>
