@@ -8,6 +8,12 @@
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+	var msg = '${msg}';
+	if (msg != "") {
+		alert(msg);
+	}
+	</script>
 </head>
 <style>
     * {
@@ -160,10 +166,5 @@
 			}else{
 			alert("비밀번호 변경에 실패하셨습니다.");
 		}
-		
-	var msg = '${msg}';
-	if (msg != "") {
-			alert(msg);
-	}
 </script>
 </html>

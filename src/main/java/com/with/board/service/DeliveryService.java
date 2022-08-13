@@ -238,7 +238,7 @@ public class DeliveryService {
 		String gd_restriction = params.get("gd_restriction");
 		
 		// 성별 제한에 걸렸을 때
-		if((dao.getGender(member_id)+'만').equals(gd_restriction)) {
+		if(!(dao.getGender(member_id)+'만').equals(gd_restriction)) {
 			rAttr.addFlashAttribute("msg",gd_restriction + " 가능한 신청입니다.");
 		}
 		// 이미 신청했을 때, 방장이 수락했을 때
@@ -274,6 +274,16 @@ public class DeliveryService {
 	public ModelAndView deliDelete(RedirectAttributes rAttr, String board_idx) {
 		logger.info("배달 게시글 삭제 서비스");
 		ModelAndView mav = new ModelAndView();
+		// 어떤 게시글에서 삭제버튼을 눌렀는지 확인하기 위해 카테고리를 가져온다.
+		String category = dao.getCategory(board_idx);
+		// 카테고리 별로 요청명을 달리하여 보내진다.
+		if(category.equals("배달게시판")) {
+			mav.setViewName("redirect:/deliListGo");
+		} else if (category.equals("밥게시판")) {
+			mav.setViewName("redirect:/mealList.go");
+		} else if (category.equals("택시게시판")) {
+			mav.setViewName("redirect:/texiListGo.go");
+		}
 		
 		// 신청자 > 0 인 경우
 		if(dao.applyCnt(board_idx) > 0) {
@@ -317,16 +327,7 @@ public class DeliveryService {
 	         deliPhotoList.clear();
 			*/
 		}
-		// 어떤 게시글에서 삭제버튼을 눌렀는지 확인하기 위해 카테고리를 가져온다.
-		String category = dao.getCategory(board_idx);
-		// 카테고리 별로 요청명을 달리하여 보내진다.
-		if(category.equals("배달게시판")) {
-			mav.setViewName("redirect:/deliListGo");
-		} else if (category.equals("밥게시판")) {
-			mav.setViewName("redirect:/mealList.go");
-		} else if (category.equals("택시게시판")) {
-			mav.setViewName("redirect:/texiListGo.go");
-		}
+		
 			
 		return mav;
 	}

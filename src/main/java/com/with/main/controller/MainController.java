@@ -11,7 +11,7 @@ public class MainController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	// 정상적으로 로그인을 했을 때 하는 메인페이지 이동 요청
-	@RequestMapping(value = "main", method = RequestMethod.GET)
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main() {
 		return "main";
 	}

@@ -59,7 +59,7 @@
 	
 	<select id="allCount" resultType="board" parameterType="hashmap">
 	 	SELECT board_idx FROM board_common_column
-			WHERE category_id = '배달게시판'
+			WHERE category_id = '배달게시판' AND hide = 0
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -163,7 +163,7 @@
 	
 	<select id="applyCnt" resultType="int">
 		SELECT COUNT(apply_idx) FROM apply
-			WHERE board_idx = #{param1} and status='신청'
+			WHERE board_idx = #{param1} and status='대기중'
 	</select>
 	
 	<select id="partCnt" resultType="int">

@@ -36,7 +36,8 @@ public class LoginController {
 	
 	//로그인 페이지 이동
 	@RequestMapping(value = {"/login","/"}, method = RequestMethod.GET)
-	public String loginForm() {		
+	public String loginForm(HttpServletRequest request,RedirectAttributes rAttr) {
+		
 		return "member/login";
 	}
 	
@@ -75,7 +76,7 @@ public class LoginController {
 	
 	  //로그아웃
 	  @RequestMapping(value="logout", method=RequestMethod.GET)
-	  public String logout(HttpSession session) { 
+	  public String logout(HttpSession session, RedirectAttributes rAttr) { 
 		  session.invalidate();
 		  return "redirect:/login"; 
 		  }
@@ -165,7 +166,7 @@ public class LoginController {
 			session.invalidate();
 			logger.info("이용제한회원이기 때문에 강제 로그아웃 처리합니다.");
 			rAttr.addFlashAttribute("msg","현재 "+chkPenalty+ " 까지 이용제한 중인 계정입니다.");
-			
+			// String msg = "현재 "+chkPenalty+ " 까지 이용제한 중인 계정입니다.";
 			return "redirect:/login";
 		}
 	  

@@ -34,7 +34,7 @@ public class PenaltyInter extends HandlerInterceptorAdapter {
         Date currDate = new Date(miliseconds);
         
 		boolean pass = true; // 원래 이 코드 없이도 작동해야하는데 정상작동이 안돼서 임시방편
-		if(chkPenalty != null) {
+		if(chkPenalty != null) { // 이용제한 날짜가 존재한다면
 			if(currDate.compareTo(chkPenalty) < 0) {
 				System.out.println("이용제한을 받고 있는 상태");
 				// redirect:/ -> http://localhost:8080/{contextPath} 와 같다. 아래의 경우로 사용하기위해 웬만하면 서버설정에서 contextPath 를 지워두자.
