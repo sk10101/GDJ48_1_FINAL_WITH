@@ -188,14 +188,11 @@
 	<select id="getCategory" resultType="String">
 		SELECT category_id FROM board_common_column
 			WHERE board_idx = #{param1}
-<<<<<<< HEAD
-=======
 	</select>
 	
 	<select id="getGender" resultType="String">
 		SELECT gender FROM member
 			WHERE member_id = #{param1}
->>>>>>> origin/master
 	</select>
 </mapper>
 
