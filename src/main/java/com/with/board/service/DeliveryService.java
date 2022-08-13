@@ -229,8 +229,9 @@ public class DeliveryService {
 	}
 
 
-	public void applyDeli(RedirectAttributes rAttr, HashMap<String, String> params) {
+	public ModelAndView applyDeli(RedirectAttributes rAttr, HashMap<String, String> params) {
 		logger.info("배달 게시글 참여 신청 서비스");
+		ModelAndView mav = new ModelAndView();
 		String member_id = params.get("member_id");
 		String board_idx = params.get("board_idx");
 		String investment = params.get("investment");
@@ -257,7 +258,7 @@ public class DeliveryService {
 			dao.applyDeli(member_id,board_idx,investment);
 		}
 		
-		
+		return mav;
 	}
 
 

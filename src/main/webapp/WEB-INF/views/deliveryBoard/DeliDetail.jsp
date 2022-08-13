@@ -192,7 +192,7 @@
 						<td>${part.investment}</td>
 						<c:if test="${partMemberChk > 0}"><td>${part.phone}</td></c:if>
 						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}"><td><input type="button" value="평가하기"/></td></c:if>
-						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId }"><td><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
+						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
 					</tr>
 				</c:forEach>
 			</table>
@@ -200,7 +200,7 @@
 			<input type="hidden" id="lat" value="${info.appoint_coords_lat}"/>
 			<input type="hidden" id="lng" value="${info.appoint_coords_lng}"/>
 			<div id="map" style="width:500px;height:350px;"></div>
-			<c:if test="${info.recruit_end eq 0}">
+			<c:if test="${info.recruit_end eq 0 and info.member_id ne sessionScope.loginId}">
 				<button id="deliPop">참여신청</button><br/>
 			</c:if>
 			<input type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>

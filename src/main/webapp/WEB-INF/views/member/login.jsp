@@ -161,8 +161,8 @@
 			alert("비밀번호 변경에 실패하셨습니다.");
 		}
 		
-	var msg = "${msg}"
-		if (msg != "") {
+	var msg = '${msg}';
+	if (msg != "") {
 			alert(msg);
 	}
 </script>

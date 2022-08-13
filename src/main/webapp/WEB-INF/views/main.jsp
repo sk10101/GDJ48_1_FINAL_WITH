@@ -406,8 +406,8 @@
    /* 아래 코드는 지우지 마세요 */
     $(".sidebar").css("height", ($(".content").height() + $(".footer").height()));
    
-    var msg = "${msg}"
-		if (msg != "") {
+    var msg = '${msg}';
+	if (msg != "") {
 			alert(msg);
 	}
 </script>
