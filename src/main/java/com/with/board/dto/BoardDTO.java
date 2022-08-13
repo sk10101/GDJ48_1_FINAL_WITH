@@ -220,4 +220,21 @@ public int getBoard_idx() {
 		this.partNo = partNo;
 	}
    
+	//배달 참가 리스트 전용 dto
+	private int manner_score;
+	private int penalty_idx;
+
+	public int getPenalty_idx() {
+		return penalty_idx;
+	}
+	public void setPenalty_idx(int penalty_idx) {
+		this.penalty_idx = penalty_idx;
+	}
+	public int getManner_score() {
+		return manner_score;
+	}
+	public void setManner_score(int manner_score) {
+		this.manner_score = manner_score;
+	}
+	
 }
