@@ -30,8 +30,7 @@ public class LoginService {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@Autowired
-	LoginDAO dao;
+	@Autowired LoginDAO dao;
 
 	public MemberDTO login(String id, String pw) {
 		logger.info("로그인 서비스");
@@ -206,11 +205,10 @@ public class LoginService {
 	
 	//비밀번호 찾기
 	public String pwFind(String id, String email) {
-		String pwFind = dao.pwFind(id,email);
-		
-		return pwFind;
+		return dao.pwFind(id,email);
 	}
 
+		//비밀번호 수정
 	  public boolean newPw(String id, String pw) { 
 		  boolean success =dao.newPw(id,pw); 
 		  return success; 

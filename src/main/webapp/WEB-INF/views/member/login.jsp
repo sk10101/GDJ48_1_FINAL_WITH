@@ -153,5 +153,11 @@
 	<jsp:include page="../commons/memberFooter.jsp"/>
 </body>
 <script>
+var pwmsg = ${pwmsg};
+if(pwmsg==true){
+	alert("비밀번호 변경에 성공하셨습니다.");
+}else{
+	alert("비밀번호 변경에 실패하셨습니다.");
+}
 </script>
 </html>

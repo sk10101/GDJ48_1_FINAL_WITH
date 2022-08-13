@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.with.member.dto.KakaoDTO;
 import com.with.member.dto.MemberDTO;
@@ -102,31 +103,45 @@ public class LoginController {
 		  return "member/pwFind";
 	  }	  
 	  
-	  //비밀번호 찾기 > 되면 수정 페이지로 이동 
-		@RequestMapping("/pwFind.ajax")
-		@ResponseBody
-		public String pwFind(@RequestParam String id,@RequestParam String email) {
-			logger.info("아이디 찾기 아이디: "+id);
-			logger.info("아이디 찾기 이메일: "+email);
-			return service.pwFind(id,email);
-		}
-		
+		/*
+		 * //비밀번호 찾기 > 되면 수정 페이지로 이동
+		 * 
+		 * @RequestMapping("/pwFind.ajax")
+		 * 
+		 * @ResponseBody public String pwFind(@RequestParam String id,@RequestParam
+		 * String email) { logger.info("비밀번호 찾기 아이디: "+id);
+		 * logger.info("비밀번호 찾기 이메일: "+email); return service.pwFind(id,email); }
+		 */
+	  
+	//비밀번호 찾기 > 되면 수정 페이지로 이동 
+      @RequestMapping("/pwfind.do")
+      public ModelAndView pwFind(@RequestParam String id,@RequestParam String email) {
+         ModelAndView mav = new ModelAndView();
+    	 logger.info("아이디 찾기 아이디: "+id);
+         logger.info("아이디 찾기 이메일: "+email);
+         String pw = service.pwFind(id,email);
+         mav.addObject("id",id);
+         logger.info("id 값 : "+id);
+         mav.addObject("pw",pw);
+         logger.info("pw 값 : "+pw);
+         mav.setViewName("member/newPw");
+         return mav;
+      }
 	  
 	  //비밀번호찾기-->비밀번호 수정페이지
 		@RequestMapping(value="/newPw")
-		public @ResponseBody HashMap<String, Object>
-		  pwUpdate(@RequestParam HashMap<String,String> params) {
-		  
+		public String newPw(Model model, @RequestParam String id, @RequestParam String pw) {
 		  BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		  logger.info("비밀번호 수정(컨트롤러)"); String pw = encoder.encode(params.get("pw"));
-		  String id = params.get("id");
-		  
+		  logger.info("비밀번호 수정(컨트롤러)");
+		  logger.info("현재 ID : "+id);
+		  logger.info("현재 PW : "+pw);
+		  String newpw = encoder.encode(pw);
+		  logger.info("새로운 암호화 PW : "+newpw);
 		  boolean success = false; 
-		  success = service.newPw(id, pw);
+		  success = service.newPw(id,newpw);
 		  logger.info("비밀번호 찾기 여부 : " + success);
-		  
-		  HashMap<String, Object> map = new HashMap<String, Object>();
-		  map.put("success", success); return map; 
+		  model.addAttribute("pwmsg",success);
+		  return "/member/login"; 
 		  }
 		 
 		
