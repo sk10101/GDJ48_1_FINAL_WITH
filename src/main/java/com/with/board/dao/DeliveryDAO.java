@@ -61,6 +61,8 @@ public interface DeliveryDAO {
 
 	String getCategory(String board_idx);
 
+	String getGender(String member_id);
+
 
 
 
