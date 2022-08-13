@@ -133,13 +133,13 @@ public class DeliveryController {
 	
 	// 참여 신청
 	@RequestMapping(value = "/applyDeli", method = RequestMethod.GET)
-	public ModelAndView applyDeli(HttpSession session, RedirectAttributes rAttr, @RequestParam String member_id, @RequestParam String board_idx, @RequestParam String investment) {
-		logger.info("로그인한 아이디 : " + member_id);
+	public ModelAndView applyDeli(HttpSession session, RedirectAttributes rAttr, @RequestParam HashMap<String, String> params) {
+		logger.info("로그인한 아이디 : " + params.get("member_id"));
 		ModelAndView mav = new ModelAndView();
 		
-		service.applyDeli(rAttr,member_id,board_idx,investment);
+		service.applyDeli(rAttr,params);
 		
-		mav.setViewName("redirect:/deliDetail?board_idx="+board_idx);
+		mav.setViewName("redirect:/deliDetail?board_idx="+params.get("board_idx"));
 		
 		return mav;
 	}

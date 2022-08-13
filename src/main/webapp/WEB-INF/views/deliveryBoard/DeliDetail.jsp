@@ -204,7 +204,7 @@
 				<button id="deliPop">참여신청</button><br/>
 			</c:if>
 			<input type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
-			<input type="button" value="돌아가기" onclick="history.back()"/>
+			<input type="button" value="돌아가기" onclick="location.href='deliListGo'"/>
 	   </div>
 	</div>
 	<!-- 아래부터 참여 신청 모달 부분 -->
@@ -219,6 +219,7 @@
 	           투자 금액 <input type="text" name="investment" placeholder="최소 투자 금액 : ${info.min_fund}" required/><br/>
 	           <input type="hidden" name="member_id" value="id_test"/>
 	           <input type="hidden" name="board_idx" value="${info.board_idx}"/>
+	           <input type="hidden" name="gd_restriction" value="${info.gender}"/>
 	           <input type="submit" value="보내기" style="text-align: right;"/>
         	</form>
         </div>

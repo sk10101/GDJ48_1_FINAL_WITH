@@ -27,11 +27,16 @@
  		SELECT member_id FROM member WHERE name=#{param1} AND email=#{param2}
  	</select> 
  	
- 	<select id="pwFind" parameterType="java.util.HashMap" resultType="String">
+ 	<select id="pwFind" resultType="String">
  		SELECT member_pw FROM member WHERE member_id=#{param1} AND email=#{param2}
  	</select>
  	
 	<update id="newPw">
 			UPDATE member SET member_pw=#{param2} WHERE member_id=#{param1}	 
-	</update> 	 
+	</update>
+	<!-- PenaltyInter 에서 사용하는 쿼리 -->
+	<select id="chkPenalty" resultType="java.sql.Date">
+		SELECT penalty_end FROM penalty
+			WHERE member_id = #{param1} AND cancel = 0
+	</select>
 </mapper>

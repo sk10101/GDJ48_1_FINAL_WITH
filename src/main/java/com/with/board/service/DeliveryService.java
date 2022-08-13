@@ -229,10 +229,19 @@ public class DeliveryService {
 	}
 
 
-	public void applyDeli(RedirectAttributes rAttr, String member_id, String board_idx, String investment) {
+	public void applyDeli(RedirectAttributes rAttr, HashMap<String, String> params) {
 		logger.info("배달 게시글 참여 신청 서비스");
+		String member_id = params.get("member_id");
+		String board_idx = params.get("board_idx");
+		String investment = params.get("investment");
+		String gd_restriction = params.get("gd_restriction");
+		
+		// 성별 제한에 걸렸을 때
+		if((dao.getGender(member_id)+'만').equals(gd_restriction)) {
+			rAttr.addFlashAttribute("msg",gd_restriction + " 가능한 신청입니다.");
+		}
 		// 이미 신청했을 때, 방장이 수락했을 때
-		if(dao.isApplied(member_id,board_idx) > 0) {
+		else if (dao.isApplied(member_id,board_idx) > 0) {
 			rAttr.addFlashAttribute("msg","이미 수락 대기중이거나 수락된 신청입니다.");
 		}
 		// 해당 글에 신청했다가 거절당한 이력이 있을 때
@@ -320,5 +329,4 @@ public class DeliveryService {
 			
 		return mav;
 	}
-
 }

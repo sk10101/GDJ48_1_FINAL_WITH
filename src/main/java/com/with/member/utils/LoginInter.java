@@ -1,4 +1,4 @@
-package com.with.utils;
+package com.with.member.utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
