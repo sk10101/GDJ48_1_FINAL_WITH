@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.with.member.dto.KakaoDTO;
 import com.with.member.dto.MemberDTO;
@@ -39,7 +40,7 @@ public class LoginController {
 	
 	//로그인
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(HttpServletRequest request, Model model, HttpSession session) {		
+	public String login(HttpServletRequest request, Model model, HttpSession session, RedirectAttributes rAttr) {		
 		logger.info("로그인 하기");
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
@@ -57,9 +58,9 @@ public class LoginController {
 		if(loginId != null && member_class != null) {
 			session.setAttribute("loginId", loginId);
 			session.setAttribute("member_class", member_class);
-			
 			msg = loginId + " (" + member_class + ") 님 환영합니다";			
-			page = "main";			
+			rAttr.addFlashAttribute("msg",msg);
+			page = "redirect:/main";			
 		} else {			
 			model.addAttribute("msg", msg);
 			logger.info("로그인 실패");
@@ -173,7 +174,14 @@ public class LoginController {
 		}
 		
 	  
-	  
+		// 로그인한 사용자가 이용제한을 받고 있는 중일 때 Interceptor 에서 보내는 요청
+		@RequestMapping(value = "penaltyLogout", method = RequestMethod.GET)
+		public String penaltyLogout(RedirectAttributes rAttr, @RequestParam String chkPenalty) {
+			session.invalidate();
+			rAttr.addFlashAttribute("msg","현재 "+chkPenalty+ " 까지 이용제한 중인 계정입니다.");
+			
+			return "redirect:/login";
+		}
 	  
 	  
 	
