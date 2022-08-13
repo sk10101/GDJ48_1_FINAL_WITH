@@ -19,7 +19,6 @@ import com.with.member.dto.MemberDTO;
 import com.with.member.service.JoinService;
 
 @Controller
-/* @RequestMapping(value="/member/*") */
 public class JoinController {
 		
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
