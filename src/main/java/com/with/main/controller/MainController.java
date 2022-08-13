@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MainController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	@RequestMapping(value = "/cc", method = RequestMethod.GET)
+	// 정상적으로 로그인을 했을 때 하는 메인페이지 이동 요청
+	@RequestMapping(value = "main", method = RequestMethod.GET)
 	public String main() {
-		return "/main";
+		return "main";
 	}
 }

@@ -90,7 +90,7 @@
 		,recruit_end 
 		,(SELECT COUNT(pt_idx) FROM participant p WHERE bcc.board_idx = p.board_idx AND p.hide = 0) as partNo
 		FROM board_common_column bcc, delivery_board d
-			WHERE bcc.board_idx = d.board_idx AND category_id = '배달게시판'
+			WHERE bcc.board_idx = d.board_idx AND category_id = '배달게시판' AND hide = 0
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -159,6 +159,40 @@
 	<select id="partMemberChk" resultType="int">
 		SELECT COUNT(pt_idx) FROM participant
 			WHERE member_id = #{param1} AND hide = 0 AND board_idx = #{param2}
+	</select>
+	
+	<select id="applyCnt" resultType="int">
+		SELECT COUNT(apply_idx) FROM apply
+			WHERE board_idx = #{param1} and status='신청'
+	</select>
+	
+	<select id="partCnt" resultType="int">
+		SELECT COUNT(pt_idx) FROM participant
+			WHERE board_idx = #{param1} and hide = 0
+	</select>
+	
+	<select id="isEnd" resultType="int">
+		SELECT COUNT(board_idx) FROM board_common_column
+			WHERE board_idx = #{param1} and recruit_end = 1
+	</select>
+	
+	<update id="deliDelete">
+		UPDATE board_common_column SET hide = 1
+			WHERE board_idx = #{param1}
+	</update>
+	
+	<delete id="photoDel">
+		DELETE FROM photo WHERE board_idx = #{param1} and category_id = '배달게시판'
+	</delete>
+	
+	<select id="getCategory" resultType="String">
+		SELECT category_id FROM board_common_column
+			WHERE board_idx = #{param1}
+	</select>
+	
+	<select id="getGender" resultType="String">
+		SELECT gender FROM member
+			WHERE member_id = #{param1}
 	</select>
 </mapper>
 

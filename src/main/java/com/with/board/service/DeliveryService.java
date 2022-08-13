@@ -1,5 +1,6 @@
 package com.with.board.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -79,11 +80,11 @@ public class DeliveryService {
 		ArrayList<BoardDTO> partList = partList(board_idx);
 		
 		mav.addObject("partList",partList);
-		// + 글쓰기에 성공했을 때 참여자 목록에 방장 본인을 동시에 넣어준다.
+		// 참여자 명단에 방장을 맨위에 따로 그려준다 (방장은 investment 변수에 입력한 값이 없어 부득이하게 따로 입력)
 		ArrayList<MemberDTO> partMaster = dao.partMaster(info.getMember_id());
 		// 참여자 명단에 로그인한 아이디가 있는지 확인한다.
 		int partMemberChk = dao.partMemberChk((String) session.getAttribute("loginId"),board_idx);
-		logger.info("해당 방의 참여자 입니까? : " + partMemberChk);
+		logger.info("0 이면 참여자 아님 : " + partMemberChk);
 		mav.addObject("partMemberChk",partMemberChk);
 		mav.addObject("partMaster",partMaster);
 		
@@ -112,6 +113,8 @@ public class DeliveryService {
 		// 파일을 올리지 않아도 fileSave 가 진행되는 것을 방지하는 조건문
 		if(row > 0 & row2 > 0) {
 			deliFileSave(photos, board_idx, "배달게시판");
+			// 글을 작성함과 동시에 참여자 목록에 작성자 본인을 추가해준다.
+			dao.applyMaster(dto.getMember_id(),board_idx);
 		}
 		
 		logger.info("성공 여부 : " + row + " / " + row2);
@@ -226,10 +229,19 @@ public class DeliveryService {
 	}
 
 
-	public void applyDeli(RedirectAttributes rAttr, String member_id, String board_idx, String investment) {
+	public void applyDeli(RedirectAttributes rAttr, HashMap<String, String> params) {
 		logger.info("배달 게시글 참여 신청 서비스");
+		String member_id = params.get("member_id");
+		String board_idx = params.get("board_idx");
+		String investment = params.get("investment");
+		String gd_restriction = params.get("gd_restriction");
+		
+		// 성별 제한에 걸렸을 때
+		if((dao.getGender(member_id)+'만').equals(gd_restriction)) {
+			rAttr.addFlashAttribute("msg",gd_restriction + " 가능한 신청입니다.");
+		}
 		// 이미 신청했을 때, 방장이 수락했을 때
-		if(dao.isApplied(member_id,board_idx) > 0) {
+		else if (dao.isApplied(member_id,board_idx) > 0) {
 			rAttr.addFlashAttribute("msg","이미 수락 대기중이거나 수락된 신청입니다.");
 		}
 		// 해당 글에 신청했다가 거절당한 이력이 있을 때
@@ -240,6 +252,7 @@ public class DeliveryService {
 		else if(dao.isBanned(member_id,board_idx) > 0) {
 			rAttr.addFlashAttribute("msg","이미 모임에서 나간 이력이 있습니다.");
 		} else {
+			// 위 세 경우에 모두 해당되지 않아야 신청이 가능하도록 조건 설정함
 			logger.info("모임 참여 신청 성공");
 			dao.applyDeli(member_id,board_idx,investment);
 		}
@@ -256,17 +269,64 @@ public class DeliveryService {
 		return mav;
 	}
 
-
-	public ModelAndView deliDelete(String board_idx) {
+	@Transactional
+	public ModelAndView deliDelete(RedirectAttributes rAttr, String board_idx) {
 		logger.info("배달 게시글 삭제 서비스");
 		ModelAndView mav = new ModelAndView();
 		
 		// 신청자 > 0 인 경우
-		// 참여자 > 0 인 경우
+		if(dao.applyCnt(board_idx) > 0) {
+			rAttr.addFlashAttribute("msg","이미 모임에 참여신청한 회원이 있습니다.");
+		}
+		// 참여자 > 1 인 경우
+		else if(dao.partCnt(board_idx) > 1) {
+			rAttr.addFlashAttribute("msg","이미 모임에 참여한 회원이 있습니다.");
+		}
 		// 글상태 = '마감' 인 경우
-		// dao.deliDelete(board_idx);
-		
+		else if(dao.isEnd(board_idx) > 0) {
+			rAttr.addFlashAttribute("msg","이미 마감된 게시글입니다.");
+		} else {
+			// 위 세 경우에 모두 해당되지 않아야 글 삭제가 가능하도록 조건 설정함 
+			BoardDTO dto = new BoardDTO();
+			// 해당 board_idx 에 사진이 있는지 확인 (동시에 이름확보)
+			int delCount = dao.deliDelete(board_idx);
+			
+			/* 사진을 삭제하면 블라인드 게시판에서 사진을 확인못하는 상황이 발생... 일단 사진 삭제기능은 빼는 걸로
+			ArrayList<PhotoDTO> deliPhotoList = dao.deliPhotoList(board_idx, "배달게시판");
+		    logger.info(board_idx + " 번 게시물에 업로드된 사진 수 : " + deliPhotoList.size());
+			
+			
+			// 글을 지울 때 사진이 있다면 사진도 함께 지워줘야 한다
+			if(delCount > 0 && deliPhotoList.size() > 0) {
+				// DB 에서 사진정보를 지워준다.
+				dao.photoDel(board_idx);
+				
+				for (PhotoDTO photo : deliPhotoList) {
+			        File f = new File("C:/STUDY/SPRING_ADVANCE/GDJ48_1_FINAL_WITH/src/main/webapp/resources/photo/" + photo.getNewFileName());
+			        logger.info("삭제하려는 이미지의 파일명 : " + photo.getNewFileName());
+			        
+			        if(f.exists()) {
+			            boolean success = f.delete();
+			            logger.info(photo.getNewFileName() + " 의 삭제 여부 : " + success);
+			        }
+				}
+		        
+			}
+			 // 이미지를 지워도 파일이름이 남아있어서 비워줌
+	         deliPhotoList.clear();
+			*/
+		}
+		// 어떤 게시글에서 삭제버튼을 눌렀는지 확인하기 위해 카테고리를 가져온다.
+		String category = dao.getCategory(board_idx);
+		// 카테고리 별로 요청명을 달리하여 보내진다.
+		if(category.equals("배달게시판")) {
+			mav.setViewName("redirect:/deliListGo");
+		} else if (category.equals("밥게시판")) {
+			mav.setViewName("redirect:/mealList.go");
+		} else if (category.equals("택시게시판")) {
+			mav.setViewName("redirect:/texiListGo.go");
+		}
+			
 		return mav;
 	}
-
 }
