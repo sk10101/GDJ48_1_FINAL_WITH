@@ -104,17 +104,7 @@ public class LoginController {
 		  logger.info("비밀번호 찾기 페이지로 이동");
 		  return "member/pwFind";
 	  }	  
-	  
-		/*
-		 * //비밀번호 찾기 > 되면 수정 페이지로 이동
-		 * 
-		 * @RequestMapping("/pwFind.ajax")
-		 * 
-		 * @ResponseBody public String pwFind(@RequestParam String id,@RequestParam
-		 * String email) { logger.info("비밀번호 찾기 아이디: "+id);
-		 * logger.info("비밀번호 찾기 이메일: "+email); return service.pwFind(id,email); }
-		 */
-	  
+	    
 	//비밀번호 찾기 > 되면 수정 페이지로 이동 
       @RequestMapping("/pwfind.do")
       public ModelAndView pwFind(@RequestParam String id,@RequestParam String email) {
@@ -146,42 +136,21 @@ public class LoginController {
 		  return "/member/login"; 
 		  }
 		 
-		
-		
-		  
-		/*
-		 * @RequestMapping(value="/idFind.do") public @ResponseBody HashMap<String,
-		 * Object> idSearch(@RequestParam HashMap<String,String> params) {
-		 * 
-		 * logger.info("아이디찾기요청(컨트롤러)"); String userName = params.get("name"); String
-		 * email = params.get("email");
-		 * 
-		 * String userId = service.idFind(userName, email);
-		 * 
-		 * logger.info("userId : " + userId); boolean success=false;
-		 * 
-		 * HashMap<String, Object> map = new HashMap<String, Object>();
-		 * 
-		 * if(userId == null) { userId = "해당 조건의 아이디를 찾을 수 없습니다."; map.put("success",
-		 * success); map.put("userId", userId); }else { success = true;
-		 * map.put("success", success); map.put("userId", userId); } return map; }
-		 */
-	  
-	  
-	  
-	  // 카카오 로그인 토큰 받기
-		@RequestMapping(value="/kakaoLogin", method=RequestMethod.GET)
-		public String kakaoLogin(@RequestParam(value = "code", required = false) String code, Model model) throws Exception{
-	        System.out.println("#########" + code);
-	        String access_Token = service.getAccessToken(code);
-	        KakaoDTO userInfo = service.getUserInfo(access_Token);
-	        KakaoDTO number = service.kakaoNumber(userInfo);
-	        session.invalidate();
-	        session.setAttribute("kakaoN", userInfo.getK_name());
-	        session.setAttribute("kakaoE", userInfo.getK_email());
-	        session.setAttribute("kakaoNumber", number.getK_number());
-	        return "member/memberMain";
-	    }
+
+			/* //일시 중단...
+			 * // 카카오 로그인 토큰 받기
+			 * 
+			 * @RequestMapping(value="/kakaoLogin", method=RequestMethod.GET) public String
+			 * kakaoLogin(@RequestParam(value = "code", required = false) String code, Model
+			 * model) throws Exception{ System.out.println("#########" + code); String
+			 * access_Token = service.getAccessToken(code); KakaoDTO userInfo =
+			 * service.getUserInfo(access_Token); KakaoDTO number =
+			 * service.kakaoNumber(userInfo); session.invalidate();
+			 * session.setAttribute("kakaoN", userInfo.getK_name());
+			 * session.setAttribute("kakaoE", userInfo.getK_email());
+			 * session.setAttribute("kakaoNumber", number.getK_number()); return
+			 * "member/memberMain"; }
+			 */
 		
 		// 로그인 api 용 Main
 		@RequestMapping(value="Main", method=RequestMethod.GET)
