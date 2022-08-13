@@ -10,6 +10,12 @@
 	<title>With</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="./resources/js/jquery.datetimepicker.full.min.js"></script>
+	<script>
+	var msg = '${msg}';
+	if (msg != "") {
+		alert(msg);
+	}
+	</script>
 </head>
 <style>
     .content-wrap {
@@ -105,10 +111,6 @@
 </div>
 </body>
 <script>
-	var msg = "${msg}"
-		if (msg != "") {
-			alert(msg);
-	}
 
 	function showPopup(){
 	    window.open("deliKakaoMap","팝업 테스트","width=1000, height=1000, top=10, left=10");

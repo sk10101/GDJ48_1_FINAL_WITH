@@ -11,4 +11,12 @@ public interface ApplyDAO {
 
 	ArrayList<BoardDTO> myApplyList(HashMap<String, Object> map);
 
+	ArrayList<BoardDTO> deliallCount(HashMap<String, Object> map);
+
+	ArrayList<BoardDTO> deliApplyList(HashMap<String, Object> map);
+
+	ArrayList<BoardDTO> taxiallCount(HashMap<String, Object> map);
+
+	ArrayList<BoardDTO> taxiApplyList(HashMap<String, Object> map);
+
 }

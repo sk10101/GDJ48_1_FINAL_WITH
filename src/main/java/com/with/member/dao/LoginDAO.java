@@ -1,5 +1,6 @@
 package com.with.member.dao;
 
+import java.sql.Date;
 import java.util.HashMap;
 
 import com.with.member.dto.KakaoDTO;
@@ -21,6 +22,8 @@ public interface LoginDAO {
 	String pwFind(String id, String email);
 
 	boolean newPw(String id, String pw);
+
+	Date chkPenalty(String loginId);
 
 
 
