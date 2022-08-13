@@ -32,7 +32,7 @@
 		-->
 		<mvc:interceptor>
 			<mvc:mapping path="/main"/>
-			<bean class="com.with.member.utils.PenaltyInter"/>
+			<bean class="com.with.report.utils.PenaltyInter"/>
 		</mvc:interceptor>
 		
 	</mvc:interceptors>
