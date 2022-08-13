@@ -287,14 +287,23 @@ public class DeliveryService {
 		
 		// 신청자 > 0 인 경우
 		if(dao.applyCnt(board_idx) > 0) {
+			if(category.equals("배달게시판")) {
+				mav.setViewName("redirect:/deliDetail?board_idx="+board_idx);;
+			}
 			rAttr.addFlashAttribute("msg","이미 모임에 참여신청한 회원이 있습니다.");
 		}
 		// 참여자 > 1 인 경우
 		else if(dao.partCnt(board_idx) > 1) {
+			if(category.equals("배달게시판")) {
+				mav.setViewName("redirect:/deliDetail?board_idx="+board_idx);;
+			}
 			rAttr.addFlashAttribute("msg","이미 모임에 참여한 회원이 있습니다.");
 		}
 		// 글상태 = '마감' 인 경우
 		else if(dao.isEnd(board_idx) > 0) {
+			if(category.equals("배달게시판")) {
+				mav.setViewName("redirect:/deliDetail?board_idx="+board_idx);;
+			}
 			rAttr.addFlashAttribute("msg","이미 마감된 게시글입니다.");
 		} else {
 			// 위 세 경우에 모두 해당되지 않아야 글 삭제가 가능하도록 조건 설정함 
