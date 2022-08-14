@@ -58,60 +58,46 @@
         <div class="logo"><a href="#"><img src="./resources/images/logo.png" alt="logo"></a></div>  
         <div class="content">
             <!-- 여기에서 작업 시작하세요 -->
-	<h3 id="title">PW 찾기</h3>
-	<table class="idFindTable">
+	<h3>PW 찾기</h3>
+	<form action="newPw" method="POST">
+	<table>
 		<tr>
-			<th class="col1">비밀번호</th>
-			<td class="FindCol2">
-				<input type="password" name="userPw"  id = "id"  placeholder="변경할 비밀번호"/>
+			<th>비밀번호</th>
+			<td>
+				<input type="hidden" name="id" id="id" value="${id}"/>
+				<input type="password" name="pw" id="pw" required="required"/>
 			</td>
 		</tr>	
 		<tr>
-			<th class="col1">비밀번호확인</th>
-			<td class="FindCol2">
-				<input type="password" name="pwChk" id ="PasswordChk" placeholder="변경할 비밀번호" />
+			<th>비밀번호확인</th>
+			<td>
+				<p><input type="password" name="pw1" id="pw1" required="required"/><font id="chkNotice" size="2"></font></p>
 			</td>
 		</tr>
 	</table>
-		<div class="FindBtn-area">
-			<button class="FindBtn" type="button" onclick="pwUpdate()">수정</button>
-			<button class="FindBtn" type="button" onclick="location.href='./login.go'">취소</button>
-		</div>           
+			<!-- <button class="FindBtn" type="button" onclick="pwUpdate()">수정</button>
+			<button class="FindBtn" type="button" onclick="location.href='./login.go'">취소</button> -->
+			<input type="submit" value="확인"/>
+			<input type="button" onclick="location.href='/'" value="돌아가기"/>
+			</form>
       </div>
     </div>
 	<jsp:include page="../commons/memberFooter.jsp"/>
 </body>
 <script>
-var userId =""; // 비밀번호 변경화면으로 바뀌었을때 아이디값이 필요
-
-$("#pwUpdate").click(function(){
-	  if($( "input[name='userPw']").val()=="" ||  pwdCheck == 0 ){//비밀번호 입력 확인
-			alert("비밀 번호를 확인 해 주세요");
-			$("input[name='userPw']").focus();//포커스 이동
-		}else if($("input[name='pwChk']").val()!=$("input[name='userPw']").val() || pwdCheck == 0 ){//비밀번호가 서로 일치하는지 확인
-			alert("비밀번호 일치 확인 해주세요");
-			$("input[name='pwChk']").focus();//포커스 이동
-		}else{
-	  $.ajax({
-		  url: "./newPw",
-		  type: "post",
-		  dataType: "json",
-		  data: {
-			 "pw": $("input[name='userPw']").val(), 
-			 "id" : userId
-		  },
-		  success:function(d){
-			  if(d.success){
-				  alert("비밀번호 변경이 완료되었습니다.");
-				  location.href="./";
-			  }else{
-				  alert("비밀번호 변경 실패");
-			  }
-		  }  
-	  });
-	}
+//비밀번호 일치 불일치 여부 확인후 내용띄우기
+$(function(){
+    $('#pw1').keyup(function(){
+		
+        if($('#pw').val() == $('#pw1').val()){
+        	$("#chkNotice").html(' ※일치');
+            $("#chkNotice").css('color','blue');
+        } else{
+          $("#chkNotice").html(' ※불일치');
+          $("#chkNotice").css('color','red');
+        }
+    });
 });
-
 
 </script>
 </html>

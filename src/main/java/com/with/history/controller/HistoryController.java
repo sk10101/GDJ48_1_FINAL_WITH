@@ -72,9 +72,24 @@ public class HistoryController {
 		if(category_id.equals("배달게시판")){
 			page = "redirect:/deliDetail?board_idx="+board_idx; 
 		}else if (category_id.equals("밥게시판")){
-			page = "redirect:/MealDetail?board_idx="+board_idx; 
+			page = "redirect:/mealDetail?board_idx="+board_idx; 
 		}else if(category_id.equals("택시게시판")){
 			page = "redirect:/taxiDetail?board_idx="+board_idx;
+		}
+		return page;
+	}
+	
+	@RequestMapping("/applydetail.go")
+	public String applyDetail(Model model, @RequestParam String board_idx, @RequestParam String category_id) {
+		logger.info(category_id);
+		logger.info(board_idx);
+		String page = "";
+		if(category_id.equals("배달게시판")){
+			page = "redirect:/deliApplyList.go?board_idx="+board_idx; 
+		}else if (category_id.equals("밥게시판")){
+			page = "redirect:/mealApplyList?board_idx="+board_idx; 
+		}else if(category_id.equals("택시게시판")){
+			page = "redirect:/taxiApplyList.go?board_idx="+board_idx;
 		}
 		return page;
 	}

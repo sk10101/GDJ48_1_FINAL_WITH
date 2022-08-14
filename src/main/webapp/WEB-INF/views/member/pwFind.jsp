@@ -59,65 +59,33 @@
         <div class="content">
 		 <!-- 여기에서 작업 시작하세요 -->
 	<h3 id="title">PW 찾기</h3>
-	<table class="idFindTable">
+	<form action="pwfind.do" method="POST">
+	<table>
 		<tr>
-			<th class="col1">아이디</th>
-			<td class="FindCol2">
-				<input type="text" id = "id"/>
+			<th>아이디</th>
+			<td>
+				<input type="text" id="id" name="id" required="required"/>
 			</td>
 		</tr>	
 		<tr>
-			<th class="col1">이메일</th>
-			<td class="FindCol2">
-				<input type="email" id = "email"/>
+			<th>이메일</th>
+			<td>
+				<input type="email" id="id" name="email" required="required"/>
 			</td>
 		</tr>
-	</table>
-		<div class="FindBtn-area">
+			<!-- 
 			<button class="FindBtn" type="button" onclick="pwFind()">PW찾기</button>
 			<button class="FindBtn" type="button" onclick="location.href='./login.go'">취소</button>
-		</div>           
-      </div>
+			 -->
+	</table>
+	<button>확인</button>
+	<input type="button" onclick="location.href='/'" value="돌아가기"/>
+	</form>  
+     </div>
     </div>
 	<jsp:include page="../commons/memberFooter.jsp"/>
 </body>
 <script>
-function pwFind(){
-	var id =$("#id").val()	
-	var email =$("#email").val()
-	 if(id== ""|| id == null){
-         alert("아이디를 입력해주세요");
-         $("#id").focus();
-         return false;
-      }
-	 if(email== ""|| email == null){
-         alert("이메일을 입력해주세요");
-         $("#email").focus();
-         return false;
-      }
-	
-	$.ajax({
-		type:'get',
-		url:'pwFind.ajax',
-		data:{
-			id :id,
-			email :email},
-		dataType:'text',
-		success:function(data){			
-			if(data){
-				alert("비밀번호 수정 페이지로 이동합니다.");
-				 location.href="../newPw"
-			}else{
-				alert("회원님의 정보를 찾을수 없습니다.");				
-			}
-		},
-		error:function(e){
-			console.log(e);
-		}			
-	});
-}
-
-
 
 </script>
 </html>

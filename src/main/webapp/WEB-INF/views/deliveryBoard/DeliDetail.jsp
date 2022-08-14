@@ -9,6 +9,12 @@
 	<title>With</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=303e3eb3eab9c15e38c80a5c6f8d0caf&libraries=services"></script>
+	<script>
+	var msg = '${msg}';
+	if (msg != "") {
+		alert(msg);
+	}
+	</script>
 </head>
 <style>
     .content-wrap {
@@ -127,7 +133,7 @@
 				</tr>
 				<tr>
 					<td>마감시간 : ${info.deadline}</td>
-					<td>인원 : ${partList.size()} / ${info.member_cnt + 1}</td>
+					<td>인원 : ${partList.size() + 1} / ${info.member_cnt + 1}</td>
 				</tr>
 				<tr>
 				</tr>
@@ -171,9 +177,6 @@
 					<c:if test="${partMemberChk > 0}"><th>평가</th></c:if>
 					<c:if test="${info.member_id eq sessionScope.loginId}"><th>강퇴</th></c:if>
 				</tr>
-				<c:if test="${partList.size() eq 0}">
-					<tr><td colspan="5">참여한 회원이 없습니다.</td></tr>			
-				</c:if>
 				<c:forEach items="${partMaster}" var="ptm">
 					<tr>
 						<td>${ptm.member_id}</td>
@@ -192,7 +195,7 @@
 						<td>${part.investment}</td>
 						<c:if test="${partMemberChk > 0}"><td>${part.phone}</td></c:if>
 						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}"><td><input type="button" value="평가하기"/></td></c:if>
-						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId }"><td><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
+						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
 					</tr>
 				</c:forEach>
 			</table>
@@ -200,11 +203,13 @@
 			<input type="hidden" id="lat" value="${info.appoint_coords_lat}"/>
 			<input type="hidden" id="lng" value="${info.appoint_coords_lng}"/>
 			<div id="map" style="width:500px;height:350px;"></div>
-			<c:if test="${info.recruit_end eq 0}">
+			<c:if test="${info.recruit_end eq 0 and info.member_id ne sessionScope.loginId}">
 				<button id="deliPop">참여신청</button><br/>
 			</c:if>
-			<input type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
-			<input type="button" value="돌아가기" onclick="history.back()"/>
+			<c:if test="${info.member_id eq sessionScope.loginId}">
+				<input type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
+			</c:if>
+			<input type="button" value="돌아가기" onclick="location.href='deliListGo'"/>
 	   </div>
 	</div>
 	<!-- 아래부터 참여 신청 모달 부분 -->
@@ -219,6 +224,7 @@
 	           투자 금액 <input type="text" name="investment" placeholder="최소 투자 금액 : ${info.min_fund}" required/><br/>
 	           <input type="hidden" name="member_id" value="id_test"/>
 	           <input type="hidden" name="board_idx" value="${info.board_idx}"/>
+	           <input type="hidden" name="gd_restriction" value="${info.gender}"/>
 	           <input type="submit" value="보내기" style="text-align: right;"/>
         	</form>
         </div>
@@ -226,10 +232,6 @@
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script type="text/javascript">
-	var msg = "${msg}"
-		if (msg != "") {
-			alert(msg);
-	}
 
     $("#deliPop").click(function() {
         $("#banner_online").show();
