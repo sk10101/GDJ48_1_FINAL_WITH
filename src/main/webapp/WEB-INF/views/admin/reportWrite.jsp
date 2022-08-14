@@ -65,21 +65,19 @@
 	</div>
 </body>
 <script>
-
-/* var chkId = $('#chkId').val();
-if(chkId == null){
-	alert("사유를 선택해주세요.");
-} */
-
+/* var msg = "${msg}"
+	if (msg != "") {
+	alert(msg);
+	} */
+	
 function windowclose(){
 	window.close();
 }
 
 $("#send_button").click(function(){
-	$("#send").submit();
+	$("#send").submit()
 	setTimeout(function() {
 		window.close();
-		
 	 }, 10);
 });
 

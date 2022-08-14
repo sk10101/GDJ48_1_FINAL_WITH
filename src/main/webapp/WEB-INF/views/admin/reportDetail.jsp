@@ -32,8 +32,65 @@
 	<div class="content-wrap">
 	   <jsp:include page="../commons/adminSideBar5.jsp"/>
 	   <div class="content">
-	       <!-- 여기에서 작업 시작하세요 -->
-	     
+	   	<form action="reportcom" method="get">
+			<table>
+			<input type="hidden" id="member_id" name="member_id" value="${info.member_id}"/>
+			<input type="hidden" id="report_idx" name="report_idx" value="${info.report_idx}"/>
+		       	<tr>
+		       		<th>회원ID</th>
+		       		<td>${info.member_id}</td>
+		       	</tr>
+		       	<tr>
+		       		<th>이용서비스</th>
+		       		<td>${info.category_id}</td>
+		       	</tr>
+		       	<tr>
+		       		<th>글번호</th>
+		       		<td>${info.board_idx}</td>
+		       	</tr>
+		       	<tr>
+		       		<th>제목</th>
+		       		<td>${info.subject}</td>
+		       	</tr>
+		       	<tr>
+		       		<th>신고사유</th>
+		       		<td>${info.report_content}</td>
+		       	</tr>
+		       	<tr>
+		       		<th>처리한 관리자ID</th>
+		       		<td>${info.report_admin}</td>
+		       	</tr>
+		       	<tr>
+		       		<th>처리날짜</th>
+		       		<td><%-- ${패널티DTO써서 따로 가져올거임} --%></td>
+		       	</tr>
+		       	<tr>
+		       		<th>처리사유</th>
+		       		<c:if test="${info.report_reason eq null}"><td><input type="text" id="report_reason" name="report_reason"/></td></c:if>
+		       		<c:if test="${info.report_reason ne null}"><td>${info.report_reason}</td></c:if>
+		       	</tr>
+		       	<tr>
+		       		<th>처리상태</th>
+		       		<c:if test="${info.status eq '처리완료'}"><td>${info.status}</td></c:if>
+		       		<c:if test="${info.status ne '처리완료'}">
+			       		<td>
+			       			<select name="status" id="status" onchange="selectBoxChange(this.value);">
+		                   		<option value="미처리" selected="selected">미처리</option>
+		                   		<option value="처리중">처리중</option>
+		                   		<option value="처리완료">처리완료</option>
+		              		</select>
+	               		</td>
+               		</c:if>
+		       	</tr>
+		       	<tr>
+		       		<th>제한종료날짜</th>
+		       		<c:if test="${info.report_reason eq null}"><td><input type="date" id="penalty_end" name="penalty_end"/></td></c:if>
+		       		<c:if test="${info.report_reason ne null}"><td>${info.report_reason}</td></c:if>
+		       	</tr>
+	       </table>
+		       <input type="button" value="돌아가기" onclick="location.href='reportList.go'"/>
+		       <input type="submit" value="처리"/>
+	       </form>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>

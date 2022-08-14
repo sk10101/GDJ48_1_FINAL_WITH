@@ -141,6 +141,11 @@
 	  z-index: 99;
 	  display: none;
 	}
+	
+	#link {
+		color : black;
+	}
+	
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>

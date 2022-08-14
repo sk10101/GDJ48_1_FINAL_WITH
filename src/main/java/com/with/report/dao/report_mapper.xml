@@ -13,5 +13,27 @@
 		INSERT INTO report (board_idx, reporter_id, report_content)
 		VALUE (#{board_idx}, 'test2', #{report_content})
 	</insert>
+	
+	<select id="reportchk" parameterType="hashmap" resultType="int">
+		SELECT count(report_idx) FROM report WHERE board_idx = #{board_idx} AND reporter_id = 'test2'
+	</select>
+	
+	<select id="reportdetail" resultType="report">
+		SELECT b.member_id, b.category_id, b.board_idx, b.subject, r.report_content, r.report_admin, r.report_reason, r.status, r.report_idx
+		FROM report r, board_common_column b
+		WHERE r.board_idx = b.board_idx AND report_idx = #{param1}
+	</select>
+	
+	<insert id="reportcom" parameterType="hashmap">
+		INSERT INTO penalty (penalty_end, member_id, penalty_admin)
+		VALUES (#{penalty_end}, #{member_id}, 'admin1')
+	</insert>
+
+	<update id="penaltycom" parameterType="hashmap">
+		UPDATE report SET report_admin = 'admin', report_reason = #{report_reason}, status = #{status}
+		WHERE report_idx = #{report_idx}
+	</update>
 
 </mapper>
+
+<!-- , penalty p , p.penalty_date, p.penalty_end -->

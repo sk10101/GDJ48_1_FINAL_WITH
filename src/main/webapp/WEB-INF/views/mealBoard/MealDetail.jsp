@@ -105,6 +105,10 @@
   display: none;
 }
     
+    #link {
+		color : black;
+	}
+    
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -142,7 +146,7 @@
 				<tr>
 					<td><img alt="성별제한" src="../resources/images/gender.png" style="width:20px; height:20px;"> ${info.gender}</td>
 					<!-- 신고하기위해 살짝 수정함 -제한- -->
-					<td><a href="#" onclick="reportPop()"><span style="border:1px solid black; background-color:red;">신고</span></a></td>
+					<td><a id="link" href="#" onclick="reportPop()"><span style="border:1px solid black; background-color:red;">신고</span></a></td>
 				</tr>
 			</table>
 			<hr>
@@ -264,7 +268,6 @@
 	        $("#modal").fadeOut();
 	    });
 	});	
-<script>
 
 <!-- 신고하기위해 추가함 -제한- -->
 function reportPop(){

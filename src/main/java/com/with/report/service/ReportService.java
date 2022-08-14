@@ -27,17 +27,50 @@ public class ReportService {
 		return mav;
 	}
 	
-	public void reportsend(HashMap<String, String> params) {
+	public ModelAndView reportsend(HashMap<String, String> params) {
 		logger.info("게시글 신고 서비스");
+		ModelAndView mav = new ModelAndView("admin/reportWrite");
 		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("board_idx", params.get("board_idx"));
-		if(params.get("check").equals("기타")) {
-			map.put("report_content", params.get("textbox"));
-		} else {
-			map.put("report_content", params.get("check"));			
+		int reportchk = dao.reportchk(params);
+		logger.info("신고 횟수 : "+reportchk);
+		String msg = "이미 신고한 게시글 입니다.";
+		if(reportchk == 0) {
+			msg = "신고에 성공 했습니다.";
+			map.put("board_idx", params.get("board_idx"));
+			if(params.get("check").equals("기타")) {
+				map.put("report_content", params.get("textbox"));
+			} else {
+				map.put("report_content", params.get("check"));			
+			}
+			dao.reportsend(map);
 		}
-		dao.reportsend(map);
+		mav.addObject("msg", msg);
+		return mav;
 		}
+
+	public ModelAndView reportdetail(String report_idx) {
+		ModelAndView mav = new ModelAndView("admin/reportDetail");
+		ReportDTO list = dao.reportdetail(report_idx);
+		mav.addObject("info", list);
+		return mav;
 	}
+
+	public String reportcom(HashMap<String, String> params) {
+		logger.info("신고 처리 서비스");
+		//ModelAndView mav = new ModelAndView("admin/reportDetail");
+		logger.info(params.get("report_reason")+params.get("penalty_end")+params.get("status")+params.get("member_id")+params.get("report_idx"));
+		String msg = "신고 처리에 실패 했습니다.";
+		boolean success = dao.reportcom(params);
+		dao.penaltycom(params);
+		logger.info("success");
+		/*if(success == true) {
+			msg = "신고 처리 되었습니다.";
+		}
+		mav.addObject("msg", msg);*/
+		return "redirect:/reportList.go";
+	}
+	
+	
+}
 
 

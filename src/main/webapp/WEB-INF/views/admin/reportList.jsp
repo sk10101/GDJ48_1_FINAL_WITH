@@ -53,13 +53,13 @@
 					<td>${report.category_id}</td>
 					<td><c:if test="${report.category_id eq '배달게시판'}"><a href="deliDetail?board_idx=${report.board_idx}">${report.subject}</a></c:if></td>
 					<td><c:if test="${report.category_id eq '택시게시판'}"><a href="taxiDetail?board_idx=${report.board_idx}">${report.subject}</a></c:if></td>
-					<td><c:if test="${report.category_id eq '밥게시판'}"><a href="?board_idx=${report.board_idx}">${report.subject}</a></c:if></td>
+					<td><c:if test="${report.category_id eq '밥게시판'}"><a href="mealDetail?board_idx=${report.board_idx}">${report.subject}</a></c:if></td>
 					<td>${report.reporter_id}</td>
 					<td>${report.report_date}</td>
 					<td>${report.report_content}</td>
 					<td>${report.report_admin}</td>
 					<td>${report.status}</td>
-					<td><a href="admin/reportDetail?report_idx=${report.report_idx}"><input type="button" value="처리하기"/></a></td>
+					<td><a href="reportDetail?report_idx=${report.report_idx}"><input type="button" value="처리하기"/></a></td>
 				</tr>
 			</c:forEach>
 			</tbody>
