@@ -153,11 +153,12 @@ public class LoginController {
 			 * "member/memberMain"; }
 			 */
 		
-		// 로그인 api 용 Main
-		@RequestMapping(value="Main", method=RequestMethod.GET)
-		public String Main(){
-			return "member/memberMain";
-		}
+			/*
+			 * // 로그인 api 용 Main
+			 * 
+			 * @RequestMapping(value="Main", method=RequestMethod.GET) public String Main(){
+			 * return "member/memberMain"; }
+			 */
 		
 	  
 		// 로그인한 사용자가 이용제한을 받고 있는 중일 때 Interceptor 에서 보내는 요청
