@@ -20,6 +20,7 @@
 		<!-- 관리자만 들어갈 수 있는 페이지에 일반회원 접근을 막는 Interceptor -->
 		<mvc:interceptor>
 			<mvc:mapping path="/reportList"/>
+			<mvc:mapping path="/superBlind"/>
 			<bean class="com.with.member.utils.MemberInter"/>
 		</mvc:interceptor>
 		<!-- 나중에 인터페이스 추가하면서 주석 해제할 것
