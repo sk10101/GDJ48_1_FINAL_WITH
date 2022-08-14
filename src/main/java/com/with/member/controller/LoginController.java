@@ -107,7 +107,7 @@ public class LoginController {
 	  }	  
 	    
 	//비밀번호 찾기 > 되면 수정 페이지로 이동 
-      @RequestMapping("/pwfind.do")
+      @RequestMapping("/pwFind.do")
       public ModelAndView pwFind(@RequestParam String id,@RequestParam String email) {
          ModelAndView mav = new ModelAndView();
     	 logger.info("아이디 찾기 아이디: "+id);

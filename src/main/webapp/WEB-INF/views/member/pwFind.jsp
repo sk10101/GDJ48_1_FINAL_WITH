@@ -59,7 +59,7 @@
         <div class="content">
 		 <!-- 여기에서 작업 시작하세요 -->
 	<h3 id="title">PW 찾기</h3>
-	<form action="pwfind.do" method="POST">
+	<form action="pwFind.do" method="POST">
 	<table>
 		<tr>
 			<th>아이디</th>
