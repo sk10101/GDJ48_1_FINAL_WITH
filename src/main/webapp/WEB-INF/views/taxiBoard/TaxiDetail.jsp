@@ -146,6 +146,14 @@
 		color : black;
 	}
 	
+	.eye {
+        position: absolute;
+        z-index: 1;
+        width: 27px;
+        right: 665px;
+        top: 105px;
+    }
+
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -153,7 +161,7 @@
 	   <jsp:include page="../commons/memberSideBar2.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	       
+	       <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${info.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
 	       <!-- 모달팝업창 -->
  	       <form action="taxiApplyDo" method="post">
 			   <div id= "modal"> 
@@ -272,7 +280,7 @@
 	       		</tr>
 	       		<tr>
 	       			<td colspan="4" style="text-align: center">
-		       			<input type="button" value="삭제" onclick="location.href=''"/>
+		       			<input type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
 						<input type="button" value="돌아가기" onclick="location.href='/taxiList?page=${sessionScope.page}&option=${sessionScope.option}&word=${sessionScope.word}'"/>
 					</td>
 	       		</tr>

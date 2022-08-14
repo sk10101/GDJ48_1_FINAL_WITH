@@ -1,5 +1,6 @@
 package com.with.member.dao;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,5 +28,6 @@ public interface MemberDAO {
 	ArrayList<MemberDTO> blockList(HashMap<String, Object> map);
 
 	void blockDelete(String member_id, String block_member);
+
 
 }

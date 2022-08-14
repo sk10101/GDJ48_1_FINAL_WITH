@@ -116,6 +116,7 @@
 	   <jsp:include page="../commons/memberSideBar1.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
+	       <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${info.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
 	     	<table>
 	     		<tr>
 	     			<td class='subject'>     ${info.subject}</td>
@@ -199,7 +200,7 @@
 			<c:if test="${info.recruit_end eq 0}">
 				<button id="openModalPop">참여신청</button><br/>
 			</c:if>
-			<input type="button" value="삭제" onclick="location.href='replyUpdate.go?reply_id=${reply.reply_id}&claim_id=${claim.claim_id}'"/>
+			<input type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
 			<input type="button" value="돌아가기" onclick="history.back()"/>
 	   </div>
 	</div>
