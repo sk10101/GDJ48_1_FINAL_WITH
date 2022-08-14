@@ -29,4 +29,5 @@ public interface MemberDAO {
 
 	void blockDelete(String member_id, String block_member);
 
+
 }
