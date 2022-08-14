@@ -279,4 +279,18 @@
 	INSERT INTO participant(member_id, board_idx) VALUES(#{member_id}, #{board_idx})
 </insert>
 
+<select id="chkPt" resultType="int">
+	SELECT COUNT(*) FROM participant WHERE board_idx = #{param1} AND member_id = #{param2} AND hide = 0
+</select>
+
+<select id="chkSuper" resultType="int">
+	SELECT COUNT(*) 
+	FROM 
+	participant p, 
+	board_common_column bcc 
+	WHERE 
+	board_idx = #{param1} AND
+	member_id = #{param2} AND hide = 0
+</select>
+
 </mapper>

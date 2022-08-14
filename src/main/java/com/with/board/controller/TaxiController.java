@@ -1,6 +1,7 @@
 package com.with.board.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 

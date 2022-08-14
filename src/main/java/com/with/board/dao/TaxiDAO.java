@@ -62,4 +62,8 @@ public interface TaxiDAO {
 
 	String chkGender(HashMap<String, Object> params);
 
+	int chkPt(String board_idx, String loginId);
+
+	int chkSuper(String board_idx, String loginId);
+
 }

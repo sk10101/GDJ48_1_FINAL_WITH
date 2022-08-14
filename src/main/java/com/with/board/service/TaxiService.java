@@ -101,13 +101,17 @@ public class TaxiService {
 		// 참여해있는 인원의 이름, 성별, 연락처를 불러오는 코드
 		ArrayList<MemberDTO> pt = dao.taxiParticipant(board_idx);
 		
-//		int recruitEnd = dao.recruitEnd(board_idx);
+		// 아래부터는 참여현황 관련 코드
+		
+		// 로그인한 아이디가 특정 게시글의 participant 에 들어가있는지 확인해주는 코드
+		int chkPt = dao.chkPt(board_idx, loginId);
 		
 		mav.addObject("list", list);
 		mav.addObject("photo", photo);
 		mav.addObject("count", count);
 		mav.addObject("pt", pt);
 		mav.addObject("phone", phone);
+		mav.addObject("chkPt", chkPt);
 		mav.setViewName("taxiBoard/TaxiDetail");
 		
 		return mav;
@@ -288,14 +292,14 @@ public class TaxiService {
 			// 아니면 '여자만' 으로 바꿔준다.
 			
 			// 이후 gender(ex '남자만') 와 chkGender(ex '남자') 가 일치하거나 or gender 가 '상관없음' 이라면 신청을 허가한다.
-			String chkGender = dao.chkGender(params);
+			String chkGender = dao.chkGender(params) + "만";
 			
 			// 성별 비교를 위해 텍스트를 변환해주는 코드
-			if (chkGender.equals("남자")) {
-				chkGender = "남자만";
-			} else {
-				chkGender = "여자만";
-			}
+//			if (chkGender.equals("남자")) {
+//				chkGender = "남자만";
+//			} else {
+//				chkGender = "여자만";
+//			}
 			
 			
 			if (recruitEnd == 1) {
@@ -307,7 +311,7 @@ public class TaxiService {
 			} else if (chkElim > 0) {
 				rAttr.addFlashAttribute("msg", "이미 모임에서 나간 이력이 있습니다.");
 			} else if (!chkGender.equals(gender) && !gender.equals("상관없음")) {
-				rAttr.addFlashAttribute("msg", gender + " 가능한 신청입니다.");
+				rAttr.addFlashAttribute("msg", gender + " 신청 가능합니다.");
 			}
 			else {
 				int row = dao.taxiApply(params);

@@ -193,6 +193,14 @@
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script type="text/javascript">
+
+	var msg = "${msg}";
+	
+	if(msg != "") {
+		alert(msg);
+	}
+
+
 	var page = 1; // 초기 페이지 번호
 	var word = $('#word').val();
 	var option = $('#option').val();

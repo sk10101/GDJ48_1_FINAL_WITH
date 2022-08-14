@@ -161,7 +161,7 @@
 	   <jsp:include page="../commons/memberSideBar2.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	       <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${info.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
+	       <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${list.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
 	       <!-- 모달팝업창 -->
  	       <form action="taxiApplyDo" method="post">
 			   <div id= "modal"> 
@@ -261,23 +261,28 @@
 	       		<c:forEach items="${pt}" var="pt">
 		       		<tr>
 	       				<th class="ptList">
+	       					<!-- 참여자와 방장의 아이디가 같으면 왕관 아이콘을 붙여준다. -->
 	       					<c:if test="${pt.member_id eq list.member_id}">
 	       						<img id="crown" src="./resources/images/crown.png" alt="crown"/>
 	       					</c:if>
 	       					${pt.member_id}
 	       				</th>
 		       			<td class="ptList">${pt.gender}</td>
-		       			<%-- <c:if test="${sessionScope.loginId eq pt.member_id}"> --%>
+		       			<!-- 현재 로그인한 아이디가 이 방의 참여인원으로 있다면 연락처를 보여준다. -->
+		       			<c:if test="${chkPt > 0}">
 		       				<td class="ptList">${pt.phone}</td>
-		       			<%-- </c:if> --%>	
+		       			</c:if>	
 		       			<!-- 내 아이디가 참여인원에 들어가 있어야 평가하기가 보여야 한다. -->
 		       			<!-- 마감된 글에서만 평가하기가 보여야 한다. -->
 		       			<!-- 한번 평가했다면 버튼은 사라져야한다. (해야할 것) -->
-	       				<c:if test="${sessionScope.loginId eq pt.member_id and list.recruit_end == 1}">
-		       				<td class="ptList"><input type="button" class="manner" value="평가하기" onclick="location.href='/mannerDo?member_id=${pt.member_id}'"/></td>
+	       				<c:if test="${chkPt > 0 and list.recruit_end == 1}">
+		       				<td class="ptList">
+		       					<input type="button" class="manner" value="평가하기" onclick="location.href='/mannerDo?member_id=${pt.member_id}'"
+		       					<c:if test="${pt.member_id eq sessionScope.loginId}">hidden</c:if>/>
+		       				</td>
 		       			</c:if>
 	       				<!-- 강퇴 열 방장빼고는 아예 못보게 한다. -->
-	       				<c:if test="${sessionScope.loginId eq list.member_id}">
+	       				<c:if test="${list.member_id eq sessionScope.loginId}">
 		       				<td class="ptList">
 		       					<input type="button" class="elim" value="강퇴" onclick="location.href='/elimDo?member_id=${pt.member_id}'" <c:if test="${pt.member_id eq list.member_id}">hidden</c:if>/>
       						</td>
@@ -302,7 +307,9 @@
 	       		</tr>
 	       		<tr>
 	       			<td colspan="4" style="text-align: center">
-		       			<input type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
+		       			<c:if test="${sessionScope.loginId eq list.member_id}">
+			       			<input type="button" value="삭제" onclick="location.href='/deliDelete?board_idx=${list.board_idx}'"/>
+			       		</c:if>	
 						<input type="button" value="돌아가기" onclick="location.href='/taxiList?page=${sessionScope.page}&option=${sessionScope.option}&word=${sessionScope.word}'"/>
 					</td>
 	       		</tr>
@@ -385,7 +392,7 @@
 
 	<!-- 신고하기위해 추가함 -제한- -->
 	function reportPop(){
-		window.open('reportWrite.go?board_idx=${info.board_idx}','report','width=1000, height=600, top=200, left=500')
+		window.open('reportWrite.go?board_idx=${list.board_idx}','report','width=1000, height=600, top=200, left=500')
 	}
 	
 </script>
