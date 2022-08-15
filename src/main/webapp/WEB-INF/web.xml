@@ -60,7 +60,7 @@
 	</servlet-mapping>
 	<!-- 세션의 유효시간 설정 -->
 	<session-config>
-    	<session-timeout>30</session-timeout>                                                
+    	<session-timeout>60</session-timeout>                                                
 	</session-config>
 	
 </web-app>
