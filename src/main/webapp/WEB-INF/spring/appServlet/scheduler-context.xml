@@ -18,5 +18,11 @@
 	<task:scheduled-tasks>
 		<task:scheduled ref="scheduleJob" method="deadline" cron=" */1 * * * * MON-FRI"/>
 	</task:scheduled-tasks>  -->
-
+	
+	<!-- 매일 00시 마다 회원의 이용제한 기간을 확인하여 회원상태를 정지 -> 정상으로 업데이트 -->
+	<bean id="scheduleJob" class="com.with.report.service.PenaltySchedulerService"/>
+	
+	<task:scheduled-tasks>
+		<task:scheduled ref="scheduleJob" method="updateMbStatus" cron="0 0 0 * * *"/>
+	</task:scheduled-tasks>
 </beans>

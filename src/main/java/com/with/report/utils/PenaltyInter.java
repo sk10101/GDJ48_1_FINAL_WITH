@@ -1,4 +1,4 @@
-package com.with.member.utils;
+package com.with.report.utils;
 
 import java.sql.Date;
 
@@ -37,8 +37,7 @@ public class PenaltyInter extends HandlerInterceptorAdapter {
 		if(chkPenalty != null) { // 이용제한 날짜가 존재한다면
 			if(currDate.compareTo(chkPenalty) < 0) {
 				System.out.println("이용제한을 받고 있는 상태");
-				// redirect:/ -> http://localhost:8080/{contextPath} 와 같다. 아래의 경우로 사용하기위해 웬만하면 서버설정에서 contextPath 를 지워두자.
-				response.sendRedirect("/penaltyLogout?chkPenalty="+chkPenalty); // http://localhost:8080/ 이다. 때문에 만약 contextPath 가 존재하면 404 에러가 발생한다.
+				response.sendRedirect("/penaltyLogout?chkPenalty="+chkPenalty);
 				pass = false; // 원래 이 코드 없이도 작동해야하는데 정상작동이 안돼서 임시방편
 			}
 		}

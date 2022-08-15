@@ -48,11 +48,18 @@ public class LoginController {
 		String pw = request.getParameter("pw");
 		
 		MemberDTO loginDto = service.login(id, pw);
+		MemberDTO loginInfo = service.getMbInfo(id);
 		String loginId = loginDto.getMember_id();
 		String member_class = loginDto.getMember_class();  
+<<<<<<< HEAD
 	
+=======
+		int certficate_chk = loginInfo.getCertficate_chk(); 
+		
+>>>>>>> origin/master
 		logger.info("로그인한 아이디 : "+ loginId);
 		logger.info("회원등급 : "+ member_class);
+		logger.info("대학인증 : "+ certficate_chk);
 		
 		String msg = "아이디 혹은 비밀번호가 틀렸습니다";
 		String page = "member/login";
@@ -60,6 +67,7 @@ public class LoginController {
 		if(loginId != null && member_class != null) {
 			session.setAttribute("loginId", loginId);
 			session.setAttribute("member_class", member_class);
+<<<<<<< HEAD
 			
 			/* 양수빈 매너점수 영역 작업 */ 
 			
@@ -70,6 +78,9 @@ public class LoginController {
 			
 			/* 여기까지 */
 			
+=======
+			session.setAttribute("certficate_chk", certficate_chk);
+>>>>>>> origin/master
 			msg = loginId + " (" + member_class + ") 님 환영합니다";			
 			rAttr.addFlashAttribute("msg",msg);
 			
@@ -117,7 +128,7 @@ public class LoginController {
 	  }	  
 	    
 	//비밀번호 찾기 > 되면 수정 페이지로 이동 
-      @RequestMapping("/pwfind.do")
+      @RequestMapping("/pwFind.do")
       public ModelAndView pwFind(@RequestParam String id,@RequestParam String email) {
          ModelAndView mav = new ModelAndView();
     	 logger.info("아이디 찾기 아이디: "+id);
@@ -163,11 +174,12 @@ public class LoginController {
 			 * "member/memberMain"; }
 			 */
 		
-		// 로그인 api 용 Main
-		@RequestMapping(value="Main", method=RequestMethod.GET)
-		public String Main(){
-			return "member/memberMain";
-		}
+			/*
+			 * // 로그인 api 용 Main
+			 * 
+			 * @RequestMapping(value="Main", method=RequestMethod.GET) public String Main(){
+			 * return "member/memberMain"; }
+			 */
 		
 	  
 		// 로그인한 사용자가 이용제한을 받고 있는 중일 때 Interceptor 에서 보내는 요청
