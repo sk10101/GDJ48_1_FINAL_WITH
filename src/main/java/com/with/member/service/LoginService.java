@@ -53,6 +53,11 @@ public class LoginService {
 
 	}
 	
+	//유저 정보 가져오기
+	public MemberDTO getMbInfo(String id) {
+		return dao.getMbInfo(id);
+	}
+	
 	//아이디 찾기
 	public String idFind(String name, String email) {
 		String idFind = dao.idFind(name,email); 
