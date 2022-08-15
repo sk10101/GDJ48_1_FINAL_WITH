@@ -19,7 +19,6 @@ import com.with.member.dto.MemberDTO;
 import com.with.member.service.JoinService;
 
 @Controller
-/* @RequestMapping(value="/member/*") */
 public class JoinController {
 		
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -42,6 +41,7 @@ public class JoinController {
 		logger.info("성별:"+dto.getGender());
 		logger.info("이메일:"+dto.getEmail());
 		logger.info("연락처:"+dto.getPhone());
+		
 		System.out.println("test");
 			return service.join(photos,dto);
 	}	

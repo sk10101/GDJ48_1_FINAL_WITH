@@ -229,15 +229,16 @@ public class DeliveryService {
 	}
 
 
-	public void applyDeli(RedirectAttributes rAttr, HashMap<String, String> params) {
+	public ModelAndView applyDeli(RedirectAttributes rAttr, HashMap<String, String> params) {
 		logger.info("배달 게시글 참여 신청 서비스");
+		ModelAndView mav = new ModelAndView();
 		String member_id = params.get("member_id");
 		String board_idx = params.get("board_idx");
 		String investment = params.get("investment");
 		String gd_restriction = params.get("gd_restriction");
 		
 		// 성별 제한에 걸렸을 때
-		if((dao.getGender(member_id)+'만').equals(gd_restriction)) {
+		if(!(dao.getGender(member_id)+'만').equals(gd_restriction)) {
 			rAttr.addFlashAttribute("msg",gd_restriction + " 가능한 신청입니다.");
 		}
 		// 이미 신청했을 때, 방장이 수락했을 때
@@ -257,7 +258,7 @@ public class DeliveryService {
 			dao.applyDeli(member_id,board_idx,investment);
 		}
 		
-		
+		return mav;
 	}
 
 
@@ -273,23 +274,49 @@ public class DeliveryService {
 	public ModelAndView deliDelete(RedirectAttributes rAttr, String board_idx) {
 		logger.info("배달 게시글 삭제 서비스");
 		ModelAndView mav = new ModelAndView();
+		// 어떤 게시글에서 삭제버튼을 눌렀는지 확인하기 위해 카테고리를 가져온다.
+		String category = dao.getCategory(board_idx);
+		// 카테고리 별로 요청명을 달리하여 보내진다.
+		if(category.equals("배달게시판")) {
+			mav.setViewName("redirect:/deliListGo");
+		} else if (category.equals("밥게시판")) {
+			mav.setViewName("redirect:/mealList.go");
+		} else if (category.equals("택시게시판")) {
+			mav.setViewName("redirect:/texiListGo.go");
+		}
 		
 		// 신청자 > 0 인 경우
 		if(dao.applyCnt(board_idx) > 0) {
+			if(category.equals("배달게시판")) {
+				mav.setViewName("redirect:/deliDetail?board_idx="+board_idx);;
+			}
 			rAttr.addFlashAttribute("msg","이미 모임에 참여신청한 회원이 있습니다.");
 		}
 		// 참여자 > 1 인 경우
 		else if(dao.partCnt(board_idx) > 1) {
+			if(category.equals("배달게시판")) {
+				mav.setViewName("redirect:/deliDetail?board_idx="+board_idx);;
+			}
 			rAttr.addFlashAttribute("msg","이미 모임에 참여한 회원이 있습니다.");
 		}
 		// 글상태 = '마감' 인 경우
 		else if(dao.isEnd(board_idx) > 0) {
+			if(category.equals("배달게시판")) {
+				mav.setViewName("redirect:/deliDetail?board_idx="+board_idx);;
+			}
 			rAttr.addFlashAttribute("msg","이미 마감된 게시글입니다.");
 		} else {
 			// 위 세 경우에 모두 해당되지 않아야 글 삭제가 가능하도록 조건 설정함 
-			BoardDTO dto = new BoardDTO();
 			// 해당 board_idx 에 사진이 있는지 확인 (동시에 이름확보)
 			int delCount = dao.deliDelete(board_idx);
+			
+			// 블라인드하려는 게시판의 제목과 작성자를 가져온다.
+			BoardDTO dto = dao.getSubAndWriter(board_idx);
+			String member_id = dto.getMember_id();
+			String subject = dto.getSubject();
+			// 글 삭제와 동시에 블라인드 게시판에 보내야함
+			dao.blindBoardWrite(category,board_idx,member_id,subject);
+			
 			
 			/* 사진을 삭제하면 블라인드 게시판에서 사진을 확인못하는 상황이 발생... 일단 사진 삭제기능은 빼는 걸로
 			ArrayList<PhotoDTO> deliPhotoList = dao.deliPhotoList(board_idx, "배달게시판");
@@ -316,16 +343,7 @@ public class DeliveryService {
 	         deliPhotoList.clear();
 			*/
 		}
-		// 어떤 게시글에서 삭제버튼을 눌렀는지 확인하기 위해 카테고리를 가져온다.
-		String category = dao.getCategory(board_idx);
-		// 카테고리 별로 요청명을 달리하여 보내진다.
-		if(category.equals("배달게시판")) {
-			mav.setViewName("redirect:/deliListGo");
-		} else if (category.equals("밥게시판")) {
-			mav.setViewName("redirect:/mealList.go");
-		} else if (category.equals("택시게시판")) {
-			mav.setViewName("redirect:/texiListGo.go");
-		}
+		
 			
 		return mav;
 	}

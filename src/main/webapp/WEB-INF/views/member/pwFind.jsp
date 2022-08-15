@@ -59,7 +59,7 @@
         <div class="content">
 		 <!-- 여기에서 작업 시작하세요 -->
 	<h3 id="title">PW 찾기</h3>
-	<form action="pwfind.do" method="POST">
+	<form action="pwFind.do" method="POST">
 	<table>
 		<tr>
 			<th>아이디</th>
@@ -86,42 +86,6 @@
 	<jsp:include page="../commons/memberFooter.jsp"/>
 </body>
 <script>
-/* function pwFind(){
-	var id =$("#id").val()	
-	var email =$("#email").val()
-	 if(id== ""|| id == null){
-         alert("아이디를 입력해주세요");
-         $("#id").focus();
-         return false;
-      }
-	 if(email== ""|| email == null){
-         alert("이메일을 입력해주세요");
-         $("#email").focus();
-         return false;
-      }
-	
-	$.ajax({
-		type:'get',
-		url:'pwFind.ajax',
-		data:{
-			id :id,
-			email :email},
-		dataType:'text',
-		success:function(data){			
-			if(data){
-				alert("비밀번호 수정 페이지로 이동합니다.");
-				location.href="../newPw?pw="+data;
-			}else{
-				alert("회원님의 정보를 찾을수 없습니다.");				
-			}
-		},
-		error:function(e){
-			console.log(e);
-		}			
-	});
-} */
-
-
 
 </script>
 </html>

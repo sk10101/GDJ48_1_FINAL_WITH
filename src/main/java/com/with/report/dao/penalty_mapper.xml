@@ -2,5 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.with.report.dao.PenaltyDAO">
-
+	<update id="updateMbStatus">
+	<![CDATA[
+		UPDATE member m, penalty p SET member_status = '정상', cancel = 1
+			WHERE now() > penalty_end AND p.member_id = m.member_id;
+	]]>  
+	</update>
 </mapper>

@@ -31,7 +31,7 @@ public class DeliveryController {
 	
 	// 배달 게시판 목록 페이지 이동
 	@RequestMapping(value = "/deliListGo", method = RequestMethod.GET)
-	public String deliList(HttpSession session) {
+	public String deliList(RedirectAttributes rAttr, HttpSession session) {
 		
 		return "redirect:/deliList?page="+1+"&option="+"&word=";
 	}

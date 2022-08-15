@@ -8,6 +8,12 @@
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+	var msg = '${msg}';
+	if (msg != "") {
+		alert(msg);
+	}
+	</script>
 </head>
 <style>
     * {
@@ -135,19 +141,19 @@
 				<div class="text-center">
 				<div id="idfind"><a href="idFind">아이디 찾기</a></div>
 				<div id="pwfind"><a href="pwFind">비밀번호 찾기</a></div>
-				<h3 class="mb-3">다른 계정으로 로그인</h3>
+<!-- 				<h3 class="mb-3">다른 계정으로 로그인</h3>
 
 				<div class="d-flex justify-content-center">
 				
-					<!-- 네이버 -->
+					네이버
 					<div id="naverIdLogin" class="p-2"></div>
 	
-					<!-- 카카오 -->
-					<!-- <a id="kakao-login-btn"></a> -->
+					카카오
+					<a id="kakao-login-btn"></a>
 					<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=b8239aad28fc4b4100b8f469df9c704f&redirect_uri=http://localhost:8080/kakaoLogin&response_type=code">
 						<img src="/resources/images/kakao_login_large_narrow.png" style="height:60px">
 					</a>
-				</div>       
+				</div>       --> 
         </div>
     </div>
     </div>
@@ -160,10 +166,5 @@
 			}else{
 			alert("비밀번호 변경에 실패하셨습니다.");
 		}
-		
-	var msg = "${msg}"
-		if (msg != "") {
-			alert(msg);
-	}
 </script>
 </html>
