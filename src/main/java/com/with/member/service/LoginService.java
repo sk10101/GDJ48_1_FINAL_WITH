@@ -1,16 +1,6 @@
 package com.with.member.service;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.with.member.dao.LoginDAO;
-import com.with.member.dto.KakaoDTO;
+import com.with.member.dao.MemberDAO;
 import com.with.member.dto.MemberDTO;
 
 @Service
@@ -31,7 +18,8 @@ public class LoginService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired LoginDAO dao;
-
+	@Autowired MemberDAO mbdao;
+	
 	public MemberDTO login(String id, String pw) {
 		logger.info("로그인 서비스");
 		
@@ -72,6 +60,21 @@ public class LoginService {
 		return success; 
 	}	
 	
+	/* 양수빈 service 작업 공간 */
+	
+	public HashMap<String, Object> mblist(String loginId) {
+		return mbdao.mblist(loginId);
+	}
+
+	public String univer(Object object) {
+		return mbdao.univer(object);
+	}
+
+	public int macnt(String loginId) {
+		return mbdao.macnt(loginId);
+	}
+
+	/* 여기까지 */
 	
 	/*
 	 * // member(admin)Main으로 돌아가기

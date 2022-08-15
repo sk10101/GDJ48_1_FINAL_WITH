@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,10 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
-import com.with.member.dto.KakaoDTO;
 import com.with.member.dto.MemberDTO;
 import com.with.member.service.LoginService;
+import com.with.member.service.MemberService;
 
 @Controller
 public class LoginController {
@@ -30,6 +28,7 @@ public class LoginController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired LoginService service;
+	@Autowired MemberService mbservice;
 	
 	@Autowired
 	private HttpSession session;
@@ -51,7 +50,7 @@ public class LoginController {
 		MemberDTO loginDto = service.login(id, pw);
 		String loginId = loginDto.getMember_id();
 		String member_class = loginDto.getMember_class();  
-		
+	
 		logger.info("로그인한 아이디 : "+ loginId);
 		logger.info("회원등급 : "+ member_class);
 		
@@ -61,8 +60,19 @@ public class LoginController {
 		if(loginId != null && member_class != null) {
 			session.setAttribute("loginId", loginId);
 			session.setAttribute("member_class", member_class);
+			
+			/* 양수빈 매너점수 영역 작업 */ 
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map = mbservice.infoAll(loginId,map);
+			rAttr.addFlashAttribute("map", map);
+			
+			
+			/* 여기까지 */
+			
 			msg = loginId + " (" + member_class + ") 님 환영합니다";			
 			rAttr.addFlashAttribute("msg",msg);
+			
 			page = "redirect:/main";			
 		} else {			
 			model.addAttribute("msg", msg);

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.with.member.dao.JoinDAO;
+import com.with.member.dao.MemberDAO;
 import com.with.member.dto.MemberDTO;
 
 @Service
@@ -24,7 +25,8 @@ public class JoinService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired JoinDAO dao;
-
+	@Autowired MemberDAO mbdao;
+	
 	//회원가입
 	public ModelAndView join(MultipartFile[] photos, MemberDTO dto) {
 		
@@ -53,8 +55,15 @@ public class JoinService {
 		if(row >0) {
 			msg = "회원가입에 성공 했습니다.";
 			page = "redirect:/";
+			/* 양수빈 매너점수 영역 작업 */
+			
+			String nameBox[] = {"친절함","응답속도","시간약속"};
+			for(int i=0;i<3;i++) {
+				mbdao.insert(member_id,nameBox[i],0);
+			}
+			
+			/* 여기까지 */
 		}
-		
 		mav.addObject("msg", msg);
 		mav.setViewName(page);
 		

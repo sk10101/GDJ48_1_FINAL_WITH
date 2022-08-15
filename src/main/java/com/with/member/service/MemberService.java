@@ -22,23 +22,10 @@ public class MemberService {
 		return dao.mblist(member_id);
 	}
 
-	public String univer(Object object) {
-		return dao.univer(object);
-	}
-
 	public void update(String member_pw, String phone, int hide, String member_id) {
 		dao.update(member_pw, phone, hide, member_id);
 
 	}
-
-	public int macnt(String member_id) {
-		return dao.macnt(member_id);
-	}
-
-	public int average(String member_id, String nameBox) {
-		return dao.average(member_id, nameBox);
-	}
-
 	public ModelAndView madetail(String member_id, int page) {
 		// 페이징 처리
 		ModelAndView mav = new ModelAndView("myPage/mannerDetail");
@@ -144,5 +131,42 @@ public class MemberService {
 
 	public void blockDelete(String member_id, String block_member) {
 		dao.blockDelete(member_id,block_member);
+	}
+
+	public HashMap<String, Object> infoAll(String member_id, HashMap<String, Object> map) {
+		String name = dao.univer(map.get("university_idx"));
+		String nameBox[] = {"친절함","응답속도","시간약속"};
+		float mannerAvg = dao.avg(member_id,nameBox[0]);
+		int cnt=0;
+		float avg[]= new float[4];
+		int result[]= new int[4]; 
+		if(mannerAvg!=0) {
+			cnt = dao.macnt(member_id)/3;
+		}
+		for(int i=0;i<3;i++) {
+			if(mannerAvg!=0) {
+				result[i]+=dao.average(member_id,nameBox[i]);
+				avg[i]=(float)result[i]/cnt;
+				dao.mannerCnt(member_id,nameBox[i],avg[i]);
+			} else {
+				result[i]=0;
+			}
+			avg[3]+=avg[i];
+		}
+		int num[] = new int[4];
+		for(int i=0;i<3;i++) {
+			num[i]=(int)Math.round(avg[i]*1)/1;
+			num[3]+=num[i];
+		}
+		map.put("university_idx",name);
+		map.put("manner_cnt",cnt);
+		map.put("avg_kindFloat",Math.round(avg[0]*10)/10.0);
+		map.put("avg_answerFloat",Math.round(avg[1]*10)/10.0);
+		map.put("avg_timeFloat",Math.round(avg[2]*10)/10.0);
+		map.put("avg_allAvg",Math.round((avg[3]/3)*10)/10.0);
+		map.put("avg_kindInt",num[0]);
+		map.put("avg_answerInt",num[1]);
+		map.put("avg_timeInt",num[2]);
+		return map;
 	}
 }
