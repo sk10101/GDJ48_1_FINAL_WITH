@@ -28,13 +28,10 @@ public interface MemberDAO {
 
 	void blockDelete(String member_id, String block_member);
 
-<<<<<<< HEAD
 	void mannerCnt(String member_id, String string, float avg);
 
 	float avg(String member_id, String string);
 
 	void insert(String member_id, String nameBox, int i);
-=======
->>>>>>> origin/master
 
 }

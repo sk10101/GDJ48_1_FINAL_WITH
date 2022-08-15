@@ -51,12 +51,7 @@ public class LoginController {
 		MemberDTO loginInfo = service.getMbInfo(id);
 		String loginId = loginDto.getMember_id();
 		String member_class = loginDto.getMember_class();  
-<<<<<<< HEAD
-	
-=======
 		int certficate_chk = loginInfo.getCertficate_chk(); 
-		
->>>>>>> origin/master
 		logger.info("로그인한 아이디 : "+ loginId);
 		logger.info("회원등급 : "+ member_class);
 		logger.info("대학인증 : "+ certficate_chk);
@@ -67,8 +62,6 @@ public class LoginController {
 		if(loginId != null && member_class != null) {
 			session.setAttribute("loginId", loginId);
 			session.setAttribute("member_class", member_class);
-<<<<<<< HEAD
-			
 			/* 양수빈 매너점수 영역 작업 */ 
 			
 			HashMap<String, Object> map = new HashMap<String, Object>();
@@ -77,10 +70,8 @@ public class LoginController {
 			
 			
 			/* 여기까지 */
-			
-=======
+
 			session.setAttribute("certficate_chk", certficate_chk);
->>>>>>> origin/master
 			msg = loginId + " (" + member_class + ") 님 환영합니다";			
 			rAttr.addFlashAttribute("msg",msg);
 			

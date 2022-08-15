@@ -147,9 +147,9 @@ public class MemberService {
 			if(mannerAvg!=0) {
 				result[i]+=dao.average(member_id,nameBox[i]);
 				avg[i]=(float)result[i]/cnt;
-				dao.mannerCnt(member_id,nameBox[i],avg[i]);
 			} else {
 				result[i]=0;
+				dao.mannerCnt(member_id,nameBox[i],avg[i]);
 			}
 			avg[3]+=avg[i];
 		}
