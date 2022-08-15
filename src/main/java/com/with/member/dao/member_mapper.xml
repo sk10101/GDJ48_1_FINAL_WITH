@@ -29,7 +29,10 @@
     </select>
     
     <select id="blockList" resultType="member" parameterType="hashmap">
-    	select block_member from block where member_id=#{idx} LIMIT #{cnt} OFFSET #{offset}
+    	select block_member from block where member_id=#{idx}
+    	<if test="word != null and word != ''">
+    		AND block_member LIKE CONCAT('%',#{word},'%')
+    	</if> LIMIT #{cnt} OFFSET #{offset}
     </select>
     
     <select id="allCount" resultType="int">
@@ -43,5 +46,17 @@
 	<delete id="blockDelete">
 		DELETE FROM block WHERE member_id=#{param1} AND block_member=#{param2};
 	</delete>
+	
+	<update id="mannerCnt" parameterType="manner">
+		UPDATE manner_score SET avg_score = #{param3} WHERE member_id = #{param1} AND category_id = #{param2}
+	</update>
+	
+	<select id="avg" resultType="float">
+		SELECT avg_score FROM manner_score WHERE member_id=#{param1} AND category_id=#{param2}
+	</select>
+	
+	<insert id="insert" parameterType="manner">
+		INSERT INTO manner_score (member_id,category_id,avg_score) VALUES (#{param1}, #{param2}, #{param3})
+	</insert>
 	
 </mapper>

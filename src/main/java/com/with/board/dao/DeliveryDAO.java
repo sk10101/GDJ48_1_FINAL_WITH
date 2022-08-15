@@ -63,6 +63,10 @@ public interface DeliveryDAO {
 
 	String getGender(String member_id);
 
+	void blindBoardWrite(String category, String board_idx, String member_id, String subject);
+
+	BoardDTO getSubAndWriter(String board_idx);
+
 
 
 

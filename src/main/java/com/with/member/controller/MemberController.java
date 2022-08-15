@@ -23,30 +23,9 @@ public class MemberController {
 	@RequestMapping(value = "/myInfo")
 	public String myInfo(Model model, HttpSession session) {
 		String member_id = (String) session.getAttribute("loginId");
-		HashMap<String, Object> map = service.mblist(member_id);
-		String name = service.univer(map.get("university_idx"));
-		int cnt = service.macnt(member_id)/3;
-		float avg[]= new float[4];
-		int result[]= new int[4]; 
-		String nameBox[] = {"친절함","응답속도","시간약속"};
-		for(int i=0;i<3;i++) {
-			result[i]+=service.average(member_id,nameBox[i]);
-			avg[i]=(float)result[i]/cnt;
-			avg[3]+=avg[i];
-		}
-		int num[] = new int[3];
-		for(int i=0;i<3;i++) {
-			num[i]=(int)Math.round(avg[i]*1)/1;
-		}
-		map.put("university_idx",name);
-		map.put("manner_cnt",cnt);
-		map.put("avg_One",Math.round(avg[0]*10)/10.0);
-		map.put("avg_Two",Math.round(avg[1]*10)/10.0);
-		map.put("avg_Three",Math.round(avg[2]*10)/10.0);
-		map.put("avg_Four",Math.round((avg[3]/3)*10)/10.0);
-		map.put("avg_Five",num[0]);
-		map.put("avg_Six",num[1]);
-		map.put("avg_Seven",num[2]);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map=service.mblist(member_id);
+		map=service.infoAll((String) map.get("member_id"),map);
 		model.addAttribute("mblist",map);
 		return "myPage/myInfo";
 	}
@@ -97,5 +76,8 @@ public class MemberController {
 		service.blockDelete(member_id,name);
 		return "redirect:/blockUserList?page="+1;
 	}
-	
+	@RequestMapping(value = "/inqueryList.go")
+	public String inqueryListgo() {
+		return "redirect:/inqueryList?page="+1;
+	}
 }

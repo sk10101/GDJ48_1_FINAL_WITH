@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,10 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
-import com.with.member.dto.KakaoDTO;
 import com.with.member.dto.MemberDTO;
 import com.with.member.service.LoginService;
+import com.with.member.service.MemberService;
 
 @Controller
 public class LoginController {
@@ -30,6 +28,7 @@ public class LoginController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired LoginService service;
+	@Autowired MemberService mbservice;
 	
 	@Autowired
 	private HttpSession session;
@@ -49,11 +48,13 @@ public class LoginController {
 		String pw = request.getParameter("pw");
 		
 		MemberDTO loginDto = service.login(id, pw);
+		MemberDTO loginInfo = service.getMbInfo(id);
 		String loginId = loginDto.getMember_id();
 		String member_class = loginDto.getMember_class();  
-		
+		int certficate_chk = loginInfo.getCertficate_chk(); 
 		logger.info("로그인한 아이디 : "+ loginId);
 		logger.info("회원등급 : "+ member_class);
+		logger.info("대학인증 : "+ certficate_chk);
 		
 		String msg = "아이디 혹은 비밀번호가 틀렸습니다";
 		String page = "member/login";
@@ -61,8 +62,19 @@ public class LoginController {
 		if(loginId != null && member_class != null) {
 			session.setAttribute("loginId", loginId);
 			session.setAttribute("member_class", member_class);
+			/* 양수빈 매너점수 영역 작업 */ 
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map = mbservice.infoAll(loginId,map);
+			rAttr.addFlashAttribute("map", map);
+			
+			
+			/* 여기까지 */
+
+			session.setAttribute("certficate_chk", certficate_chk);
 			msg = loginId + " (" + member_class + ") 님 환영합니다";			
 			rAttr.addFlashAttribute("msg",msg);
+			
 			page = "redirect:/main";			
 		} else {			
 			model.addAttribute("msg", msg);
@@ -107,7 +119,7 @@ public class LoginController {
 	  }	  
 	    
 	//비밀번호 찾기 > 되면 수정 페이지로 이동 
-      @RequestMapping("/pwfind.do")
+      @RequestMapping("/pwFind.do")
       public ModelAndView pwFind(@RequestParam String id,@RequestParam String email) {
          ModelAndView mav = new ModelAndView();
     	 logger.info("아이디 찾기 아이디: "+id);
@@ -153,11 +165,12 @@ public class LoginController {
 			 * "member/memberMain"; }
 			 */
 		
-		// 로그인 api 용 Main
-		@RequestMapping(value="Main", method=RequestMethod.GET)
-		public String Main(){
-			return "member/memberMain";
-		}
+			/*
+			 * // 로그인 api 용 Main
+			 * 
+			 * @RequestMapping(value="Main", method=RequestMethod.GET) public String Main(){
+			 * return "member/memberMain"; }
+			 */
 		
 	  
 		// 로그인한 사용자가 이용제한을 받고 있는 중일 때 Interceptor 에서 보내는 요청

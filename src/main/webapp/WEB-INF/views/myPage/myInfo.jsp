@@ -133,41 +133,41 @@ button {
 				<div class="star" style="margin-left : 420px;">
                     <td>
                     	<c:forEach var="i" begin="1" end="5">
-							<c:if test="${mblist.avg_Four >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
-							<c:if test="${mblist.avg_Four < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+							<c:if test="${mblist.avg_allAvg >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+							<c:if test="${mblist.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
 						</c:forEach>
 					</td>
                 </div>
 				<br><br>
-				<p class="score">${mblist.avg_Four}</p>
+				<p class="score">${mblist.avg_allAvg}</p>
 			</div>
 			<table class="myinfo" style="margin-left: 180px;">
 				<tr>
 					<th>친절함</th>
 					<td><c:forEach var="i" begin="1" end="5">
-							<c:if test="${mblist.avg_Five >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
-							<c:if test="${mblist.avg_Five < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+							<c:if test="${mblist.avg_kindInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+							<c:if test="${mblist.avg_kindInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
 						</c:forEach>		
 					</td>
-					<td>${mblist.avg_One}</td>
+					<td>${mblist.avg_kindFloat}</td>
 				</tr>
 				<tr>
 					<th>응답속도</th>
 					<td><c:forEach var="i" begin="1" end="5">
-							<c:if test="${mblist.avg_Six >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
-							<c:if test="${mblist.avg_Six < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+							<c:if test="${mblist.avg_answerInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+							<c:if test="${mblist.avg_answerInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
 						</c:forEach>
 					</td>
-					<td>${mblist.avg_Two}</td>
+					<td>${mblist.avg_answerFloat}</td>
 				</tr>
 				<tr>
 					<th>시간약속</th>
 					<td><c:forEach var="i" begin="1" end="5">
-							<c:if test="${mblist.avg_Seven >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
-							<c:if test="${mblist.avg_Seven < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+							<c:if test="${mblist.avg_timeInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+							<c:if test="${mblist.avg_timeInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
 						</c:forEach>
 					</td>
-					<td>${mblist.avg_Three}</td>
+					<td>${mblist.avg_timeFloat}</td>
 				</tr>
 			</table>
 			<br><br>

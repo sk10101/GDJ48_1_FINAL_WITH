@@ -10,6 +10,10 @@
 		SELECT member_class FROM member WHERE member_id = #{param1};	
  	</select>
  	
+ 	<select id="getMbInfo" resultType="com.with.member.dto.MemberDTO">
+		SELECT * FROM member WHERE member_id = #{param1};	
+ 	</select>
+ 	
  	<select id="kakaoNumber" parameterType="com.with.member.dto.KakaoDTO" resultType="com.with.member.dto.KakaoDTO">
 		select * from kakao_table where k_name=#{k_name} and k_email=#{k_email}
 	</select>
