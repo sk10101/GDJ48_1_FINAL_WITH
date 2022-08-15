@@ -150,6 +150,7 @@
 				</div>       
         </div>
     </div>
+    </div>
 	<jsp:include page="../commons/memberFooter.jsp"/>
 </body>
 <script>

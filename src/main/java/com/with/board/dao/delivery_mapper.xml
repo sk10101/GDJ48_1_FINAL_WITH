@@ -188,7 +188,6 @@
 	<select id="getCategory" resultType="String">
 		SELECT category_id FROM board_common_column
 			WHERE board_idx = #{param1}
-
 	</select>
 	
 	<select id="getGender" resultType="String">
