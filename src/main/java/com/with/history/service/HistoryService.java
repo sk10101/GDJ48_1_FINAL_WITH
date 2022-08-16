@@ -32,6 +32,7 @@ public class HistoryService {
 				String word = params.get("word");
 				
 				map.put("page", page); // page 입력
+				map.put("loginId", loginId);
 				// 검색어를 입력했을 때
 				if(word != "") {   
 		               if(word.indexOf("모집")== 0 || word.indexOf("모") == 0 || word.indexOf("모집중") == 0) {
@@ -69,7 +70,6 @@ public class HistoryService {
 		int allCnt = 0;
 		// 한 페이지에 보여줄 게시글의 수 map 에 입력
 		map.put("cnt", cnt);
-		
 		ArrayList<BoardDTO> allCount = dao.allCount(map);
 		allCnt = allCount.size();
 		logger.info("allCnt : " + allCnt);

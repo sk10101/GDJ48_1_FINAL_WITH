@@ -59,17 +59,15 @@
 	</select>
 	
 	<select id="deliApplyList" resultType="board" parameterType="hashmap">
+	<![CDATA[
 	SELECT 
 		a.member_id,
 		a.investment,
-		count(p.penalty_idx),
-		a.apply_date,
-		m.manner_score,
-		a.status
-	FROM apply a, manner_assess m, penalty p, board_common_column b, delivery_board d
-	WHERE b.board_idx = a.board_idx AND a.member_id != b.member_id 
-	AND m.member_id = a.member_id AND a.status = '대기중' 
-	AND d.board_idx = a.board_idx AND b.board_idx  = d.board_idx AND b.category_id = '배달게시판' AND b.board_idx = d.board_idx AND investment != ''
+		(select count(penalty_idx) from penalty p where penalty_date < now() AND penalty_date > date_add(now(), interval -5 day) and p.member_id = a.member_id),
+		DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date,
+		(SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE 'id_test' = m.member_id) as avg_allAvg
+	FROM apply a, board_common_column b
+	WHERE b.board_idx = a.board_idx AND a.member_id != b.member_id AND a.status = '대기중' AND b.board_idx = #{board_idx}]]>
 		<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -83,6 +81,7 @@
 					</choose>
 				</if>
 			ORDER BY a.board_idx DESC LIMIT #{cnt} OFFSET #{offset}
+			
 	</select> 
 	
 	<select id="deliallCount" resultType="board" parameterType="hashmap">
@@ -109,7 +108,7 @@
 	SELECT 
 		a.member_id,
 		count(p.penalty_idx),
-		a.apply_date,
+		DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date,
 		m.manner_score,
 		b.category_id,
 		a.status
