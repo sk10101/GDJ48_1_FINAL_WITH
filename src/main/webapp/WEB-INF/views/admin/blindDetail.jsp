@@ -33,7 +33,29 @@
 	   <jsp:include page="../commons/adminSideBar8.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	     
+	     <form method="post" action="/blind/updateList">
+	     <input type="hidden" name="board_idx" id="board_idx" value="${info.board_idx}">
+	     	<table>
+	     		<tr>
+	     		<td>블라인드 사유 : </td>
+	     		<td>${info.blind_reason}</td>
+	     		</tr>
+	     		<tr>
+	     		<td> 블라인드 해제 관리자 : </td>
+	     		<td>${info.blindCancel_id}</td>
+	     		</tr>
+	     		<tr>
+	     		<td> 블라인드 해제 : </td>
+	     		<td><input type="checkbox" name="cancel" id="cancel" value="1" <c:if test="${info.cancel==1}">checked</c:if>></td>
+	     		</tr>
+	     		<tr>
+	     		<td>해제 사유 : </td>
+	     		<td><input name="blindCancel_reason" id="blindCancel_reason" value="${info.blindCancel_reason}" ></td>
+	     		</tr>
+	     	</table>
+	     	<input type="submit" value="해제">
+	     	<input type="button" value="돌아가기" onclick="location.href='blindListGo'"/>
+	     </form>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>

@@ -29,8 +29,10 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		   int page = Integer.parseInt(params.get("page"));
 		   String option = params.get("option");
 		   String word = params.get("word");
+		  
 		   
 		   map.put("page", page); // page 입력
+		   map.put("loginId", loginId);
 		   // 검색어를 입력했을 때
 		   if(word != "") {   
                if(word.indexOf("모집")== 0 || word.indexOf("모") == 0 || word.indexOf("모집중") == 0) {
@@ -115,7 +117,10 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			   int page = Integer.parseInt(params.get("page"));
 			   String option = params.get("option");
 			   String word = params.get("word");
-			   
+			   String board_idx = params.get("board_idx");
+			   logger.info(board_idx);
+
+			   map.put("board_idx", board_idx);
 			   map.put("page", page); // page 입력
 			   // 검색어를 입력했을 때
 			   if(word != "" && word != " ") {
@@ -127,7 +132,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			   logger.info("게시글의 개수 : "+ deliApplyList.size());
 			   mav.addObject("deliApplyList",deliApplyList);
 			   mav.addObject("map",map);
-			   
+			 
 			   return mav;
 			
 		}
@@ -178,7 +183,9 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 			deliApplyList = dao.deliApplyList(map);
 			
-		
+			
+			
+			
 			logger.info("페이징 체크포인트");
 			return deliApplyList;
 		}
@@ -260,6 +267,11 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		
 			logger.info("페이징 체크포인트");
 			return taxiApplyList;
+		}
+
+		public void applyUpdate(HashMap<String, String> params) {
+			dao.applyUpdate(params);
+			
 		}
 	
 	

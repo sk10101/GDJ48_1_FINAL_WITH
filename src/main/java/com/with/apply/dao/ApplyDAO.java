@@ -19,4 +19,6 @@ public interface ApplyDAO {
 
 	ArrayList<BoardDTO> taxiApplyList(HashMap<String, Object> map);
 
+	void applyUpdate(HashMap<String, String> params);
+
 }
