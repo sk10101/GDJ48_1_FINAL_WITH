@@ -109,7 +109,7 @@
 <body>
 	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
-	   <jsp:include page="../commons/memberSideBar1.jsp"/>
+	   <jsp:include page="../commons/memberSideBar3.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	       <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${info.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
@@ -183,7 +183,7 @@
 						<td>${part.gender}</td>
 						<td>${part.phone}</td>
 						<c:if test="${part.member_id ne sessionScope.loginId}">
-						<c:if test="true"><td><input type="button" value="평가하기"/></c:if></td>		
+						<c:if test="true"><td><input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'"/></c:if></td>		
 						<c:if test="${info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></c:if></td>
 						</c:if>	
 					</tr>

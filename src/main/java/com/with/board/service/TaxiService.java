@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.with.board.dao.TaxiDAO;
 import com.with.board.dto.BoardDTO;
 import com.with.board.dto.PhotoDTO;
+import com.with.member.dto.MannerDTO;
 import com.with.member.dto.MemberDTO;
 
 @Service
@@ -99,9 +100,7 @@ public class TaxiService {
 		int count = dao.taxiCount(board_idx);
 		
 		// 참여해있는 인원의 이름, 성별, 연락처를 불러오는 코드
-		ArrayList<MemberDTO> pt = dao.taxiParticipant(board_idx);
-		
-		// 아래부터는 참여현황 관련 코드
+		ArrayList<MemberDTO> pt = dao.taxiParticipant(board_idx, loginId);
 		
 		// 로그인한 아이디가 특정 게시글의 participant 에 들어가있는지 확인해주는 코드
 		int chkPt = dao.chkPt(board_idx, loginId);
@@ -323,5 +322,61 @@ public class TaxiService {
 			// 참여자 0, 신청자 0, 마감여부 0 일 경우에만 삭제 가능
 			return mav;
 		}
+		
+		// 매너평가 이동
+		public ModelAndView mannerGo(String board_idx, String member_id) {
+			ModelAndView mav = new ModelAndView("taxiBoard/manner");
+			
+			String chkCate = dao.chkCate(board_idx);
+			
+			mav.addObject("chkCate", chkCate);
+			mav.addObject("board_idx", board_idx);
+			mav.addObject("member_id", member_id);
+			
+			return mav;
+		}
+
+		
+		// 매너평가 실행
+		public ModelAndView mannerDo(HttpSession session, HashMap<String, String> params, RedirectAttributes rAttr) {
+			ModelAndView mav = new ModelAndView();
+			
+			String board_idx = params.get("board_idx");
+			params.put("loginId", (String) session.getAttribute("loginId"));
+			
+			String chkCate = dao.chkCate(board_idx);
+			
+			int row1 = dao.putKind(params);
+			int row2 = dao.putResponse(params);
+			int row3 = dao.putTime(params);
+			
+			if(row1 > 0 && row2 > 0 && row3 > 0) {
+				rAttr.addFlashAttribute("msg", "평가를 완료했습니다.");
+			} else {
+				rAttr.addFlashAttribute("msg", "평가에 실패했습니다.");
+			}
+			
+			if(chkCate.equals("배달게시판")) {
+				mav.setViewName("redirect:/deliDetail?board_idx=" + board_idx);
+			} else if (chkCate.equals("택시게시판")) {
+				mav.setViewName("redirect:/taxiDetail?board_idx=" + board_idx);
+			} else {
+				mav.setViewName("redirect:/mealDetail?board_idx=" + board_idx);
+			}
+			
+			return mav;
+		}
+
+		
+		// 참여한 회원 강퇴
+		public ModelAndView elimDo(String member_id, String board_idx) {
+			ModelAndView mav = new ModelAndView("redirect:/taxiDetail?board_idx=" + board_idx);
+			
+			int row = dao.elimDo(board_idx, member_id);
+			
+			return mav;
+		}
+
+
 
 }

@@ -31,7 +31,8 @@ public class TaxiController {
 	
 	// 택시게시판 목록 페이지 이동
 	@RequestMapping(value = "/taxiListGo", method = RequestMethod.GET)
-	public String taxiListGo(HttpSession session) {
+	public String taxiListGo(HttpSession session, RedirectAttributes rAttr) {
+		
 		return "redirect:/taxiList?page="+1+"&option="+"&word=";
 	}
 	
@@ -98,5 +99,25 @@ public class TaxiController {
 	RedirectAttributes rAttr) {
 		return service.taxiApply(session, params, rAttr);
 	}
+	
+	// 매너평가 이동
+	@RequestMapping(value = "/mannerGo", method = RequestMethod.GET)
+	public ModelAndView mannerGo(@RequestParam String board_idx, @RequestParam String member_id) {
+		return service.mannerGo(board_idx, member_id);
+	}
+	
+	// 매너평가 실행
+	@RequestMapping(value = "/mannerDo", method = RequestMethod.POST)
+	public ModelAndView mannerDo(HttpSession session, @RequestParam HashMap<String, String> params,
+	RedirectAttributes rAttr) {
+		return service.mannerDo(session, params, rAttr);
+	}
+	
+	// 참여한 회원 강퇴
+	@RequestMapping(value = "/elimDo", method = RequestMethod.GET)
+	public ModelAndView elimDo(HttpSession session, RedirectAttributes rAttr, @RequestParam String member_id, @RequestParam String board_idx) {
+		return service.elimDo(member_id, board_idx);
+	}
+	
 	
 }

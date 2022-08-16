@@ -90,7 +90,8 @@
 	(member_cnt + 1) as member_cnt,
 	recruit_end,
 	bcc.hide,
-	destination
+	destination,
+	(SELECT COUNT(pt_idx) FROM participant p WHERE bcc.board_idx = p.board_idx AND p.hide = 0) as partNo
 	FROM
 	board_common_column bcc,
 	taxi_board t,
@@ -235,7 +236,8 @@
 	SELECT 
 	p.member_id,
 	gender,
-	phone 
+	phone,
+	(SELECT COUNT(*) FROM manner_assess m WHERE m.board_idx = #{param1} AND assessor = #{param2} and p.member_id = m.member_id) as chkManner 
 	FROM 
 	participant p, 
 	member m
@@ -292,5 +294,28 @@
 	board_idx = #{param1} AND
 	member_id = #{param2} AND hide = 0
 </select>
+
+<select id="chkCate" resultType="String">
+	SELECT category_id FROM board_common_column WHERE board_idx = #{param1}
+</select>
+
+<insert id="putKind" parameterType="hashmap">
+	INSERT INTO manner_assess(member_id, category_id, board_idx, assessor, manner_score) 
+	VALUES(#{member_id}, '친절함', #{board_idx}, #{loginId}, #{kind})
+</insert>
+
+<insert id="putResponse" parameterType="hashmap">
+	INSERT INTO manner_assess(member_id, category_id, board_idx, assessor, manner_score) 
+	VALUES(#{member_id}, '응답속도', #{board_idx}, #{loginId}, #{response})
+</insert>
+
+<insert id="putTime" parameterType="hashmap">
+	INSERT INTO manner_assess(member_id, category_id, board_idx, assessor, manner_score) 
+	VALUES(#{member_id}, '시간약속', #{board_idx}, #{loginId}, #{time})
+</insert>
+
+<update id="elimDo">
+	UPDATE participant SET hide = 1 WHERE board_idx = #{param1} AND member_id = #{param2}
+</update>
 
 </mapper>

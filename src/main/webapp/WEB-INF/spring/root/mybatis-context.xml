@@ -23,6 +23,7 @@
 	    		<value>classpath:com/with/history/dao/*.xml</value>
 	    		<value>classpath:com/with/alarm/dao/*.xml</value>
 	    		<value>classpath:com/with/apply/dao/*.xml</value>
+	    		<value>classpath:com/with/main/dao/*.xml</value>
 	    	</list>
 	    </property>
 	    <property name="configLocation" value="classpath:config/alias.xml"/>
@@ -39,6 +40,7 @@
 	<mybatis-spring:scan base-package="com.with.history.dao"/>
 	<mybatis-spring:scan base-package="com.with.alarm.dao"/>
 	<mybatis-spring:scan base-package="com.with.apply.dao"/>
+	<mybatis-spring:scan base-package="com.with.main.dao"/>
 	
 
 

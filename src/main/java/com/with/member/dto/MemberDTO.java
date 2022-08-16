@@ -123,4 +123,15 @@ public class MemberDTO {
 	}
 	
 	
+//	정현민 추가
+	private int chkManner;
+
+	public int getChkManner() {
+		return chkManner;
+	}
+	public void setChkManner(int chkManner) {
+		this.chkManner = chkManner;
+	}
+	
+	
 }

@@ -29,13 +29,13 @@
         padding: 60px 100px;
     }
     
-    table {
+    #main-table {
     	width: 100%;
     	box-shadow: rgba(100, 100, 111, 0.6) 0px 7px 29px 0px;
     	border-radius: 20px;
     }
     
-    table th,td {
+    #main-table th,td {
     	border: none;
     	padding: 7px 10px;
     }
@@ -79,7 +79,7 @@
     
     
     
-    
+    /* 참여신청 모달 */
     #banner_online {
 	    height: 270px;
 	    width: 350px;
@@ -99,36 +99,14 @@
 	    margin-bottom: 10px;
 	}
 	
-	#banner_online p .second {
-	    margin-left: 6px;
-	}
-	
 	.pop_content {
 	    font-size: 13px;
 	    margin-left: 20px;
 	}
 	
-	#banner_online_how {
-	    height: 78px;
-	    width: 444px;
-	    margin-left: 28px;
-	    border: 1px solid #82bf77;
-	    margin-top: 22px;
-	}
-	
-	#banner_online_how h3 {
-	    font-size: 12px;
-	    margin-left: 6px;
-	    margin-top: 16px;
-	}
-	
 	#close_button {
 	    float: right;
 	    margin-top: -3px;
-	}
-	
-	.p_bottom {
-	    margin-left: 30px;
 	}
 	
 	#modal {
@@ -154,6 +132,10 @@
         top: 105px;
     }
     
+    .star {
+    	width: 30px;
+    }
+    
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -162,7 +144,7 @@
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	       <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${list.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
-	       <!-- 모달팝업창 -->
+	       <!-- 참여신청 모달팝업창 -->
  	       <form action="taxiApplyDo" method="post">
 			   <div id= "modal"> 
 			   </div>
@@ -187,11 +169,11 @@
 			      </div>
 			   </div>
 		   </form>
-		   <!-- 모발팝업 끝 -->
-	       
+		   <!--참여신청 모달팝업 끝 -->
+		   
 	       
 	       <p id="subject">${list.subject}</p>
-	       <table>
+	       <table id="main-table">
 	       		<tr>
 	       			<%-- <input type="hidden" name="board_idx" value="${list.board_idx}"/> --%>
 	       			<%-- <th colspan="4" style="font-size: 20px; background-color: #537ef4;">${list.subject}</th> --%>
@@ -275,16 +257,15 @@
 		       			<!-- 내 아이디가 참여인원에 들어가 있어야 평가하기가 보여야 한다. -->
 		       			<!-- 마감된 글에서만 평가하기가 보여야 한다. -->
 		       			<!-- 한번 평가했다면 버튼은 사라져야한다. (해야할 것) -->
-	       				<c:if test="${chkPt > 0 and list.recruit_end == 1}">
+       					<c:if test="${chkPt > 0 and list.recruit_end == 1}">
 		       				<td class="ptList">
-		       					<input type="button" class="manner" value="평가하기" onclick="location.href='/mannerDo?member_id=${pt.member_id}'"
-		       					<c:if test="${pt.member_id eq sessionScope.loginId}">hidden</c:if>/>
+		       					<input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${pt.member_id}&board_idx=${list.board_idx}'" <c:if test="${pt.member_id eq sessionScope.loginId or pt.chkManner > 0}">hidden</c:if>/>
 		       				</td>
-		       			</c:if>
+	       				</c:if>
 	       				<!-- 강퇴 열 방장빼고는 아예 못보게 한다. -->
-	       				<c:if test="${list.member_id eq sessionScope.loginId}">
+	       				<c:if test="${list.member_id eq sessionScope.loginId and list.recruit_end == 0}">
 		       				<td class="ptList">
-		       					<input type="button" class="elim" value="강퇴" onclick="location.href='/elimDo?member_id=${pt.member_id}'" <c:if test="${pt.member_id eq list.member_id}">hidden</c:if>/>
+		       					<input type="button" class="elim" value="강퇴" onclick="location.href='/elimDo?board_idx=${list.board_idx}&member_id=${pt.member_id}'" <c:if test="${pt.member_id eq list.member_id}">hidden</c:if>/>
       						</td>
 		       			</c:if>
 		       		</tr>	
@@ -355,7 +336,7 @@
 	});
 	
 	
-	// 모달팝업
+	// 참여신청 모달팝업
 	$(document).ready(function() {
 	    $("#apply-button").click(function() {
 	        $("#banner_online").show();
@@ -366,7 +347,6 @@
 	        $("#modal").fadeOut();
 	    });
 	});
-	
 	
 /* 	// 이미지 지도에 표시할 마커입니다
 	// 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
