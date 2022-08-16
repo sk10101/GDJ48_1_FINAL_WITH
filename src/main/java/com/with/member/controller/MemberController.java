@@ -80,4 +80,27 @@ public class MemberController {
 	public String inqueryListgo() {
 		return "redirect:/inqueryList?page="+1;
 	}
+	
+	@RequestMapping(value = "/mannerInfo")
+	public ModelAndView mannerInfogo(@RequestParam HashMap<String, Object> params) {
+		ModelAndView mav = new ModelAndView();
+		String member = (String) params.get("member");
+		int board=Integer.parseInt((String) params.get("board"));
+		logger.info("member의 값 : "+member);
+		logger.info("board의 값 : {}",board);
+		params=service.infoAll(member, params);
+		params.put("board",board);
+		mav.addObject("params",params);
+		mav.setViewName("myPage/mannerInfo");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/blockAdd")
+	public String blockAdd(@RequestParam HashMap<String, Object> params, HttpSession session) {
+		String mb_id = (String) session.getAttribute("loginId");
+		String member = (String) params.get("member");
+		int board=Integer.parseInt((String) params.get("board"));
+		service.blockUser(member,mb_id);
+		return "redirect:/deliDetail?board_idx="+board;
+	}
 }

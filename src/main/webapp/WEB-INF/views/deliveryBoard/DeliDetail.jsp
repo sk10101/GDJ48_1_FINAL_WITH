@@ -116,6 +116,7 @@
 	       <!-- 여기에서 작업 시작하세요 -->
 	     	<c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${info.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
 	     	<table>
+	     		
 	     		<tr>
 	     			<td class='subject'>${info.subject}</td>
 	     		</tr>
@@ -179,7 +180,7 @@
 				</tr>
 				<c:forEach items="${partMaster}" var="ptm">
 					<tr>
-						<td><a href="">${ptm.member_id}</a></td>
+						<td><a href="/mannerInfo?member=${ptm.member_id}&board=${info.board_idx}">${ptm.member_id}</a></td>
 						<td>${ptm.gender}</td>
 						<td>0000</td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>

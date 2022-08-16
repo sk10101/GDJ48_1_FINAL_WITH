@@ -169,4 +169,8 @@ public class MemberService {
 		map.put("avg_timeInt",num[2]);
 		return map;
 	}
+
+	public void blockUser(String member, String mb_id) {
+		dao.blockUser(member,mb_id);
+	}
 }

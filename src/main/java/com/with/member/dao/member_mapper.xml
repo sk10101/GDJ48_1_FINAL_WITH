@@ -59,4 +59,8 @@
 		INSERT INTO manner_score (member_id,category_id,avg_score) VALUES (#{param1}, #{param2}, #{param3})
 	</insert>
 	
+	<insert id="blockUser" parameterType="String">
+		INSERT INTO block (member_id,block_member) VALUES (#{param2}, #{param1})
+	</insert>
+	
 </mapper>
