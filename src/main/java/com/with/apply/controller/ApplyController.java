@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.with.apply.service.ApplyService;
+import com.with.member.service.MemberService;
 
 @Controller
 public class ApplyController {
@@ -22,6 +23,7 @@ public class ApplyController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired ApplyService service;
+	@Autowired MemberService mbservice;
 	
 	@RequestMapping("/myGroupList.go") public String myGroup(Model model) {
 		return "myPage/myGroupList"; 
@@ -38,9 +40,9 @@ public class ApplyController {
 	
 		// 배달 참가 리스트 페이지 이동
 		@RequestMapping(value = "/deliApplyList.go", method = RequestMethod.GET)
-		public String deliApplyList(HttpSession session) {
+		public String deliApplyList(HttpSession session, @RequestParam String board_idx) {
 			
-			return "redirect:/deliApplyList?page="+1+"&option="+"&word=";
+			return "redirect:/deliApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=";
 		}
 		// 택시 참가 리스트 페이지 이동
 		@RequestMapping(value = "/taxiApplyList.go", method = RequestMethod.GET)
@@ -69,8 +71,7 @@ public class ApplyController {
 			session.setAttribute("option", params.get("option"));
 			session.setAttribute("word", params.get("word"));
 		}
-		params.put("member_id", "son");
-		session.setAttribute("loginId", "son"); 
+		
 		String loginId = (String) session.getAttribute("loginId");
 		ModelAndView mav = new ModelAndView();
 		mav = service.myApplyList(params, loginId);
@@ -91,7 +92,14 @@ public class ApplyController {
 		
 		logger.info(params.get("category_id"));
 		session.setAttribute("category_id", params.get("category_id"));
+		session.setAttribute("board_idx", params.get("board_idx"));
+		logger.info(params.get("board_idx"));
+		
+		//HashMap<String, Object> map = new HashMap<String, Object>();
+//		map=mbservice.infoAll(, map);
 		ModelAndView mav = new ModelAndView();
+//		logger.info("map의 맛 : {}",map.get("avg_allAvg"));
+//		mav.addObject("manner",map);
 		mav = service.deliApplyList(params);
 		return mav;
 	}
