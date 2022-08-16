@@ -88,7 +88,7 @@
 	<select id="deliallCount" resultType="board" parameterType="hashmap">
 		SELECT a.member_id
 		FROM apply a, board_common_column b
-		WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx AND a.status = '대기중';
+		WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx AND a.status = '대기중'
 
 			<if test="word != null and word != ''">
 					<choose>
@@ -104,9 +104,9 @@
 				</if>
 	</select>
 	
-<!-- 	<UPDATE id="applyUpdate" parameterType="hashmap"> -->
-<!-- 		UPDATE apply SET status = #{realstatus} WHERE apply_idx = #{apply_idx}  -->
-<!-- 	</UPDATE> -->
+	<update id="applyUpdate" parameterType="hashmap">
+		UPDATE apply SET status = #{realstatus} WHERE apply_idx = #{apply_idx} 
+	</update>
 	
 	
 	<select id="taxiApplyList" resultType="board" parameterType="hashmap">

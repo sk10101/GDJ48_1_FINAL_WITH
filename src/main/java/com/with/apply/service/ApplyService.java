@@ -269,9 +269,9 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			return taxiApplyList;
 		}
 
-		public String applyUpdate(HashMap<String, String> params) {
+		public void applyUpdate(HashMap<String, String> params) {
+			dao.applyUpdate(params);
 			
-			return dao.applyUpdate(params);
 		}
 	
 	

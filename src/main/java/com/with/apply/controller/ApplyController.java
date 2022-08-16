@@ -51,17 +51,17 @@ public class ApplyController {
 			return "redirect:/taxiApplyList?page="+1+"&option="+"&word=";
 		}
 		@RequestMapping(value = "/applyUpdate", method = RequestMethod.GET)
-		public String applyUpdate(HttpSession session, @RequestParam HashMap<String, String> params) {
+		public void applyUpdate(HttpSession session, @RequestParam HashMap<String, String> params) {
 			logger.info(params.get("status"));
 			logger.info(params.get("apply_idx"));
-			String realstatus = params.get("status");
-			if (realstatus == "1") {
-				realstatus = "수락";
-				}if(realstatus == "0") {
-					realstatus = "거절";
+			String status = params.get("status");
+			if (status.equals("1")) {
+				status = "수락";
+				}if(status.equals("0")) {
+					status = "거절";
 				}
-			params.put("realstatus", realstatus);
-			return service.applyUpdate(params);
+			params.put("realstatus", status);
+			service.applyUpdate(params);
 		}
 		
 		/*
