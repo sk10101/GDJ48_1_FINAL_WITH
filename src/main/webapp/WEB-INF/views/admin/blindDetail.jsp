@@ -54,7 +54,7 @@
 	     		</tr>
 	     	</table>
 	     	<input type="submit" value="해제">
-	     	<button>돌아가기</button>
+	     	<input type="button" value="돌아가기" onclick="location.href='blindListGo'"/>
 	     </form>
 	   </div>
 	</div>
