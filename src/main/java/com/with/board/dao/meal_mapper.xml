@@ -112,12 +112,14 @@
 	
 	
 	<insert id="mealApply" 
-		useGeneratedKeys="true"
-		keyColumn="apply_idx"
-		keyProperty="apply_idx"
 		parameterType="board">
 		INSERT INTO apply (board_idx, member_id)
 			VALUES(#{param2}, #{param1})
+	</insert>
+	
+	<insert id="partMeal">
+		INSERT INTO participant (member_id, board_idx)
+			VALUES(#{param1},#{param2})
 	</insert>
 		
 	<select id="partList" parameterType="String" resultType="board">
@@ -125,6 +127,34 @@
 			WHERE p.board_idx = #{board_idx} AND a.board_idx = #{board_idx} AND a.status = '수락' 
 			AND a.member_id = p.member_id AND p.hide = 0 AND p.member_id = m.member_id AND a.member_id = m.member_id
 	</select>
+	
+	<select id="mealCount" resultType="int">
+	SELECT count(*) FROM participant WHERE board_idx = #{param1} and hide = 0
+	</select>
+	
+	<select id="mealPhone" resultType="string">
+	SELECT phone FROM member WHERE member_id = #{param1}
+	</select>
+	
+	<update id="updateEnd">
+	UPDATE board_common_column SET recruit_end = if(deadline &gt; now(), '0', '1')
+ 	</update>
+ 	
+ 	<!-- 방장의 정보만 가져와서 따로 출력 -->
+	<select id="partMaster" parameterType="String" resultType="member">
+	SELECT member_id, gender, phone FROM member
+		WHERE member_id = #{member_id}
+	</select>
+ 	
+	<select id="partMemberChk" resultType="int">
+	SELECT COUNT(pt_idx) FROM participant
+		WHERE member_id = #{param1} AND hide = 0 AND board_idx = #{param2}
+	</select>
+	
+	<update id="deliBan">
+	UPDATE participant SET hide = 1
+		WHERE member_id = #{param1} AND board_idx = #{param2}
+	</update>
 	
 
 	
