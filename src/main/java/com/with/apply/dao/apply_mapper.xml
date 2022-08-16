@@ -65,7 +65,8 @@
 		a.investment,
 		(select count(penalty_idx) from penalty p where penalty_date < now() AND penalty_date > date_add(now(), interval -5 day) and p.member_id = a.member_id),
 		DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date,
-		(SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE 'id_test' = m.member_id) as avg_allAvg
+		(SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE a.member_id = m.member_id) as avg_allAvg,
+		a.apply_idx
 	FROM apply a, board_common_column b
 	WHERE b.board_idx = a.board_idx AND a.member_id != b.member_id AND a.status = '대기중' AND b.board_idx = #{board_idx}]]>
 		<if test="word != null and word != ''">
@@ -86,8 +87,8 @@
 	
 	<select id="deliallCount" resultType="board" parameterType="hashmap">
 		SELECT a.member_id
-		FROM apply a, board_common_column b, delivery_board d
-		WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx AND b.board_idx  = d.board_idx AND a.status = '대기중' AND b.category_id = '배달게시판' AND investment != ''
+		FROM apply a, board_common_column b
+		WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx AND a.status = '대기중'
 
 			<if test="word != null and word != ''">
 					<choose>
@@ -102,6 +103,10 @@
 					</choose>
 				</if>
 	</select>
+	
+	<update id="applyUpdate" parameterType="hashmap">
+		UPDATE apply SET status = #{realstatus} WHERE apply_idx = #{apply_idx} 
+	</update>
 	
 	
 	<select id="taxiApplyList" resultType="board" parameterType="hashmap">
@@ -147,5 +152,7 @@
 					</choose>
 				</if>
 	</select>
+	
+	
 	
 	</mapper>

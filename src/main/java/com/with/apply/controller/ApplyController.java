@@ -50,6 +50,19 @@ public class ApplyController {
 			
 			return "redirect:/taxiApplyList?page="+1+"&option="+"&word=";
 		}
+		@RequestMapping(value = "/applyUpdate", method = RequestMethod.GET)
+		public void applyUpdate(HttpSession session, @RequestParam HashMap<String, String> params) {
+			logger.info(params.get("status"));
+			logger.info(params.get("apply_idx"));
+			String status = params.get("status");
+			if (status.equals("1")) {
+				status = "수락";
+				}if(status.equals("0")) {
+					status = "거절";
+				}
+			params.put("realstatus", status);
+			service.applyUpdate(params);
+		}
 		
 		/*
 		//배달 참여 신청자 목록
