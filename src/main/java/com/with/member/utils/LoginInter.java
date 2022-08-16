@@ -33,7 +33,7 @@ public class LoginInter extends HandlerInterceptorAdapter {
 			//response.sendRedirect("/"); //로그인을 하지않고 /main 에서 배달,택시,식사를 누르면 로그인화면으로 가게하기..
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter printwriter = response.getWriter();
-			printwriter.print("<script>alert('로그인을 해주십시오'); location.href='/'</script>");
+			printwriter.print("<script>alert('로그인이 필요한 서비스입니다.'); location.href='/'</script>");
 			printwriter.flush();
 			printwriter.close();			
 			return false;

@@ -148,7 +148,7 @@
 	</c:choose>
 	  -->	
 	<div class="content-wrap">
-	<jsp:include page="../commons/memberSideBar1.jsp"/>
+	<jsp:include page="../commons/memberSideBar3.jsp"/>
 	<!-- 
 	<c:choose>
 		<c:when test="회원등급이 일반회원일때">

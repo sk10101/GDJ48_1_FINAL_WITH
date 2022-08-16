@@ -282,7 +282,7 @@ public class DeliveryService {
 		} else if (category.equals("밥게시판")) {
 			mav.setViewName("redirect:/mealList.go");
 		} else if (category.equals("택시게시판")) {
-			mav.setViewName("redirect:/texiListGo.go");
+			mav.setViewName("redirect:/taxiListGo");
 		}
 		
 		// 신청자 > 0 인 경우
@@ -307,9 +307,16 @@ public class DeliveryService {
 			rAttr.addFlashAttribute("msg","이미 마감된 게시글입니다.");
 		} else {
 			// 위 세 경우에 모두 해당되지 않아야 글 삭제가 가능하도록 조건 설정함 
-			BoardDTO dto = new BoardDTO();
 			// 해당 board_idx 에 사진이 있는지 확인 (동시에 이름확보)
 			int delCount = dao.deliDelete(board_idx);
+			
+			// 블라인드하려는 게시판의 제목과 작성자를 가져온다.
+			BoardDTO dto = dao.getSubAndWriter(board_idx);
+			String member_id = dto.getMember_id();
+			String subject = dto.getSubject();
+			// 글 삭제와 동시에 블라인드 게시판에 보내야함
+			dao.blindBoardWrite(category,board_idx,member_id,subject);
+			
 			
 			/* 사진을 삭제하면 블라인드 게시판에서 사진을 확인못하는 상황이 발생... 일단 사진 삭제기능은 빼는 걸로
 			ArrayList<PhotoDTO> deliPhotoList = dao.deliPhotoList(board_idx, "배달게시판");
@@ -336,7 +343,6 @@ public class DeliveryService {
 	         deliPhotoList.clear();
 			*/
 		}
-		
 			
 		return mav;
 	}

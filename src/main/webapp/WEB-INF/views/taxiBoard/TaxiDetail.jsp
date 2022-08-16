@@ -29,13 +29,13 @@
         padding: 60px 100px;
     }
     
-    table {
+    #main-table {
     	width: 100%;
     	box-shadow: rgba(100, 100, 111, 0.6) 0px 7px 29px 0px;
     	border-radius: 20px;
     }
     
-    table th,td {
+    #main-table th,td {
     	border: none;
     	padding: 7px 10px;
     }
@@ -79,7 +79,7 @@
     
     
     
-    
+    /* 참여신청 모달 */
     #banner_online {
 	    height: 270px;
 	    width: 350px;
@@ -99,36 +99,14 @@
 	    margin-bottom: 10px;
 	}
 	
-	#banner_online p .second {
-	    margin-left: 6px;
-	}
-	
 	.pop_content {
 	    font-size: 13px;
 	    margin-left: 20px;
 	}
 	
-	#banner_online_how {
-	    height: 78px;
-	    width: 444px;
-	    margin-left: 28px;
-	    border: 1px solid #82bf77;
-	    margin-top: 22px;
-	}
-	
-	#banner_online_how h3 {
-	    font-size: 12px;
-	    margin-left: 6px;
-	    margin-top: 16px;
-	}
-	
 	#close_button {
 	    float: right;
 	    margin-top: -3px;
-	}
-	
-	.p_bottom {
-	    margin-left: 30px;
 	}
 	
 	#modal {
@@ -144,6 +122,9 @@
 	
 	#link {
 		color : black;
+
+	#crown {
+		width: 20px;
 	}
 	
 	.eye {
@@ -153,7 +134,11 @@
         right: 665px;
         top: 105px;
     }
-
+    
+    .star {
+    	width: 30px;
+    }
+    
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -161,8 +146,8 @@
 	   <jsp:include page="../commons/memberSideBar2.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	       <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${info.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
-	       <!-- 모달팝업창 -->
+	       <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${list.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
+	       <!-- 참여신청 모달팝업창 -->
  	       <form action="taxiApplyDo" method="post">
 			   <div id= "modal"> 
 			   </div>
@@ -175,6 +160,7 @@
 			          <table>
 			          	<tr>
 			          		<th>내 연락처 :</th>
+			          		<td><input type="hidden" name="gender" value="${list.gender}"/></td>
 			          		<td><input type="hidden" name="board_idx" value="${list.board_idx}"/></td>
 			          		<td><input type="hidden" name="member_id" value="${list.member_id}"/></td>
 			          		<td><input type="text" name="phone" value="${phone}" readonly/></td>
@@ -186,11 +172,11 @@
 			      </div>
 			   </div>
 		   </form>
-		   <!-- 모발팝업 끝 -->
-	       
+		   <!--참여신청 모달팝업 끝 -->
+		   
 	       
 	       <p id="subject">${list.subject}</p>
-	       <table>
+	       <table id="main-table">
 	       		<tr>
 	       			<%-- <input type="hidden" name="board_idx" value="${list.board_idx}"/> --%>
 	       			<%-- <th colspan="4" style="font-size: 20px; background-color: #537ef4;">${list.subject}</th> --%>
@@ -257,14 +243,36 @@
 	       		<tr>
 	       			<th colspan="4"><img id="people" src="./resources/images/people.png" alt="people"/> 참여현황</th>
 	       		</tr>
-	       		<tr>
-		       		<c:forEach items="${pt}" var="pt">
-			       			<td class="ptList">${pt.member_id}</td>
-			       			<td class="ptList">${pt.gender}</td>
-			       			<td class="ptList">${pt.phone}</td>
-			       			<td class="ptList"><input type="button" class="manner" value="평가하기" onclick="location.href='mannerDo'"/></td>
-		       		</c:forEach>
-	       		</tr>
+	       		<c:forEach items="${pt}" var="pt">
+		       		<tr>
+	       				<th class="ptList">
+	       					<!-- 참여자와 방장의 아이디가 같으면 왕관 아이콘을 붙여준다. -->
+	       					<c:if test="${pt.member_id eq list.member_id}">
+	       						<img id="crown" src="./resources/images/crown.png" alt="crown"/>
+	       					</c:if>
+	       					${pt.member_id}
+	       				</th>
+		       			<td class="ptList">${pt.gender}</td>
+		       			<!-- 현재 로그인한 아이디가 이 방의 참여인원으로 있다면 연락처를 보여준다. -->
+		       			<c:if test="${chkPt > 0}">
+		       				<td class="ptList">${pt.phone}</td>
+		       			</c:if>	
+		       			<!-- 내 아이디가 참여인원에 들어가 있어야 평가하기가 보여야 한다. -->
+		       			<!-- 마감된 글에서만 평가하기가 보여야 한다. -->
+		       			<!-- 한번 평가했다면 버튼은 사라져야한다. (해야할 것) -->
+       					<c:if test="${chkPt > 0 and list.recruit_end == 1}">
+		       				<td class="ptList">
+		       					<input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${pt.member_id}&board_idx=${list.board_idx}'" <c:if test="${pt.member_id eq sessionScope.loginId or pt.chkManner > 0}">hidden</c:if>/>
+		       				</td>
+	       				</c:if>
+	       				<!-- 강퇴 열 방장빼고는 아예 못보게 한다. -->
+	       				<c:if test="${list.member_id eq sessionScope.loginId and list.recruit_end == 0}">
+		       				<td class="ptList">
+		       					<input type="button" class="elim" value="강퇴" onclick="location.href='/elimDo?board_idx=${list.board_idx}&member_id=${pt.member_id}'" <c:if test="${pt.member_id eq list.member_id}">hidden</c:if>/>
+      						</td>
+		       			</c:if>
+		       		</tr>	
+	       		</c:forEach>
 	       		<tr>
 	       			<td colspan="4">
 						<!-- 아래부터 Kakao Map API 구역 -->
@@ -275,12 +283,17 @@
 	       		</tr>
 	       		<tr>
 	       			<td colspan="4" style="text-align: center">
-						<input id="apply-button" type="button" value="참여신청"/>
+	       				<!--  모집중 and 본인이 작성한 글이 아니라면 참여신청 버튼이 노출된다. -->
+	       				<c:if test="${list.recruit_end == 0 and sessionScope.loginId ne list.member_id}">
+							<input id="apply-button" type="button" value="참여신청"/>
+						</c:if>
 					</td>
 	       		</tr>
 	       		<tr>
 	       			<td colspan="4" style="text-align: center">
-		       			<input type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
+		       			<c:if test="${sessionScope.loginId eq list.member_id}">
+			       			<input type="button" value="삭제" onclick="location.href='/deliDelete?board_idx=${list.board_idx}'"/>
+			       		</c:if>	
 						<input type="button" value="돌아가기" onclick="location.href='/taxiList?page=${sessionScope.page}&option=${sessionScope.option}&word=${sessionScope.word}'"/>
 					</td>
 	       		</tr>
@@ -326,7 +339,7 @@
 	});
 	
 	
-	// 모달팝업
+	// 참여신청 모달팝업
 	$(document).ready(function() {
 	    $("#apply-button").click(function() {
 	        $("#banner_online").show();
@@ -337,7 +350,6 @@
 	        $("#modal").fadeOut();
 	    });
 	});
-	
 	
 /* 	// 이미지 지도에 표시할 마커입니다
 	// 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 

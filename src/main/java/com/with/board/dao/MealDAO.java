@@ -41,6 +41,22 @@ public interface MealDAO {
 
 	void mealApply(String member_id, String board_idx);
 
+	int mealCount(String board_idx);
+
+	String mealPhone(String loginId);
+
+	void updateEnd();
+
+	int partMeal(String member_id, int board_idx);
+
+	int partMemberChk(String attribute, String board_idx);
+
+	void applyDeli(String member_id, String board_idx);
+
+	ArrayList<MemberDTO> partMaster(String member_id);
+
+	void mealBan(String member_id, String board_idx);
+
 	
 
 	

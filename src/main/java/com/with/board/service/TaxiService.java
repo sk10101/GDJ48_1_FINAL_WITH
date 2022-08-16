@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.with.board.dao.TaxiDAO;
 import com.with.board.dto.BoardDTO;
 import com.with.board.dto.PhotoDTO;
+import com.with.member.dto.MannerDTO;
 import com.with.member.dto.MemberDTO;
 
 @Service
@@ -84,6 +85,9 @@ public class TaxiService {
 		
 		session.setAttribute("chkHit", "chkHit");
 		
+		// 시간 비교를 통해 마감여부를 update 해주는 코드
+		dao.updateEnd();
+		
 		BoardDTO list = dao.taxiDetail(board_idx);
 		
 		// 로그인 회원의 연락처를 불러오는 코드
@@ -96,16 +100,17 @@ public class TaxiService {
 		int count = dao.taxiCount(board_idx);
 		
 		// 참여해있는 인원의 이름, 성별, 연락처를 불러오는 코드
-		ArrayList<MemberDTO> pt = dao.taxiParticipant(board_idx);
+		ArrayList<MemberDTO> pt = dao.taxiParticipant(board_idx, loginId);
 		
-		// 시간 비교를 통해 마감여부를 update 해주는 코드
-		dao.updateEnd();
+		// 로그인한 아이디가 특정 게시글의 participant 에 들어가있는지 확인해주는 코드
+		int chkPt = dao.chkPt(board_idx, loginId);
 		
 		mav.addObject("list", list);
 		mav.addObject("photo", photo);
 		mav.addObject("count", count);
 		mav.addObject("pt", pt);
 		mav.addObject("phone", phone);
+		mav.addObject("chkPt", chkPt);
 		mav.setViewName("taxiBoard/TaxiDetail");
 		
 		return mav;
@@ -252,10 +257,12 @@ public class TaxiService {
 			String loginId = (String) session.getAttribute("loginId");
 			
 			String board_idx = (String) params.get("board_idx");
+			String gender = (String) params.get("gender");
 //			String member_id = params.get("member_id");
 //			String phone = params.get("phone");
 			
 			params.put("loginId", loginId);
+			params.put("gender", gender);
 			
 			
 			// 신청하기 전 마감여부를 마지막으로 업데이트하는 코드
@@ -275,6 +282,25 @@ public class TaxiService {
 			// 해당 글에서 강퇴당하거나 스스로 나간 이력이 있을 때
 			int chkElim = dao.chkElim(params);
 			
+			
+			// 로그인 회원의 성별을 확인해주는 코드
+			// chkGender 의 값은 '남자' 또는 '여자'
+			// gender 의 값은 '남자만' 또는 '여자만' 또는 '상관없음'
+
+			// 만약 chkGender 의 값이 '남자' 라면 '남자만' 으로 바꿔준다. 
+			// 아니면 '여자만' 으로 바꿔준다.
+			
+			// 이후 gender(ex '남자만') 와 chkGender(ex '남자') 가 일치하거나 or gender 가 '상관없음' 이라면 신청을 허가한다.
+			String chkGender = dao.chkGender(params) + "만";
+			
+			// 성별 비교를 위해 텍스트를 변환해주는 코드
+//			if (chkGender.equals("남자")) {
+//				chkGender = "남자만";
+//			} else {
+//				chkGender = "여자만";
+//			}
+			
+			
 			if (recruitEnd == 1) {
 				rAttr.addFlashAttribute("msg", "이미 마감된 모임입니다.");
 			} else if (chkStatus > 0) {
@@ -283,6 +309,8 @@ public class TaxiService {
 				rAttr.addFlashAttribute("msg", "이미 거절된 신청입니다.");
 			} else if (chkElim > 0) {
 				rAttr.addFlashAttribute("msg", "이미 모임에서 나간 이력이 있습니다.");
+			} else if (!chkGender.equals(gender) && !gender.equals("상관없음")) {
+				rAttr.addFlashAttribute("msg", gender + " 신청 가능합니다.");
 			}
 			else {
 				int row = dao.taxiApply(params);
@@ -294,5 +322,61 @@ public class TaxiService {
 			// 참여자 0, 신청자 0, 마감여부 0 일 경우에만 삭제 가능
 			return mav;
 		}
+		
+		// 매너평가 이동
+		public ModelAndView mannerGo(String board_idx, String member_id) {
+			ModelAndView mav = new ModelAndView("taxiBoard/manner");
+			
+			String chkCate = dao.chkCate(board_idx);
+			
+			mav.addObject("chkCate", chkCate);
+			mav.addObject("board_idx", board_idx);
+			mav.addObject("member_id", member_id);
+			
+			return mav;
+		}
+
+		
+		// 매너평가 실행
+		public ModelAndView mannerDo(HttpSession session, HashMap<String, String> params, RedirectAttributes rAttr) {
+			ModelAndView mav = new ModelAndView();
+			
+			String board_idx = params.get("board_idx");
+			params.put("loginId", (String) session.getAttribute("loginId"));
+			
+			String chkCate = dao.chkCate(board_idx);
+			
+			int row1 = dao.putKind(params);
+			int row2 = dao.putResponse(params);
+			int row3 = dao.putTime(params);
+			
+			if(row1 > 0 && row2 > 0 && row3 > 0) {
+				rAttr.addFlashAttribute("msg", "평가를 완료했습니다.");
+			} else {
+				rAttr.addFlashAttribute("msg", "평가에 실패했습니다.");
+			}
+			
+			if(chkCate.equals("배달게시판")) {
+				mav.setViewName("redirect:/deliDetail?board_idx=" + board_idx);
+			} else if (chkCate.equals("택시게시판")) {
+				mav.setViewName("redirect:/taxiDetail?board_idx=" + board_idx);
+			} else {
+				mav.setViewName("redirect:/mealDetail?board_idx=" + board_idx);
+			}
+			
+			return mav;
+		}
+
+		
+		// 참여한 회원 강퇴
+		public ModelAndView elimDo(String member_id, String board_idx) {
+			ModelAndView mav = new ModelAndView("redirect:/taxiDetail?board_idx=" + board_idx);
+			
+			int row = dao.elimDo(board_idx, member_id);
+			
+			return mav;
+		}
+
+
 
 }

@@ -41,6 +41,7 @@ public class JoinController {
 		logger.info("성별:"+dto.getGender());
 		logger.info("이메일:"+dto.getEmail());
 		logger.info("연락처:"+dto.getPhone());
+		
 		System.out.println("test");
 			return service.join(photos,dto);
 	}	

@@ -184,12 +184,12 @@
 				</tr>
 				<c:forEach items="${partMaster}" var="ptm">
 					<tr>
-						<td>${ptm.member_id}</td>
+						<td><a href="">${ptm.member_id}</a></td>
 						<td>${ptm.gender}</td>
 						<td>0000</td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>
 						<c:if test="${partMemberChk > 0}"><td></td></c:if>
-						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId}"><td><input type="button" value="평가하기"/></td></c:if>
+						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId}"><td><input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${ptm.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
 						<td></td>
 					</tr>
 				</c:forEach>
@@ -199,7 +199,7 @@
 						<td>${part.gender}</td>
 						<td>${part.investment}</td>
 						<c:if test="${partMemberChk > 0}"><td>${part.phone}</td></c:if>
-						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}"><td><input type="button" value="평가하기"/></td></c:if>
+						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}"><td><input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
 						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
 					</tr>
 				</c:forEach>

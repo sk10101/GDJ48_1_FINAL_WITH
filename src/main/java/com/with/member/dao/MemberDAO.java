@@ -1,6 +1,5 @@
 package com.with.member.dao;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,5 +28,10 @@ public interface MemberDAO {
 
 	void blockDelete(String member_id, String block_member);
 
+	void mannerCnt(String member_id, String string, float avg);
+
+	float avg(String member_id, String string);
+
+	void insert(String member_id, String nameBox, int i);
 
 }

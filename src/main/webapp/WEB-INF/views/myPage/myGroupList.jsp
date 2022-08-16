@@ -65,7 +65,6 @@
 			   		<input type="hidden" name="page" value="1"/>
            			<button id="searchBtn">검색</button>
 			</form>
-
 			<table>
 				<thead>
 					<tr>
@@ -79,8 +78,8 @@
 					</tr>
 				</thead>
 				
-				<c:forEach items="${mygList}" var="his">
-				
+				<c:forEach items="${mygList}" var="his">				
+				<input type="hidden" id="board_idx" name="board_idx" value="${his.board_idx}"/>
 				<tbody class="mygList">
 						<tr>
 							<td>${his.board_idx}</td>

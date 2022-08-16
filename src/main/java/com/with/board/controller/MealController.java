@@ -28,7 +28,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired MealService service;
 	
-	// 배달 게시판 목록 페이지 이동
+	// 밥 게시판 목록 페이지 이동
 	@RequestMapping(value = "/mealList.go", method = RequestMethod.GET)
 	public String mealList(HttpSession session) {
 		
@@ -36,7 +36,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	}
 	
 	
-	// 배달 게시판 목록 조회
+	// 밥 게시판 목록 조회
 	@RequestMapping(value = "/mealList", method = RequestMethod.GET)
 	public ModelAndView mealList(HttpSession session, @RequestParam HashMap<String, String> params) {
 		
@@ -57,19 +57,19 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
 	
-	// detail MealDetail
+	// 밥  게시글 상세보기
 	@RequestMapping(value = "/mealDetail", method = RequestMethod.GET)
 	public ModelAndView mealDetail(HttpSession session, @RequestParam String board_idx) {
 		logger.info(board_idx + " 번 글 상세보기 요청 컨트롤러 접속");
 		ModelAndView mav = new ModelAndView();
 		
-		mav = service.mealDetail(board_idx);
+		mav = service.mealDetail(session,board_idx);
 		
 		return mav;
 	}
 	
 	
-	// 글쓰기 페이지 이동
+	// 밥 글쓰기 페이지 이동
 	@RequestMapping(value = "/MealWrite.go", method = RequestMethod.GET)
 	public ModelAndView writePage(HttpSession session, RedirectAttributes rAttr) {
 		logger.info("글쓰기 페이지 이동");
@@ -98,7 +98,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	}
 	
 	
-	//  kakao
+		// kakao
 		@RequestMapping(value = "/mealkakao.go", method = RequestMethod.GET)
 		public ModelAndView kakao(HttpSession session, RedirectAttributes rAttr) {
 			logger.info("글쓰기 페이지 이동");
@@ -135,11 +135,24 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		
 		// 밥 게시판 참가 신청 
 		@RequestMapping(value = "/mealApply")
-		public ModelAndView applyDeli(HttpSession session, RedirectAttributes rAttr, @RequestParam String member_id, @RequestParam String board_idx) {
+		public ModelAndView mealApply(HttpSession session, RedirectAttributes rAttr, @RequestParam HashMap<String, String> params) {
+			logger.info("로그인한 아이디 : " + params.get("member_id"));
+			ModelAndView mav = new ModelAndView();
+			
+			service.mealApply(rAttr,params);
+			
+			mav.setViewName("redirect:/mealDetail?board_idx="+params.get("board_idx"));
+			
+			return mav;
+		}
+		
+		// 참여한 회원 강퇴
+		@RequestMapping(value = "/mealBan", method = RequestMethod.GET)
+		public ModelAndView mealBan(HttpSession session, RedirectAttributes rAttr, @RequestParam String member_id, @RequestParam String board_idx) {
 			logger.info("로그인한 아이디 : " + member_id);
 			ModelAndView mav = new ModelAndView();
 			
-			service.mealApply(rAttr,member_id,board_idx);
+			mav = service.mealBan(member_id,board_idx);
 			
 			mav.setViewName("redirect:/mealDetail?board_idx="+board_idx);
 			

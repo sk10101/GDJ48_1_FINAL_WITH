@@ -63,17 +63,25 @@ public class MealService {
 	public void write(MultipartFile[] photos, BoardDTO dto,HttpSession session) {
 		logger.info("글쓰기 서비스 요청");
 		// 이후에 로그인한 아이디를 담아주는 것으로 변경해야함
-		dto.setMember_id("id_test");
+		//String loginId = (String) session.getAttribute("loginId");
+		dto.setMember_id((String) session.getAttribute("loginId"));
+		
 		// session 에 저장한 좌표를 dto 에 담아준다.
 		dto.setAppoint_coords_lat((String) session.getAttribute("lat"));
 		dto.setAppoint_coords_lng((String) session.getAttribute("lng"));
+		
 		// 공통 컬럼 테이블에 작성할 내용
 		int row = dao.writeBcc(dto);
+		
 		// 밥 전용 컬럼 테이블에 작성하기 위해 위에서 작성했던 글의 번호를 가져와야함
 		int board_idx = dao.getBoardIdx(dto);
 		dto.setBoard_idx(board_idx);
+		
 		// 밥 전용 컬럼 테이블에 작성할 내용
 		int row2 = dao.writeMeal(dto);
+		
+		// 방장이 글 쓰면 참가자로 자동 참여
+		int row3 = dao.partMeal(dto.getMember_id(),board_idx);
 		
 		// 파일을 올리지 않아도 fileSave 가 진행되는 것을 방지하는 조건문
 		if(row > 0 & row2 > 0) {
@@ -111,7 +119,7 @@ public class MealService {
 					
 					try {
 						byte[] arr = photo.getBytes();
-						Path path = Paths.get("C:\\Users\\GDJ48\\Documents\\GDJ48_1_FINAL_WITH\\src\\main\\webapp\\resources\\photo\\" + newFileName);
+						Path path = Paths.get("C:\\STUDY\\SPRING _ADVANCE\\GDJ48_1_FINAL_WITH\\src\\main\\webapp\\resources\\photo\\" + newFileName);
 						// 같은이름의 파일이 나올 수 없기 떄문에 옵션 설정 안해도된다.
 						Files.write(path, arr);
 						logger.info(newFileName + " SAVE OK");
@@ -126,9 +134,11 @@ public class MealService {
 			
 		}
 		
-	public ModelAndView mealDetail(String board_idx) {
+	public ModelAndView mealDetail(HttpSession session,String board_idx) {
 		logger.info("상세보기 서비스 요청");
 		ModelAndView mav = new ModelAndView("mealBoard/MealDetail");
+		
+		String loginId = (String) session.getAttribute("loginId");
 		
 		// 조회수 올리기
 		dao.hit(board_idx);
@@ -137,16 +147,33 @@ public class MealService {
 		ArrayList<PhotoDTO> mealPhotoList = dao.mealPhotoList(board_idx,"밥게시판");
 		mav.addObject("info",info);
 		mav.addObject("mealPhotoList",mealPhotoList);
-		// 참여자 목록 조회
+		// 참여자 목록 조회하기
 		ArrayList<BoardDTO> partList = partList(board_idx);
 		mav.addObject("partList",partList);
+		
+		ArrayList<MemberDTO> partMaster = dao.partMaster(info.getMember_id());
+
+		
+		// 참여한 인원 수 확인하기
+		int count = dao.mealCount(board_idx);
+		mav.addObject("count", count);
+		// login person 연락처 가져오기
+		String phone = dao.mealPhone(loginId);
+		mav.addObject("phone", phone);
+		// 시간 비교를 통해 마감여부를 update 해주는 코드
+		dao.updateEnd();
+		
+		// 로그인한 참가자가 명단에 있는지 
+		int partMemberChk = dao.partMemberChk((String) session.getAttribute("loginId"),board_idx);
+		logger.info("0 이면 참여자 아님 : " + partMemberChk);
+		mav.addObject("partMemberChk",partMemberChk);
+		mav.addObject("partMaster",partMaster);
 		return mav;
 	}
 	
 
 	private ArrayList<BoardDTO> partList(String board_idx) {
 		logger.info("참여 회원 목록 서비스");
-		
 		return dao.partList(board_idx);
 	}
 
@@ -216,14 +243,41 @@ public class MealService {
 	}
 
 
-
+	/*
+	 // 밥 게시글 참여 신청
 	public void mealApply(RedirectAttributes rAttr, String member_id, String board_idx) {
 		logger.info("밥 서비스 참가신청 서비스 도착");
 		dao.mealApply(member_id,board_idx);
 		rAttr.addFlashAttribute("msg", "모임 참여 신청 성공");
 	}
+	*/
 
 
+	 // 밥 게시글 참여 신청
+	public ModelAndView mealApply(RedirectAttributes rAttr, HashMap<String, String> params) {
+		logger.info("배달 게시글 참여 신청 서비스");
+		ModelAndView mav = new ModelAndView();
+		String member_id = params.get("member_id");
+		String board_idx = params.get("board_idx");
+	
+		logger.info("모임 참여 신청 성공");
+		dao.mealApply(member_id,board_idx);
+		rAttr.addFlashAttribute("msg", "모임 참여 신청 성공");
+		
+		return mav;
+	}
+
+
+	//ghldnjs rkdxhl
+	public ModelAndView mealBan(String member_id, String board_idx) {
+		logger.info("참여 회원 강퇴 서비스");
+		ModelAndView mav = new ModelAndView();
+		dao.mealBan(member_id,board_idx);
+		
+		return mav;
+	}
+
+	
 
 
 
