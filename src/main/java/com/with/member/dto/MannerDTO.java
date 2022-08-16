@@ -82,5 +82,4 @@ public class MannerDTO {
 		this.time = time;
 	}
 	
-	
 }

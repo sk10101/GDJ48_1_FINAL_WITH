@@ -172,7 +172,7 @@
 					</tr>
 					<tr>
 						<th>인원 : </th>
-						<td>(현재인원) / ${list.member_cnt}</td>
+						<td>${list.partNo} / ${list.member_cnt}</td>
 						<c:if test="${list.recruit_end eq 0}">
 							<td colspan="2">
 								<span style="padding: 3px 10px; border-radius: 5px; background-color: #2962ff">모집중</span>
@@ -190,9 +190,18 @@
 				<ul class="pagination" id="pagination"></ul>
 			</nav>
 		</div>
+	</div>	
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script type="text/javascript">
+
+	var msg = "${msg}";
+	
+	if(msg != "") {
+		alert(msg);
+	}
+
+
 	var page = 1; // 초기 페이지 번호
 	var word = $('#word').val();
 	var option = $('#option').val();

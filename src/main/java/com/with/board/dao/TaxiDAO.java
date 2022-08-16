@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.with.board.dto.BoardDTO;
 import com.with.board.dto.PhotoDTO;
+import com.with.member.dto.MannerDTO;
 import com.with.member.dto.MemberDTO;
 
 public interface TaxiDAO {
@@ -25,7 +26,7 @@ public interface TaxiDAO {
 
 	int taxiCount(String board_idx);
 
-	ArrayList<MemberDTO> taxiParticipant(String board_idx);
+	ArrayList<MemberDTO> taxiParticipant(String board_idx, String loginId);
 
 	int writeBcc(BoardDTO dto);
 
@@ -36,7 +37,6 @@ public interface TaxiDAO {
 	void taxiFileWrite(String oriFileName, String newFileName, int board_idx, String category);
 
 //	ArrayList<BoardDTO> allCount(HashMap<String, Object> map, String loginId);
-
 
 	int allCount(HashMap<String, Object> map);
 
@@ -57,5 +57,23 @@ public interface TaxiDAO {
 	int chkReject(HashMap<String, Object> params);
 
 	int chkElim(HashMap<String, Object> params);
+
+	int chkSuper(HashMap<String, Object> params);
+
+	String chkGender(HashMap<String, Object> params);
+
+	int chkPt(String board_idx, String loginId);
+
+	int chkSuper(String board_idx, String loginId);
+
+	int putKind(HashMap<String, String> params);
+
+	int putResponse(HashMap<String, String> params);
+
+	int putTime(HashMap<String, String> params);
+
+	String chkCate(String board_idx);
+
+	int elimDo(String board_idx, String member_id);
 
 }
