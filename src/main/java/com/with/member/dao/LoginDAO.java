@@ -28,8 +28,4 @@ public interface LoginDAO {
 
 	Date chkPenalty(String loginId);
 
-
-
-	
-
 }

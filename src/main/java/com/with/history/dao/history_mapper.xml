@@ -14,7 +14,7 @@
 			recruit_end,
 			(SELECT count(a.apply_idx) FROM apply a where a.status = '대기중' AND b.board_idx = a.board_idx) as applyNo 
 		FROM board_common_column b
-		WHERE b.member_id = '일반회원'
+		WHERE b.member_id = #{loginId}
 		<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -39,7 +39,7 @@
 
 
 	<select id="allCount" resultType="board" parameterType="hashmap">
-		SELECT board_idx FROM board_common_column WHERE member_id = '일반회원'
+		SELECT board_idx FROM board_common_column WHERE member_id = #{loginId}
 			<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">

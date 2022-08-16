@@ -179,7 +179,7 @@
 				</tr>
 				<c:forEach items="${partMaster}" var="ptm">
 					<tr>
-						<td>${ptm.member_id}</td>
+						<td><a href="">${ptm.member_id}</a></td>
 						<td>${ptm.gender}</td>
 						<td>0000</td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>

@@ -313,9 +313,9 @@
                 <li><a href="/mealList.go"><img class="eating" src="./resources/images/eating.png" alt="eating"><div class="circle"></div>식사</a></li>
                 <li><div class="line"></div></li>
                 <li><a class="my" href="/myInfo">내 정보</a></li>
-                <li><a class="my" href="/applyList">이용내역</a></li>
-                <li><a class="my" href="/block">차단 회원 관리</a></li>
-                <li><a class="my" href="/inquery">고객 문의</a></li>
+                <li><a class="my" href="mygList.go">이용내역</a></li>
+                <li><a class="my" href="/blockUserList.go">차단 회원 관리</a></li>
+                <li><a class="my" href="/inqueryList.go">고객 문의</a></li>
             </ul>
         </div>
         <div class="content">
@@ -324,16 +324,15 @@
                 <br><br><br><br><br><br><br>
                 <p class="score">내 평점</p>
                 <div class="star">
-                    <a href="#">
-                    <img src="./resources/images/star.png" alt="star">
-                    <img src="./resources/images/star.png" alt="star">
-                    <img src="./resources/images/star.png" alt="star">
-                    <img src="./resources/images/star.png" alt="star">
-                    <img src="./resources/images/star1.png" alt="star1">
-                    </a>
+                    <td>
+                    	<c:forEach var="i" begin="1" end="5">
+							<c:if test="${map.avg_allAvg >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+							<c:if test="${map.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+						</c:forEach>
+					</td>
                 </div>
                 <br><br>
-                <p class="score">4.0</p>
+				<p class="score">${map.avg_allAvg}</p>
             </div>
             <div class="content-box content-left">
                 <div class="center-line"></div>
