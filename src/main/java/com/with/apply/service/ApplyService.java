@@ -183,7 +183,9 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 			deliApplyList = dao.deliApplyList(map);
 			
-		
+			
+			
+			
 			logger.info("페이징 체크포인트");
 			return deliApplyList;
 		}
@@ -265,6 +267,11 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		
 			logger.info("페이징 체크포인트");
 			return taxiApplyList;
+		}
+
+		public String applyUpdate(HashMap<String, String> params) {
+			
+			return dao.applyUpdate(params);
 		}
 	
 	
