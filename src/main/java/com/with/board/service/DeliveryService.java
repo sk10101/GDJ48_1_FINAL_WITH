@@ -282,7 +282,7 @@ public class DeliveryService {
 		} else if (category.equals("밥게시판")) {
 			mav.setViewName("redirect:/mealList.go");
 		} else if (category.equals("택시게시판")) {
-			mav.setViewName("redirect:/texiListGo.go");
+			mav.setViewName("redirect:/taxiListGo");
 		}
 		
 		// 신청자 > 0 인 경우
@@ -343,7 +343,6 @@ public class DeliveryService {
 	         deliPhotoList.clear();
 			*/
 		}
-		
 			
 		return mav;
 	}

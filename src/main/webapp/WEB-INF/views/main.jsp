@@ -320,7 +320,7 @@
         </div>
         <div class="content">
             <div class="content-top">
-                <span class="collage">서울대학교</span>
+                <span class="collage">${univ}</span>
                 <br><br><br><br><br><br><br>
                 <p class="score">내 평점</p>
                 <div class="star">
