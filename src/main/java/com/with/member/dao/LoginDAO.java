@@ -4,10 +4,13 @@ import java.sql.Date;
 import java.util.HashMap;
 
 import com.with.member.dto.KakaoDTO;
+import com.with.member.dto.MemberDTO;
 
 public interface LoginDAO {
 
 	String login(String id,String pw);
+	
+	MemberDTO getMbInfo(String id);
 
 	void kakaoinsert(HashMap<String, Object> userInfo);
 
@@ -24,9 +27,5 @@ public interface LoginDAO {
 	boolean newPw(String id, String pw);
 
 	Date chkPenalty(String loginId);
-
-
-
-	
 
 }

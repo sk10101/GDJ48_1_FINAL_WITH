@@ -4,10 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<link rel="favicon" href="./resources/images/with_favicon.ico">
-	<title>With</title>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<meta charset="UTF-8">
+<link rel="favicon" href="./resources/images/with_favicon.ico">
+<title>With</title>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="resources/js/jquery.twbsPagination.js"></script>
 </head>
 <style>
     .content-wrap {
@@ -71,14 +74,18 @@
 							<td>${apply.investment}</td>
 							<td>${apply.penalty_idx}</td>
 							<td>${apply.apply_date}</td> 
-							<td>${apply.manner_score}</td> 
-							<c:if test="${apply.status eq '수락'}"><td><span style="border:1px solid black; background-color:#2962ff;">수락</span></td></c:if>
-							<c:if test="${apply.status eq '거절'}"><td><span style="border:1px solid black; background-color:red;">거절</span></td></c:if>
+							<td>
+								<c:forEach var="i" begin="1" end="5">
+				                     <c:if test="${apply.avg_allAvg >= i}"><img src="./resources/images/star.png" alt="star" style="width: 15px;"></c:if>
+				                     <c:if test="${apply.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 15px;"></c:if>
+              				    </c:forEach>
+							</td> 
+						
 						</tr>
 				</tbody>
 				</c:forEach>
-
 			</table>
+			<p>${manner.avg_allAvg}</p>
 	     	<div class="container">
                <nav arial-label="Page navigation" style="text-align:center">
                		<ul class="delipagination" id="delipagination"></ul>

@@ -2,8 +2,61 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.with.report.dao.BlindDAO">
+	
+	<select id="blindList" resultType="com.with.report.dto.BlindDTO" parameterType="hashmap">
+		SELECT * FROM blind_board
+			WHERE 1=1
+				<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('아이디')">
+							AND member_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('이용서비스')">
+							AND category_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+				<!-- 정렬조건 여기에 -->
+				LIMIT #{cnt} OFFSET #{offset}
+	</select>
+	
+	<select id="allCount" resultType="com.with.report.dto.BlindDTO" parameterType="hashmap">
+	 	SELECT * FROM blind_board
+			WHERE 1=1
+				<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('아이디')">
+							AND member_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('이용서비스')">
+							AND category_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+	</select>
+	
+	<select id="blindDetail" resultType="com.with.report.dto.BlindDTO" parameterType="String">
+		SELECT * FROM blind_board
+			WHERE board_idx = #{param1}
+	</select>
+	
 	<update id="superBlind">
 		UPDATE board_common_column SET hide = 1
 			WHERE board_idx = #{param1}
 	</update>
+	
+	<update id="updateComm" parameterType="com.with.report.dto.BlindDTO">
+		UPDATE board_common_column SET hide = #{cancel}
+			WHERE board_idx = #{board_idx}
+	</update>
+	
+	<update id="updateBlind" parameterType="com.with.report.dto.BlindDTO">
+		UPDATE blind_board SET cancel = #{cancel}, blindCancel_id = #{blindCancel_id},blindCancel_reason =#{blindCancel_reason}
+			WHERE board_idx = #{board_idx}
+	</update>
+	
 </mapper>

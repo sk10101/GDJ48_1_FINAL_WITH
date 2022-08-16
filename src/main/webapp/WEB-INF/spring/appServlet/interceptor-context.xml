@@ -13,26 +13,38 @@
 			<mvc:mapping path="/*"/>
 			<mvc:exclude-mapping path="/"/>
 			<mvc:exclude-mapping path="/*join*"/>
-			<mvc:exclude-mapping path="/login.do"/>
-			<mvc:exclude-mapping path="/logout"/>
+			<mvc:exclude-mapping path="/IdCheck.ajax"/>
+			<mvc:exclude-mapping path="/EmailCheck.ajax"/>
+			<mvc:exclude-mapping path="/cliempSearch.ajax"/>
+			<mvc:exclude-mapping path="/cliempList.ajax"/> 
+			<mvc:exclude-mapping path="/login.*"/>
+			<mvc:exclude-mapping path="/login"/>
+			<mvc:exclude-mapping path="/idFind*"/>	
+			<mvc:exclude-mapping path="/pwFind*"/>
+			<mvc:exclude-mapping path="/newPw"/>
+			
 			<bean class="com.with.member.utils.LoginInter"/>
 		</mvc:interceptor>
-		<!-- 나중에 인터페이스 추가하면서 주석 해제할 것
+		<!-- 관리자만 들어갈 수 있는 페이지에 일반회원 접근을 막는 Interceptor -->
 		<mvc:interceptor>
-			<mvc:mapping path="/*"/>
-			<mvc:exclude-mapping path="/"/>
-			<bean class="com.with.utils.MemberInter"/>
+			<mvc:mapping path="/reportList"/>
+			<mvc:mapping path="/superBlind"/>
+			<bean class="com.with.member.utils.MemberInter"/>
+		</mvc:interceptor>
+
+		<!-- 대학교 인증 관련 Interceptor -->
+		<mvc:interceptor>
+			<mvc:mapping path="/deliList*"/>
+			<mvc:mapping path="/taxiList*"/>
+			<mvc:mapping path="/mealList*"/>
+			<mvc:exclude-mapping path="/myInfo*"/>
+			<bean class="com.with.member.utils.UnivInter"/>
 		</mvc:interceptor>
 		
-		<mvc:interceptor>
-			<mvc:mapping path="/*"/>
-			<mvc:exclude-mapping path="/"/>
-			<bean class="com.with.utils.UnivInter"/>
-		</mvc:interceptor>
-		-->
+		<!-- 이용제한을 받고있는 회원의 로그인을 막는 Interceptor -->
 		<mvc:interceptor>
 			<mvc:mapping path="/main"/>
-			<bean class="com.with.member.utils.PenaltyInter"/>
+			<bean class="com.with.report.utils.PenaltyInter"/>
 		</mvc:interceptor>
 		
 	</mvc:interceptors>

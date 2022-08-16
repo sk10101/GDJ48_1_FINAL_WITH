@@ -223,7 +223,14 @@ public int getBoard_idx() {
 	//배달 참가 리스트 전용 dto
 	private int manner_score;
 	private int penalty_idx;
+	private float avg_allAvg;
 
+	public float getAvg_allAvg() {
+		return avg_allAvg;
+	}
+	public void setAvg_allAvg(float avg_allAvg) {
+		this.avg_allAvg = avg_allAvg;
+	}
 	public int getPenalty_idx() {
 		return penalty_idx;
 	}
