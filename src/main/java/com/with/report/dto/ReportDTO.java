@@ -89,5 +89,20 @@ public class ReportDTO {
 		this.subject = subject;
 	}
 	
+	//패널티 게시판
+	public Date penalty_date;
+	public Date penalty_end;
+	public Date getPenalty_date() {
+		return penalty_date;
+	}
+	public void setPenalty_date(Date penalty_date) {
+		this.penalty_date = penalty_date;
+	}
+	public Date getPenalty_end() {
+		return penalty_end;
+	}
+	public void setPenalty_end(Date penalty_end) {
+		this.penalty_end = penalty_end;
+	}
 	
 }

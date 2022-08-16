@@ -7,7 +7,7 @@ import com.with.report.dto.ReportDTO;
 
 public interface ReportDAO {
 
-	ArrayList<ReportDTO> reportlist();
+	ArrayList<ReportDTO> reportList(HashMap<String, Object> map);
 
 	void reportsend(HashMap<String, String> params);
 
@@ -18,5 +18,9 @@ public interface ReportDAO {
 	void penaltycom(HashMap<String, String> params);
 
 	int reportchk(HashMap<String, String> params);
+
+	ArrayList<ReportDTO> allCount(HashMap<String, Object> map);
+
+	ReportDTO penaltydetail(String member_id);
 
 }

@@ -62,7 +62,7 @@
 		       	</tr>
 		       	<tr>
 		       		<th>처리날짜</th>
-		       		<td><%-- ${패널티DTO써서 따로 가져올거임} --%></td>
+		       		<td>${penaltyinfo.penalty_date}</td>
 		       	</tr>
 		       	<tr>
 		       		<th>처리사유</th>
@@ -76,7 +76,6 @@
 			       		<td>
 			       			<select name="status" id="status" onchange="selectBoxChange(this.value);">
 		                   		<option value="미처리" selected="selected">미처리</option>
-		                   		<option value="처리중">처리중</option>
 		                   		<option value="처리완료">처리완료</option>
 		              		</select>
 	               		</td>
@@ -84,8 +83,8 @@
 		       	</tr>
 		       	<tr>
 		       		<th>제한종료날짜</th>
-		       		<c:if test="${info.report_reason eq null}"><td><input type="date" id="penalty_end" name="penalty_end"/></td></c:if>
-		       		<c:if test="${info.report_reason ne null}"><td>${info.report_reason}</td></c:if>
+		       		<c:if test="${penaltyinfo.penalty_end eq null}"><td><input type="date" id="penalty_end" name="penalty_end"/></td></c:if>
+		       		<c:if test="${penaltyinfo.penalty_end ne null}"><td>${penaltyinfo.penalty_end}</td></c:if>
 		       	</tr>
 	       </table>
 		       <input type="button" value="돌아가기" onclick="location.href='reportList.go'"/>

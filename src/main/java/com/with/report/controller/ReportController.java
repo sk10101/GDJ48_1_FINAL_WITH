@@ -26,11 +26,34 @@ public class ReportController {
 	
 	@Autowired ReportService service;
 	
+	@RequestMapping(value = "/reportList.go", method = RequestMethod.GET)
+	public String userlist(HttpSession session) {
+		
+		return "redirect:/reportList?page="+1+"&option=''"+"&word=''"+"&filter=''";
+	}
+	
 	//신고내역 조회
 	@RequestMapping(value = "/reportList")
-	public ModelAndView reportlist() {
+	public ModelAndView reportlist(HttpSession session, @RequestParam HashMap<String, String> params) {
 		logger.info("신고내역 리스트 조회");
-		return service.reportlist();
+		String loginId = (String) session.getAttribute("loginId");
+		String filter = params.get("filter");
+		session.setAttribute("filter", filter);
+		logger.info("필터 값 :"+filter);
+		session.removeAttribute("option");
+		session.removeAttribute("word");
+//		session.removeAttribute("filter");
+		
+		if(params.get("word") != "") {
+			session.setAttribute("option",params.get("option")); 
+			session.setAttribute("word", params.get("word"));
+			}
+
+		logger.info("로그인 아이디: "+loginId);
+		params.put("loginId", loginId);
+		ModelAndView mav = new ModelAndView();
+		mav = service.reportlist(params);
+		return mav;
 	}
 	
 	//신고 내역 폼 이동
@@ -45,7 +68,9 @@ public class ReportController {
 	public ModelAndView reportsend(HttpSession session, @RequestParam HashMap<String, String> params) {
 		ModelAndView mav = new ModelAndView();
 		logger.info(params.get("board_idx")+"번 게시글"+params.get("check")+"신고하기"+params.get("textbox"));
-		service.reportsend(params);
+		logger.info("로그인 아이디 : "+ session.getAttribute("loginId"));
+		params.put("loginId", (String) session.getAttribute("loginId"));
+		mav = service.reportsend(params);
 		return mav;
 	}
 	
@@ -53,13 +78,17 @@ public class ReportController {
 	@RequestMapping(value = "/reportDetail")
 	public ModelAndView reportdetail(HttpSession session, @RequestParam String report_idx) {
 		logger.info(report_idx+" 번 신고내역 상세보기");
-		return service.reportdetail(report_idx);
+		ModelAndView mav = new ModelAndView();
+		mav = service.reportdetail(report_idx);
+		return mav;
 	}
 	
 	//신고 처리
 	@RequestMapping(value = "/reportcom", method = RequestMethod.GET)
 	public String reportcom(HttpSession session, @RequestParam HashMap<String, String> params) {
 		logger.info("신고처리");
+		logger.info("로그인 아이디 : "+session.getAttribute("loginId"));
+		params.put("loginId", (String) session.getAttribute("loginId"));
 		return service.reportcom(params);
 	}
 	

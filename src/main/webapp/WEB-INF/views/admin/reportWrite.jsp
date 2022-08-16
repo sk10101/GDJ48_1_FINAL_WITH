@@ -66,9 +66,9 @@
 </body>
 <script>
 /* var msg = "${msg}"
-	if (msg != "") {
-	alert(msg);
-	} */
+if (msg != "") {
+alert(msg);
+} */
 	
 function windowclose(){
 	window.close();
