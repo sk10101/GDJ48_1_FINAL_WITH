@@ -3,15 +3,88 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.with.report.dao.ReportDAO">
 
-	<select id="reportlist" resultType="report">
-	SELECT r.report_idx, b.board_idx, b.category_id, b.subject, r.reporter_id, r.report_date, r.report_content, r.report_admin, r.status
-	FROM report r, board_common_column b
-	WHERE r.board_idx = b.board_idx
+	<select id="reportList" resultType="report" parameterType="hashmap">
+		SELECT r.report_idx, b.board_idx, b.category_id, b.subject, r.reporter_id, r.report_date, r.report_content, r.report_admin, r.status
+		FROM report r, board_common_column b
+		WHERE r.board_idx = b.board_idx
+		<if test="word != null and word != ''">
+			<choose>
+				<when test="option.equals('subject')">
+					AND b.subject LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('category_id')">
+					AND b.category_id LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('report_content')">
+					AND r.report_content LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('report_admin')">
+					AND r.report_admin LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('처리상태')">
+					AND r.status LIKE CONCAT('%',#{word},'%')
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>	
+			ORDER BY r.report_idx DESC LIMIT #{cnt} OFFSET #{offset}
 	</select>
 
 	<insert id="reportsend" parameterType="hashmap">
 		INSERT INTO report (board_idx, reporter_id, report_content)
-		VALUE (#{board_idx}, 'test2', #{report_content})
+		VALUE (#{board_idx}, #{loginId}, #{report_content})
 	</insert>
+	
+	<select id="reportchk" parameterType="hashmap" resultType="int">
+		SELECT count(report_idx) FROM report WHERE board_idx = #{board_idx} AND reporter_id = #{loginId}
+	</select>
+	
+	<select id="reportdetail" resultType="report">
+		SELECT b.member_id, b.category_id, b.board_idx, b.subject, r.report_content, r.report_admin, r.report_reason, r.status, r.report_idx
+		FROM report r, board_common_column b
+		WHERE r.board_idx = b.board_idx AND report_idx = #{param1}
+	</select>
+	
+	<insert id="reportcom" parameterType="hashmap">
+		INSERT INTO penalty (penalty_end, member_id, penalty_admin)
+		VALUES (#{penalty_end}, #{member_id}, #{loginId})
+	</insert>
+
+	<update id="penaltycom" parameterType="hashmap">
+		UPDATE report SET report_admin = #{loginId}, report_reason = #{report_reason}, status = #{status}
+		WHERE report_idx = #{report_idx}
+	</update>
+
+	<select id="allCount" resultType="report" parameterType="hashmap">
+		SELECT report_idx FROM report r, board_common_column b WHERE r.board_idx  = b.board_idx
+		<if test="word != null and word != ''">
+			<choose>
+				<when test="option.equals('subject')">
+					AND b.subject LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('category_id')">
+					AND b.category_id LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('report_content')">
+					AND r.report_content LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('report_admin')">
+					AND r.report_admin LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('처리상태')">
+					AND r.status LIKE CONCAT('%',#{word},'%')
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</if>
+	</select>
+	
+	<select id="penaltydetail" resultType="report">
+		<![CDATA[
+			SELECT penalty_end, penalty_date FROM penalty WHERE member_id = #{param1} AND penalty_end > now()
+		]]> 
+	</select>
 
 </mapper>

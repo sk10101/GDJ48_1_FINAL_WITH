@@ -34,4 +34,6 @@ public interface MemberDAO {
 
 	void insert(String member_id, String nameBox, int i);
 
+	void blockUser(String member, String mb_id);
+
 }

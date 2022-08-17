@@ -92,6 +92,10 @@
 	    margin-top: -3px;
 	}
 	
+	#link {
+		color : black;
+	}
+	
 	.eye {
         position: absolute;
         z-index: 1;
@@ -107,6 +111,7 @@
         right: 665px;
         top: 105px;
     }
+
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -116,6 +121,7 @@
 	       <!-- 여기에서 작업 시작하세요 -->
 	     	<c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${info.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
 	     	<table>
+	     		
 	     		<tr>
 	     			<td class='subject'>${info.subject}</td>
 	     		</tr>
@@ -145,7 +151,7 @@
 				<tr>
 					<td><img alt="성별제한" src="../resources/images/gender.png" style="width:20px; height:20px;"> ${info.gender}</td>
 					<!-- 신고하기위해 살짝 수정함 -제한- -->
-					<td><a href="#" onclick="reportPop()"><span style="border:1px solid black; background-color:red;">신고</span></a></td> 
+					<td><a id="link" href="#" onclick="reportPop()"><span style="border:1px solid black; background-color:red;">신고</span></a></td> 
 				</tr>
 			</table>
 			<hr>
@@ -179,7 +185,7 @@
 				</tr>
 				<c:forEach items="${partMaster}" var="ptm">
 					<tr>
-						<td><a href="">${ptm.member_id}</a></td>
+						<td><a href="/mannerInfo?member=${ptm.member_id}&board=${info.board_idx}">${ptm.member_id}</a></td>
 						<td>${ptm.gender}</td>
 						<td>0000</td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>
@@ -273,6 +279,6 @@
 	function reportPop(){
 		window.open('reportWrite.go?board_idx=${info.board_idx}','report','width=1000, height=600, top=200, left=500')
 	}
-	
+
 </script>
 </html>

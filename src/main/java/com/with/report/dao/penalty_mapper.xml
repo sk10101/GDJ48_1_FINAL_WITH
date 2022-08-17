@@ -8,4 +8,31 @@
 			WHERE now() > penalty_end AND p.member_id = m.member_id;
 	]]>  
 	</update>
+	
+	<select id="penaltyList" resultType="penalty" parameterType="hashmap">
+		SELECT member_id, penalty_date, penalty_end, penalty_admin, cancel, penalty_idx
+		FROM penalty
+		<if test="word != null and word != ''">
+			WHERE member_id LIKE CONCAT('%',#{word},'%')
+		 </if>
+		 ORDER BY penalty_idx DESC LIMIT #{cnt} OFFSET #{offset}
+	</select>
+	
+	<select id="allCount" resultType="penalty" parameterType="hashmap">
+		SELECT penalty_idx FROM penalty
+			<if test="word != null and word != ''">
+				WHERE member_id LIKE CONCAT('%',#{word},'%')
+			</if>
+	</select>
+	
+	<select id="penaltydetail" resultType="penalty" parameterType="String">
+		SELECT member_id, penalty_admin, penalty_date, penalty_end, pntCancel_id, pntCancel_reason, cancel, penalty_reason
+		FROM penalty WHERE penalty_idx = #{penalty_idx}
+	</select>
+	
+	<update id="update" parameterType="hashmap">
+		UPDATE penalty SET pntCancel_id = #{loginId}, cancel = 1, pntCancel_reason = #{pntCancel_reason} WHERE penalty_idx = #{penalty_idx}
+	</update>
+	
+	
 </mapper>

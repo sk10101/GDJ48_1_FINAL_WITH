@@ -21,12 +21,11 @@
 
     .content {
         display: inline-block;
-        
         margin-left: 160px;
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
@@ -100,7 +99,7 @@ $("#pagination").twbsPagination({
 		//console.log(e); //클릭한 페이지와 관련된 이벤트 객체
 		console.log(page); //사용자가 클릭한 페이지
 		// 페이지 이동시에도 데이터를 가지고 있기 위해 session 을 활용한다
-		location.href = "userList?page="+page+"&option="+"${sessionScope.option}"+"&word="+"${sessionScope.word}"+"&member_class="+"${sessionScope.member_class}";
+		location.href = "userList?page="+page+"&option="+"${sessionScope.option}"+"&word="+"${sessionScope.word}";
 		
 	}
 });

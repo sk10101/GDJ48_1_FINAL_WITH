@@ -119,6 +119,9 @@
 	  display: none;
 	}
 	
+	#link {
+		color : black;
+
 	#crown {
 		width: 20px;
 	}

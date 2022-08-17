@@ -194,15 +194,15 @@ public class ApplyController {
 	
 	// 밥 참가 리스트 페이지 이동
 			@RequestMapping(value = "/mealApplyList.go", method = RequestMethod.GET)
-			public String mealApplyList(HttpSession session) {
+			public String mealApplyList(HttpSession session, @RequestParam String board_idx) {
 				
-				return "redirect:/mealApplyList?page="+1+"&option="+"&word=";
+				return "redirect:/mealApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=";
 			}
 	
 	//밥 참가
 		@RequestMapping(value = "/mealApplyList", method = RequestMethod.GET)
 		public ModelAndView mealApplyList(HttpSession session, @RequestParam HashMap<String, String> params) {
-			logger.info("밥 참가 목록 조회");
+			logger.info(" 참가 목록 조회");
 			session.removeAttribute("option");
 			session.removeAttribute("word");
 			
@@ -212,17 +212,33 @@ public class ApplyController {
 				session.setAttribute("word", params.get("word"));
 			}
 			
-			logger.info(params.get("category_id"));
 			session.setAttribute("category_id", params.get("category_id"));
+			logger.info(params.get("category_id"));
 			session.setAttribute("board_idx", params.get("board_idx"));
 			logger.info(params.get("board_idx"));
-			
-			
 			ModelAndView mav = new ModelAndView();
 			mav = service.mealApplyList(params);
 			return mav;
 		}
-	
+		
+		//택시 업데이트
+		@RequestMapping(value = "/mealApplyUpdate", method = RequestMethod.GET)
+		public ModelAndView mealApplyUpdate(HttpSession session, @RequestParam HashMap<String, String> params) {
+			logger.info(params.get("status"));
+			logger.info(params.get("apply_idx"));
+			logger.info(params.get("board_idx"));
+			String status = params.get("status");
+			if (status.equals("1")) {
+				status = "수락";
+			}if(status.equals("0")) {
+				status = "거절";
+			}
+			params.put("realstatuss", status);
+			ModelAndView mav = new ModelAndView();
+			mav=service.mealApplyUpdate(params);
+			return  mav;
+		}
+
 	
 	/*
 	@RequestMapping(value = "/totalApplyList", method = RequestMethod.GET)
