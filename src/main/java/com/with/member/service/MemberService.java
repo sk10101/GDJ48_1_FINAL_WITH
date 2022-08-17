@@ -140,11 +140,11 @@ public class MemberService {
 		int cnt=0;
 		float avg[]= new float[4];
 		int result[]= new int[4]; 
-		if(mannerAvg!=0||dao.average(member_id,nameBox[0])>0) {
+		if(mannerAvg!=0) {
 			cnt = dao.macnt(member_id)/3; // 매너점수를 작성한 회원들 예) 12명
 		}
 		for(int i=0;i<3;i++) {
-			if(mannerAvg!=0||dao.average(member_id,nameBox[0])>0) {
+			if(mannerAvg!=0) {
 				result[i]+=dao.average(member_id,nameBox[i]); //
 				avg[i]=(float)result[i]/cnt;
 				dao.mannerCnt(member_id,nameBox[i],avg[i]);

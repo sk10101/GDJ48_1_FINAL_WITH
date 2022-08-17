@@ -36,7 +36,7 @@
 	 <%--   <jsp:include page="../commons/memberSideBar5.jsp"/> --%>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	     <form action="mygrouplist.go" method="get">
+	     <form action="myapplylist.go" method="get">
 				<table>
 					<tr>
 						<th><input type="radio" name="member" onclick="window.location.href='/mygList.go';"

@@ -20,6 +20,30 @@
 	</script>
 </head>
 <style>
+
+	.btn{
+	
+	  background-color: blue;
+	
+	  border: none;
+	
+	  color: white;
+	
+	  padding: 5px 10px;
+	
+	  text-align: center;
+	
+	  text-decoration: none;
+	
+	  display: inline-block;
+	
+	  font-size: 16px;
+	
+	  margin: 4px 2px;
+	
+	  cursor: pointer;
+	
+	}
     .content-wrap {
     	max-width: 1200px;
     	width: 100%;
@@ -115,7 +139,7 @@
 							</tr>							
 							<tr>
 							<td>
-								<button onClick="location='blindDetail?board_idx=${bbs.board_idx}'">해제</button>
+								<button class="btn" onClick="location='blindDetail?board_idx=${bbs.board_idx}'">상세보기</button>
 							</td>
 							</tr>
 						</table>
