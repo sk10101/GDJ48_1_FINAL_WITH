@@ -25,15 +25,15 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
 </style>
 <body>
-	<%-- <jsp:include page="../commons/header.jsp"/> --%>
+	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
-	   <%-- <jsp:include page="../commons/memberSideBar5.jsp"/> --%>
+	   <jsp:include page="../commons/memberSideBar5.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	     
@@ -82,8 +82,8 @@
 				                     <c:if test="${apply.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 15px;"></c:if>
               				    </c:forEach>
 							</td>
-								<td><input type="button" value="수락" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&status=1'" /></td>
-								<td><input type="button" value="거절" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&status=0'" /></td>
+								<td><input type="button" value="수락" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=1'" /></td>
+								<td><input type="button" value="거절" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=0'" /></td>
 							</tr>
 				</tbody>
 				</c:forEach>
@@ -96,7 +96,7 @@
 			</div>
 	   </div>
 	</div>
-	<%-- <jsp:include page="../commons/footer.jsp"/> --%>
+	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script type="text/javascript">
 	var page = 1; // 초기 페이지 번호

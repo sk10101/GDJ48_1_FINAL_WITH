@@ -1,5 +1,7 @@
 package com.with.main.service;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.with.board.dto.BoardDTO;
 import com.with.main.dao.MainDAO;
 
 @Service
@@ -29,10 +32,25 @@ public class MainService {
 		String univ = dao.getUniv(loginId);
 		
 		// 모집중인 게시글 작성을 최신순으로 5개 가져오기
+		ArrayList<BoardDTO> recruitIng = dao.recruitIng(loginId);
 		
 		// 참여중인 게시글 최신순으로 5개 가져오기
+		ArrayList<BoardDTO> partIng = dao.partIng(loginId);
+		
+		// 모집중인 게시글 수 가져오기
+		int recruitCnt = dao.recruitCnt(loginId);
+		logger.info("모집중인 게시글 수 : " + recruitCnt);
+		
+		// 참여중인 게시글 수 가져오기
+		int partCnt = dao.partCnt(loginId);
+		logger.info("참여중인 게시글 수 : " + partCnt);
+		
 		
 		mav.addObject("univ", univ);
+		mav.addObject("recruitIng", recruitIng);
+		mav.addObject("partIng", partIng);
+		mav.addObject("recruitCnt", recruitCnt);
+		mav.addObject("partCnt", partCnt);
 		mav.setViewName("main");
 		
 		return mav;

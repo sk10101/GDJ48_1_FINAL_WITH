@@ -21,4 +21,18 @@ public interface ApplyDAO {
 
 	void applyUpdate(HashMap<String, String> params);
 
+	void taxiApplyUpdate(HashMap<String, String> params);
+	
+
+	ArrayList<BoardDTO> mealCount(HashMap<String, Object> map);
+
+	ArrayList<BoardDTO> mealApplyList(HashMap<String, Object> map);
+
+
+	void mealApplyUpdate(HashMap<String, String> params);
+
+	void applyCancle(HashMap<String, String> params, String board_idx, String apply_idx);
+
+	void applyDelete(HashMap<String, String> params);
+
 }

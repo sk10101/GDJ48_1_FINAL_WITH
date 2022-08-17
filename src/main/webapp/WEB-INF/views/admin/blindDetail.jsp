@@ -22,7 +22,7 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
@@ -45,7 +45,7 @@
 	     		<td>${info.blindCancel_id}</td>
 	     		</tr>
 	     		<tr>
-	     		<td> 블라인드 해제 : </td>
+	     		<td> 블라인드 해제 : </td>  <!-- db에 저장된 cancel 값이 1이면 체크로 보이게하고,0이면 체크박스 체크 안되어있게하기-->
 	     		<td><input type="checkbox" name="cancel" id="cancel" value="1" <c:if test="${info.cancel==1}">checked</c:if>></td>
 	     		</tr>
 	     		<tr>
@@ -54,7 +54,7 @@
 	     		</tr>
 	     	</table>
 	     	<input type="submit" value="해제">
-	     	<button>돌아가기</button>
+	     	<input type="button" value="돌아가기" onclick="location.href='blindListGo'"/>
 	     </form>
 	   </div>
 	</div>
