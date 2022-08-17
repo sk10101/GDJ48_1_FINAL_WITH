@@ -62,7 +62,9 @@
 						<th>최근 14일간 받은 패널티</th>
 						<th>신청시간</th>
 						<th>매너점수</th>
-						<th>수락/거절</th>
+						<th colspan="2">
+							<td>수락/거절</td>
+						</th>
 					</tr>
 				</thead>
 				
@@ -79,9 +81,10 @@
 				                     <c:if test="${apply.avg_allAvg >= i}"><img src="./resources/images/star.png" alt="star" style="width: 15px;"></c:if>
 				                     <c:if test="${apply.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 15px;"></c:if>
               				    </c:forEach>
-							</td> 
-						
-						</tr>
+							</td>
+								<td><input type="button" value="수락" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=1'" /></td>
+								<td><input type="button" value="거절" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=0'" /></td>
+							</tr>
 				</tbody>
 				</c:forEach>
 			</table>

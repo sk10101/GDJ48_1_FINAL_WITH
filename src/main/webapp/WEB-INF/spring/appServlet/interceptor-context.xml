@@ -29,6 +29,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/reportList"/>
 			<mvc:mapping path="/superBlind"/>
+			<!-- <mvc:mapping path="/blindListGo"/> -->
 			<bean class="com.with.member.utils.MemberInter"/>
 		</mvc:interceptor>
 
@@ -47,7 +48,18 @@
 			<bean class="com.with.report.utils.PenaltyInter"/>
 		</mvc:interceptor>
 		
-	</mvc:interceptors>
+		<!-- 관리자만 들어갈 수 있는 페이지에 일반회원 접근을 막는 Interceptor -->
+		<mvc:interceptor>
+			<mvc:mapping path="/reportList"/>
+			<mvc:mapping path="/superBlind"/>
+			<bean class="com.with.member.utils.MemberInter"/>
+		</mvc:interceptor>
 
-
+		<!--  관리자만 들어갈 수 있는 페이지에 일반회원 접근을 막는 BlindInterceptor  -->
+		<mvc:interceptor>
+			<mvc:mapping path="/blindListGo"/>
+			<bean class="com.with.report.utils.BlindInter"/>
+		</mvc:interceptor> 	
+		
+		</mvc:interceptors>		
 </beans>

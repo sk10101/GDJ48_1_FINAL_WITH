@@ -63,9 +63,11 @@
 	SELECT 
 		a.member_id,
 		a.investment,
-		(select count(penalty_idx) from penalty p where penalty_date < now() AND penalty_date > date_add(now(), interval -5 day) and p.member_id = a.member_id),
+		(select count(penalty_idx) from penalty p where penalty_date < now() AND penalty_date > date_add(now(), interval -14 day) and p.member_id = a.member_id),
 		DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date,
-		(SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE 'id_test' = m.member_id) as avg_allAvg
+		(SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE a.member_id = m.member_id) as avg_allAvg,
+		a.apply_idx,
+		b.board_idx	
 	FROM apply a, board_common_column b
 	WHERE b.board_idx = a.board_idx AND a.member_id != b.member_id AND a.status = '대기중' AND b.board_idx = #{board_idx}]]>
 		<if test="word != null and word != ''">
@@ -86,8 +88,8 @@
 	
 	<select id="deliallCount" resultType="board" parameterType="hashmap">
 		SELECT a.member_id
-		FROM apply a, board_common_column b, delivery_board d
-		WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx AND b.board_idx  = d.board_idx AND a.status = '대기중' AND b.category_id = '배달게시판' AND investment != ''
+		FROM apply a, board_common_column b
+		WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx AND a.status = '대기중' 
 
 			<if test="word != null and word != ''">
 					<choose>
@@ -103,17 +105,22 @@
 				</if>
 	</select>
 	
+	<update id="applyUpdate" parameterType="hashmap">
+		UPDATE apply SET status = #{realstatus} WHERE apply_idx = #{apply_idx} 
+	</update>
+	
 	
 	<select id="taxiApplyList" resultType="board" parameterType="hashmap">
+	<![CDATA[
 	SELECT 
 		a.member_id,
-		count(p.penalty_idx),
+		(select count(penalty_idx) from penalty p where penalty_date < now() AND penalty_date > date_add(now(), interval -14 day) and p.member_id = a.member_id),
 		DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date,
-		m.manner_score,
-		b.category_id,
-		a.status
-	FROM apply a, manner_assess m, penalty p, board_common_column b,taxi_board t
-	WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx AND t.board_idx = b.board_idx  AND m.member_id = a.member_id AND a.status = '대기중' AND b.category_id = '택시게시판'
+		(SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE a.member_id = m.member_id) as avg_allAvg,
+		a.apply_idx,
+		b.board_idx	
+	FROM apply a, board_common_column b
+	WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx  AND a.status = '대기중' AND b.board_idx = #{board_idx}]]>
 		<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -131,8 +138,8 @@
 	
 	<select id="taxiallCount" resultType="board" parameterType="hashmap">
 		SELECT a.member_id
-		FROM apply a, manner_assess m, board_common_column b, taxi_board t
-		WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx and t.board_idx = a.board_idx AND a.member_id = m.member_id and a.status = '대기중' and b.category_id = '택시게시판'
+		FROM apply a, board_common_column b
+		WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx and a.status = '대기중'
 
 			<if test="word != null and word != ''">
 					<choose>
@@ -147,5 +154,57 @@
 					</choose>
 				</if>
 	</select>
+	
+
+	<select id="mealApplyList" resultType="board" parameterType="hashmap">
+	<![CDATA[
+	SELECT 
+		a.member_id,
+		(select count(penalty_idx) from penalty p where penalty_date < now() AND penalty_date > date_add(now(), interval 14 day) and p.member_id = a.member_id),
+		DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date,
+		(SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE a.member_id = m.member_id) as avg_allAvg,
+		a.apply_idx
+	FROM apply a, board_common_column b
+	WHERE b.board_idx = a.board_idx AND a.member_id != b.member_id AND a.status = '대기중' AND b.board_idx = #{board_idx}]]>
+		<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('제목')">
+							AND subject LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('아이디')">
+							AND a.member_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+			ORDER BY a.board_idx DESC LIMIT #{cnt} OFFSET #{offset}
+			
+	</select>
+	
+	<select id="mealCount" resultType="board" parameterType="hashmap">
+		SELECT a.member_id
+		FROM apply a, board_common_column b
+		WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx AND a.status = '대기중';
+
+			<if test="word != null and word != ''">
+					<choose>
+						<when test="option.equals('제목')">
+							AND subject LIKE CONCAT('%',#{word},'%')
+						</when>
+						<when test="option.equals('아이디')">
+							AND a.member_id LIKE CONCAT('%',#{word},'%')
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+				</if>
+	</select>
+	
+	<update id="taxiApplyUpdate" parameterType="hashmap">
+		UPDATE apply SET status = #{realstatuss} WHERE apply_idx = #{apply_idx} 
+	</update>
+
+	
 	
 	</mapper>
