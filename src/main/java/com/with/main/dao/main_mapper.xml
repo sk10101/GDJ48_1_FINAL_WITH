@@ -8,4 +8,60 @@
 	SELECT university_name FROM university u, member m WHERE member_id = #{param1} AND m.university_idx = u.university_idx
 </select>
 
+<select id="recruitIng" resultType="board">
+	SELECT 
+	subject,
+	board_idx,
+	category_id 
+	FROM board_common_column 
+	WHERE 
+	member_id = #{param1} AND 
+	recruit_end = 0 AND
+	hide = 0
+	ORDER BY board_idx DESC LIMIT 5
+</select>
+
+<select id="partIng" resultType="board">
+	SELECT 
+	subject,
+	bcc.board_idx,
+	category_id 
+	FROM 
+	board_common_column bcc,
+	participant p
+	WHERE 
+	p.member_id = #{param1} AND 
+	recruit_end = 0 AND
+	p.board_idx = bcc.board_idx AND
+	p.hide = 0 AND
+	bcc.hide = 0 AND
+	bcc.member_id != p.member_id
+	ORDER BY pt_idx DESC LIMIT 5
+</select>
+
+<select id="recruitCnt" resultType="int">
+	SELECT 
+	COUNT(*)
+	FROM board_common_column 
+	WHERE 
+	member_id = #{param1} AND 
+	recruit_end = 0 AND
+	hide = 0
+</select>
+
+<select id="partCnt" resultType="int">
+	SELECT 
+	COUNT(*)
+	FROM 
+	board_common_column bcc,
+	participant p
+	WHERE 
+	p.member_id = #{param1} AND 
+	recruit_end = 0 AND
+	p.board_idx = bcc.board_idx AND
+	p.hide = 0 AND
+	bcc.hide = 0 AND
+	bcc.member_id != p.member_id
+</select>
+
 </mapper>

@@ -56,7 +56,7 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
@@ -122,6 +122,9 @@
 		   </form>
 					<c:forEach items="${blindList}" var="bbs">
 				     	<table class="blindList">
+				     		<tr>
+								<td>글번호 : ${bbs.board_idx}</td>
+							</tr>		
 							<tr>
 								<td>이용서비스 : ${bbs.category_id}</td>
 							</tr>				     	

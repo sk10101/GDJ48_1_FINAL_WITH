@@ -25,7 +25,7 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
@@ -41,6 +41,7 @@
 					<input id="word" type="search" placeholder="아이디를 입력하세요" name="word" value=""/>
 					<input type="hidden" name="page" value="1"/>
 					<input type="hidden" name="option" value="id"/>
+					<input type="hidden" name="member_class" value="관리자"/>
 					<button id="searchBtn">검색</button>
 				</form>
 		<table>
@@ -92,9 +93,8 @@ $("#pagination").twbsPagination({
 		console.log(page); //사용자가 클릭한 페이지
 		// 페이지 이동시에도 데이터를 가지고 있기 위해 session 을 활용한다
 		location.href = "userList?page="+page+"&option="+"${sessionScope.option}"+"&word="+"${sessionScope.word}"+"&member_class="+"${sessionScope.member_class}";
-		
 	}
 });
-//"&member_class='관리자'"
+
 </script>
 </html>

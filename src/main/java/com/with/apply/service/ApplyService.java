@@ -289,6 +289,15 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 		}
 		
+
+		public ModelAndView mealApplyUpdate(HashMap<String, String> params) {
+			String board_idx = params.get("board_idx");
+			
+			ModelAndView mav = new ModelAndView("redirect:/mealApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			dao.mealApplyUpdate(params);
+			return mav;
+		}
+		
 		
 		
 		
@@ -298,7 +307,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		
 		// 현수 밥 추가요----------------------------------------------------------
 		public ModelAndView mealApplyList(HashMap<String, String> params) {
-			logger.info("밥 참가 목록 요청");
+			logger.info(" 참가 목록 요청");
 			   ModelAndView mav = new ModelAndView("myPage/mealApplyList");
 			   
 			   // 페이징 처리
@@ -326,13 +335,15 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		}
 
 		private ArrayList<BoardDTO> mealpagination(HashMap<String, Object> map) {
-			int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
+int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
+			
+			logger.info("테스트");
 			
 			int page = (int) map.get("page");
 			String option = (String) map.get("option");
 			String word = (String) map.get("word");
 			
-			logger.info("밥 보여줄 페이지 : " + map.get("page"));
+			logger.info("배달 보여줄 페이지 : " + map.get("page"));
 			logger.info("검색 옵션 / 검색어 : " + map.get("option") + " / " + map.get("word"));
 			
 			ArrayList<BoardDTO> mealApplyList = new ArrayList<BoardDTO>();
@@ -352,6 +363,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			}
 			
 		
+			
 			int pages = allCnt%cnt != 0 ? (allCnt/cnt)+1 : (allCnt/cnt);
 			logger.info("pages : " + pages);
 			
@@ -368,10 +380,27 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 			mealApplyList = dao.mealApplyList(map);
 			
-
+		
 			logger.info("페이징 체크포인트");
 			return mealApplyList;
 		}
+
+
+		public ModelAndView applyCancle(HashMap<String, String> params, String board_idx, String apply_idx) {
+			
+			ModelAndView mav = new ModelAndView("redirect:/myApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			dao.applyCancle(params, board_idx, apply_idx);
+			return mav;
+		}
+
+		public ModelAndView applyDelete(HashMap<String, String> params) {
+			String board_idx = params.get("board_idx");
+			
+			ModelAndView mav = new ModelAndView("redirect:/myApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			dao.applyDelete(params);
+			return mav;
+		}
+
 
 		
 	

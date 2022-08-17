@@ -63,5 +63,8 @@
 		</if>
 	</select>
 
+	<select id="filedetail" resultType="member">
+		SELECT new_fileName FROM certificate WHERE member_id = #{param1}
+	</select>
 	
 </mapper>
