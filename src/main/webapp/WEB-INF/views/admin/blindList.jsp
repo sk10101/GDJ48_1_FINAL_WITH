@@ -20,6 +20,30 @@
 	</script>
 </head>
 <style>
+
+	.btn{
+	
+	  background-color: blue;
+	
+	  border: none;
+	
+	  color: white;
+	
+	  padding: 5px 10px;
+	
+	  text-align: center;
+	
+	  text-decoration: none;
+	
+	  display: inline-block;
+	
+	  font-size: 16px;
+	
+	  margin: 4px 2px;
+	
+	  cursor: pointer;
+	
+	}
     .content-wrap {
     	max-width: 1200px;
     	width: 100%;
@@ -32,7 +56,7 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
@@ -98,6 +122,9 @@
 		   </form>
 					<c:forEach items="${blindList}" var="bbs">
 				     	<table class="blindList">
+				     		<tr>
+								<td>글번호 : ${bbs.board_idx}</td>
+							</tr>		
 							<tr>
 								<td>이용서비스 : ${bbs.category_id}</td>
 							</tr>				     	
@@ -115,7 +142,7 @@
 							</tr>							
 							<tr>
 							<td>
-								<button onClick="location='blindDetail?board_idx=${bbs.board_idx}'">해제</button>
+								<button class="btn" onClick="location='blindDetail?board_idx=${bbs.board_idx}'">상세보기</button>
 							</td>
 							</tr>
 						</table>
