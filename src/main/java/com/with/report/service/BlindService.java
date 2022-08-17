@@ -122,17 +122,24 @@ public class BlindService {
 			return mav;
 		}
 		
-		public void updateList(BlindDTO dto) {
-			if(!(dto.getCancel()==1)) {
-				dto.setCancel(0);
-			}
-			dao.updateBlind(dto);
+		public void updateList(BlindDTO dto) {						 // 블라인드 : cancel=0,hide=1   <-> 블라인드해제: cancel=1, hide=0  
+			logger.info("첫번째 cancel 값:" +dto.getCancel()); 		//블라인드글이면 cancel=0 임. 블라인드해제글이면 cancel=1임.
 			
-			if(dto.getCancel()==1) {
-				dto.setCancel(0);
-			}else {
-				dto.setCancel(1);
+			if(!(dto.getCancel()==1)) {   	 								 //  cancel=1이 아니면
+				dto.setCancel(0);												//	cancel=0 (혹시 모를 null 대비 0 직접 지정..)
+			}	
+				dao.updateBlind(dto);         				 				 
+			
+			logger.info("두번째 cancel 값:" +dto.getCancel());
+			
+			if(dto.getCancel()==1) {     										//cancel=1 이면, 
+				dto.setCancel(0);													//cancel=0 해주기..  hide=0을 넣어야하기때문
+				logger.info("세번째 cancel 값:" +dto.getCancel());
+			}else {																	//아니면 (cancel=0 이면),
+				dto.setCancel(1);          									   // cancel=1 
 			}
+			logger.info("네번째 cancel 값:" +dto.getCancel());  //블라인드해제>블라인드 : cancel 0>0>x>1 // 블라인드>블라인드해제 : cancel:1>1>0>0
+			
 			dao.updateComm(dto);
 			
 		}
