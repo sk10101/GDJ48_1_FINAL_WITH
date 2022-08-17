@@ -95,26 +95,34 @@ table{
                </tr>
             </thead>
             
-            <c:forEach items="${mygList}" var="his">            
-            <input type="hidden" id="board_idx" name="board_idx" value="${his.board_idx}"/>
-            <tbody class="mygList">
-                  <tr>
-                     <td>${his.board_idx}</td>
-                     <td>${his.category_id}</td>
-                     <td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.subject}</a></td>
-                     <td>${his.write_date}</td> 
-                     <c:if test="${his.applyNo eq 0}"><td></td></c:if>
-                     <c:if test="${his.applyNo ne 0}"><td><span style="font-color:black;"><a href="applydetail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.applyNo}</a></span></td></c:if>
-                     <c:if test="${his.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
-                     <c:if test="${his.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
-                     
-                     <!-- <c:if test="${sessionScope.loginId eq his.member_id}">
-                         <input id="board_del" type="button" value="삭제" onclick="location.href='detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}'" />
-                      </c:if> -->
-                      
-                  </tr>
-            </tbody>
-            </c:forEach>
+            <c:forEach items="${mygList}" var="his">				
+				<input type="hidden" id="board_idx" name="board_idx" value="${his.board_idx}"/>
+				<tbody class="mygList">
+						<tr>
+							<td>${his.board_idx}</td>
+							<td>${his.category_id}</td>
+							<c:if test="${his.category_id eq '배달게시판'}">
+							<td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.subject}</a></td>
+							 </c:if>
+							 <c:if test="${his.category_id eq '택시게시판'}">
+							<td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.subject}</a></td>
+							 </c:if>
+							 <c:if test="${his.category_id eq '밥게시판'}">
+							<td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.subject}</a></td>
+							 </c:if>
+							<td>${his.write_date}</td> 
+							<c:if test="${his.applyNo eq 0}"><td></td></c:if> 							
+							<c:if test="${his.applyNo ne 0}"><td><span style="font-color:black;"><a href="applydetail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.applyNo}</a></span></td></c:if>
+							<c:if test="${his.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
+							<c:if test="${his.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
+							
+							<!-- <c:if test="${sessionScope.loginId eq his.member_id}">
+						       <input id="board_del" type="button" value="삭제" onclick="location.href='detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}'" />
+						    </c:if> -->
+						   
+						</tr>
+				</tbody>
+				</c:forEach>
 
          </table>
          <!-- <input id="button3" type="button" onclick="close()" value="마감" />-->

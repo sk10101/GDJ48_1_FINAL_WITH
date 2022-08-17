@@ -22,7 +22,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	//내가 참가한 모임
 	public ModelAndView myApplyList(HashMap<String, String> params, String loginId) {
 			logger.info("내가 참여한 목록 요청");
-		   ModelAndView mav = new ModelAndView("redirect:/myApplyList");
+		   ModelAndView mav = new ModelAndView("myPage/myApplyList");
 		   
 		   // 페이징 처리
 		   HashMap<String, Object> map = new HashMap<String, Object>(); // map 객체화
