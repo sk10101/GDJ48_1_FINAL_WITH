@@ -105,11 +105,11 @@
 								<td colspan="2">글 제목: ${bbs.subject}</td>
 							</tr>
 							<tr>
-								<td>작성자ID:${bbs.member_id}</td><td>블라인드날짜:${bbs.blind_date}</td>
+								<td>작성자ID:${bbs.member_id}</td><td>블라인드날짜:<fmt:formatDate pattern="yyyy-MM-dd" value="${bbs.blind_date}"/></td>
 							</tr>
-							<tr>
+						<!--  	<tr>
 								<td>작성일:${bbs.write_date}</td>
-							</tr>
+							</tr>  -->
 							<tr>
 								<td>블라인드사유:${bbs.blind_reason}</td>
 							</tr>							

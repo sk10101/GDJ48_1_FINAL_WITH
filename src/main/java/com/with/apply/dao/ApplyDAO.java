@@ -19,7 +19,10 @@ public interface ApplyDAO {
 
 	ArrayList<BoardDTO> taxiApplyList(HashMap<String, Object> map);
 
-	String applyUpdate(HashMap<String, String> params);
+	void applyUpdate(HashMap<String, String> params);
+
+	void taxiApplyUpdate(HashMap<String, String> params);
+	
 
 	ArrayList<BoardDTO> mealCount(HashMap<String, Object> map);
 
