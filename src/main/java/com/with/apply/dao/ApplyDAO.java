@@ -21,4 +21,8 @@ public interface ApplyDAO {
 
 	String applyUpdate(HashMap<String, String> params);
 
+	ArrayList<BoardDTO> mealCount(HashMap<String, Object> map);
+
+	ArrayList<BoardDTO> mealApplyList(HashMap<String, Object> map);
+
 }

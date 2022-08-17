@@ -35,6 +35,24 @@
 	position: relative;
 	right: 100px;
 }
+table{
+		width: 100%;
+	}
+   table, th, td{
+      border: 1px solid black;
+      border-collapse: collapse;
+   }
+   
+   th, td{
+      padding: 5px 10px;
+      text-align: center;
+   }
+   
+   table{
+      width: 80%;
+   }
+   
+ 
 </style>
 <body>
 	<!--<jsp:include page="../commons/header.jsp" />-->
@@ -50,7 +68,7 @@
 						<td><input type="radio" name="member"
 							onclick="window.location.href='/myApplyList.go';"
 							value="내가 참여한 모임">내가 참여한 모임</td>
-						<td>
+						
 					</tr>
 				</table>
 			</form>
@@ -74,7 +92,6 @@
 						<th>작성일</th>
 						<th>신청자 수</th>
 						<th>상태</th>
-						<th></th>
 					</tr>
 				</thead>
 				
@@ -84,9 +101,17 @@
 						<tr>
 							<td>${his.board_idx}</td>
 							<td>${his.category_id}</td>
+							<c:if test="${his.category_id eq '배달게시판'}">
 							<td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.subject}</a></td>
+							 </c:if>
+							 <c:if test="${his.category_id eq '택시게시판'}">
+							<td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.subject}</a></td>
+							 </c:if>
+							 <c:if test="${his.category_id eq '밥게시판'}">
+							<td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.subject}</a></td>
+							 </c:if>
 							<td>${his.write_date}</td> 
-							<c:if test="${his.applyNo eq 0}"><td></td></c:if>
+							<c:if test="${his.applyNo eq 0}"><td></td></c:if> 							
 							<c:if test="${his.applyNo ne 0}"><td><span style="font-color:black;"><a href="applydetail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.applyNo}</a></span></td></c:if>
 							<c:if test="${his.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
 							<c:if test="${his.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
@@ -94,7 +119,7 @@
 							<!-- <c:if test="${sessionScope.loginId eq his.member_id}">
 						       <input id="board_del" type="button" value="삭제" onclick="location.href='detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}'" />
 						    </c:if> -->
-						    
+						   
 						</tr>
 				</tbody>
 				</c:forEach>

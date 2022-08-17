@@ -50,6 +50,9 @@ public class ApplyController {
 			
 			return "redirect:/taxiApplyList?page="+1+"&option="+"&word=";
 		}
+		
+		
+		
 		@RequestMapping(value = "/applyUpdate", method = RequestMethod.GET)
 		public String applyUpdate(HttpSession session, @RequestParam HashMap<String, String> params) {
 			logger.info(params.get("status"));
@@ -136,6 +139,41 @@ public class ApplyController {
 		mav = service.taxiApplyList(params);
 		return mav;
 	}
+	
+	
+	
+	// 현수 밥 추가요----------------------------------------------------------
+	
+	// 밥 참가 리스트 페이지 이동
+			@RequestMapping(value = "/mealApplyList.go", method = RequestMethod.GET)
+			public String mealApplyList(HttpSession session) {
+				
+				return "redirect:/mealApplyList?page="+1+"&option="+"&word=";
+			}
+	
+	//밥 참가
+		@RequestMapping(value = "/mealApplyList", method = RequestMethod.GET)
+		public ModelAndView mealApplyList(HttpSession session, @RequestParam HashMap<String, String> params) {
+			logger.info("밥 참가 목록 조회");
+			session.removeAttribute("option");
+			session.removeAttribute("word");
+			
+			// 검색어 저장을 위해 세션 활용
+			if(params.get("word") != "") {
+				session.setAttribute("option", params.get("option"));
+				session.setAttribute("word", params.get("word"));
+			}
+			
+			logger.info(params.get("category_id"));
+			session.setAttribute("category_id", params.get("category_id"));
+			session.setAttribute("board_idx", params.get("board_idx"));
+			logger.info(params.get("board_idx"));
+			
+			
+			ModelAndView mav = new ModelAndView();
+			mav = service.mealApplyList(params);
+			return mav;
+		}
 	
 	
 	/*
