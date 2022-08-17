@@ -28,9 +28,7 @@ public class HistoryController {
 		return "myPage/myGroupList";
 	}
 
-	@RequestMapping("/myApplyList.go") public String myApply(Model model) {
-		return "myPage/myApplyList"; 
-	}
+	
 
 	
 
@@ -40,6 +38,8 @@ public class HistoryController {
 
 		return "redirect:/mygList?page="+1+"&option="+"&word=";
 	}
+	
+	
 
 
 	@RequestMapping(value = "/mygList", method = RequestMethod.GET)

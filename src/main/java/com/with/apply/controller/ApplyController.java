@@ -179,7 +179,7 @@ public class ApplyController {
 	//밥 참가
 		@RequestMapping(value = "/mealApplyList", method = RequestMethod.GET)
 		public ModelAndView mealApplyList(HttpSession session, @RequestParam HashMap<String, String> params) {
-			logger.info("밥 참가 목록 조회");
+			logger.info(" 참가 목록 조회");
 			session.removeAttribute("option");
 			session.removeAttribute("word");
 			
@@ -189,12 +189,10 @@ public class ApplyController {
 				session.setAttribute("word", params.get("word"));
 			}
 			
-			logger.info(params.get("category_id"));
 			session.setAttribute("category_id", params.get("category_id"));
+			logger.info(params.get("category_id"));
 			session.setAttribute("board_idx", params.get("board_idx"));
 			logger.info(params.get("board_idx"));
-			
-			
 			ModelAndView mav = new ModelAndView();
 			mav = service.mealApplyList(params);
 			return mav;
