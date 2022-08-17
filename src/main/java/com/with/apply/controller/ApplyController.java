@@ -70,6 +70,29 @@ public class ApplyController {
 			return  mav;
 		}
 	
+		@RequestMapping(value = "/applyCancle", method = RequestMethod.GET)
+		public ModelAndView applyCancle(HttpSession session, @RequestParam HashMap<String, String> params) {
+			String board_idx = params.get("board_idx");
+			String apply_idx = params.get("apply_idx");
+			logger.info(params.get("apply_idx"));
+			logger.info(params.get("board_idx"));
+	
+			
+			ModelAndView mav = new ModelAndView();
+			mav=service.applyCancle(params, board_idx, apply_idx);
+			return  mav;
+		}
+		
+		@RequestMapping(value = "/applyDelete", method = RequestMethod.GET)
+		public ModelAndView applyDelete(HttpSession session, @RequestParam HashMap<String, String> params, @RequestParam String board_idx,  @RequestParam String apply_idx) {
+			logger.info(params.get("apply_idx"));
+			logger.info(params.get("board_idx"));
+			
+			ModelAndView mav = new ModelAndView();
+			mav=service.applyDelete(params);
+			return  mav;
+		}
+		
 		//택시 업데이트
 		@RequestMapping(value = "/taxiApplyUpdate", method = RequestMethod.GET)
 		public ModelAndView taxiApplyUpdate(HttpSession session, @RequestParam HashMap<String, String> params) {
