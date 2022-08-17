@@ -3,5 +3,22 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.with.inquery.dao.InqueryDAO">	
 	
+	<select id="allCount" resultType="int">
+	 	SELECT count(member_id) FROM inquery WHERE member_id = #{param1}
+	</select>
 	
+	<select id="inqueryList" resultType="inquery" parameterType="hashmap">
+    	select member_id, subject, inquery_date, status, inquery_admin, hide from inquery where member_id=#{idx}
+    	<if test="word != null and word != ''">
+    		AND subject LIKE CONCAT('%',#{word},'%')
+    	</if>LIMIT #{cnt} OFFSET #{offset}
+    </select>
+	
+	<insert id="inqueryWrite" parameterType="hashmap">
+		INSERT INTO inquery (member_id, subject, inquery_date, inquery_content, status, inquery_admin, hide) VALUE(#{member_id}, #{subject}, now(), #{inquery_content}, '미처리', '배정중' ,0)
+	</insert>
+	
+	<select id="inqueryDetail" resultType="inquery" parameterType="String">
+    	select member_id, subject, inquery_date, status, inquery_admin, hide from inquery where member_id=#{param1}
+    </select>
 </mapper>

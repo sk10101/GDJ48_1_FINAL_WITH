@@ -173,4 +173,5 @@ public class MemberService {
 	public void blockUser(String member, String mb_id) {
 		dao.blockUser(member,mb_id);
 	}
+
 }

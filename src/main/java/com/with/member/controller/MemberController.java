@@ -76,11 +76,6 @@ public class MemberController {
 		service.blockDelete(member_id,name);
 		return "redirect:/blockUserList?page="+1;
 	}
-	@RequestMapping(value = "/inqueryList.go")
-	public String inqueryListgo() {
-		return "redirect:/inqueryList?page="+1;
-	}
-	
 	@RequestMapping(value = "/mannerInfo")
 	public ModelAndView mannerInfogo(@RequestParam HashMap<String, Object> params) {
 		ModelAndView mav = new ModelAndView();
@@ -103,4 +98,5 @@ public class MemberController {
 		service.blockUser(member,mb_id);
 		return "redirect:/deliDetail?board_idx="+board;
 	}
+
 }

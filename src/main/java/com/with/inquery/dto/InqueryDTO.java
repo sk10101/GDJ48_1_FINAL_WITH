@@ -2,6 +2,8 @@ package com.with.inquery.dto;
 
 import java.util.Date;
 
+import org.apache.ibatis.type.Alias;
+@Alias("inquery")
 public class InqueryDTO {
 	private int inquery_idx;
 	private String member_id;

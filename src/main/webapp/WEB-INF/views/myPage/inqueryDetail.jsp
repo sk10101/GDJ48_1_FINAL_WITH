@@ -33,7 +33,28 @@
 	   <jsp:include page="../commons/memberSideBar7.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	     
+	       <table class="myinfo" style="margin-left:180px;">
+            	<tr>
+            		<th>작성자</th>
+            		<td>${idx}</td>
+            	</tr>
+            	<tr>
+            		<th>제목</th>
+            		<td>${list.subject}</td>
+            	</tr>
+            	<tr>
+            		<th>작성일</th>
+            		<td>${list.inquery_date}</td>
+            	</tr>
+            	<tr>
+            		<th>처리상태</th>
+            		<td>${list.status}</td>
+            	</tr>
+            	<tr>
+            		<th>내용</th>
+            		<td>${list.inquery_content}</td>
+            	</tr>
+            </table>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>
