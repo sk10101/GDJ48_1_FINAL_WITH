@@ -133,5 +133,21 @@ public class MemberDTO {
 		this.chkManner = chkManner;
 	}
 	
+	//이제한 사진 업로드 추가
+	public int certificate_idx;
+	public String newFileName;
+	public int getCertificate_idx() {
+		return certificate_idx;
+	}
+	public void setCertificate_idx(int certificate_idx) {
+		this.certificate_idx = certificate_idx;
+	}
+	public String getNewFileName() {
+		return newFileName;
+	}
+	public void setNewFileName(String newFileName) {
+		this.newFileName = newFileName;
+	}
+	
 	
 }

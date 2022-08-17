@@ -21,6 +21,9 @@
 				<when test="option.equals('report_admin')">
 					AND r.report_admin LIKE CONCAT('%',#{word},'%')
 				</when>
+				<when test="option.equals('처리상태')">
+					AND r.status LIKE CONCAT('%',#{word},'%')
+				</when>
 				<otherwise>
 				</otherwise>
 			</choose>
@@ -68,6 +71,9 @@
 				</when>
 				<when test="option.equals('report_admin')">
 					AND r.report_admin LIKE CONCAT('%',#{word},'%')
+				</when>
+				<when test="option.equals('처리상태')">
+					AND r.status LIKE CONCAT('%',#{word},'%')
 				</when>
 				<otherwise>
 				</otherwise>

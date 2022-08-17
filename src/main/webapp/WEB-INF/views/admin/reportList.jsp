@@ -25,7 +25,7 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
@@ -36,15 +36,12 @@
 	   <jsp:include page="../commons/adminSideBar5.jsp"/>
 	   <div class="content">
 		   <form action="reportList">
-		   		<select id="filter" name="filter">
-		   			<option value="미처리" selected="selected">미처리</option>
-					<option value="처리완료">처리완료</option>
-		   		</select>
 				<select id="option" name="option">
-					<option value="subject">제목</option>
+					<option value="subject" selected="selected">제목</option>
 					<option value="category_id">이용서비스</option>
 					<option value="report_content">신고사유</option>
-					<option value="report_admin">관리자ID</option>
+					<option value="report_admin">담당관리자ID</option>
+					<option value="처리상태">처리상태</option>
 				</select>
 				<input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
 				<input type="hidden" name="page" value="1"/>
@@ -110,7 +107,7 @@ $("#pagination").twbsPagination({
 		//console.log(e); //클릭한 페이지와 관련된 이벤트 객체
 		console.log(page); //사용자가 클릭한 페이지
 		// 페이지 이동시에도 데이터를 가지고 있기 위해 session 을 활용한다
-		location.href = "reportList?page="+page+"&option="+"${sessionScope.option}"+"&word="+"${sessionScope.word}"+"&filter="+"${sessionScope.filter}";
+		location.href = "reportList?page="+page+"&option="+"${sessionScope.option}"+"&word="+"${sessionScope.word}";
 		
 	}
 });

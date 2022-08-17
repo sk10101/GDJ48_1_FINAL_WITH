@@ -29,7 +29,7 @@ public class ReportController {
 	@RequestMapping(value = "/reportList.go", method = RequestMethod.GET)
 	public String userlist(HttpSession session) {
 		
-		return "redirect:/reportList?page="+1+"&option=''"+"&word=''"+"&filter=''";
+		return "redirect:/reportList?page="+1+"&option=''"+"&word=''";
 	}
 	
 	//신고내역 조회
@@ -37,12 +37,8 @@ public class ReportController {
 	public ModelAndView reportlist(HttpSession session, @RequestParam HashMap<String, String> params) {
 		logger.info("신고내역 리스트 조회");
 		String loginId = (String) session.getAttribute("loginId");
-		String filter = params.get("filter");
-		session.setAttribute("filter", filter);
-		logger.info("필터 값 :"+filter);
 		session.removeAttribute("option");
 		session.removeAttribute("word");
-//		session.removeAttribute("filter");
 		
 		if(params.get("word") != "") {
 			session.setAttribute("option",params.get("option")); 

@@ -37,20 +37,19 @@ public class AdminController {
 		logger.info("유저 목록 조회");
 		session.removeAttribute("option");
 		session.removeAttribute("word");
-		
+		session.removeAttribute("member_classs");
+
 		String loginId = (String) session.getAttribute("loginId");
-		session.setAttribute("loginId", loginId);
 		
 		logger.info("로그인 아이디 : "+loginId);
 		
 		if(params.get("word") != "") {
 			session.setAttribute("option",params.get("option")); 
 			session.setAttribute("word", params.get("word"));
+			session.setAttribute("member_classs", params.get("member_class"));
 			}
-		params.put("loginId", loginId);
 		
-//		logger.info(params.get("member_class"));
-		session.setAttribute("member_class", params.get("member_class"));
+		params.put("loginId", loginId);
 		ModelAndView mav = new ModelAndView();
 		mav = service.userList(params);
 		return mav;
