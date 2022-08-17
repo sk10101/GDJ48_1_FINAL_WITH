@@ -25,7 +25,7 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
         padding: 60px 100px;
@@ -108,29 +108,23 @@
   
 </style>
 <body>
-	<jsp:include page="../commons/header.jsp"/>
-	<!--
 	<c:choose>
-		<c:when test="회원등급이 일반회원일때">
+		<c:when test="${sessionScope.member_class eq '일반회원'}">
 		   	<jsp:include page="../commons/header.jsp"/>
 		</c:when>
-		<c:when test="회원등급이 관리자일때">
+		<c:when test="${sessionScope.member_class eq '관리자'}">
 			<jsp:include page="../commons/adminHeader.jsp"/>
 		</c:when>
 	</c:choose>
-	  -->	
 	<div class="content-wrap">
-		<jsp:include page="../commons/memberSideBar2.jsp"/>
-		<!-- 
 		<c:choose>
-			<c:when test="회원등급이 일반회원일때">
+			<c:when test="${sessionScope.member_class eq '일반회원'}">
 			   <jsp:include page="../commons/memberSideBar2.jsp"/>
 			</c:when>
-			<c:when test="회원등급이 관리자일때">
+			<c:when test="${sessionScope.member_class eq '관리자'}">
 				<jsp:include page="../commons/adminSideBar2.jsp"/>
 			</c:when>
 		</c:choose>
-		 -->
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	       <div class="search">

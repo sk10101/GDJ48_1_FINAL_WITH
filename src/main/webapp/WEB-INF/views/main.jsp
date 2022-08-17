@@ -223,6 +223,7 @@
     .content-box table {
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         border-radius: 20px;
+        table-layout: fixed;
     }
 
     .content-box th {
@@ -242,16 +243,24 @@
     .content-box table th {
         font-size: 16px;
     }
+    
+    .content-box table td {
+        white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 350px;
+    }
 
-    .content-box tbody tr:nth-child(odd) {
+    .content-box tbody tr:nth-child(odd):not(tr:last-child) td {
         background-color: #537ef4;
+        color: #eaeaea;
     }
     
-    .content-box tbody tr:nth-child(odd) a {
+    .content-box tbody tr:nth-child(odd):not(tr:last-child) a {
         color: #eaeaea;
     }
 
-    .content-box table tbody tr:last-child {
+    .content-box table tbody tr:last-child td {
         text-align: right;
         text-decoration: underline;
         color: rgb(103, 103, 103);
@@ -295,14 +304,15 @@
         line-height: 25px;
         color: rgb(104, 104, 104);
     }
+    
 
 </style>
 <body>
     <div class="main">
         <div class="navbar-top-bg"></div>
         <div class="navbar-top">
-            <a href="/"><img class="logo" src="./resources/images/logo.png" alt="logo"></a>
-            <p><a href="#">${sessionScope.loginId}(${sessionScope.member_class}) 님 환영합니다.</a> &nbsp; | &nbsp; <a href="logout">로그아웃</a></p>
+            <a href="/main"><img class="logo" src="./resources/images/logo.png" alt="logo"></a>
+            <p><a href="/myInfo">${sessionScope.loginId}(${sessionScope.member_class}) 님 환영합니다.</a> &nbsp; | &nbsp; <a href="logout">로그아웃</a></p>
             <a href="#"><img class="bell" src="./resources/images/bell.png" alt="bell"></a>
             <img class="dot" src="./resources/images/dot.png" alt="dot">
         </div>
@@ -313,7 +323,7 @@
                 <li><a href="/mealList.go"><img class="eating" src="./resources/images/eating.png" alt="eating"><div class="circle"></div>식사</a></li>
                 <li><div class="line"></div></li>
                 <li><a class="my" href="/myInfo">내 정보</a></li>
-                <li><a class="my" href="mygList.go">이용내역</a></li>
+                <li><a class="my" href="/mygList.go">이용내역</a></li>
                 <li><a class="my" href="/blockUserList.go">차단 회원 관리</a></li>
                 <li><a class="my" href="/inqueryList.go">고객 문의</a></li>
             </ul>
@@ -342,25 +352,28 @@
                             <th>주최 중인 모임</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><a class="content-left-a" href="#">택시 두분 선착순!</a></td>
+                    <tbody class="r-body">
+                    <c:forEach items="${recruitIng}" var="rI">
+                        <tr class="r-tr">
+                        	<c:if test="${rI.category_id eq '배달게시판'}">
+                            	<td><a class="content-left-a" href="/deliDetail?board_idx=${rI.board_idx}">[${rI.category_id}] ${rI.subject}</a></td>
+                            </c:if>	
+                        	<c:if test="${rI.category_id eq '택시게시판'}">
+                            	<td><a class="content-left-a" href="/taxiDetail?board_idx=${rI.board_idx}">[${rI.category_id}] ${rI.subject}</a></td>
+                            </c:if>	
+                        	<c:if test="${rI.category_id eq '밥게시판'}">
+                            	<td><a class="content-left-a" href="/mealDetail?board_idx=${rI.board_idx}">[${rI.category_id}] ${rI.subject}</a></td>
+                            </c:if>	
                         </tr>
-                        <tr>
-                            <td><a class="content-left-a" href="#">냉면 드실분?</a></td>
-                        </tr>
-                        <tr>
-                            <td><a class="content-left-a" href="#">족발 최소주문 금액 맞춰주셈</a></td>
-                        </tr>
-                        <tr>
-                            <td><a class="content-left-a" href="#">오후 2시에 학식 같이 먹자</a></td>
-                        </tr>
-                        <tr>
-                            <td><a class="content-left-a" href="#">김가네 조지자</a></td>
-                        </tr>
-                        <tr>
-                            <td><a class="content-left-a" href="#">more</a></td>
-                        </tr>
+                    </c:forEach>
+                    <tr>
+                    	<c:if test="${recruitCnt gt 5}">
+                        	<td><a class="content-left-a" href="/mygList.go">more</a></td>
+                        </c:if>
+                    	<c:if test="${recruitCnt le 5}">
+                        	<td><a class="content-left-a" href="#"></a></td>
+                        </c:if>	
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -371,25 +384,28 @@
                             <th>참여 중인 모임</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><a class="content-right-a" href="#">택시 두분 선착순!</a></td>
+                    <tbody class="p-body">
+                    <c:forEach items="${partIng}" var="pI">
+                        <tr class="p-tr">
+                        	<c:if test="${pI.category_id eq '배달게시판'}">
+                            	<td><a class="content-right-a" href="/deliDetail?board_idx=${pI.board_idx}">[${pI.category_id}] ${pI.subject}</a></td>
+                            </c:if>
+                        	<c:if test="${pI.category_id eq '택시게시판'}">
+                            	<td><a class="content-right-a" href="/taxiDetail?board_idx=${pI.board_idx}">[${pI.category_id}] ${pI.subject}</a></td>
+                            </c:if>
+                        	<c:if test="${pI.category_id eq '밥게시판'}">
+                            	<td><a class="content-right-a" href="/mealDetail?board_idx=${pI.board_idx}">[${pI.category_id}] ${pI.subject}</a></td>
+                            </c:if>
                         </tr>
-                        <tr>
-                            <td><a class="content-right-a" href="#">냉면 드실분?</a></td>
-                        </tr>
-                        <tr>
-                            <td><a class="content-right-a" href="#">족발 최소주문 금액 맞춰주셈</a></td>
-                        </tr>
-                        <tr>
-                            <td><a class="content-right-a" href="#">오후 2시에 학식 같이 먹자</a></td>
-                        </tr>
-                        <tr>
-                            <td><a class="content-right-a" href="#">김가네 조지자</a></td>
-                        </tr>
-                        <tr>
-                            <td><a class="content-right-a" href="#">more</a></td>
-                        </tr>
+                    </c:forEach>
+                    <tr>
+                    	<c:if test="${partCnt gt 5}">
+                        	<td><a class="content-right-a" href="/myApplyList.go">more</a></td>
+                        </c:if>	
+                    	<c:if test="${partCnt le 5}">
+                        	<td><a class="content-right-a" href="#"></a></td>
+                        </c:if>	
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -409,5 +425,143 @@
 	if (msg != "") {
 			alert(msg);
 	}
+	
+	
+	// 리스트의 사이즈에 따라 변하는 테이블의 크기를 고정시켜주기 위한 코드 (좌측 테이블)
+	$(document).ready(function(){
+		
+	var rCnt = "${recruitCnt}";
+	var pCnt = "${partCnt}";	
+		
+	var contentR = "";	
+	var contentP = "";	
+		
+	switch (rCnt) {
+	  case "0" :
+		for(i = 0; i < 5; i++) {
+			contentR += '<tr>';
+			if(i == 2) {
+				contentR += '<td style="font-size: 16px; text-align: center; background-color: rgb(249, 249, 249); font-weight: bold; color: #ef5350;">';
+				contentR += '주최 중인 모임이 존재하지 않습니다.';
+			} else {
+				contentR += '<td style="background-color: rgb(249, 249, 249)">';
+				contentR += '<a class="content-left-a" href="#">';
+				contentR += '</a>';
+			}
+			contentR += '</td>';
+			contentR += '</tr>';
+		}
+		$('.r-body').prepend(contentR);  
+	    break;
+	  case "1" :
+		for(i = 0; i < 4; i++) {
+			contentR += '<tr>';
+			contentR += '<td style="background-color: rgb(249, 249, 249);">';
+			contentR += '<a class="content-left-a" href="#">';
+			contentR += '</a>';
+			contentR += '</td>';
+			contentR += '</tr>';
+		}
+		$('.r-tr:last').after(contentR);   
+	    break;
+	  case "2" :
+		for(i = 0; i < 3; i++) {
+			contentR += '<tr>';
+			contentR += '<td style="background-color: rgb(249, 249, 249);">';
+			contentR += '<a class="content-left-a" href="#">';
+			contentR += '</a>';
+			contentR += '</td>';
+			contentR += '</tr>';
+		}
+		$('.r-tr:last').after(contentR);   
+	    break;
+	  case "3" :
+		for(i = 0; i < 2; i++) {
+			contentR += '<tr>';
+			contentR += '<td style="background-color: rgb(249, 249, 249);">';
+			contentR += '<a class="content-left-a" href="#">';
+			contentR += '</a>';
+			contentR += '</td>';
+			contentR += '</tr>';
+		}
+		$('.r-tr:last').after(contentR);   
+	    break;
+	  case "4" :
+		contentR += '<tr>';
+		contentR += '<td style="background-color: rgb(249, 249, 249);">';
+		contentR += '<a class="content-left-a" href="#">';
+		contentR += '</a>';
+		contentR += '</td>';
+		contentR += '</tr>';
+		$('.r-tr:last').after(contentR);   
+	    break;
+	  default :
+	    break;
+	}
+	
+	// 리스트의 사이즈에 따라 변하는 테이블의 크기를 고정시켜주기 위한 코드 (우측 테이블)
+	switch (pCnt) {
+	  case "0" :
+		for(i = 0; i < 5; i++) {
+			contentP += '<tr>';
+			if(i == 2) {
+				contentP += '<td style="font-size: 16px; text-align: center; background-color: rgb(249, 249, 249); font-weight: bold; color: #ef5350;">';
+				contentP += '참여 중인 모임이 존재하지 않습니다.';
+			} else {
+				contentP += '<td style="background-color: rgb(249, 249, 249)">';
+				contentP += '<a class="content-left-a" href="#">';
+				contentP += '</a>';
+			}
+			contentP += '</td>';
+			contentP += '</tr>';
+		}
+		$('.p-body').prepend(contentP);  
+	    break;
+	  case "1" :
+		for(i = 0; i < 4; i++) {
+			contentP += '<tr>';
+			contentP += '<td style="background-color: rgb(249, 249, 249);">';
+			contentP += '<a class="content-left-a" href="#">';
+			contentP += '</a>';
+			contentP += '</td>';
+			contentP += '</tr>';
+		}
+		$('.p-tr:last').after(contentP);   
+	    break;
+	  case "2" :
+		for(i = 0; i < 3; i++) {
+			contentP += '<tr>';
+			contentP += '<td style="background-color: rgb(249, 249, 249);">';
+			contentP += '<a class="content-left-a" href="#">';
+			contentP += '</a>';
+			contentP += '</td>';
+			contentP += '</tr>';
+		}
+		$('.p-tr:last').after(contentP);   
+	    break;
+	  case "3" :
+		for(i = 0; i < 2; i++) {
+			contentP += '<tr>';
+			contentP += '<td style="background-color: rgb(249, 249, 249);">';
+			contentP += '<a class="content-left-a" href="#">';
+			contentP += '</a>';
+			contentP += '</td>';
+			contentP += '</tr>';
+		}
+		$('.p-tr:last').after(contentP);   
+	    break;
+	  case "4" :
+		contentP += '<tr>';
+		contentP += '<td style="background-color: rgb(249, 249, 249);">';
+		contentP += '<a class="content-left-a" href="#">';
+		contentP += '</a>';
+		contentP += '</td>';
+		contentP += '</tr>';
+		$('.p-tr:last').after(contentP);   
+	    break;
+	  default :
+	    break;
+	}
+	});
 </script>
 </html>
