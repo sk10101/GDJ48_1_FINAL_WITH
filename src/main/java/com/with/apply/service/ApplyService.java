@@ -289,6 +289,15 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 		}
 		
+
+		public ModelAndView mealApplyUpdate(HashMap<String, String> params) {
+			String board_idx = params.get("board_idx");
+			
+			ModelAndView mav = new ModelAndView("redirect:/mealApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			dao.mealApplyUpdate(params);
+			return mav;
+		}
+		
 		
 		
 		
@@ -375,6 +384,7 @@ int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
 			logger.info("페이징 체크포인트");
 			return mealApplyList;
 		}
+
 
 		
 	

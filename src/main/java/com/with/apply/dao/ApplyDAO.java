@@ -28,4 +28,6 @@ public interface ApplyDAO {
 
 	ArrayList<BoardDTO> mealApplyList(HashMap<String, Object> map);
 
+	void mealApplyUpdate(HashMap<String, String> params);
+
 }

@@ -8,6 +8,9 @@
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="resources/js/jquery.twbsPagination.js"></script>
 </head>
 <style>
     .content-wrap {
@@ -22,7 +25,7 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
@@ -43,8 +46,8 @@
       width: 80%;
    }
    
-   input[type='text']{
-      width: 100%;
+   input[type='button']{
+      width: 80%;
    }
 
    
@@ -57,9 +60,9 @@
 }
 </style>
 <body>
-	<%-- <jsp:include page="../commons/header.jsp"/> --%>
+	<jsp:include page="../commons/header.jsp"/> 
 	<div class="content-wrap">
-	   <%-- <jsp:include page="../commons/memberSideBar5.jsp"/> --%>
+	    <jsp:include page="../commons/memberSideBar5.jsp"/> 
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	     
@@ -87,7 +90,7 @@
 						<th>최근 14일간 받은 패널티</th>
 						<th>신청시간</th>
 						<th>매너점수</th>
-						<th>수락 || 거절</th>
+						<th colspan="2">수락 || 거절</th>
 					</tr>
 				</thead>
 				
@@ -104,9 +107,9 @@
 				                     <c:if test="${apply.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 15px;"></c:if>
               				    </c:forEach>
 							</td>
-								<td>
-								<input type="button" value="수락" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&status=1'" />
-								<input type="button" value="거절" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&status=0'" />
+								<td colspan="2">
+								<input type="button" value="수락" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&status=1'" />
+								<input type="button" value="거절" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&status=0'" />
 								</td>
 							</tr>
 				</tbody>
@@ -120,7 +123,7 @@
 			</div>
 	   </div>
 	</div>
-	<%-- <jsp:include page="../commons/footer.jsp"/> --%>
+	<jsp:include page="../commons/footer.jsp"/> 
 </body>
 <script type="text/javascript">
 	var page = 1; // 초기 페이지 번호

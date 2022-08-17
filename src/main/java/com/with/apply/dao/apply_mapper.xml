@@ -204,6 +204,10 @@
 	<update id="taxiApplyUpdate" parameterType="hashmap">
 		UPDATE apply SET status = #{realstatuss} WHERE apply_idx = #{apply_idx} 
 	</update>
+	
+	<update id="mealApplyUpdate" parameterType="hashmap">
+		UPDATE apply SET status = #{realstatuss} WHERE apply_idx = #{apply_idx} 
+	</update>
 
 	
 	
