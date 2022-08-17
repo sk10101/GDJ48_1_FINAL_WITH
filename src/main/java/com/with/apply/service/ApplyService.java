@@ -373,6 +373,21 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			return mealApplyList;
 		}
 
+		public ModelAndView applyCancle(HashMap<String, String> params, String board_idx, String apply_idx) {
+			
+			ModelAndView mav = new ModelAndView("redirect:/myApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			dao.applyCancle(params, board_idx, apply_idx);
+			return mav;
+		}
+
+		public ModelAndView applyDelete(HashMap<String, String> params) {
+			String board_idx = params.get("board_idx");
+			
+			ModelAndView mav = new ModelAndView("redirect:/myApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			dao.applyDelete(params);
+			return mav;
+		}
+
 		
 	
 	

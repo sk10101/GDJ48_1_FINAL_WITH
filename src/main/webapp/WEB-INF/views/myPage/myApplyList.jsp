@@ -25,15 +25,15 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
 </style>
 <body>
-	<%-- <jsp:include page="../commons/header.jsp"/> --%>
+	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
-	 <%--   <jsp:include page="../commons/memberSideBar5.jsp"/> --%>
+	 <jsp:include page="../commons/memberSideBar5.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	     <form action="myapplylist.go" method="get">
@@ -69,6 +69,7 @@
 						<th>신청시간</th>
 						<th>신청상태</th>
 						<th>마감상태</th>
+						<th>          </th>
 					</tr>
 
 				</thead>
@@ -87,6 +88,8 @@
 								<c:if test="${his.status eq '취소'}"><td>취소</td></c:if>
 								<c:if test="${his.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
 								<c:if test="${his.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
+								<c:if test="${his.recruit_end eq 0}"><td><input type="button" value="취소" onclick="location.href='applyCancle?apply_idx=${his.apply_idx}&board_idx=${his.board_idx}'" /></td></c:if>
+								<c:if test="${his.recruit_end eq 1}">	<td><input type="button" value="삭제" onclick="location.href='applyDelete?apply_idx=${his.apply_idx}&board_idx=${his.board_idx}'" /></td></c:if>
 							</tr>
 					</tbody>
 				</c:forEach>
@@ -99,7 +102,7 @@
 			</div>
 	   </div>
 	</div>
-	<%-- <jsp:include page="../commons/footer.jsp"/> --%>
+	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script type="text/javascript">
 	var page = 1; // 초기 페이지 번호

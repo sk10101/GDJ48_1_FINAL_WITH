@@ -25,15 +25,15 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
 </style>
 <body>
-	<%-- <jsp:include page="../commons/header.jsp"/> --%>
+	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
-	   <%-- <jsp:include page="../commons/memberSideBar5.jsp"/> --%>
+	   <jsp:include page="../commons/memberSideBar5.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	     
@@ -96,7 +96,7 @@
 			</div>
 	   </div>
 	</div>
-	<%-- <jsp:include page="../commons/footer.jsp"/> --%>
+	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script type="text/javascript">
 	var page = 1; // 초기 페이지 번호

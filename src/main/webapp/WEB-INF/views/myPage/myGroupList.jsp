@@ -26,7 +26,7 @@
    margin-top: 100px;
    max-width: 1040px;
    width: 100%;
-   min-height: 680px;
+   min-height: 100vh;
    /* background-color: #f4f4f4; */
    background-color: rgb(249, 249, 249);
 }
@@ -55,9 +55,9 @@ table{
  
 </style>
 <body>
-   <!--<jsp:include page="../commons/header.jsp" />-->
+   <jsp:include page="../commons/header.jsp" />
    <div class="content-wrap">
-      <!--<jsp:include page="../commons/memberSideBar5.jsp" />-->
+      <jsp:include page="../commons/memberSideBar5.jsp" />
       <div class="content">
          <!-- 여기에서 작업 시작하세요 -->
          <form action="mygrouplist.go" method="get">
@@ -95,7 +95,6 @@ table{
                </tr>
             </thead>
             
-<<<<<<< HEAD
             <c:forEach items="${mygList}" var="his">				
 				<input type="hidden" id="board_idx" name="board_idx" value="${his.board_idx}"/>
 				<tbody class="mygList">
@@ -124,37 +123,6 @@ table{
 						</tr>
 				</tbody>
 				</c:forEach>
-=======
-            <c:forEach items="${mygList}" var="his">            
-            <input type="hidden" id="board_idx" name="board_idx" value="${his.board_idx}"/>
-            <tbody class="mygList">
-                  <tr>
-                     <td>${his.board_idx}</td>
-                     <td>${his.category_id}</td>
-                     <c:if test="${his.category_id eq '배달게시판'}">
-                     <td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.subject}</a></td>
-                      </c:if>
-                      <c:if test="${his.category_id eq '택시게시판'}">
-                     <td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.subject}</a></td>
-                      </c:if>
-                      <c:if test="${his.category_id eq '밥게시판'}">
-                     <td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.subject}</a></td>
-                      </c:if>
-                     <td>${his.write_date}</td> 
-                     <c:if test="${his.applyNo eq 0}"><td></td></c:if>                      
-                     <c:if test="${his.applyNo ne 0}"><td><span style="font-color:black;"><a href="applydetail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.applyNo}</a></span></td></c:if>
-                     <c:if test="${his.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
-                     <c:if test="${his.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
-                     
-                     <!-- <c:if test="${sessionScope.loginId eq his.member_id}">
-                         <input id="board_del" type="button" value="삭제" onclick="location.href='detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}'" />
-                      </c:if> -->
-                     
-                  </tr>
-            </tbody>
-            </c:forEach>
->>>>>>> origin/master
-
          </table>
          <!-- <input id="button3" type="button" onclick="close()" value="마감" />-->
          <div class="container">
@@ -164,7 +132,7 @@ table{
          </div>
       </div>
    </div>
-   <!--<jsp:include page="../commons/footer.jsp" />-->
+   <jsp:include page="../commons/footer.jsp" />
 </body>
 <script type="text/javascript">
    var page = 1; // 초기 페이지 번호
