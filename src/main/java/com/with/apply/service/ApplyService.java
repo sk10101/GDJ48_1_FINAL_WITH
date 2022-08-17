@@ -22,7 +22,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	//내가 참가한 모임
 	public ModelAndView myApplyList(HashMap<String, String> params, String loginId) {
 			logger.info("내가 참여한 목록 요청");
-		   ModelAndView mav = new ModelAndView("myPage/myApplyList");
+		   ModelAndView mav = new ModelAndView("redirect:/myApplyList");
 		   
 		   // 페이징 처리
 		   HashMap<String, Object> map = new HashMap<String, Object>(); // map 객체화
@@ -107,7 +107,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
 	
-	//내가 참가한 모임
+	//배달 신청자 리스트 
 		public ModelAndView deliApplyList(HashMap<String, String> params) {
 				logger.info("배달 참가 목록 요청");
 			   ModelAndView mav = new ModelAndView("myPage/deliApplyList");
@@ -200,7 +200,10 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			   int page = Integer.parseInt(params.get("page"));
 			   String option = params.get("option");
 			   String word = params.get("word");
-			   
+			   String board_idx = params.get("board_idx");
+			   logger.info(board_idx);
+
+			   map.put("board_idx", board_idx);
 			   map.put("page", page); // page 입력
 			   // 검색어를 입력했을 때
 			   if(word != "" && word != " ") {
@@ -269,8 +272,20 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			return taxiApplyList;
 		}
 
-		public void applyUpdate(HashMap<String, String> params) {
+		public ModelAndView applyUpdate(HashMap<String, String> params) {
+			String board_idx = params.get("board_idx");
+			
+			ModelAndView mav = new ModelAndView("redirect:/deliApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
 			dao.applyUpdate(params);
+			return mav;
+			
+		}
+		public ModelAndView taxiApplyUpdate(HashMap<String, String> params) {
+			String board_idx = params.get("board_idx");
+			
+			ModelAndView mav = new ModelAndView("redirect:/taxiApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			dao.taxiApplyUpdate(params);
+			return mav;
 			
 		}
 	

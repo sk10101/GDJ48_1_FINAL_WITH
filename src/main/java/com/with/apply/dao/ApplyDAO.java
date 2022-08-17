@@ -21,4 +21,7 @@ public interface ApplyDAO {
 
 	void applyUpdate(HashMap<String, String> params);
 
+	void taxiApplyUpdate(HashMap<String, String> params);
+	
+
 }
