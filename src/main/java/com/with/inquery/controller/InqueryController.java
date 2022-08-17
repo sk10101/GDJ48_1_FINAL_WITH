@@ -54,11 +54,25 @@ public class InqueryController {
 		return "redirect:/inqueryList?page="+1;
 	}
 	@RequestMapping(value = "/inqueryDetail.go")
-	public String inqueryDetail(Model model,@RequestParam String idx) {
-		ArrayList<InqueryDTO> inqueryList = service.inqueryDetail(idx);
-		logger.info("list 값 : "+inqueryList);
-		model.addAttribute("list",inqueryList);
-		model.addAttribute("idx",idx);
+	public String inqueryDetailgo(@RequestParam int idx) {
+		return "redirect:/inqueryDetail?idx="+idx;
+	}
+	
+	@RequestMapping(value = "/inqueryDetail")
+	public String inqueryDetail(Model model,@RequestParam int idx) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map = service.inqueryDetail(idx);
+		logger.info("map 값 : {}",map);
+		model.addAttribute("map",map);
 		return "myPage/inqueryDetail";
+	}
+	
+	@RequestMapping(value = "/inqueryDelete")
+	public String inqueryDelete(RedirectAttributes rAttr, @RequestParam int idx) {
+		int result = service.inqueryDelete(idx);
+		if(result>0) {
+			rAttr.addFlashAttribute("msg","문의내역 삭제에 성공하셨습니다.");
+		}
+		return "redirect:/inqueryList.go";
 	}
 }

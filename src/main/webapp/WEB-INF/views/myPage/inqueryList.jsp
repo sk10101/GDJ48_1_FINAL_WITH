@@ -73,15 +73,22 @@
             		<th>삭제</th>
             	</tr>
             	<c:forEach items="${name}" var="name">
-					<tr>
-						<td><a href="/inqueryDetail.go?idx=${name.member_id}">${name.subject}</a></td>
-						<td>${name.inquery_date}</td>						
-						<td>${name.status}</td>
-						<td>${name.inquery_admin}</td>
-						<c:if test="${name.status eq '미처리'}">
-						<td><button>삭제</button></td>												
-						</c:if>
-					</tr>
+            		<c:if test="${name.hide eq 0}">
+						<tr>
+							<td><a href="/inqueryDetail.go?idx=${name.inquery_idx}">${name.subject}</a></td>
+							<td>${name.inquery_date}</td>						
+							<td>${name.status}</td>
+							<td>${name.inquery_admin}</td>
+							<c:choose>
+						         <c:when test="${name.status eq '미처리'}">
+										<td><button onclick="location.href='/inqueryDelete?idx=${name.inquery_idx}'">삭제</button></td>												
+						         </c:when>
+					         <c:otherwise>
+				         	<td></td>
+				         </c:otherwise>
+				      </c:choose>
+						</tr>
+					</c:if>
 				</c:forEach>
             </table>
             <div class="container">
@@ -95,7 +102,7 @@
 </body>
 <script type="text/javascript">
 
-	var msg = "${msg}";
+	var msg = "${map.msg}";
 	if(msg != ""){
 		alert(msg);
 	}

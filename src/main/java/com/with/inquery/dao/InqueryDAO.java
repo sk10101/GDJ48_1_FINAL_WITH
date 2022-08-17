@@ -13,6 +13,8 @@ public interface InqueryDAO {
 
 	int inqueryWrite(HashMap<String, Object> map);
 
-	ArrayList<InqueryDTO> inqueryDetail(String idx);
+	HashMap<String, Object> inqueryDetail(int idx);
+
+	int inqueryDelete(int idx);
 
 }

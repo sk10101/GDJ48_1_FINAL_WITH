@@ -26,6 +26,30 @@
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
+    /* 양수빈 CSS 작업[삭제 해도 됨] */
+	.myinfo th, td {
+		border: 1px solid #000000;
+		padding: 8px;
+		text-align: center;
+	}
+	
+	.myinfo th {
+		background-color: #2962ff;
+		color: #ffffff;
+	}
+	.managerinfo th, td {
+		border: 1px solid #000000;
+		padding: 8px;
+		text-align: center;
+	}
+	
+	.managerinfo th {
+		background-color: #2962ff;
+		color: #ffffff;
+	}
+	.container {
+    	text-align: center;
+    }
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -36,23 +60,69 @@
 	       <table class="myinfo" style="margin-left:180px;">
             	<tr>
             		<th>작성자</th>
-            		<td>${idx}</td>
+            		<td>${map.member_id}</td>
             	</tr>
             	<tr>
             		<th>제목</th>
-            		<td>${list.subject}</td>
+            		<td>
+            		<c:choose>
+				         <c:when test="${map.status eq '미처리'}">
+				        	<input style="width : 300px;" type="text" value="${map.subject}"/>
+				         </c:when>
+				         <c:otherwise>
+				    		<input type="text" value="${map.subject}" readonly/>
+				         </c:otherwise>
+				      </c:choose>
+            		</td>
             	</tr>
             	<tr>
             		<th>작성일</th>
-            		<td>${list.inquery_date}</td>
+            		<td>${map.inquery_date}</td>
             	</tr>
             	<tr>
             		<th>처리상태</th>
-            		<td>${list.status}</td>
+            		<td>${map.status}</td>
             	</tr>
             	<tr>
             		<th>내용</th>
-            		<td>${list.inquery_content}</td>
+            		<td>
+            			<c:choose>
+				         <c:when test="${map.status eq '미처리'}">
+				        	<input style="width : 300px; height : 200px;" type="text" value="${map.inquery_content}"/>
+				         </c:when>
+				         <c:otherwise>
+				    		<input style="width : 300px; height : 200px;" type="text" value="${map.inquery_content}" readonly/>
+				         </c:otherwise>
+				      </c:choose>	
+            		</td>
+            	</tr>
+            </table>
+            <br><br><br><br><br>
+            <table class="manegerinfo" style="margin-left:180px;">
+            	<tr>
+            		<th>관리자</th>
+            		<td>${map.member_id}</td>
+            	</tr>
+            	<tr>
+            		<th>작성일</th>
+            		<td>
+            		<c:choose>
+				         <c:when test="${map.status eq '미처리'}">
+				        	<input style="width : 300px;" type="text" value="${map.subject}"/>
+				         </c:when>
+				         <c:otherwise>
+				    		<input type="text" value="${map.subject}" readonly/>
+				         </c:otherwise>
+				      </c:choose>
+            		</td>
+            	</tr>
+            	<tr>
+            		<th>작성일</th>
+            		<td>${map.inquery_date}</td>
+            	</tr>
+            	<tr>
+            		<th>처리상태</th>
+            		<td>${map.status}</td>
             	</tr>
             </table>
 	   </div>

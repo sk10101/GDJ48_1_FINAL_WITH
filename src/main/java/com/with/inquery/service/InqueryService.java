@@ -78,8 +78,12 @@ public class InqueryService {
 		return dao.inqueryWrite(map);
 	}
 
-	public ArrayList<InqueryDTO> inqueryDetail(String idx) {
+	public HashMap<String, Object> inqueryDetail(int idx) {
 		return dao.inqueryDetail(idx);
+	}
+
+	public int inqueryDelete(int idx) {
+		return dao.inqueryDelete(idx);
 	}
 
 }
