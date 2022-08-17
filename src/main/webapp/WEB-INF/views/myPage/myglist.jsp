@@ -39,6 +39,7 @@
 	position: relative;
 	right: 100px;
 }
+
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp" />

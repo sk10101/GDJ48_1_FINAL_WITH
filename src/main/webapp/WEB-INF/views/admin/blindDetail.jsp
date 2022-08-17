@@ -45,7 +45,7 @@
 	     		<td>${info.blindCancel_id}</td>
 	     		</tr>
 	     		<tr>
-	     		<td> 블라인드 해제 : </td>
+	     		<td> 블라인드 해제 : </td>  <!-- db에 저장된 cancel 값이 1이면 체크로 보이게하고,0이면 체크박스 체크 안되어있게하기-->
 	     		<td><input type="checkbox" name="cancel" id="cancel" value="1" <c:if test="${info.cancel==1}">checked</c:if>></td>
 	     		</tr>
 	     		<tr>
