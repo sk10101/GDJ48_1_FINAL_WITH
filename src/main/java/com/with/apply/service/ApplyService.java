@@ -277,6 +277,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 			ModelAndView mav = new ModelAndView("redirect:/deliApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
 			dao.applyUpdate(params);
+			dao.part(params);
 			return mav;
 			
 		}

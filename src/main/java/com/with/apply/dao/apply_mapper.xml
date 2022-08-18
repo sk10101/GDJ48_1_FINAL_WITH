@@ -12,7 +12,8 @@
 			DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date, 
 			a.status,
 			b.recruit_end ,
-			a.apply_idx
+			a.apply_idx,
+			a.member_id
 		FROM board_common_column b, apply a, participant p
 		WHERE p.member_id = #{loginId} and a.member_id != b.member_id and b.board_idx = p.board_idx and a.member_id = p.member_id and a.board_idx = p.board_idx 
 		<if test="word != null and word != ''">
@@ -109,6 +110,11 @@
 	<update id="applyUpdate" parameterType="hashmap">
 		UPDATE apply SET status = #{realstatus} WHERE apply_idx = #{apply_idx} 
 	</update>
+	
+	<insert id="part" parameterType="hashmap">
+		INSERT INTO (member_id,board_idx) VALUES (#{member_id},#{member_id})
+	</insert>
+	
 	
 	
 	<delete id="applyCancle">

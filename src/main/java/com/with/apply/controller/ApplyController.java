@@ -58,6 +58,7 @@ public class ApplyController {
 			logger.info(params.get("status"));
 			logger.info(params.get("apply_idx"));
 			logger.info(params.get("board_idx"));
+			logger.info(params.get("member_id"));
 			String status = params.get("status");
 			if (status.equals("1")) {
 				status = "수락";
