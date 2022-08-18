@@ -63,7 +63,7 @@
 		</if>
 	</select>
 
-	<select id="filedetail" resultType="member">
+	<select id="filedetail" resultType="String">
 		SELECT new_fileName FROM certificate WHERE member_id = #{param1}
 	</select>
 	

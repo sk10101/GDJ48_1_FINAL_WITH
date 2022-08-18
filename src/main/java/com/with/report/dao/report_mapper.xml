@@ -47,8 +47,8 @@
 	</select>
 	
 	<insert id="reportcom" parameterType="hashmap">
-		INSERT INTO penalty (penalty_end, member_id, penalty_admin)
-		VALUES (#{penalty_end}, #{member_id}, #{loginId})
+		INSERT INTO penalty (penalty_end, member_id, penalty_admin, penalty_reason)
+		VALUES (#{penalty_end}, #{member_id}, #{loginId}, #{report_reason})
 	</insert>
 
 	<update id="penaltycom" parameterType="hashmap">
