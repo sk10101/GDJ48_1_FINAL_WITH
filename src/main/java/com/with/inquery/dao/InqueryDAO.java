@@ -17,4 +17,14 @@ public interface InqueryDAO {
 
 	int inqueryDelete(int idx);
 
+	int inqueryUpdate(HashMap<String, Object> params);
+
+	int adminAllCount();
+
+	ArrayList<InqueryDTO> adminInqueryList(HashMap<String, Object> map);
+
+	HashMap<String, Object> adminInqueryDetail(int idx);
+
+	int admininqueryUpdate(HashMap<String, Object> params);
+
 }

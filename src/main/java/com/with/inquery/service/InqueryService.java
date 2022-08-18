@@ -86,4 +86,72 @@ public class InqueryService {
 		return dao.inqueryDelete(idx);
 	}
 
+	public int inqueryUpdate(HashMap<String, Object> params) {
+		return dao.inqueryUpdate(params);
+	}
+
+	public ModelAndView adminInqueryList(int page) {
+		ModelAndView mav = new ModelAndView("admin/inqueryList");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("page",page);
+		ArrayList<InqueryDTO> name = adminpagination(map);
+		logger.info("게시글의 개수 : " + name.size());
+		mav.addObject("name", name);
+		mav.addObject("map", map);
+		logger.info("map의 값 : {}",map);
+		return mav;
+	}
+
+	private ArrayList<InqueryDTO> adminpagination(HashMap<String, Object> map) {
+		int page = (int) map.get("page");
+		logger.info("page 값 : {}",page);
+		int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
+		// 총 게시글의 개수(allCnt) / 페이지당 보여줄 개수(cnt) = 생성할 수 있는 총 페이지 수(pages)
+		int allCnt = 0;
+		int allCount = dao.adminAllCount();
+		logger.info("allCount : {}",allCount);
+		allCnt = allCount;
+		logger.info("allCnt : " + allCnt);
+
+		// 검색결과가 없다면 SQL 문 오류가 뜨는 현상이 있음
+		if (allCnt == 0) {
+			// 임시 예외 처리... 다음에 코드 작성할 때 처리해봐야 할 듯
+			allCnt = 1;
+		}
+		String word = (String) map.get("word");
+		if(word != "") {
+			logger.info("word의 값 : "+word);
+			map.put("word", word); // 검색어 입력
+		}
+		
+		int pages = allCnt % cnt != 0 ? (allCnt / cnt) + 1 : (allCnt / cnt);
+		logger.info("pages : " + pages);
+		
+		if (page > pages) {
+			page = pages;
+		}
+		map.put("cnt",cnt);
+		map.put("page",page);
+		map.put("pages", pages); // 최대 페이지 수
+		int offset = cnt * (page - 1);
+		logger.info("offset : " + offset);
+
+		map.put("offset", offset);
+		map.put("currPage", page); // 현재 페이지
+		
+		ArrayList<InqueryDTO> inqueryList = new ArrayList<InqueryDTO>();
+		inqueryList = dao.adminInqueryList(map);
+		logger.info("list 값 : {}",inqueryList);
+		logger.info("페이징 체크포인트");
+		return inqueryList;
+	}
+
+	public HashMap<String, Object> admininqueryDetail(int idx) {
+		return dao.adminInqueryDetail(idx);
+	}
+
+	public int admininqueryUpdate(HashMap<String, Object> params) {
+		return dao.admininqueryUpdate(params);
+	}
+
 }

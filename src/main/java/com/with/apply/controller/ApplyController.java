@@ -70,11 +70,9 @@ public class ApplyController {
 			mav=service.applyUpdate(params);
 			return  mav;
 		}
-	
+		//취소(삭제)
 		@RequestMapping(value = "/applyCancle", method = RequestMethod.GET)
-		public ModelAndView applyCancle(HttpSession session, @RequestParam HashMap<String, String> params) {
-			String board_idx = params.get("board_idx");
-			String apply_idx = params.get("apply_idx");
+		public ModelAndView applyCancle(HttpSession session, @RequestParam HashMap<String, String> params, @RequestParam String board_idx,  @RequestParam String apply_idx) {
 			logger.info(params.get("apply_idx"));
 			logger.info(params.get("board_idx"));
 	
@@ -84,6 +82,7 @@ public class ApplyController {
 			return  mav;
 		}
 		
+		//내가 참여한 모임 삭제
 		@RequestMapping(value = "/applyDelete", method = RequestMethod.GET)
 		public ModelAndView applyDelete(HttpSession session, @RequestParam HashMap<String, String> params, @RequestParam String board_idx,  @RequestParam String apply_idx) {
 			logger.info(params.get("apply_idx"));
@@ -91,6 +90,29 @@ public class ApplyController {
 			
 			ModelAndView mav = new ModelAndView();
 			mav=service.applyDelete(params);
+			return  mav;
+		}
+		
+		//내가 만든 모임 삭제
+		@RequestMapping(value = "/mygApplyDelete", method = RequestMethod.GET)
+		public ModelAndView mygApplyDelete(HttpSession session, @RequestParam HashMap<String, String> params, @RequestParam String board_idx,  @RequestParam String apply_idx) {
+			logger.info(params.get("apply_idx"));
+			logger.info(params.get("board_idx"));
+			
+			ModelAndView mav = new ModelAndView();
+			mav=service.mygApplyDelete(params);
+			return  mav;
+		}
+		
+		//마감
+		@RequestMapping(value = "/applyClose", method = RequestMethod.GET)
+		public ModelAndView applyClose(HttpSession session, @RequestParam HashMap<String, String> params, @RequestParam String board_idx,  @RequestParam String apply_idx) {
+			
+			logger.info(params.get("apply_idx"));
+			logger.info(params.get("board_idx"));
+						
+			ModelAndView mav = new ModelAndView();
+			mav=service.applyClose(params);
 			return  mav;
 		}
 		
