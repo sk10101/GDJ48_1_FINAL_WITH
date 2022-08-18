@@ -116,7 +116,14 @@
 <body>
 	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
-	   <jsp:include page="../commons/memberSideBar1.jsp"/>
+		<c:choose>
+			<c:when test="${sessionScope.member_class eq '일반회원'}">
+			   <jsp:include page="../commons/memberSideBar1.jsp"/>
+			</c:when>
+			<c:when test="${sessionScope.member_class eq '관리자'}">
+				<jsp:include page="../commons/adminSideBar1.jsp"/>
+			</c:when>
+		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	     	<c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${info.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
@@ -187,7 +194,7 @@
 					<tr>
 						<td><a href="/mannerInfo?member=${ptm.member_id}&board=${info.board_idx}">${ptm.member_id}</a></td>
 						<td>${ptm.gender}</td>
-						<td>0000</td>
+						<td>-</td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>
 						<c:if test="${partMemberChk > 0}"><td></td></c:if>
 						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId}"><td><input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${ptm.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
