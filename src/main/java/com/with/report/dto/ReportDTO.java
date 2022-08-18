@@ -92,6 +92,13 @@ public class ReportDTO {
 	//패널티 게시판
 	public Date penalty_date;
 	public Date penalty_end;
+	public String penalty_reason;
+	public String getPenalty_reason() {
+		return penalty_reason;
+	}
+	public void setPenalty_reason(String penalty_reason) {
+		this.penalty_reason = penalty_reason;
+	}
 	public Date getPenalty_date() {
 		return penalty_date;
 	}

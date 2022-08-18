@@ -74,7 +74,8 @@ public class AdminService {
 		logger.info("유저 상세보기 서비스 요청");
 		ModelAndView mav = new ModelAndView("admin/userDetail");
 		MemberDTO dto = dao.userDetail(member_id);
-		MemberDTO file = dao.filedetail(member_id);
+		String file = dao.filedetail(member_id);
+		logger.info("파일 사이즈 : "+ file);
 		mav.addObject("dto", dto);
 		mav.addObject("file", file);
 		
