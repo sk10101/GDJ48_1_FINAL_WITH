@@ -336,13 +336,13 @@
                 <div class="star">
                     <td>
                     	<c:forEach var="i" begin="1" end="5">
-							<c:if test="${map.avg_allAvg >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
-							<c:if test="${map.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+							<c:if test="${avg >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+							<c:if test="${avg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
 						</c:forEach>
 					</td>
                 </div>
                 <br><br>
-				<p class="score">${map.avg_allAvg}</p>
+				<p class="score">${avg}</p>
             </div>
             <div class="content-box content-left">
                 <div class="center-line"></div>

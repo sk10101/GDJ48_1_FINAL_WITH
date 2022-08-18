@@ -35,7 +35,6 @@
 		padding: 8px;
 		text-align: center;
 	}
-	
 	.myinfo th {
 		background-color: #2962ff;
 		color: #ffffff;
@@ -58,7 +57,7 @@
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	       <p class="myP"><a href="/inqueryWrite.go">문의 작성</a></p>
-	       <form action="blockUserList">
+	       <form action="inqueryList">
 			   <input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
 			   <input type="hidden" name="page" value="1"/>
 			   <button id="searchBtn">검색</button>		

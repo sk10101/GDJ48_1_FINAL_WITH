@@ -37,13 +37,18 @@
 		background-color: #2962ff;
 		color: #ffffff;
 	}
-	.managerinfo th, td {
+	
+	.manegerinfo th, td {
 		border: 1px solid #000000;
 		padding: 8px;
 		text-align: center;
 	}
 	
-	.managerinfo th {
+	.manegerinfo td{
+		width: 300px;
+	}
+	
+	.manegerinfo th {
 		background-color: #2962ff;
 		color: #ffffff;
 	}
@@ -57,74 +62,67 @@
 	   <jsp:include page="../commons/memberSideBar7.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	       <table class="myinfo" style="margin-left:180px;">
-            	<tr>
-            		<th>작성자</th>
-            		<td>${map.member_id}</td>
-            	</tr>
-            	<tr>
-            		<th>제목</th>
-            		<td>
-            		<c:choose>
-				         <c:when test="${map.status eq '미처리'}">
-				        	<input style="width : 300px;" type="text" value="${map.subject}"/>
-				         </c:when>
-				         <c:otherwise>
-				    		<input type="text" value="${map.subject}" readonly/>
-				         </c:otherwise>
-				      </c:choose>
-            		</td>
-            	</tr>
-            	<tr>
-            		<th>작성일</th>
-            		<td>${map.inquery_date}</td>
-            	</tr>
-            	<tr>
-            		<th>처리상태</th>
-            		<td>${map.status}</td>
-            	</tr>
-            	<tr>
-            		<th>내용</th>
-            		<td>
-            			<c:choose>
-				         <c:when test="${map.status eq '미처리'}">
-				        	<input style="width : 300px; height : 200px;" type="text" value="${map.inquery_content}"/>
-				         </c:when>
-				         <c:otherwise>
-				    		<input style="width : 300px; height : 200px;" type="text" value="${map.inquery_content}" readonly/>
-				         </c:otherwise>
-				      </c:choose>	
-            		</td>
-            	</tr>
-            </table>
-            <br><br><br><br><br>
-            <table class="manegerinfo" style="margin-left:180px;">
-            	<tr>
-            		<th>관리자</th>
-            		<td>${map.member_id}</td>
-            	</tr>
-            	<tr>
-            		<th>작성일</th>
-            		<td>
-            		<c:choose>
-				         <c:when test="${map.status eq '미처리'}">
-				        	<input style="width : 300px;" type="text" value="${map.subject}"/>
-				         </c:when>
-				         <c:otherwise>
-				    		<input type="text" value="${map.subject}" readonly/>
-				         </c:otherwise>
-				      </c:choose>
-            		</td>
-            	</tr>
-            	<tr>
-            		<th>작성일</th>
-            		<td>${map.inquery_date}</td>
-            	</tr>
-            	<tr>
-            		<th>처리상태</th>
-            		<td>${map.status}</td>
-            	</tr>
-            </table>
+	       <form action="inqueryUpdate" method="POST">
+		       <table class="myinfo" style="margin-left:180px;">
+	            	<tr>
+	            		<th>작성자</th>
+	            		<td>${map.member_id}<input type="hidden" name="idx" value="${map.idx}"/></td>
+	            	</tr>
+	            	<tr>
+	            		<th>제목</th>
+	            		<td>
+	            		<c:choose>
+					         <c:when test="${map.status eq '미처리'}">
+					        	<input style="width : 300px;" type="text" name="subject" value="${map.subject}"/>
+					         </c:when>
+					         <c:otherwise>
+					    		<input type="text" value="${map.subject}" readonly/>
+					         </c:otherwise>
+					      </c:choose>
+	            		</td>
+	            	</tr>
+	            	<tr>
+	            		<th>작성일</th>
+	            		<td>${map.inquery_date}</td>
+	            	</tr>
+	            	<tr>
+	            		<th>처리상태</th>
+	            		<td>${map.status}</td>
+	            	</tr>
+	            	<tr>
+	            		<th>내용</th>
+	            		<td>
+	            			<c:choose>
+					         <c:when test="${map.status eq '미처리'}">
+					        	<input style="width : 300px; height : 200px;" name="content" type="text" value="${map.inquery_content}"/>
+					         </c:when>
+					         <c:otherwise>
+					    		<input style="width : 300px; height : 200px;" type="text" value="${map.inquery_content}" readonly/>
+					         </c:otherwise>
+					      </c:choose>	
+	            		</td>
+	            	</tr>
+	            </table>
+	            <br><br><br><br>
+	            <table class="manegerinfo" style="margin-left:180px;">
+	            	<tr>
+	            		<th>관리자</th>
+	            		<td>${map.inquery_admin}</td>
+	            	</tr>
+	            	<tr>
+	            		<th>작성일</th>
+	            		<td>${map.answer_date}</td>
+	            	</tr>
+	            	<tr>
+	            		<th>답변내용</th>
+	            		<td>${map.answer_content}</td>
+	            	</tr>
+	            </table>
+	            <c:if test="${map.status eq '미처리'}">
+	            	<input type="submit" value="수정">
+	            </c:if>
+	            <input type="button" onclick="location.href='/inqueryList.go'" value="돌아가기"/>
+            </form>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>

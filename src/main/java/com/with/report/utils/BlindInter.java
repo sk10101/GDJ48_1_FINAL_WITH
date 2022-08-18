@@ -22,7 +22,7 @@ public class BlindInter extends HandlerInterceptorAdapter{
 		boolean pass = true; // 원래 이 코드 없이도 작동해야하는데 정상작동이 안돼서 임시방편
 		
 		if(loginId == null || (loginId != null && member_class.equals("일반회원"))) {
-			System.out.println("일반회원이 관리자 페이지에 접근을 시도함");
+			System.out.println("관리자 전용 페이지 입니다.");
 			// 일단은 메인페이지로 보낸다.
 			response.sendRedirect("/forcedMainGo");
 			pass = false; // 원래 이 코드 없이도 작동해야하는데 정상작동이 안돼서 임시방편
