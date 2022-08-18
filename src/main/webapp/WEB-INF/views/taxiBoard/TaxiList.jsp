@@ -48,7 +48,7 @@
     
     .taxiList th, td {
     	color: #eaeaea;
-    	padding: 3px 15px;
+    	padding: 5px 15px;
     	font-size: 14px;
     }
     
@@ -58,7 +58,7 @@
     	font-size: 16px;
     }
     
-    .taxiList tr:last-child th {
+    .taxiList tr:last-child td {
     	padding-bottom: 15px;
     }
     
@@ -105,17 +105,15 @@
     	text-align: center;
     	margin-top: 40px;
     }
+    
+   	#option {
+   		padding: 4px 10px;
+   		border-radius: 5px;
+   	}
   
 </style>
 <body>
-	<c:choose>
-		<c:when test="${sessionScope.member_class eq '일반회원'}">
-		   	<jsp:include page="../commons/header.jsp"/>
-		</c:when>
-		<c:when test="${sessionScope.member_class eq '관리자'}">
-			<jsp:include page="../commons/adminHeader.jsp"/>
-		</c:when>
-	</c:choose>
+   	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
 		<c:choose>
 			<c:when test="${sessionScope.member_class eq '일반회원'}">
@@ -144,37 +142,30 @@
 		   <c:forEach items="${taxiList}" var="list">
 	   			<table class="taxiList" onClick="location='/taxiDetail?board_idx=${list.board_idx}'">
 					<tr>
-						<th colspan="4">${list.subject}</th>
+						<th colspan="2">${list.subject}</th>
 	 				</tr>
 					<tr>
-						<th>출발지 : </th>
-						<td>${list.appoint_place}</td>
-						<th>작성자 : </th>
-						<td>${list.member_id}</td>
+						<td>출발지 &nbsp;:&nbsp; ${list.appoint_place}</td>
+						<td>작성자 &nbsp;:&nbsp; ${list.member_id}</td>
 					</tr>
 					<tr>
-						<th>도착지 : </th>
-						<td>${list.destination}</td>
-						<th>작성일 : </th>
-						<td>${list.write_date}</td>
+						<td>도착지 &nbsp;:&nbsp; ${list.destination}</td>
+						<td>작성일 &nbsp;:&nbsp; ${list.write_date}</td>
 					</tr>
 					<tr>
-						<th>마감시간 : </th>
-						<td>${list.deadline}</td>
-						<th>조회수 : </th>
-						<td>${list.hit}</td>
+						<td>마감시간 &nbsp;:&nbsp; ${list.deadline}</td>
+						<td>조회수 &nbsp;:&nbsp; ${list.hit}</td>
 					</tr>
 					<tr>
-						<th>인원 : </th>
-						<td>${list.partNo} / ${list.member_cnt}</td>
+						<td>인원 &nbsp;:&nbsp; ${list.partNo} / ${list.member_cnt}</td>
 						<c:if test="${list.recruit_end eq 0}">
-							<td colspan="2">
+							<td>
 								<span style="padding: 3px 10px; border-radius: 5px; background-color: #2962ff">모집중</span>
 							</td>
 						</c:if>
 						<c:if test="${list.recruit_end eq 1}">
-							<td colspan="2">
-								<span style="padding: 3px 10px; border-radius: 5px; background-color: #e53935">마감</span>
+							<td>
+								<span style="padding: 3px 10px; border-radius: 5px; background-color: #ef5350;">마감</span>
 							</td>
 						</c:if>
 					</tr>
