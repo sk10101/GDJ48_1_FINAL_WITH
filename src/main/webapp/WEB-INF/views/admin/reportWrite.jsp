@@ -11,21 +11,45 @@
 </head>
 <style>
     .content-wrap {
-    	max-width: 1200px;
+    	max-width: 300px;
     	width: 100%;
     	margin: 0 auto;
     }
 
     .content {
         display: inline-block;
-        margin-left: 160px;
-        margin-top: 100px;
-        max-width: 1040px;
+        max-width: 300px;
         width: 100%;
         min-height: 100vh;
+        /* padding: 50px 50px; */
         /* background-color: #f4f4f4; */
-        background-color: rgb(249, 249, 249);
     }
+    
+    table {
+    	margin: 0 auto;
+    	margin-top: 50px;
+    }
+    
+    table th input {
+    	margin: 10px 0;
+    }
+    
+    .bottom-button {
+    	margin: 10px 10px;
+    	border: none;
+    	border-radius: 5px;
+    	color: #eaeaea;
+    	padding: 5px 10px;
+    }
+    
+    .report-button {
+ 		background-color: #ef5350;
+    }
+    
+    .back-button {
+ 		background-color: #537ef4;
+    }
+    
 </style>
 <body>
 	<div class="content-wrap">
@@ -36,7 +60,7 @@
 	      			<input type ="hidden" id ="board_idx" name = "board_idx" value = "${param.board_idx}"/>
 	      		</tr>
 	      		<tr>
-	      			<th><input type="radio" id="chkId" name="check" value="음란성 게시글"/></th>
+	      			<th><input type="radio" id="chkId" name="check" value="음란성 게시글" checked/></th>
 	      			<th>음란성 게시글</th>
 	      		</tr>
 	      		<tr>
@@ -52,12 +76,14 @@
 	      			<th>욕설 게시글</th>
 	      		</tr>
 	      		<tr>
-	      			<th><input type="radio" id="chkId" name="check" id="etc" value="기타" onClick="this.form.textbox.disabled=false">기타</th>
-					<th><input type="text" id="textbox" name="textbox" disabled value="직접입력"></th> 
+	      			<th><input type="radio" id="chkId" name="check" id="etc" value="기타" onClick="this.form.textbox.disabled=false"></th>
+					<th>기타 &nbsp;<input type="text" id="textbox" name="textbox" disabled value="직접입력"></th> 
 	      		</tr>
 	      		<tr>
-	      			<th><input type="submit" id="send_button" value="신고"/></th>
-	      			<th><input type="button" id="test" value="닫기" onclick="windowclose()"/></th>
+	      			<th colspan="2">
+		      			<input class="bottom-button report-button" type="submit" id="send_button" value="신고"/>
+		      			<input class="bottom-button back-button" type="button" id="test" value="닫기" onclick="windowclose()"/>
+	      			</th>
 	      		</tr>
 	       	</table>	
 	     </form>

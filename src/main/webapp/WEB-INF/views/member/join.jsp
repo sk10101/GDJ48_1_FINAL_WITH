@@ -26,6 +26,7 @@
         margin: 0 auto;
         background-color: rgb(249, 249, 249);
         border-radius: 20px 20px 0 0;
+        padding-bottom: 60px;
     }
     
 	.goodRegister {
@@ -66,6 +67,35 @@
         background-color: #fff;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
+    
+    table {
+    	margin: 0 auto;
+    	margin-top: 30px;
+    	color: rgb(64, 64, 64);
+    }
+    
+    table th, table td {
+    	padding: 8px 10px;
+    }
+    
+    table tr:last-child th {
+    	padding-bottom: 30px;
+    }
+    
+    input[type='text'], input[type='password'] {
+    	border: 0.4px solid gray;
+    	border-radius: 5px;
+    	padding: 2px 5px;
+    }
+    
+    .bottom-button {
+    	margin: 0 10px;
+    }
+    
+    #chkNotice {
+    	margin-left: 20px;
+    }
+    
 
 </style>
 <body>
@@ -77,31 +107,32 @@
 		<table>
 			<tr>
 				<th>아이디</th>
-				<td><input type="text" name="member_id" id="member_id" placeholder="아이디 입력"/>
+				<td><input type="text" name="member_id" id="member_id" placeholder="아이디 입력" required/>
 					<button type="button" class="btn btn-default" id="idoverlay" onclick="IdOverlay()">중복확인</button>
 				<td>
 			</tr>
 			<tr>
 				<th>비밀번호</th>
-				<td><input type="password" name="member_pw" id="member_pw" placeholder="비밀번호 입력"/></td> <!--   어떤 패스워드넣었는지 확인하려고 text 타입으로.. -->
+				<td><input type="password" name="member_pw" id="member_pw" placeholder="비밀번호 입력" required/></td> <!--   어떤 패스워드넣었는지 확인하려고 text 타입으로.. -->
 				<td>* 8 ~ 15자 입력 </td>
 			</tr>
 			<tr>
 			<!-- onkeyup="JS function" 입력이 되었을 때, -->
-				<th>비밀번호확인</th>
-				<td><input type="password"  id="member_pw2" placeholder="비밀번호확인"/></td>
+				<th>비밀번호 확인</th>
+				<td><input type="password"  id="member_pw2" placeholder="비밀번호확인" required/></td>
 				<font id="chkNotice" size="2"></font>
 				<!-- <span id="confirmMsg"></span></td> -->
 			</tr>			
 			<tr>
 				<th>이름</th>
-				<td><input type="text" name="name"  id="name" placeholder="이름 입력"/></td>
+				<td><input type="text" name="name"  id="name" placeholder="이름 입력" required/></td>
 			</tr>
 			<tr>
 				<th>성별</th>
 				<td>
-				<label><input name="gender" type="radio" checked value="남자">남</label>
-                <input id="female" name="gender" type="radio" value="여자"><label for="female">여</label>
+					<label><input name="gender" type="radio" value="남자" checked> 남</label>
+					&nbsp;&nbsp;&nbsp;
+	                <label><input id="female" name="gender" type="radio" value="여자"> 여</label>
 				</td>
 			</tr>
 			<tr>
@@ -113,11 +144,11 @@
 				</td>	
 			  <tr>
 				<th>연락처</th>
-				<td><input type="text" class="phone-number-check" name="phone"  id="phone" placeholder="휴대폰번호 입력"/></td>
+				<td><input type="text" class="phone-number-check" name="phone"  id="phone" placeholder="휴대폰번호 입력" required/></td>
 			</tr>
 				<tr>
 					<th>EMAIL</th>
-					<td><input type="text" name="email" id="email"  placeholder="이메일주소  입력"/>
+					<td><input type="text" name="email" id="email"  placeholder="이메일주소 입력" required/>
 							<button type="button" class="btn btn-default" id="emailoverlay" onclick="EmailOverlay()">중복확인</button>
 					</td>
 				</tr>
@@ -128,9 +159,9 @@
 	              </td>			
 			  </tr>		
 			  <tr>
-				<th colspan="2"><br>
-					<button class="btn btn-default" type="button" onclick="save(); return false;">회원가입</button>
-					<button class="btn btn-default" type="button" onclick="location.href='/'"/>돌아가기</button> 
+				<th colspan="3" style="text-align: center;"><br>
+					<button class="btn btn-default bottom-button" type="button" onclick="save(); return false;">회원가입</button>
+					<button class="btn btn-default bottom-button" type="button" onclick="location.href='/'"/>돌아가기</button> 
 <!-- 				<input type="submit"  class="btn btn-default" value="회원가입" />
 					<input type="button"  class="btn btn-default" value="돌아가기" onclick="location.href='/'"/>  -->
 				</th>
@@ -160,7 +191,7 @@
 		  <button type="button" id="empsearch" style="width:20%" class="btn btn-default">검색</button> 
 		 </div>
         	<thead style="text-align:center; font-size:20px;">
-        		<tr><td></td><td>학교</td><tr>
+        		<tr><td>대학교</td><tr>
         	</thead>
         	<tbody id="list" style="font-size:20px;">
         	</tbody>
@@ -218,14 +249,14 @@ $(function(){
                 }
                 else
                 {
-                    alert("유효하지 않은 전화번호 입니다.");
+                    alert("유효하지 않은 연락처 입니다.");
                     $(this).val("");
                     $(this).focus();
                 }
             }
             else 
             {
-                alert("유효하지 않은 전화번호 입니다.");
+                alert("유효하지 않은 연락처 입니다.");
                 $(this).val("");
                 $(this).focus();
             }

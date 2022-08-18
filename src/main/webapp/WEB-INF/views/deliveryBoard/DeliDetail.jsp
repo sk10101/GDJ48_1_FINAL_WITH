@@ -277,7 +277,7 @@
 	
 	<!-- 신고하기위해 추가함 -제한- -->
 	function reportPop(){
-		window.open('reportWrite.go?board_idx=${info.board_idx}','report','width=1000, height=600, top=200, left=500')
+		window.open('reportWrite.go?board_idx=${list.board_idx}','report','width=300, height=300, top=300, left=650')
 	}
 
 </script>
