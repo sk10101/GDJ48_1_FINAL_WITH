@@ -25,7 +25,6 @@
         margin: 0 auto;
         background-color: rgb(249, 249, 249);
         border-radius: 20px 20px 0 0;
-  		overflow: hidden;
     }
     
     div.logo {
@@ -74,7 +73,28 @@
 		padding-top: 30px;
 		text-align: center;
 	}
-
+	
+	.FindBtn {
+		padding: 5px 10px;
+		border: none;
+		background-color: #537ef4;
+		color: #eaeaea;
+		border-radius: 5px;
+		transition: all 0.3s ease;
+		margin: 0 10px;
+	}
+	
+	.FindBtn:hover {
+		background-color: #004ecb;
+		transform: scale(1.05);
+	}
+	
+	input[type='text'], input[type='email'] {
+		padding: 3px 10px;
+		border-radius: 5px;
+		border: 0.3px solid gray;
+	}
+	
 </style>
 <body>
     <div class="main">
@@ -96,9 +116,9 @@
 					</td>
 				</tr>
 				<tr>
-					<td>
-						<button class="FindBtn" type="button" onclick="idFind()">확인</button>
-						<button class="FindBtn" type="button" onclick="location.href='./login.go'">돌아가기</button>
+					<td colspan="2">
+						<input type="button" class="FindBtn" onclick="idFind()" value="확인"/>
+						<input type="button" class="FindBtn" onclick="location.href='./login.go'" value="돌아가기"/>
 					</td>
 				</tr>           
 			</table>

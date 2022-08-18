@@ -148,7 +148,7 @@
 			</tr>
 				<tr>
 					<th>EMAIL</th>
-					<td><input type="text" name="email" id="email"  placeholder="이메일주소 입력" required/>
+					<td><input type="email" name="email" id="email"  placeholder="이메일주소 입력" required/>
 							<button type="button" class="btn btn-default" id="emailoverlay" onclick="EmailOverlay()">중복확인</button>
 					</td>
 				</tr>
