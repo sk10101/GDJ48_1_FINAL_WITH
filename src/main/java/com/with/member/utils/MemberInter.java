@@ -29,8 +29,7 @@ public class MemberInter extends HandlerInterceptorAdapter {
 			// 일단은 메인페이지로 보낸다.
 			response.sendRedirect("/forcedMainGo");
 			pass = false; // 원래 이 코드 없이도 작동해야하는데 정상작동이 안돼서 임시방편
-		}
-		
+		} 
 		// 기본은 true 값이어야한다.
 		return pass;
 	}

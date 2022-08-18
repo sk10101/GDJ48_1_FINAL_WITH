@@ -15,6 +15,6 @@ public interface AdminDAO {
 
 	ArrayList<MemberDTO> allCount(HashMap<String, Object> map);
 
-	MemberDTO filedetail(String member_id);
+	String filedetail(String member_id);
 
 }

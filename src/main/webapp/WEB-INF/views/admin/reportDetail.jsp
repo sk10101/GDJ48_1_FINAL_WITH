@@ -28,9 +28,16 @@
     }
 </style>
 <body>
-	<jsp:include page="../commons/adminHeader.jsp"/>
+	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
-	   <jsp:include page="../commons/adminSideBar5.jsp"/>
+		<c:choose>
+			<c:when test="${sessionScope.member_class eq '일반회원'}">
+			   <jsp:include page="../commons/memberSideBar5.jsp"/>
+			</c:when>
+			<c:when test="${sessionScope.member_class eq '관리자'}">
+				<jsp:include page="../commons/adminSideBar5.jsp"/>
+			</c:when>
+		</c:choose>
 	   <div class="content">
 	   	<form action="reportcom" method="get">
 			<table>

@@ -28,9 +28,16 @@
     }
 </style>
 <body>
-	<jsp:include page="../commons/adminHeader.jsp"/>
+	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
-	   <jsp:include page="../commons/adminSideBar4.jsp"/>
+		<c:choose>
+			<c:when test="${sessionScope.member_class eq '일반회원'}">
+			   <jsp:include page="../commons/memberSideBar4.jsp"/>
+			</c:when>
+			<c:when test="${sessionScope.member_class eq '관리자'}">
+				<jsp:include page="../commons/adminSideBar4.jsp"/>
+			</c:when>
+		</c:choose>
 	   <div class="content">
 	   	<form action="pass?member_id=${dto.member_id}" method="post">
 	       <table>
@@ -50,10 +57,13 @@
 				<th>대학교</th>
 				<td>${dto.university_name}</td>
 			</tr>
+			<c:if test="${file eq null}"></c:if>
+			<c:if test="${file ne null}">
 			<tr>
 				<th>사진</th>
-				<td>${file.new_fileName}</td>
+				<td><img src="./resources/certificate/${file}" width="500px"/></td>
 			</tr>
+			</c:if>
 			<tr>
 				<th>이메일</th>
 				<td>${dto.email}</td>

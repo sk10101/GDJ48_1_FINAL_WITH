@@ -5,16 +5,16 @@
 <mapper namespace="com.with.apply.dao.ApplyDAO">
 <select id="myApplyList" resultType="board" parameterType="hashmap">
 	SELECT 
-			b.board_idx,
-			b.category_id,
-			b.subject,
-			a.investment,
-			DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date, 
-			a.status,
-			b.recruit_end,
-			a.member_id
-		FROM board_common_column b, apply a
-		WHERE a.member_id = #{loginId} and a.member_id != b.member_id and a.board_idx = b.board_idx 
+         b.board_idx,
+         b.category_id,
+         b.subject,
+         a.investment,
+         DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date, 
+         a.status,
+         b.recruit_end,
+         a.member_id
+      FROM board_common_column b, apply a
+      WHERE a.member_id = #{loginId} and a.member_id != b.member_id and a.board_idx = b.board_idx
 		<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -109,6 +109,11 @@
 	<update id="applyUpdate" parameterType="hashmap">
 		UPDATE apply SET status = #{realstatus} WHERE apply_idx = #{apply_idx} 
 	</update>
+	
+	<insert id="part" parameterType="hashmap">
+		INSERT INTO (member_id,board_idx) VALUES (#{member_id},#{member_id})
+	</insert>
+	
 	
 	
 	<delete id="applyCancle">

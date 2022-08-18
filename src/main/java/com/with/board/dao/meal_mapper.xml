@@ -19,6 +19,7 @@
 		,hit
 		,member_cnt
 		,recruit_end
+		,(SELECT COUNT(pt_idx) FROM participant p WHERE bcc.board_idx = p.board_idx AND p.hide = 0) as partNo
 		,gender
 		,content
 		,appoint_coords_lat
@@ -85,6 +86,7 @@
 		,DATE_FORMAT(deadline,'%Y-%m-%d %H:%i') as deadline
 		,hit
 		,member_cnt
+		,(SELECT COUNT(pt_idx) FROM participant p WHERE bcc.board_idx = p.board_idx AND p.hide = 0) as partNo		
 		,recruit_end FROM board_common_column bcc, meal_board mb
 			WHERE bcc.board_idx = mb.board_idx AND category_id = '밥게시판'
 				<if test="word != null and word != ''">
@@ -155,6 +157,26 @@
 	UPDATE participant SET hide = 1
 		WHERE member_id = #{param1} AND board_idx = #{param2}
 	</update>
+	
+	<insert id="mealApplys" parameterType="hashmap">
+	INSERT INTO apply(board_idx, member_id) VALUES(#{board_idx}, #{loginId})
+</insert>
+
+<select id="chkStatus" resultType="int" parameterType="hashmap">
+	SELECT COUNT(*) FROM apply WHERE board_idx = #{board_idx} AND member_id = #{loginId} AND status IN('대기중', '수락') 
+</select>
+
+<select id="chkReject" resultType="int" parameterType="hashmap">
+	SELECT COUNT(*) FROM apply WHERE board_idx = #{board_idx} AND member_id = #{loginId} AND status = '거절'
+</select>
+
+<select id="chkElim" resultType="int" parameterType="hashmap">
+	SELECT COUNT(*) FROM participant WHERE board_idx = #{board_idx} AND member_id = #{loginId} AND hide = 1
+</select>
+
+<select id="chkGender" resultType="String" parameterType="hashmap">
+	SELECT gender FROM member WHERE member_id = #{loginId}
+</select>
 	
 
 	

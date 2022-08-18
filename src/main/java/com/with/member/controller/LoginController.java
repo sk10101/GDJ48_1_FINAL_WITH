@@ -28,6 +28,7 @@ public class LoginController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired LoginService service;
+	@Autowired MemberService mbservice;
 	
 	@Autowired
 	private HttpSession session;
@@ -49,24 +50,31 @@ public class LoginController {
 		MemberDTO loginDto = service.login(id, pw);
 		MemberDTO loginInfo = service.getMbInfo(id);
 		String loginId = loginDto.getMember_id();
-		String member_class = loginDto.getMember_class();  
-		int certficate_chk = loginInfo.getCertficate_chk(); 
+		String member_class = loginDto.getMember_class();
+		int certficate_chk = 0;
+		if (loginInfo !=null) {
+			certficate_chk = loginInfo.getCertficate_chk(); 
+		}
+		
+		logger.info("대학인증 : "+ certficate_chk); 
 		logger.info("로그인한 아이디 : "+ loginId);
 		logger.info("회원등급 : "+ member_class);
-		logger.info("대학인증 : "+ certficate_chk);
 		
 		String msg = "아이디 혹은 비밀번호가 틀렸습니다";
 		String page = "member/login";
-		
-		if(loginId != null && member_class != null) {
+
+				
+		if(loginId != null && member_class != null ) {
 			session.setAttribute("loginId", loginId);
 			session.setAttribute("member_class", member_class);
-
 			session.setAttribute("certficate_chk", certficate_chk);
 			msg = loginId + " (" + member_class + ") 님 환영합니다";			
 			rAttr.addFlashAttribute("msg",msg);
-			
-			page = "redirect:/main";			
+				
+			page = "redirect:/main";	
+			 	if (member_class.equals("관리자")) { 
+			 		page="redirect:/userList.go";
+			 	}
 		} else {			
 			model.addAttribute("msg", msg);
 			logger.info("로그인 실패");
