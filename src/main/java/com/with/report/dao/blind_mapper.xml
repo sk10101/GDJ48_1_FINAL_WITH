@@ -5,7 +5,7 @@
 	
 	<select id="blindList" resultType="blind" parameterType="hashmap">
 		SELECT * FROM blind_board
-			WHERE 1=1
+			<!-- WHERE 1=1 -->
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('아이디')">
@@ -19,12 +19,13 @@
 					</choose>
 				</if>
 				<!-- 정렬조건 여기에 -->
+				ORDER BY blind_idx DESC
 				LIMIT #{cnt} OFFSET #{offset}
 	</select>
 	
 	<select id="allCount" resultType="blind" parameterType="hashmap">
 	 	SELECT * FROM blind_board
-			WHERE 1=1
+			<!-- WHERE 1=1 -->
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('아이디')">

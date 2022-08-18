@@ -135,7 +135,7 @@ public class MemberDTO {
 	
 	//이제한 사진 업로드 추가
 	public int certificate_idx;
-	public String newFileName;
+	public String new_fileName;
 	public int getCertificate_idx() {
 		return certificate_idx;
 	}
@@ -143,10 +143,10 @@ public class MemberDTO {
 		this.certificate_idx = certificate_idx;
 	}
 	public String getNewFileName() {
-		return newFileName;
+		return new_fileName;
 	}
-	public void setNewFileName(String newFileName) {
-		this.newFileName = newFileName;
+	public void setNewFileName(String new_fileName) {
+		this.new_fileName = new_fileName;
 	}
 	
 	

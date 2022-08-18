@@ -11,7 +11,8 @@
     	select * from inquery where member_id=#{idx}
     	<if test="word != null and word != ''">
     		AND subject LIKE CONCAT('%',#{word},'%')
-    	</if>LIMIT #{cnt} OFFSET #{offset}
+    	</if>
+    		ORDER BY inquery_idx DESC LIMIT #{cnt} OFFSET #{offset}
     </select>
 	
 	<insert id="inqueryWrite" parameterType="hashmap">
@@ -38,7 +39,8 @@
     	select * from inquery
     	<if test="word != null and word != ''">
     		AND subject LIKE CONCAT('%',#{word},'%')
-    	</if>LIMIT #{cnt} OFFSET #{offset}
+    	</if> 
+    	ORDER BY inquery_idx DESC LIMIT #{cnt} OFFSET #{offset}
     </select>
     
     <select id="adminInqueryDetail" resultType="hashmap">

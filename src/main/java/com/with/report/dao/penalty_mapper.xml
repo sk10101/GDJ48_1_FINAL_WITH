@@ -31,7 +31,7 @@
 	</select>
 	
 	<update id="update" parameterType="hashmap">
-		UPDATE penalty SET pntCancel_id = #{loginId}, cancel = 1, pntCancel_reason = #{pntCancel_reason} WHERE penalty_idx = #{penalty_idx}
+		UPDATE penalty SET pntCancel_id = #{loginId}, cancel = 1, pntCancel_reason = #{pntCancel_reason}, penalty_end = now() WHERE penalty_idx = #{penalty_idx}
 	</update>
 	
 	

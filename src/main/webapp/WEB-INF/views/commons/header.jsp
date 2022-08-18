@@ -81,7 +81,7 @@
 					<a href="/userList.go"><img class="logo" src="./resources/images/logo.png" alt="logo"></a>
 				</c:when>
 			</c:choose>
-	        <p><a href="/myInfo">${sessionScope.loginId}(${sessionScope.member_class}) 님 환영합니다.</a> &nbsp; | &nbsp; <a href="logout">로그아웃</a></p>
+	        <p><a href="#">${sessionScope.loginId}(${sessionScope.member_class}) 님 환영합니다.</a> &nbsp; | &nbsp; <a href="logout">로그아웃</a></p>
 	        <a href="#"><img class="bell" src="./resources/images/bell.png" alt="bell"></a>
 	        <img class="dot" src="./resources/images/dot.png" alt="dot">
 	    </div>
