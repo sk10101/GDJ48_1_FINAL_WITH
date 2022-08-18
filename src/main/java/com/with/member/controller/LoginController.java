@@ -62,7 +62,8 @@ public class LoginController {
 		
 		String msg = "아이디 혹은 비밀번호가 틀렸습니다";
 		String page = "member/login";
-		
+
+				
 		if(loginId != null && member_class != null ) {
 			session.setAttribute("loginId", loginId);
 			session.setAttribute("member_class", member_class);
@@ -71,7 +72,9 @@ public class LoginController {
 			rAttr.addFlashAttribute("msg",msg);
 				
 			page = "redirect:/main";	
-			
+			 	if (member_class.equals("관리자")) { 
+			 		page="redirect:/userList.go";
+			 	}
 		} else {			
 			model.addAttribute("msg", msg);
 			logger.info("로그인 실패");
