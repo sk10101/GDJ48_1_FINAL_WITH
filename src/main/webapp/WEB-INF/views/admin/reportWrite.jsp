@@ -77,7 +77,7 @@
 	      		</tr>
 	      		<tr>
 	      			<th><input type="radio" id="chkId" name="check" id="etc" value="기타" onClick="this.form.textbox.disabled=false"></th>
-					<th>기타 &nbsp;<input type="text" id="textbox" name="textbox" disabled value="직접입력"></th> 
+					<th>기타 &nbsp;<input type="text" id="textbox" name="textbox" disabled placeholder="직접입력"></th> 
 	      		</tr>
 	      		<tr>
 	      			<th colspan="2">
