@@ -65,7 +65,7 @@ public class LoginService {
 		return success; 
 	}	
 	
-	/* 양수빈 service 작업 공간 */
+	/* 양수빈 service 작업 공간 
 	
 	public HashMap<String, Object> mblist(String loginId) {
 		return mbdao.mblist(loginId);
@@ -79,7 +79,7 @@ public class LoginService {
 		return mbdao.macnt(loginId);
 	}
 
-	/* 여기까지 */
+	 여기까지 */
 	
 	/*
 	 * // member(admin)Main으로 돌아가기

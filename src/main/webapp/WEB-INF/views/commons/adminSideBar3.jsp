@@ -96,15 +96,15 @@
 <body>
     <div class="sidebar">
         <ul>
-            <li><a href="#"><img src="./resources/images/delivery.png" alt="delivery"><div class="circle"></div>배달</a></li>
-            <li><a href="#"><img src="./resources/images/taxi.png" alt="taxi"><div class="circle"></div>택시</a></li>
-            <li><a href="#"><img class="eating" src="./resources/images/eating.png" alt="eating"><div class="circle"></div>식사</a></li>
+            <li><a href="/deliListGo"><img src="./resources/images/delivery.png" alt="delivery"><div class="circle"></div>배달</a></li>
+            <li><a href="/taxiListGo"><img src="./resources/images/taxi.png" alt="taxi"><div class="circle"></div>택시</a></li>
+            <li><a href="/mealList.go"><img class="eating" src="./resources/images/eating.png" alt="eating"><div class="circle"></div>식사</a></li>
             <li><div class="line"></div></li>
-            <li><a class="my" href="#">회원관리</a></li>
-            <li><a class="my" href="#">신고 내역 관리</a></li>
-            <li><a class="my" href="#">회원 이용 제한</a></li>
-            <li><a class="my" href="#">고객 문의</a></li>
-            <li><a class="my" href="#">블라인드 게시글 관리</a></li>
+            <li><a class="my" href="/userlist.go">회원관리</a></li>
+            <li><a class="my" href="/reportList.go">신고 내역 관리</a></li>
+            <li><a class="my" href="/penaltyList.go">회원 이용 제한</a></li>
+            <li><a class="my" href="/admininqueryList.go">고객 문의</a></li>
+            <li><a class="my" href="/blindListGo">블라인드 게시글 관리</a></li>
         </ul>
     </div>
 </body>
