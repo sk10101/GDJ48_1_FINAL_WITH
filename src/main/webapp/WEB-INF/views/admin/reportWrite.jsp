@@ -22,7 +22,7 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
@@ -65,21 +65,19 @@
 	</div>
 </body>
 <script>
-
-/* var chkId = $('#chkId').val();
-if(chkId == null){
-	alert("사유를 선택해주세요.");
+/* var msg = "${msg}"
+if (msg != "") {
+alert(msg);
 } */
-
+	
 function windowclose(){
 	window.close();
 }
 
 $("#send_button").click(function(){
-	$("#send").submit();
+	$("#send").submit()
 	setTimeout(function() {
 		window.close();
-		
 	 }, 10);
 });
 

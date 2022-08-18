@@ -14,7 +14,7 @@
         top: 100px;
         max-width: 160px;
         width: 100%;
-        height: 100%;
+        height: 100vh;
         background-color: #2962ff;
         display: inline-block;
         position: fixed;

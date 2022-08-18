@@ -46,38 +46,45 @@
 <body>
 	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
-	   <jsp:include page="../commons/memberSideBar4.jsp"/>
+		<jsp:include page="../commons/memberSideBar1.jsp"/>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
+	       	<p>${params.member}님의 매너평가 점수</p>
+	       	<input type="button" value="차단" onclick="location.href='/blockAdd?member=${params.member}&board=${params.board}'"/>
 	     	<table class="myinfo" style="margin-left: 180px;">
 				<tr>
 					<th>친절함</th>
 					<td><c:forEach var="i" begin="1" end="5">
-							<c:if test="${mblist.avg_kindInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
-							<c:if test="${mblist.avg_kindInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+							<c:if test="${params.avg_kindInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+							<c:if test="${params.avg_kindInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
 						</c:forEach>		
 					</td>
-					<td>${mblist.avg_kindFloat}</td>
+					<td>${params.avg_kindFloat}</td>
 				</tr>
 				<tr>
 					<th>응답속도</th>
 					<td><c:forEach var="i" begin="1" end="5">
-							<c:if test="${mblist.avg_answerInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
-							<c:if test="${mblist.avg_answerInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+							<c:if test="${params.avg_answerInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+							<c:if test="${params.avg_answerInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
 						</c:forEach>
 					</td>
-					<td>${mblist.avg_answerFloat}</td>
+					<td>${params.avg_answerFloat}</td>
 				</tr>
 				<tr>
 					<th>시간약속</th>
 					<td><c:forEach var="i" begin="1" end="5">
-							<c:if test="${mblist.avg_timeInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
-							<c:if test="${mblist.avg_timeInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+							<c:if test="${params.avg_timeInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+							<c:if test="${params.avg_timeInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
 						</c:forEach>
 					</td>
-					<td>${mblist.avg_timeFloat}</td>
+					<td>${params.avg_timeFloat}</td>
 				</tr>
 			</table>
+			<br><br>
+			<p>
+				<img src="./resources/images/people.png" alt="people" style="width: 30px; margin-left: 20px;">${params.manner_cnt}
+			</p>
+			<input type="button" value="확인" onclick="location.href='/deliDetail?board_idx=${params.board}'"/>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>

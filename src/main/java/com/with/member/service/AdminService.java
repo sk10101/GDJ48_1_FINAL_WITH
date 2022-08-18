@@ -35,13 +35,14 @@ public class AdminService {
 			pagePath = "admin/managerList";
 		}
 		ModelAndView mav = new ModelAndView(pagePath);
-
+		logger.info("페이징 처리 전 맴버 클래스 : "+params.get("member_class"));
+		
 		// 페이징 처리
 		HashMap<String, Object> map = new HashMap<String, Object>(); // map 객체화
 		int page = Integer.parseInt(params.get("page"));
 		String option = params.get("option");
 		String word = params.get("word");
-		logger.info(params.get("member_class"));
+		logger.info("페이징 처리 맴버클래스 : "+params.get("member_class"));
 		if((word != null || word != "") && member_class.equals("일반회원")) {
 			if(option.equals("certficate") && (word.equals("n") || word.equals("N"))) {
 				word = "0";
@@ -56,6 +57,9 @@ public class AdminService {
 			map.put("word", word); // 검색어 입력
 			if(member_class.equals("일반회원")) {
 				map.put("option", option); // 검색 옵션 입력
+			}else if(member_class.equals("관리자")) {
+				option = "id";
+				map.put("option", option);
 			}
 		}
 		
@@ -70,7 +74,9 @@ public class AdminService {
 		logger.info("유저 상세보기 서비스 요청");
 		ModelAndView mav = new ModelAndView("admin/userDetail");
 		MemberDTO dto = dao.userDetail(member_id);
+		MemberDTO file = dao.filedetail(member_id);
 		mav.addObject("dto", dto);
+		mav.addObject("file", file);
 		
 		return mav;
 	}

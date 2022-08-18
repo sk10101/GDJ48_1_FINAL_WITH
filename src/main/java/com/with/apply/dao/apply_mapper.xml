@@ -11,9 +11,10 @@
 			a.investment,
 			DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date, 
 			a.status,
-			b.recruit_end 
+			b.recruit_end ,
+			a.apply_idx
 		FROM board_common_column b, apply a, participant p
-		WHERE p.member_id = 'son' and a.member_id != b.member_id and b.board_idx = p.board_idx and a.member_id = p.member_id and a.board_idx = p.board_idx 
+		WHERE p.member_id = #{loginId} and a.member_id != b.member_id and b.board_idx = p.board_idx and a.member_id = p.member_id and a.board_idx = p.board_idx 
 		<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -37,7 +38,7 @@
 	
 	
 	<select id="allCount" resultType="board" parameterType="hashmap">
-		SELECT p.board_idx FROM participant p, board_common_column b, apply a  where p.member_id = 'son' and a.member_id != b.member_id and b.board_idx = p.board_idx and a.member_id = p.member_id and a.board_idx = p.board_idx	
+		SELECT b.board_idx FROM participant p, board_common_column b, apply a  where a.member_id = #{loginId} and a.member_id != b.member_id and a.board_idx = b.board_idx and a.board_idx = p.board_idx and p.board_idx = b.board_idx and a.member_id = p.member_id	
 			<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -110,6 +111,14 @@
 	</update>
 	
 	
+	<delete id="applyCancle">
+		delete from apply where apply_idx = #{param3}
+	</delete>
+	
+	<delete id="applyDelete">
+		delete from apply where apply_idx = #{apply_idx}
+	</delete>
+	
 	<select id="taxiApplyList" resultType="board" parameterType="hashmap">
 	<![CDATA[
 	SELECT 
@@ -155,37 +164,38 @@
 				</if>
 	</select>
 	
+	
 
 	<select id="mealApplyList" resultType="board" parameterType="hashmap">
-	<![CDATA[
-	SELECT 
-		a.member_id,
-		(select count(penalty_idx) from penalty p where penalty_date < now() AND penalty_date > date_add(now(), interval 14 day) and p.member_id = a.member_id),
-		DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date,
-		(SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE a.member_id = m.member_id) as avg_allAvg,
-		a.apply_idx
-	FROM apply a, board_common_column b
-	WHERE b.board_idx = a.board_idx AND a.member_id != b.member_id AND a.status = '대기중' AND b.board_idx = #{board_idx}]]>
-		<if test="word != null and word != ''">
-					<choose>
-						<when test="option.equals('제목')">
-							AND subject LIKE CONCAT('%',#{word},'%')
-						</when>
-						<when test="option.equals('아이디')">
-							AND a.member_id LIKE CONCAT('%',#{word},'%')
-						</when>
-						<otherwise>
-						</otherwise>
-					</choose>
-				</if>
-			ORDER BY a.board_idx DESC LIMIT #{cnt} OFFSET #{offset}
-			
-	</select>
+   <![CDATA[
+   SELECT 
+      a.member_id,
+      (select count(penalty_idx) from penalty p where penalty_date < now() AND penalty_date > date_add(now(), interval -14 day) and p.member_id = a.member_id),
+      DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date,
+      (SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE a.member_id = m.member_id) as avg_allAvg,
+      a.apply_idx,
+      b.board_idx   
+   FROM apply a, board_common_column b
+   WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx  AND a.status = '대기중' AND b.board_idx = #{board_idx}]]>
+      <if test="word != null and word != ''">
+               <choose>
+                  <when test="option.equals('제목')">
+                     AND subject LIKE CONCAT('%',#{word},'%')
+                  </when>
+                  <when test="option.equals('아이디')">
+                     AND a.member_id LIKE CONCAT('%',#{word},'%')
+                  </when>
+                  <otherwise>
+                  </otherwise>
+               </choose>
+            </if>
+         ORDER BY a.board_idx DESC LIMIT #{cnt} OFFSET #{offset}
+   </select> 
 	
 	<select id="mealCount" resultType="board" parameterType="hashmap">
 		SELECT a.member_id
 		FROM apply a, board_common_column b
-		WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx AND a.status = '대기중';
+		WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx AND a.status = '대기중'
 
 			<if test="word != null and word != ''">
 					<choose>
@@ -202,6 +212,10 @@
 	</select>
 	
 	<update id="taxiApplyUpdate" parameterType="hashmap">
+		UPDATE apply SET status = #{realstatuss} WHERE apply_idx = #{apply_idx} 
+	</update>
+	
+	<update id="mealApplyUpdate" parameterType="hashmap">
 		UPDATE apply SET status = #{realstatuss} WHERE apply_idx = #{apply_idx} 
 	</update>
 

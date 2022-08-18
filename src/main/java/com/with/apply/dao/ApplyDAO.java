@@ -28,4 +28,11 @@ public interface ApplyDAO {
 
 	ArrayList<BoardDTO> mealApplyList(HashMap<String, Object> map);
 
+
+	void mealApplyUpdate(HashMap<String, String> params);
+
+	void applyCancle(HashMap<String, String> params, String board_idx, String apply_idx);
+
+	void applyDelete(HashMap<String, String> params);
+
 }

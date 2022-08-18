@@ -28,9 +28,7 @@ public class HistoryController {
 		return "myPage/myGroupList";
 	}
 
-	@RequestMapping("/myApplyList.go") public String myApply(Model model) {
-		return "myPage/myApplyList"; 
-	}
+	
 
 	
 
@@ -40,6 +38,8 @@ public class HistoryController {
 
 		return "redirect:/mygList?page="+1+"&option="+"&word=";
 	}
+	
+	
 
 
 	@RequestMapping(value = "/mygList", method = RequestMethod.GET)
@@ -87,7 +87,7 @@ public class HistoryController {
 	      if(category_id.equals("배달게시판")){
 	         page = "redirect:/deliApplyList.go?board_idx="+board_idx; 
 	      }else if (category_id.equals("밥게시판")){
-	         page = "redirect:/mealApplyList?board_idx="+board_idx; 
+	         page = "redirect:/mealApplyList.go?board_idx="+board_idx; 
 	      }else if(category_id.equals("택시게시판")){
 	         page = "redirect:/taxiApplyList.go?board_idx="+board_idx;
 	      }
