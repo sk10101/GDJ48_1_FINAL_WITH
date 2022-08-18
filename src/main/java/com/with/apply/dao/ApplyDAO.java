@@ -31,8 +31,12 @@ public interface ApplyDAO {
 
 	void mealApplyUpdate(HashMap<String, String> params);
 
-	void applyCancle(HashMap<String, String> params, String board_idx, String apply_idx);
+	void applyCancle(HashMap<String, String> params);
 
 	void applyDelete(HashMap<String, String> params);
+
+	void applyClose(HashMap<String, String> params);
+
+	void mygApplyDelete(HashMap<String, String> params);
 
 }

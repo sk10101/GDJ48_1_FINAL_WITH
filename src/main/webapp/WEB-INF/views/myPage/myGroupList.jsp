@@ -55,9 +55,16 @@ table{
  
 </style>
 <body>
-   <jsp:include page="../commons/header.jsp" />
-   <div class="content-wrap">
-      <jsp:include page="../commons/memberSideBar5.jsp" />
+	<jsp:include page="../commons/header.jsp"/>
+	<div class="content-wrap">
+		<c:choose>
+			<c:when test="${sessionScope.member_class eq '일반회원'}">
+			   <jsp:include page="../commons/memberSideBar5.jsp"/>
+			</c:when>
+			<c:when test="${sessionScope.member_class eq '관리자'}">
+				<jsp:include page="../commons/adminSideBar5.jsp"/>
+			</c:when>
+		</c:choose>
       <div class="content">
          <!-- 여기에서 작업 시작하세요 -->
          <form action="mygrouplist.go" method="get">
@@ -92,6 +99,7 @@ table{
                   <th>작성일</th>
                   <th>신청자 수</th>
                   <th>상태</th>
+                  <th></th>
                </tr>
             </thead>
             
@@ -111,16 +119,14 @@ table{
 							<td><a href="detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.subject}</a></td>
 							 </c:if>
 							<td>${his.write_date}</td> 
-							<c:if test="${his.applyNo eq 0}"><td></td></c:if> 							
-							<c:if test="${his.applyNo ne 0}"><td><span style="font-color:black;"><a href="applydetail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.applyNo}</a></span></td></c:if>
+							<c:choose>
+								<c:when test="${his.applyNo eq 0 or his.recruit_end eq 1}"><td></td></c:when>
+								<c:when test="${his.applyNo ne 0}"><td><span style="font-color:black;"><a href="applydetail.go?board_idx=${his.board_idx}&category_id=${his.category_id}">${his.applyNo}</a></span></td></c:when>
+							</c:choose>
 							<c:if test="${his.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
 							<c:if test="${his.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
-							
-							
-							<!-- <c:if test="${sessionScope.loginId eq his.member_id}">
-						       <input id="board_del" type="button" value="삭제" onclick="location.href='detail.go?board_idx=${his.board_idx}&category_id=${his.category_id}'" />
-						    </c:if> -->
-						   
+							<c:if test="${his.recruit_end eq 0}"><td><input type="button" value="마감" onclick="location.href='applyClose?apply_idx=${his.apply_idx}&board_idx=${his.board_idx}'" /></td></c:if>
+							<c:if test="${his.recruit_end eq 1}">	<td><input type="button" value="삭제" onclick="location.href='mygApplyDelete?apply_idx=${his.apply_idx}&board_idx=${his.board_idx}'" /></td></c:if>
 						</tr>
 				</tbody>
 				</c:forEach>
