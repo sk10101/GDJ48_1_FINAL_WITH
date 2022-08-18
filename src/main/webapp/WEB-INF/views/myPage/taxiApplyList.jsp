@@ -34,7 +34,11 @@
 <body>
 <jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
+<<<<<<< HEAD
 		<c:choose>
+=======
+	<c:choose>
+>>>>>>> origin/master
 			<c:when test="${sessionScope.member_class eq '일반회원'}">
 			   <jsp:include page="../commons/memberSideBar5.jsp"/>
 			</c:when>

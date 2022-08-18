@@ -28,7 +28,6 @@ public class LoginController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired LoginService service;
-	@Autowired MemberService mbservice;
 	
 	@Autowired
 	private HttpSession session;
@@ -62,14 +61,6 @@ public class LoginController {
 		if(loginId != null && member_class != null) {
 			session.setAttribute("loginId", loginId);
 			session.setAttribute("member_class", member_class);
-			/* 양수빈 매너점수 영역 작업 */ 
-			
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map = mbservice.infoAll(loginId,map);
-			rAttr.addFlashAttribute("map", map);
-			
-			
-			/* 여기까지 */
 
 			session.setAttribute("certficate_chk", certficate_chk);
 			msg = loginId + " (" + member_class + ") 님 환영합니다";			
@@ -80,7 +71,6 @@ public class LoginController {
 			model.addAttribute("msg", msg);
 			logger.info("로그인 실패");
 		}
-		
 	
 		return page;
 	}

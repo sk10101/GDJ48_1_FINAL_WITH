@@ -16,7 +16,7 @@
 	</select>
 	
 	<select id="empList" resultType="com.with.member.dto.MemberDTO">
-		SELECT * FROM university
+		SELECT university_name FROM university
 	</select>
 	
 	<insert id="memberFileWrite">

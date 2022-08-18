@@ -2,6 +2,9 @@ package com.with.report.dto;
 
 import java.util.Date;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("blind")
 public class BlindDTO {
 	
 	private int blind_idx;

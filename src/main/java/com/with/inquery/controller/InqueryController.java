@@ -62,6 +62,7 @@ public class InqueryController {
 	public String inqueryDetail(Model model,@RequestParam int idx) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map = service.inqueryDetail(idx);
+		map.put("idx",idx);
 		logger.info("map 값 : {}",map);
 		model.addAttribute("map",map);
 		return "myPage/inqueryDetail";
@@ -74,5 +75,53 @@ public class InqueryController {
 			rAttr.addFlashAttribute("msg","문의내역 삭제에 성공하셨습니다.");
 		}
 		return "redirect:/inqueryList.go";
+	}
+	
+	@RequestMapping(value = "/inqueryUpdate")
+	public String inqueryUpdate(RedirectAttributes rAttr, @RequestParam HashMap<String, Object> params) {
+		logger.info("params 값 : {}",params);
+		int result = service.inqueryUpdate(params);
+		if(result>0) {
+			rAttr.addFlashAttribute("msg","문의내역 수정에 성공하셨습니다.");
+		}
+		return "redirect:/inqueryList.go";
+	}
+	
+	@RequestMapping(value = "/admininqueryList.go")
+	public String admininqueryListGo() {
+		return "redirect:/adminInQueryList?page="+1;
+	}
+	
+	@RequestMapping(value = "/adminInQueryList")
+	public ModelAndView adminInQueryList(@RequestParam int page) {
+		ModelAndView mav = new ModelAndView();
+		mav = service.adminInqueryList(page);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/adminInqueryDetail.go")
+	public String adminInqueryDetailgo(@RequestParam int idx) {
+		return "redirect:/adminInqueryDetail?idx="+idx;
+	}
+	
+	@RequestMapping(value = "/adminInqueryDetail")
+	public String adminInqueryDetail(Model model,@RequestParam int idx) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("idx",idx);
+		map = service.admininqueryDetail(idx);
+		logger.info("map 값 : {}",map);		
+		model.addAttribute("map",map);
+		model.addAttribute("page",idx);
+		return "admin/inqueryDetail";
+	}
+	
+	@RequestMapping(value = "/adminInqueryUpdate")
+	public String adminInqueryUpdate(RedirectAttributes rAttr, @RequestParam HashMap<String, Object> params) {
+		logger.info("params 값 : {}",params);
+		int result = service.admininqueryUpdate(params);
+		if(result>0) {
+			rAttr.addFlashAttribute("msg","문의내역 답변에 성공하셨습니다.");
+		}
+		return "redirect:/admininqueryList.go";
 	}
 }
