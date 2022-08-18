@@ -27,7 +27,9 @@ public class MainService {
 		String loginId = (String) session.getAttribute("loginId");
 		
 		// 평점 가져오기
-		
+		float avg = dao.grade(loginId);
+		avg = (float) (Math.round(avg*10)/10.0);
+		logger.info("avg 값 : {}",avg);
 		// 대학교 가져오기
 		String univ = dao.getUniv(loginId);
 		
@@ -45,7 +47,7 @@ public class MainService {
 		int partCnt = dao.partCnt(loginId);
 		logger.info("참여중인 게시글 수 : " + partCnt);
 		
-		
+		mav.addObject("avg", avg);
 		mav.addObject("univ", univ);
 		mav.addObject("recruitIng", recruitIng);
 		mav.addObject("partIng", partIng);
