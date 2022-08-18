@@ -109,7 +109,14 @@
 <body>
 	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
-	   <jsp:include page="../commons/memberSideBar3.jsp"/>
+		<c:choose>
+			<c:when test="${sessionScope.member_class eq '일반회원'}">
+			   <jsp:include page="../commons/memberSideBar3.jsp"/>
+			</c:when>
+			<c:when test="${sessionScope.member_class eq '관리자'}">
+				<jsp:include page="../commons/adminSideBar3.jsp"/>
+			</c:when>
+		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	       <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${info.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
@@ -126,12 +133,11 @@
 					<td>작성일 : ${info.write_date}</td>
 				</tr>
 				<tr>
-					<td>인원 : (현재 인원) / ${info.member_cnt}</td>
+					<td>인원 : ${count} / ${info.member_cnt}</td>
 					<td>조회수 : ${info.hit}</td>
 				</tr>
 				<tr>
 					<td>마감시간 : ${info.deadline}</td>
-					<td>인원 :${count} / ${info.member_cnt}</td>
 				</tr>
 				<tr>
 				</tr>
@@ -186,7 +192,7 @@
 						<td>${ptm.member_id}</td>
 						<td>${ptm.gender}</td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>
-						<c:if test="${partMemberChk > 0}"><td></td></c:if>
+						<c:if test="${partMemberChk > 0}"><td></td></c:if>				
 						<c:if test="${info.recruit_end eq 1 }">
 						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId}"><td><input type="button" value="평가하기"/></td></c:if>
 						</c:if>
@@ -202,7 +208,7 @@
 						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}"><td><input type="button" value="평가하기"/></td></c:if>
 						</c:if>
 						<c:if test="${info.recruit_end eq 0 }">
-						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
+						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='mealBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
 						</c:if>
 					</tr>
 				</c:forEach>
@@ -216,7 +222,7 @@
 				<button id="openModalPop">참여신청</button><br/>
 			</c:if>
 			<%-- </c:if> --%>
-			<input type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
+			<input type="button" value="삭제" onclick="location.href='mealDelete?board_idx=${info.board_idx}'"/>
 			<input type="button" value="돌아가기" onclick="history.back()"/>
 	   </div>
 	</div>
@@ -229,7 +235,7 @@
         </div>
         <h2>참여신청</h2>
         <div class="pop_content">
-        	<form action="mealApply">
+        	<form action="mealAppl">
 	           내 연락처 <input type="text" name="phone" value="${phone}" readonly/><br/>
 	           <input type="hidden" name="member_id" value="${info.member_id}"/>
 	           <input type="hidden" name="board_idx" value="${info.board_idx}"/>
@@ -288,7 +294,7 @@
 
 <!-- 신고하기위해 추가함 -제한- -->
 function reportPop(){
-	window.open('reportWrite.go?board_idx=${info.board_idx}','report','width=1000, height=600, top=200, left=500')
+	window.open('reportWrite.go?board_idx=${list.board_idx}','report','width=300, height=300, top=300, left=650')
 }
 
 </script>

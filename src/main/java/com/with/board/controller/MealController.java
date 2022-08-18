@@ -134,17 +134,29 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		}
 		
 		// 밥 게시판 참가 신청 
+		
 		@RequestMapping(value = "/mealApply")
 		public ModelAndView mealApply(HttpSession session, RedirectAttributes rAttr, @RequestParam HashMap<String, String> params) {
-			logger.info("로그인한 아이디 : " + params.get("member_id"));
+			String loginId = (String) session.getAttribute("loginId");
+			String board_idx = (String) params.get("board_idx");
+			
 			ModelAndView mav = new ModelAndView();
 			
 			service.mealApply(rAttr,params);
 			
-			mav.setViewName("redirect:/mealDetail?board_idx="+params.get("board_idx"));
+			mav.setViewName("redirect:/mealDetail?board_idx="+board_idx);
 			
 			return mav;
 		}
+		/*
+		@RequestMapping(value = "/mealAppls", method = RequestMethod.POST)
+		public ModelAndView mealApplys
+		(HttpSession session,
+		@RequestParam HashMap<String, Object> params,
+		RedirectAttributes rAttr) {
+			return service.mealApplys(session, params, rAttr);
+		}
+		*/
 		
 		// 참여한 회원 강퇴
 		@RequestMapping(value = "/mealBan", method = RequestMethod.GET)

@@ -137,28 +137,15 @@
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
-	<!--
-	<c:choose>
-		<c:when test="회원등급이 일반회원일때">
-		   	<jsp:include page="../commons/header.jsp"/>
-		</c:when>
-		<c:when test="회원등급이 관리자일때">
-			<jsp:include page="../commons/adminHeader.jsp"/>
-		</c:when>
-	</c:choose>
-	  -->	
 	<div class="content-wrap">
-	<jsp:include page="../commons/memberSideBar3.jsp"/>
-	<!-- 
-	<c:choose>
-		<c:when test="회원등급이 일반회원일때">
-		   <jsp:include page="../commons/memberSideBar1.jsp"/>
-		</c:when>
-		<c:when test="회원등급이 관리자일때">
-			<jsp:include page="../commons/adminSideBar1.jsp"/>
-		</c:when>
-	</c:choose>
-	 -->
+		<c:choose>
+			<c:when test="${sessionScope.member_class eq '일반회원'}">
+			   <jsp:include page="../commons/memberSideBar3.jsp"/>
+			</c:when>
+			<c:when test="${sessionScope.member_class eq '관리자'}">
+				<jsp:include page="../commons/adminSideBar3.jsp"/>
+			</c:when>
+		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	       <form action="deliList">
@@ -186,7 +173,7 @@
 								<td>작성일 : ${meal.write_date}</td>
 							</tr>
 							<tr>
-								<td>인원 : (현재 인원) / ${meal.member_cnt}</td>
+								<td>인원 : ${meal.partNo} / ${meal.member_cnt}</td>
 								<td>조회수 : ${meal.hit}</td>
 							</tr>
 							<tr>

@@ -48,15 +48,14 @@
 <body>
 	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
-	   <jsp:include page="../commons/memberSideBar6.jsp"/>
-	   <div class="content">
-	       <!-- 여기에서 작업 시작하세요 -->
-	       <form action="blockUserList">
-			   <input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
-			   <input type="hidden" name="page" value="1"/>
-			   <button id="searchBtn">검색</button>		
-		   </form>
-		   
+		<c:choose>
+			<c:when test="${sessionScope.member_class eq '일반회원'}">
+			   <jsp:include page="../commons/memberSideBar6.jsp"/>
+			</c:when>
+			<c:when test="${sessionScope.member_class eq '관리자'}">
+				<jsp:include page="../commons/adminSideBar6.jsp"/>
+			</c:when>
+		</c:choose>
 	     <table class="myinfo" style="margin-left:180px;">
             	<tr>
             		<th>차단 대상 ID</th>

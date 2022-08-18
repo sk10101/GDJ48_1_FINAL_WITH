@@ -76,7 +76,6 @@ public class LoginController {
 			model.addAttribute("msg", msg);
 			logger.info("로그인 실패");
 		}
-		
 	
 		return page;
 	}

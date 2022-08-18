@@ -119,7 +119,7 @@ public class MealService {
 					
 					try {
 						byte[] arr = photo.getBytes();
-						Path path = Paths.get("C:\\STUDY\\SPRING _ADVANCE\\GDJ48_1_FINAL_WITH\\src\\main\\webapp\\resources\\photo\\" + newFileName);
+						Path path = Paths.get("/Users/hyunsoungkim/GDJ48_FINAL_WITH/src/main/webapp/resources/photo/" + newFileName);
 						// 같은이름의 파일이 나올 수 없기 떄문에 옵션 설정 안해도된다.
 						Files.write(path, arr);
 						logger.info(newFileName + " SAVE OK");
@@ -232,30 +232,30 @@ public class MealService {
 		// loginId의 대학교 좌표를 구하기 위해 회원이 등록한 대학교의 주소를 가져온다.
 		String loginid = params.get("loginId");
 		
-		HashMap<String, Object> deliMap = new HashMap<String, Object>(); 
+		HashMap<String, Object> mealMap = new HashMap<String, Object>(); 
 		MemberDTO dto = dao.getUniversityAddr(loginid);
 		String university_addr = dto.getUniversity_addr();
-		deliMap.put("university_addr", university_addr);
+		mealMap.put("university_addr", university_addr);
 		
 		logger.info("가져온 대학교 주소 : " + university_addr);
 		
-		return deliMap;
+		return mealMap;
 	}
 
 
-	/*
+	
 	 // 밥 게시글 참여 신청
 	public void mealApply(RedirectAttributes rAttr, String member_id, String board_idx) {
 		logger.info("밥 서비스 참가신청 서비스 도착");
 		dao.mealApply(member_id,board_idx);
 		rAttr.addFlashAttribute("msg", "모임 참여 신청 성공");
 	}
-	*/
+	
 
 
 	 // 밥 게시글 참여 신청
 	public ModelAndView mealApply(RedirectAttributes rAttr, HashMap<String, String> params) {
-		logger.info("배달 게시글 참여 신청 서비스");
+		logger.info( "게시글 참여 신청 서비스");
 		ModelAndView mav = new ModelAndView();
 		String member_id = params.get("member_id");
 		String board_idx = params.get("board_idx");
@@ -277,6 +277,80 @@ public class MealService {
 		return mav;
 	}
 
+
+/*
+	public ModelAndView mealApplys(HttpSession session, HashMap<String, Object> params, RedirectAttributes rAttr) {
+		ModelAndView mav = new ModelAndView();
+		
+		String loginId = (String) session.getAttribute("loginId");
+		
+		String board_idx = (String) params.get("board_idx");
+		String gender = (String) params.get("gender");
+//		String member_id = params.get("member_id");
+//		String phone = params.get("phone");
+		
+		params.put("loginId", loginId);
+		params.put("gender", gender);
+		
+		
+		// 신청하기 전 마감여부를 마지막으로 업데이트하는 코드
+		dao.updateEnd();
+		
+		// 마감여부를 불러오는 코드
+		int recruitEnd = dao.recruitEnd(board_idx);
+		logger.info("마감여부 : " + recruitEnd);
+		
+		// 대기중 또는 수락 상태의 신청 데이터가 있는지 확인해주는 코드
+		int chkStatus = dao.chkStatus(params);
+		logger.info("대기중 또는 수락 상태의 데이터 수 : " + chkStatus);
+		
+		// 해당 글에 신청했다가 거절당한 이력이 있을 때
+		int chkReject = dao.chkReject(params);
+		
+		// 해당 글에서 강퇴당하거나 스스로 나간 이력이 있을 때
+		int chkElim = dao.chkElim(params);
+		
+		
+		// 로그인 회원의 성별을 확인해주는 코드
+		// chkGender 의 값은 '남자' 또는 '여자'
+		// gender 의 값은 '남자만' 또는 '여자만' 또는 '상관없음'
+
+		// 만약 chkGender 의 값이 '남자' 라면 '남자만' 으로 바꿔준다. 
+		// 아니면 '여자만' 으로 바꿔준다.
+		
+		// 이후 gender(ex '남자만') 와 chkGender(ex '남자') 가 일치하거나 or gender 가 '상관없음' 이라면 신청을 허가한다.
+		String chkGender = dao.chkGender(params) + "만";
+		
+		// 성별 비교를 위해 텍스트를 변환해주는 코드
+//		if (chkGender.equals("남자")) {
+//			chkGender = "남자만";
+//		} else {
+//			chkGender = "여자만";
+//		}
+		
+		
+		if (recruitEnd == 1) {
+			rAttr.addFlashAttribute("msg", "이미 마감된 모임입니다.");
+		} else if (chkStatus > 0) {
+			rAttr.addFlashAttribute("msg", "이미 수락 대기중이거나 수락된 신청입니다.");
+		} else if (chkReject > 0) {
+			rAttr.addFlashAttribute("msg", "이미 거절된 신청입니다.");
+		} else if (chkElim > 0) {
+			rAttr.addFlashAttribute("msg", "이미 모임에서 나간 이력이 있습니다.");
+		} else if (!chkGender.equals(gender) && !gender.equals("상관없음")) {
+			rAttr.addFlashAttribute("msg", gender + " 신청 가능합니다.");
+		}
+		else {
+			int row = dao.mealApplys(params);
+			rAttr.addFlashAttribute("msg", "신청을 완료했습니다.");
+		}
+		
+		mav.setViewName("redirect:/mealDetail?board_idx=" + board_idx);
+		
+		// 참여자 0, 신청자 0, 마감여부 0 일 경우에만 삭제 가능
+		return mav;
+	}
+*/
 	
 
 
