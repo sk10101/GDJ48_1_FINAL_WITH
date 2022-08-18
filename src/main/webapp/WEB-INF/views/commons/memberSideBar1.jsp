@@ -99,4 +99,3 @@
            <li><a class="my" href="/inqueryList.go">고객 문의</a></li>
        </ul>
    </div>
-</html>

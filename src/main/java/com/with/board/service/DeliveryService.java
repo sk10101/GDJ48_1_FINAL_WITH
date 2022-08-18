@@ -238,7 +238,7 @@ public class DeliveryService {
 		String gd_restriction = params.get("gd_restriction");
 		
 		// 성별 제한에 걸렸을 때
-		if(!(dao.getGender(member_id)+'만').equals(gd_restriction)) {
+		if(!(dao.getGender(member_id)+'만').equals(gd_restriction) || !gd_restriction.equals("상관없음")) {
 			rAttr.addFlashAttribute("msg",gd_restriction + " 가능한 신청입니다.");
 		}
 		// 이미 신청했을 때, 방장이 수락했을 때

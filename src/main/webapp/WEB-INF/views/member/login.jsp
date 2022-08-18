@@ -31,6 +31,7 @@
         margin: 0 auto;
         background-color: rgb(249, 249, 249);
         border-radius: 20px 20px 0 0;
+  		overflow: hidden;
     }
 
     div.logo {
@@ -40,9 +41,32 @@
         left: 50%;
         top: 100px;
     }
+    
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translate3d(0, -100%, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translateZ(0);
+        }
+    }
 
     div.logo img {
         width: 140px;
+        animation: fadeInDown 1s;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translate3d(0, 100%, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translateZ(0);
+        }
     }
 
     .content {
@@ -56,16 +80,11 @@
         /* background-color: #f4f4f4; */
         background-color: #fff;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        animation: fadeInUp 1s;
     }
 
 	/* 입력창 */
 	.inputText {
-		box-sizing: border-box;
-		width: 300px;
-		padding: 10px;
-		margin: 5px 0px;
-		border: medium solid #FFBF00;
-		border-radius: 5px;
 	}
 	
 	/* 확인 메시지 */
@@ -76,44 +95,73 @@
 		color: #ff1616;
 	}
 	
-	/* 로그인 버튼 */
-	#login {
-		box-sizing: border-box;
-		width: 300px;
-		padding: 10px;
-		margin: 5px 0px;
-		border: none;
-		border-radius: 5px;
-		background: #FFBF00;
-		color: #FFFFFF;
-		font-size: 16px;
-		font-weight: bold;
-		cursor: pointer;
+	#main-table {
+		margin: 0 auto;
+		margin-top: 50px;
+		color: rgb(64, 64, 64);
 	}
 	
-	/* 아이디/비밀번호 찾기 */
-	#idPw a {
-		float: left;
-		margin: 5px;
-		color: black;
-		font-size: 13px;
-		text-decoration: none;
+	#main-table th, #main-table td {
+		padding: 10px 10px; 
 	}
-	#idPw a:hover {
-		text-decoration: underline;
+	
+	input[type='text'], input[type='password'] {
+		padding: 3px 10px;
+		border-radius: 5px;
+		border: 0.3px solid gray;
+	}
+	
+	#sub-table {
+		margin: 0 auto;
+		margin-top: 30px;
+		text-align: center;
+	}
+	
+	#sub-table td {
+		padding-top: 5px;
+	}
+	
+	/* 로그인 버튼, 회원가입 버튼 */
+	.main-button {
+		margin: 10px 10px;	
+	} 
+	
+	/* 로그인 버튼 */
+	#login {
+		padding: 5px 10px;
+		border: none;
+		background-color: #537ef4;
+		color: #eaeaea;
+		border-radius: 5px;
+		transition: all 0.3s ease;
+	}
+	
+	#login:hover {
+		background-color: #004ecb;
+		transform: scale(1.05);
 	}
 	
 	/* 회원가입 */
-	#join a {
-		float: right;
-		margin: 5px;
-		color: black;
-		font-size: 13px;
-		text-decoration: none;
+	#join {
+		padding: 5px 10px;
+		border: none;
+		background-color: #537ef4;
+		color: #eaeaea;
+		border-radius: 5px;
+		transition: all 0.3s ease;
 	}
-	#join a:hover {
-		text-decoration: underline;
+	
+	#join:hover {
+		background-color: #004ecb;
+		transform: scale(1.05);
 	}
+	
+	/* 아이디/비밀번호 찾기 */
+	#idpwfind a {
+		color: rgb(64, 64, 64);
+		font-size: 14px;
+	}
+
 </style>
 <body>
     <div class="main">
@@ -121,7 +169,7 @@
         <div class="content">
             <!-- 여기에서 작업 시작하세요 -->    
 	<form action="login.do" method="post">
-		<table>
+		<table id="main-table">
 			<tr>
 				<th>ID</th>
 				<td><input type="text" name="id" required="required"/></td>  
@@ -132,15 +180,17 @@
 			</tr>
 			<tr>
 				<th colspan="2">
-					<input type="submit" value="로그인">
-					<input type="button" value="회원가입" onclick="location.href='./join'"/>
+					<input class="main-button" id="login" type="submit" value="로그인">
+					<input class="main-button" id="join" type="button" value="회원가입" onclick="location.href='./join'"/>
 				</th>
 			</tr>
 		</table>
 	</form>   
-				<div class="text-center">
-				<div id="idfind"><a href="idFind">아이디 찾기</a></div>
-				<div id="pwfind"><a href="pwFind">비밀번호 찾기</a></div>
+	<table id="sub-table">
+		<tr> 
+			<td id="idpwfind"><a href="idFind">아이디 찾기</a> &nbsp; | &nbsp; <a href="pwFind">비밀번호 찾기</a></td>
+		</tr>
+	</table>
 <!-- 				<h3 class="mb-3">다른 계정으로 로그인</h3>
 
 				<div class="d-flex justify-content-center">
@@ -155,7 +205,6 @@
 					</a>
 				</div>       --> 
         </div>
-    </div>
     </div>
 	<jsp:include page="../commons/memberFooter.jsp"/>
 </body>

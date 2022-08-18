@@ -49,14 +49,20 @@
 			WHERE board_idx = #{param1}
 	</update>
 	
-	<update id="updateComm" parameterType="com.with.report.dto.BlindDTO">
+	<update id="updateComm" parameterType="blind">
 		UPDATE board_common_column SET hide = #{cancel}
 			WHERE board_idx = #{board_idx}
 	</update>
 	
-	<update id="updateBlind" parameterType="com.with.report.dto.BlindDTO">
+	<update id="updateBlind" parameterType="blind">
 		UPDATE blind_board SET cancel = #{cancel}, blindCancel_id = #{blindCancel_id},blindCancel_reason =#{blindCancel_reason}
 			WHERE board_idx = #{board_idx}
 	</update>
+	
+	<update id="blindBoardUpdate" parameterType="String">
+		UPDATE board_common_column bcc, apply a SET recruit_end = 1, status = '취소'
+			WHERE bcc.board_idx = #{board_idx} AND a.board_idx = #{board_idx} AND status = '대기중'
+	</update>
+	
 	
 </mapper>
