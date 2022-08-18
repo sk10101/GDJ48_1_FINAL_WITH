@@ -47,7 +47,14 @@
 <body>
 	<jsp:include page="../commons/adminHeader.jsp"/>
 	<div class="content-wrap">
-	   <jsp:include page="../commons/adminSideBar7.jsp"/>
+	   <c:choose>
+			<c:when test="${sessionScope.member_class eq '일반회원'}">
+			   <jsp:include page="../commons/memberSideBar7.jsp"/>
+			</c:when>
+			<c:when test="${sessionScope.member_class eq '관리자'}">
+				<jsp:include page="../commons/adminSideBar7.jsp"/>
+			</c:when>
+		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	     	 <form action="adminInQueryList">
