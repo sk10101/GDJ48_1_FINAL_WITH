@@ -277,6 +277,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 			ModelAndView mav = new ModelAndView("redirect:/deliApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
 			dao.applyUpdate(params);
+			dao.part(params);
 			return mav;
 			
 		}
@@ -386,10 +387,11 @@ int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
 		}
 
 
-		public ModelAndView applyCancle(HashMap<String, String> params, String board_idx, String apply_idx) {
+		public ModelAndView applyCancle(HashMap<String, String> params, String board_idx2, String apply_idx) {
+			String board_idx = params.get("board_idx");
 			
 			ModelAndView mav = new ModelAndView("redirect:/myApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
-			dao.applyCancle(params, board_idx, apply_idx);
+			dao.applyCancle(params);
 			return mav;
 		}
 
@@ -400,6 +402,23 @@ int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
 			dao.applyDelete(params);
 			return mav;
 		}
+
+		public ModelAndView mygApplyDelete(HashMap<String, String> params) {
+			String board_idx = params.get("board_idx");
+			
+			ModelAndView mav = new ModelAndView("redirect:/mygList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			dao.mygApplyDelete(params);
+			return mav;
+		}
+		
+		public ModelAndView applyClose(HashMap<String, String> params) {
+			String board_idx = params.get("board_idx");
+			
+			ModelAndView mav = new ModelAndView("redirect:/mygList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			dao.applyClose(params);
+			return mav;
+		}
+
 
 
 		

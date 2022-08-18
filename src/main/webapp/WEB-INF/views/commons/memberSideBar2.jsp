@@ -100,6 +100,7 @@
            <li><a href="/taxiListGo"><img src="./resources/images/taxi.png" alt="taxi"><div class="circle"></div>택시</a></li>
            <li><a href="/mealList.go"><img class="eating" src="./resources/images/eating.png" alt="eating"><div class="circle"></div>식사</a></li>
            <li><div class="line"></div></li>
+           
            <li><a class="my" href="/myInfo">내 정보</a></li>
            <li><a class="my" href="/mygList.go">이용내역</a></li>
            <li><a class="my" href="/blockUserList.go">차단 회원 관리</a></li>
