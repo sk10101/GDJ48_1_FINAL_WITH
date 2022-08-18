@@ -111,8 +111,9 @@
 	</update>
 	
 	<insert id="part" parameterType="hashmap">
-		INSERT INTO (member_id,board_idx) VALUES (#{member_id},#{member_id})
+		INSERT INTO participant(member_id,board_idx) VALUES (#{member_id},#{board_idx})
 	</insert>
+	
 	
 	
 	

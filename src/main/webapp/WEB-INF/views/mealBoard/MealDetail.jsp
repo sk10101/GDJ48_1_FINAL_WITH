@@ -235,9 +235,9 @@
         </div>
         <h2>참여신청</h2>
         <div class="pop_content">
-        	<form action="mealAppl">
+        	<form action="mealApply">
 	           내 연락처 <input type="text" name="phone" value="${phone}" readonly/><br/>
-	           <input type="hidden" name="member_id" value="${info.member_id}"/>
+	           <input type="hidden" name="member_id" value="${sessionScope.loginId}"/>
 	           <input type="hidden" name="board_idx" value="${info.board_idx}"/>
 	           <input type="submit" value="보내기" style="text-align: right;"/>
         	</form>
