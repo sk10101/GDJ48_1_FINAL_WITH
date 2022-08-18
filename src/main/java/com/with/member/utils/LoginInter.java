@@ -27,7 +27,9 @@ public class LoginInter extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		
 		String loginId = (String) session.getAttribute("loginId");
-
+		String member_class = (String) session.getAttribute("member_class");
+		
+		
 		if(loginId == null) {
 			System.out.println("로그인을 하지 않은 상태");			
 			//response.sendRedirect("/"); //로그인을 하지않고 /main 에서 배달,택시,식사를 누르면 로그인화면으로 가게하기..
@@ -37,7 +39,7 @@ public class LoginInter extends HandlerInterceptorAdapter {
 			printwriter.flush();
 			printwriter.close();			
 			return false;
-		}else	{						
+		}else	{ 
 			return true;
 		}
 	}
