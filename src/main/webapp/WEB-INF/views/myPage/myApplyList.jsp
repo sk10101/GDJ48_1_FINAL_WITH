@@ -33,7 +33,14 @@
 <body>
 	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
-	 <jsp:include page="../commons/memberSideBar5.jsp"/>
+	 <c:choose>
+			<c:when test="${sessionScope.member_class eq '일반회원'}">
+			   <jsp:include page="../commons/memberSideBar5.jsp"/>
+			</c:when>
+			<c:when test="${sessionScope.member_class eq '관리자'}">
+				<jsp:include page="../commons/adminSideBar5.jsp"/>
+			</c:when>
+		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	     <form action="myapplylist.go" method="get">
@@ -90,7 +97,6 @@
 								<c:if test="${his.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
 								<c:if test="${his.recruit_end eq 0}"><td><input type="button" value="취소" onclick="location.href='applyCancle?apply_idx=${his.apply_idx}&board_idx=${his.board_idx}'" /></td></c:if>
 								<c:if test="${his.recruit_end eq 1}">	<td><input type="button" value="삭제" onclick="location.href='applyDelete?apply_idx=${his.apply_idx}&board_idx=${his.board_idx}'" /></td></c:if>
-
 							</tr>
 					</tbody>
 				</c:forEach>

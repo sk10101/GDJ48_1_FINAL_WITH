@@ -64,4 +64,8 @@
 	bcc.member_id != p.member_id
 </select>
 
+<select id="grade" resultType="float">
+	SELECT avg(avg_score) FROM manner_score WHERE member_id=#{param1}
+</select>
+
 </mapper>

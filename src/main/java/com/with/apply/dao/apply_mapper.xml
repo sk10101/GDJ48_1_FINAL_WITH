@@ -4,17 +4,17 @@
 
 <mapper namespace="com.with.apply.dao.ApplyDAO">
 <select id="myApplyList" resultType="board" parameterType="hashmap">
-		SELECT 
-			b.board_idx,
-			b.category_id,
-			b.subject,
-			a.investment,
-			DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date, 
-			a.status,
-			b.recruit_end ,
-			a.apply_idx
-		FROM board_common_column b, apply a, participant p
-		WHERE p.member_id = #{loginId} and a.member_id != b.member_id and b.board_idx = p.board_idx and a.member_id = p.member_id and a.board_idx = p.board_idx 
+	SELECT 
+         b.board_idx,
+         b.category_id,
+         b.subject,
+         a.investment,
+         DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date, 
+         a.status,
+         b.recruit_end,
+         a.member_id
+      FROM board_common_column b, apply a
+      WHERE a.member_id = #{loginId} and a.member_id != b.member_id and a.board_idx = b.board_idx
 		<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -38,7 +38,7 @@
 	
 	
 	<select id="allCount" resultType="board" parameterType="hashmap">
-		SELECT b.board_idx FROM participant p, board_common_column b, apply a  where a.member_id = #{loginId} and a.member_id != b.member_id and a.board_idx = b.board_idx and a.board_idx = p.board_idx and p.board_idx = b.board_idx and a.member_id = p.member_id	
+		SELECT a.board_idx FROM board_common_column b, apply a  where a.member_id = #{loginId} and a.member_id != b.member_id and a.board_idx = b.board_idx
 			<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -110,14 +110,27 @@
 		UPDATE apply SET status = #{realstatus} WHERE apply_idx = #{apply_idx} 
 	</update>
 	
+	<insert id="part" parameterType="hashmap">
+		INSERT INTO (member_id,board_idx) VALUES (#{member_id},#{member_id})
+	</insert>
+	
+	
 	
 	<delete id="applyCancle">
-		delete from apply where apply_idx = #{param3}
+		delete from apply where apply_idx = #{apply_idx}
 	</delete>
 	
 	<delete id="applyDelete">
 		delete from apply where apply_idx = #{apply_idx}
 	</delete>
+	
+	<delete id="mygApplyDelete">
+		delete from apply where apply_idx = #{apply_idx}
+	</delete>
+	
+	<update id="applyClose">
+		UPDATE board_common_column SET recruit_end = 1 WHERE board_idx = #{board_idx} 
+	</update>
 	
 	<select id="taxiApplyList" resultType="board" parameterType="hashmap">
 	<![CDATA[
