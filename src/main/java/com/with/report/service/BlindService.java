@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.with.board.dao.DeliveryDAO;
 import com.with.board.dto.BoardDTO;
 import com.with.board.dto.PhotoDTO;
 import com.with.member.dto.MemberDTO;
@@ -24,11 +25,23 @@ public class BlindService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired BlindDAO dao;
+	@Autowired DeliveryDAO deliDao;
 	
+	@Transactional
 	public ModelAndView superBlind(String board_idx) {
 		// 해당 기능은 조건없이 무조건 블라인드 처리해준다.
 		ModelAndView mav = new ModelAndView();
 		dao.superBlind(board_idx);
+		
+		// 글 블라인드 처리와 동시에 블라인드 게시판에 보낸다.
+		// 어떤 게시글에서 삭제버튼을 눌렀는지 확인하기 위해 카테고리를 가져온다.
+		String category = deliDao.getCategory(board_idx);
+		// 블라인드하려는 게시판의 제목과 작성자를 가져온다.
+		BoardDTO dto = deliDao.getSubAndWriter(board_idx);
+		String member_id = dto.getMember_id();
+		String subject = dto.getSubject();
+		// 글 삭제와 동시에 블라인드 게시판에 보내야함
+		deliDao.blindBoardWrite(category,board_idx,member_id,subject);
 		
 		return mav;
 	}
