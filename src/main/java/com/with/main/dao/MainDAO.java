@@ -16,4 +16,6 @@ public interface MainDAO {
 
 	int partCnt(String loginId);
 
+	float grade(String loginId);
+
 }
