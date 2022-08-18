@@ -42,6 +42,8 @@ public class BlindService {
 		String subject = dto.getSubject();
 		// 글 삭제와 동시에 블라인드 게시판에 보내야함
 		deliDao.blindBoardWrite(category,board_idx,member_id,subject);
+		// 글 삭제와 동시에 대기중인 신청내역은 모두 취소처리, 글 상태는 마감으로 변경해준다.
+		dao.blindBoardUpdate(board_idx);
 		
 		return mav;
 	}
