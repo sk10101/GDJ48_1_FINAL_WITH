@@ -38,9 +38,6 @@ public interface ApplyDAO {
 
 	void part(HashMap<String, String> params);
 
-	void applyClose(HashMap<String, String> params);
-
-	void mygApplyDelete(HashMap<String, String> params);
 
 
 }

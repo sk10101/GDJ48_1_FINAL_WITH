@@ -12,9 +12,10 @@
          DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date, 
          a.status,
          b.recruit_end,
-         a.member_id
+         a.member_id,
+         a.apply_idx
       FROM board_common_column b, apply a
-      WHERE a.member_id = #{loginId} and a.member_id != b.member_id and a.board_idx = b.board_idx
+      WHERE a.member_id = #{loginId} and a.member_id != b.member_id and a.board_idx = b.board_idx AND a.hide = 0
 		<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -70,7 +71,7 @@
 		a.apply_idx,
 		b.board_idx	
 	FROM apply a, board_common_column b
-	WHERE b.board_idx = a.board_idx AND a.member_id != b.member_id AND a.status = '대기중' AND b.board_idx = #{board_idx}]]>
+	WHERE b.board_idx = a.board_idx AND a.member_id != b.member_id AND a.status = '대기중' AND b.board_idx = #{board_idx} AND a.hide = 0]]>
 		<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -116,21 +117,15 @@
 	
 	
 	
-	<delete id="applyCancle">
-		delete from apply where apply_idx = #{apply_idx}
-	</delete>
-	
-	<delete id="applyDelete">
-		delete from apply where apply_idx = #{apply_idx}
-	</delete>
-	
-	<delete id="mygApplyDelete">
-		delete from apply where apply_idx = #{apply_idx}
-	</delete>
-	
-	<update id="applyClose">
-		UPDATE board_common_column SET recruit_end = 1 WHERE board_idx = #{board_idx} 
+	<update id="applyCancle">
+		UPDATE apply SET status = '취소' WHERE apply_idx = #{apply_idx}
 	</update>
+	
+	<update id="applyDelete">
+		UPDATE apply SET hide = 1 WHERE apply_idx = #{apply_idx}
+	</update>
+	
+
 	
 	<select id="taxiApplyList" resultType="board" parameterType="hashmap">
 	<![CDATA[

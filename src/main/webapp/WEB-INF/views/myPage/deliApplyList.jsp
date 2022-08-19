@@ -46,7 +46,7 @@
 	     
 	     <table>
 			<tr>
-				<th><input type="text" value="제목 : [배달] 제목">내가 제목 : [배달] 제목 모임</th>
+				<th><input type="text" value="제목 : [배달] 제목"></th>
 				<td>
 			</tr>
 		</table>

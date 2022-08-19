@@ -61,6 +61,35 @@ public class HistoryController {
 	}
 	
 	
+	
+	
+	
+	//내가 만든 모임 삭제
+	@RequestMapping(value = "/mygApplyDelete", method = RequestMethod.GET)
+	public ModelAndView mygApplyDelete(HttpSession session, @RequestParam HashMap<String, String> params) {
+		String apply_idx = params.get("apply_idx");
+		logger.info(params.get("apply_idx"));
+		logger.info(params.get("board_idx"));
+					
+		params.put("apply_idx", apply_idx);
+		ModelAndView mav = new ModelAndView();
+		mav=service.mygApplyDelete(params);
+		return  mav;
+	}
+	
+	//마감
+	@RequestMapping(value = "/applyClose", method = RequestMethod.GET)
+	public ModelAndView applyClose(HttpSession session, @RequestParam HashMap<String, String> params) {
+		String apply_idx = params.get("apply_idx");
+		logger.info(params.get("apply_idx"));
+		logger.info(params.get("board_idx"));
+					
+		params.put("apply_idx", apply_idx);
+		ModelAndView mav = new ModelAndView();
+		mav=service.applyClose(params);
+		return  mav;
+	}
+	
 
 
 
