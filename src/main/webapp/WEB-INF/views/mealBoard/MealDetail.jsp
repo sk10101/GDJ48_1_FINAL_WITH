@@ -133,7 +133,7 @@
 					<td>작성일 : ${info.write_date}</td>
 				</tr>
 				<tr>
-					<td>인원 : ${count} / ${info.member_cnt}</td>
+					<td>인원 : ${count} / ${info.member_cnt + 1}</td>
 					<td>조회수 : ${info.hit}</td>
 				</tr>
 				<tr>
@@ -218,13 +218,11 @@
 			<input type="hidden" id="lat" value="${info.appoint_coords_lat}"/>
 			<input type="hidden" id="lng" value="${info.appoint_coords_lng}"/>
 			<div id="map" style="width:500px;height:350px;"></div>
-			<c:if test="${info.recruit_end eq 0}">
-		<%-- 	<c:if test="${info.member_cnt eq ${count}"> --%>
+			<c:if test="${info.recruit_end eq 0 and info.member_id ne sessionScope.loginId}">
 				<button id="openModalPop">참여신청</button><br/>
 			</c:if>
-			<%-- </c:if> --%>
 			<input type="button" value="삭제" onclick="location.href='mealDelete?board_idx=${info.board_idx}'"/>
-			<input type="button" value="돌아가기" onclick="history.back()"/>
+			<input type="button" value="돌아가기" onclick=onclick="location.href=mealList.go'"/>
 	   </div>
 	</div>
 	<!-- 아래부터 참여 신청 모달 부분 -->

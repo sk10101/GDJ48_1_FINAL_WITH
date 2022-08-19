@@ -153,7 +153,7 @@
 		WHERE member_id = #{param1} AND hide = 0 AND board_idx = #{param2}
 	</select>
 	
-	<update id="deliBan">
+	<update id="mealBan">
 	UPDATE participant SET hide = 1
 		WHERE member_id = #{param1} AND board_idx = #{param2}
 	</update>

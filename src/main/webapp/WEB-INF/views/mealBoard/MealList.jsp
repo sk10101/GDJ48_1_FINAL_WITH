@@ -149,19 +149,19 @@
 		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-
-	       <form action="mealList">
-		       <select id="option" name="option">
-					<option value="제목">제목</option>
-					<option value="약속장소">약속장소</option>
-					<option value="작성자">작성자</option>
-			   </select>
-			   <input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
-			   <input type="hidden" name="page" value="1"/>
-			   <button id="searchBtn">검색</button>		
-		   </form>
-	       <input type="button" value="글쓰기" onclick="location.href='MealWrite.go'"/>
-
+	       <div class="search">
+		       <form action="deliList">
+			       <select id="option" name="option">
+						<option value="제목">제목</option>
+						<option value="약속장소">약속장소</option>
+						<option value="작성자">작성자</option>
+				   </select>
+				   <input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
+				   <input type="hidden" name="page" value="1"/>
+				   <input id="searchBtn" type="image" class="search-img" alt="search" src="../resources/images/search.png">		
+			   </form>
+		   </div>	   
+	       <input type="button" value="글쓰기" class="write-button" onclick="location.href='MealWrite.go'"/>
 					<c:forEach items="${mealList}" var="meal">
 				     	<table class="mealList" onClick="location='mealDetail?board_idx=${meal.board_idx}'">
 							<tr>
