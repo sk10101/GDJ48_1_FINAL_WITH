@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.with.member.service.MemberService;
@@ -38,12 +39,18 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/mbUpdate.do")
-	public String mbUpdate(Model model, @RequestParam String member_pw,
-			@RequestParam String phone, @RequestParam int hide, HttpSession session) {
-		String member_id = (String) session.getAttribute("loginId");
-		service.update(member_pw,phone,hide,member_id);
-		return "myPage/myInfo";
+	public String mbUpdate(Model model,MultipartFile[] photo_idx, @RequestParam HashMap<String, Object> params, HttpSession session) {
+		params.put("member_id",(String) session.getAttribute("loginId"));
+		logger.info("파일의 값 : {}",photo_idx);
+		logger.info("업데이트 변경 값 : {}",params);
+		int cnt = service.update(photo_idx,params);
+		if(cnt>0) {
+			model.addAttribute("msg","회원 수정이 완료되었습니다.");
+		}
+		return "redirect:/myInfo";
 	}
+	
+	
 	@RequestMapping(value = "/mannerDetail.go")
 	public String deliList() {
 		return "redirect:/mannerDetail?page="+1;

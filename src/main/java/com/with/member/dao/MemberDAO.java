@@ -12,8 +12,8 @@ public interface MemberDAO {
 
 	String univer(Object object);
 
-	void update(String member_pw, String phone, int hide, String member_id);
-
+	int update(HashMap<String, Object> params);
+	
 	int macnt(String member_id);
 
 	int average(String member_id, String nameBox);
@@ -35,5 +35,11 @@ public interface MemberDAO {
 	void insert(String member_id, String nameBox, int i);
 
 	void blockUser(String member, String mb_id);
+
+	void memberFileUpdate(String oriFileName, String newFileName, String member_id);
+
+	String FileName(String member_id);
+
+	
 
 }

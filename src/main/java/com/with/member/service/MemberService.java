@@ -1,5 +1,9 @@
 package com.with.member.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -7,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.with.member.dao.MemberDAO;
@@ -21,11 +26,42 @@ public class MemberService {
 	public HashMap<String, Object> mblist(String member_id) {
 		return dao.mblist(member_id);
 	}
-
-	public void update(String member_pw, String phone, int hide, String member_id) {
-		dao.update(member_pw, phone, hide, member_id);
-
+	
+	public int update(MultipartFile[] photo_idx, HashMap<String, Object> params) {
+		if(photo_idx!=null) {
+			memberFileSave(photo_idx, (String) params.get("member_id"));
+		}
+		return dao.update(params);
 	}
+	
+	private void memberFileSave(MultipartFile[] photos, String member_id) {
+		// 이미지 파일 업로드
+		for (MultipartFile photo : photos) {
+			String oriFileName = photo.getOriginalFilename();
+			
+			// 이미지 파일을 업로드 안했을 때를 제외하기 위한 조건문 처리
+			if(!oriFileName.equals("")) {
+				logger.info("업로드 진행");
+				// 확장자 추출
+				String ext = oriFileName.substring(oriFileName.lastIndexOf(".")).toLowerCase();
+				// 새 파일 이름으로 업로드 당시 시간을 붙인다.
+				String newFileName = dao.FileName(member_id);
+				logger.info(oriFileName + " ===> " + newFileName);
+				try {
+					byte[] arr = photo.getBytes();
+					Path path = Paths.get("C:\\STUDY\\SPRING_ADVANCE\\GDJ48_1_FINAL_WITH\\src\\main\\webapp\\resources\\certificate\\" + newFileName);
+					// 같은이름의 파일이 나올 수 없기 떄문에 옵션 설정 안해도된다.
+					Files.write(path, arr);
+					logger.info(newFileName + " SAVE OK");
+					// 4. 업로드 후 photo 테이블에 데이터 입력
+					dao.memberFileUpdate(oriFileName,newFileName,member_id);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public ModelAndView madetail(String member_id, int page) {
 		// 페이징 처리
 		ModelAndView mav = new ModelAndView("myPage/mannerDetail");
