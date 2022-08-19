@@ -69,6 +69,23 @@ public interface MealDAO {
 
 	int mealApplys(HashMap<String, Object> params);
 
+	String chkCate(String board_idx);
+
+	int putKind(HashMap<String, String> params);
+
+	int putResponse(HashMap<String, String> params);
+
+	int putTime(HashMap<String, String> params);
+
+	char getGender(String member_id);
+
+	int isApplied(String member_id, String board_idx);
+
+	int isRejected(String member_id, String board_idx);
+
+	int isBanned(String member_id, String board_idx);
+
+	
 	
 
 	

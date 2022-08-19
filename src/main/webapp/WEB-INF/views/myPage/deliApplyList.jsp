@@ -46,20 +46,10 @@
 	     
 	     <table>
 			<tr>
-				<th><input type="text" value="제목 : [배달] 제목">내가 제목 : [배달] 제목 모임</th>
+				<th><input type="text" value="제목 : [배달] 제목"></th>
 				<td>
 			</tr>
 		</table>
-		
-		<form action="deliApplyList">
-				<select id="option" name="option">
-					<option value="제목">제목</option>
-					<option value="아이디">아이디</option>
-				</select> 
-				<input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
-		   		<input type="hidden" name="page" value="1"/>
-          			<button id="searchBtn">검색</button>
-		</form>
      
      	<table>
 				<thead>
@@ -89,7 +79,7 @@
 				                     <c:if test="${apply.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 15px;"></c:if>
               				    </c:forEach>
 							</td>
-								<td><input type="button" value="수락" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=1'" /></td>
+								<td><input type="button" value="수락" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=1&member_id=${apply.member_id}'" /></td>
 								<td><input type="button" value="거절" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=0'" /></td>
 							</tr>
 				</tbody>

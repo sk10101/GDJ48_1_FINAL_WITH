@@ -134,7 +134,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			   mav.addObject("map",map);
 			 
 			   return mav;
-			
+			   
 		}
 		
 		
@@ -273,30 +273,75 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		}
 
 		public ModelAndView applyUpdate(HashMap<String, String> params) {
+			String member_id = params.get("member_id");
 			String board_idx = params.get("board_idx");
-			
 			ModelAndView mav = new ModelAndView("redirect:/deliApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
-			dao.applyUpdate(params);
-			dao.part(params);
+			//dao.applyUpdate(params);
+			
+			String status = params.get("status");
+			if (status.equals("1")) {
+				status = "수락";
+				dao.applyUpdate(params);
+				logger.info("참가자 테이블에 넣을게"+member_id);
+				dao.part(params);
+			}
+			if(status.equals("0")) {
+				status = "거절";
+				logger.info("참여 신청 거절"+member_id);
+				dao.applyUpdate(params);
+			}
+			
+			
 			return mav;
 			
 		}
 		public ModelAndView taxiApplyUpdate(HashMap<String, String> params) {
+			String member_id = params.get("member_id");
 			String board_idx = params.get("board_idx");
+			ModelAndView mav = new ModelAndView("redirect:/deliApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			//dao.applyUpdate(params);
 			
-			ModelAndView mav = new ModelAndView("redirect:/taxiApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
-			dao.taxiApplyUpdate(params);
+			String status = params.get("status");
+			if (status.equals("1")) {
+				status = "수락";
+				dao.taxiApplyUpdate(params);
+				logger.info("참가자 테이블에 넣을게"+member_id);
+				dao.part(params);
+			}
+			if(status.equals("0")) {
+				status = "거절";
+				logger.info("참여 신청 거절"+member_id);
+				dao.taxiApplyUpdate(params);
+			}
+			
+			
 			return mav;
 			
 		}
 		
 
 		public ModelAndView mealApplyUpdate(HashMap<String, String> params) {
+			String member_id = params.get("member_id");
 			String board_idx = params.get("board_idx");
+			ModelAndView mav = new ModelAndView("redirect:/deliApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			//dao.applyUpdate(params);
 			
-			ModelAndView mav = new ModelAndView("redirect:/mealApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
-			dao.mealApplyUpdate(params);
+			String status = params.get("status");
+			if (status.equals("1")) {
+				status = "수락";
+				dao.mealApplyUpdate(params);
+				logger.info("참가자 테이블에 넣을게"+member_id);
+				dao.part(params);
+			}
+			if(status.equals("0")) {
+				status = "거절";
+				logger.info("참여 신청 거절"+member_id);
+				dao.mealApplyUpdate(params);
+			}
+			
+			
 			return mav;
+			
 		}
 		
 		
@@ -387,9 +432,11 @@ int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
 		}
 
 
-		public ModelAndView applyCancle(HashMap<String, String> params, String board_idx2, String apply_idx) {
+		public ModelAndView applyCancle(HashMap<String, String> params) {
 			String board_idx = params.get("board_idx");
+			String apply_idx = params.get("apply_idx");
 			
+			params.put("apply_idx", apply_idx);
 			ModelAndView mav = new ModelAndView("redirect:/myApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
 			dao.applyCancle(params);
 			return mav;
@@ -397,27 +444,15 @@ int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
 
 		public ModelAndView applyDelete(HashMap<String, String> params) {
 			String board_idx = params.get("board_idx");
+			String apply_idx = params.get("apply_idx");
 			
+			params.put("apply_idx", apply_idx);
 			ModelAndView mav = new ModelAndView("redirect:/myApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
 			dao.applyDelete(params);
 			return mav;
 		}
 
-		public ModelAndView mygApplyDelete(HashMap<String, String> params) {
-			String board_idx = params.get("board_idx");
-			
-			ModelAndView mav = new ModelAndView("redirect:/mygList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
-			dao.mygApplyDelete(params);
-			return mav;
-		}
-		
-		public ModelAndView applyClose(HashMap<String, String> params) {
-			String board_idx = params.get("board_idx");
-			
-			ModelAndView mav = new ModelAndView("redirect:/mygList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
-			dao.applyClose(params);
-			return mav;
-		}
+
 
 
 

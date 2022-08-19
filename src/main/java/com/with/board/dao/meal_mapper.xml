@@ -153,7 +153,7 @@
 		WHERE member_id = #{param1} AND hide = 0 AND board_idx = #{param2}
 	</select>
 	
-	<update id="deliBan">
+	<update id="mealBan">
 	UPDATE participant SET hide = 1
 		WHERE member_id = #{param1} AND board_idx = #{param2}
 	</update>
@@ -176,6 +176,40 @@
 
 <select id="chkGender" resultType="String" parameterType="hashmap">
 	SELECT gender FROM member WHERE member_id = #{loginId}
+</select>
+
+<select id="chkCate" resultType="String">
+	SELECT category_id FROM board_common_column WHERE board_idx = #{param1}
+</select>
+
+<insert id="putKind" parameterType="hashmap">
+	INSERT INTO manner_assess(member_id, category_id, board_idx, assessor, manner_score) 
+	VALUES(#{member_id}, '친절함', #{board_idx}, #{loginId}, #{kind})
+</insert>
+
+<insert id="putResponse" parameterType="hashmap">
+	INSERT INTO manner_assess(member_id, category_id, board_idx, assessor, manner_score) 
+	VALUES(#{member_id}, '응답속도', #{board_idx}, #{loginId}, #{response})
+</insert>
+
+<insert id="putTime" parameterType="hashmap">
+	INSERT INTO manner_assess(member_id, category_id, board_idx, assessor, manner_score) 
+	VALUES(#{member_id}, '시간약속', #{board_idx}, #{loginId}, #{time})
+</insert>
+
+<select id="isApplied" resultType="int">
+		SELECT COUNT(apply_idx) FROM apply
+			WHERE member_id = #{param1} AND board_idx = #{param2} AND status IN('대기중','수락')
+</select>
+	
+<select id="isRejected" resultType="int">
+		SELECT COUNT(apply_idx) FROM apply
+			WHERE member_id = #{param1} AND board_idx = #{param2} AND status = '거절'
+</select>
+	
+<select id="isBanned" resultType="int">
+		SELECT COUNT(pt_idx) FROM participant
+			WHERE member_id = #{param1} AND board_idx = #{param2} AND hide=1
 </select>
 	
 

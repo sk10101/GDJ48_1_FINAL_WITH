@@ -61,6 +61,7 @@ public class LoginService {
 
 	//비밀번호 수정
 	public boolean newPw(String id, String pw) { 
+		logger.info("비밀번호 수정 서비스");
 		boolean success =dao.newPw(id,pw); 
 		return success; 
 	}	

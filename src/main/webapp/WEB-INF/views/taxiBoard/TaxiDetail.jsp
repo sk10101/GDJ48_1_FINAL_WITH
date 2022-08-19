@@ -301,13 +301,12 @@
 		       			<th>
 		       				<img style="position: relative; top: 5px;" id="gender" src="./resources/images/gender.png" alt="gender"/>&nbsp; ${list.gender}
 		       			</th>
-		       			<c:if test="${list.member_id eq sessionScope.loginId}"><td></td></c:if>
 		       			<c:if test="${list.member_id ne sessionScope.loginId}">
-		       			<td colspan="3" style="text-align: right;">
-		       				<img id="report-img" src="./resources/images/report.png" alt="report"/>
-		       				<!-- 신고하기위해 살짝 수정함 -제한- -->
-		       				<input id="report" type="button" name="report" value="신고" onclick="reportPop()"/>
-		       			</td>
+			       			<td colspan="3" style="text-align: right;">
+			       				<img id="report-img" src="./resources/images/report.png" alt="report"/>
+			       				<!-- 신고하기위해 살짝 수정함 -제한- -->
+			       				<input id="report" type="button" name="report" value="신고" onclick="reportPop()"/>
+			       			</td>
 		       			</c:if>
 		       		</tr>
 		       		<tr>

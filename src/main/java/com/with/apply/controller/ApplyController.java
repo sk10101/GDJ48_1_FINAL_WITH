@@ -72,49 +72,36 @@ public class ApplyController {
 		}
 		//취소(삭제)
 		@RequestMapping(value = "/applyCancle", method = RequestMethod.GET)
-		public ModelAndView applyCancle(HttpSession session, @RequestParam HashMap<String, String> params, @RequestParam String board_idx,  @RequestParam String apply_idx) {
+		public ModelAndView applyCancle(HttpSession session, @RequestParam HashMap<String, String> params) {
+			String apply_idx = params.get("apply_idx");
 			logger.info(params.get("apply_idx"));
 			logger.info(params.get("board_idx"));
-	
-			
+						
+			String status = params.get("status");
+			if (status.equals("2")) {
+				status = "수락";
+			}
+			params.put("realstatus2", status);
+			params.put("apply_idx", apply_idx);
 			ModelAndView mav = new ModelAndView();
-			mav=service.applyCancle(params, board_idx, apply_idx);
+			mav=service.applyCancle(params);
 			return  mav;
 		}
 		
 		//내가 참여한 모임 삭제
 		@RequestMapping(value = "/applyDelete", method = RequestMethod.GET)
-		public ModelAndView applyDelete(HttpSession session, @RequestParam HashMap<String, String> params, @RequestParam String board_idx,  @RequestParam String apply_idx) {
+		public ModelAndView applyDelete(HttpSession session, @RequestParam HashMap<String, String> params) {
+			String apply_idx = params.get("apply_idx");
 			logger.info(params.get("apply_idx"));
 			logger.info(params.get("board_idx"));
-			
+						
+			params.put("apply_idx", apply_idx);
 			ModelAndView mav = new ModelAndView();
 			mav=service.applyDelete(params);
 			return  mav;
 		}
 		
-		//내가 만든 모임 삭제
-		@RequestMapping(value = "/mygApplyDelete", method = RequestMethod.GET)
-		public ModelAndView mygApplyDelete(HttpSession session, @RequestParam HashMap<String, String> params, @RequestParam String board_idx,  @RequestParam String apply_idx) {
-			logger.info(params.get("apply_idx"));
-			logger.info(params.get("board_idx"));
-			
-			ModelAndView mav = new ModelAndView();
-			mav=service.mygApplyDelete(params);
-			return  mav;
-		}
-		
-		//마감
-		@RequestMapping(value = "/applyClose", method = RequestMethod.GET)
-		public ModelAndView applyClose(HttpSession session, @RequestParam HashMap<String, String> params, @RequestParam String board_idx,  @RequestParam String apply_idx) {
-			
-			logger.info(params.get("apply_idx"));
-			logger.info(params.get("board_idx"));
-						
-			ModelAndView mav = new ModelAndView();
-			mav=service.applyClose(params);
-			return  mav;
-		}
+	
 		
 		//택시 업데이트
 		@RequestMapping(value = "/taxiApplyUpdate", method = RequestMethod.GET)
@@ -125,8 +112,10 @@ public class ApplyController {
 			String status = params.get("status");
 			if (status.equals("1")) {
 				status = "수락";
+				
 			}if(status.equals("0")) {
 				status = "거절";
+				
 			}
 			params.put("realstatuss", status);
 			ModelAndView mav = new ModelAndView();

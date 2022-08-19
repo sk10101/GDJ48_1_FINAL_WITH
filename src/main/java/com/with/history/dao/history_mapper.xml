@@ -8,13 +8,13 @@
 	<select id="mygList" resultType="board" parameterType="hashmap">
 		SELECT 
 			b.board_idx,
-			category_id,
-			subject,
-			write_date, 
-			recruit_end,
-			(SELECT count(a.apply_idx) FROM apply a where a.status = '대기중' AND b.board_idx = a.board_idx) as applyNo 
+			b.category_id,
+			b.subject,
+			b.write_date, 
+			b.recruit_end,
+			(SELECT count(a.apply_idx) FROM apply a where a.status = '대기중' AND b.board_idx = a.board_idx AND a.hide = 0) as applyNo
 		FROM board_common_column b
-		WHERE b.member_id = #{loginId}
+		WHERE b.member_id = #{loginId} AND b.hide = 0
 		<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -39,7 +39,7 @@
 
 
 	<select id="allCount" resultType="board" parameterType="hashmap">
-		SELECT board_idx FROM board_common_column WHERE member_id = #{loginId}
+		SELECT board_idx FROM board_common_column WHERE member_id = #{loginId} AND hide = 0
 			<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -56,59 +56,14 @@
 					</choose>
 				</if>
 	</select>
-<!-- 
-	<select id="mygList2" resultType="board" parameterType="hashmap">
-		SELECT 
-			board_idx,
-			category_id,
-			subject,
-			write_date,
-			recruit_end 
-		FROM board_common_column
-		WHERE member_id = '일반회원'
-		<if test="word != null and word != ''">
-					<choose>
-						<when test="option.equals('제목')">
-							AND subject LIKE CONCAT('%',#{word},'%')
-						</when>
-						<when test="option.equals('이용 서비스')">
-							AND category_id LIKE CONCAT('%',#{word},'%')
-						</when>
-						<when test="option.equals('상태')">
-							AND recruit_end LIKE CONCAT('%',#{word},'%')
-						</when>
-						<otherwise>
-						</otherwise>
-					</choose>
-				</if>
-			ORDER BY board_idx DESC LIMIT #{cnt} OFFSET #{offset}
-	</select>
-
-	 -->
-	<!-- 
-	<select id="mygrouplist" resultType="com.with.history.dto.HistoryDTO">
-	SELECT 
-		b.board_idx,
-		b.category_id,
-		b.subject,
-		b.write_date,
-		count(a.member_id),
-		b.recruit_end 
-	FROM 
-		board_common_column b, apply a 
-	WHERE 
-		a.status = '대기중' AND b.board_idx = a.board_idx AND b.member_id = a.member_id;
-</select>
- -->
-<!-- 	
-	<select id="myglist" resultType="com.with.history.dto.HistoryDTO">	
-		SELECT * FROM board_common_column 
-			<where>
-				<if test="!param2.equals('') and param1 == 'subject'">subject LIKE CONCAT('%', #{param2}, '%')</if>
-				<if test="!param2.equals('') and param1 == 'category'">category LIKE CONCAT('%', #{param2}, '%')</if>
-				<if test="!param2.equals('') and param1 == 'recruit_end'">recruit_end LIKE CONCAT('%', #{param2}, '%')</if>			
-			</where>
-	</select>
-	 -->
-
+	
+	
+	<update id="mygApplyDelete">
+		UPDATE board_common_column SET hide = 1 WHERE board_idx = #{board_idx}	
+	</update>
+	
+	<update id="applyClose">
+		UPDATE board_common_column SET recruit_end = 1 WHERE board_idx = #{board_idx} 
+	</update>
+	
 </mapper>
