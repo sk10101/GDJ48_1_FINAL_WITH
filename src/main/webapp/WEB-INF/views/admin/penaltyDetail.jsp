@@ -64,7 +64,7 @@
 		       	</tr>
 		       	<tr>
 		       		<th>이용제한 해제</th>
-		       		<td><c:if test="${list.cancel eq 0}"><input id="chkbox" type="checkbox"/>제한 해제</c:if></td>
+		       		<td><input id="chkbox" type="checkbox" <c:if test="${list.cancel eq 1}">checked</c:if>>제한 해제</td>
 		       	</tr>
 		       	<tr>
 		       		<th>해제 사유</th>

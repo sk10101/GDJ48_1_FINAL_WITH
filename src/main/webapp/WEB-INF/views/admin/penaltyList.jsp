@@ -13,22 +13,7 @@
 	<script type="text/javascript" src="resources/js/jquery.twbsPagination.js"></script>
 </head>
 <style>
-table{
-      width: 100%;
-   }
-   table, th, td{
-      border: 1px solid black;
-      border-collapse: collapse;
-   }
-   
-   th, td{
-      padding: 5px 10px;
-      text-align: center;
-   }
-   
-   table{
-      width: 80%;
-   }
+
     .content-wrap {
     	max-width: 1200px;
     	width: 100%;
@@ -45,6 +30,23 @@ table{
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
+    
+    table{
+      width: 100%;
+   }
+   table, th, td{
+      border: 1px solid black;
+      border-collapse: collapse;
+   }
+   
+   th, td{
+      padding: 5px 10px;
+      text-align: center;
+   }
+   
+   table{
+      width: 80%;
+   }
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -87,7 +89,12 @@ table{
 			        	</tr>
 			        </c:forEach>
 		        </tbody>
-	       </table>    
+	       </table> 
+	       <div class="container">
+		    <nav arial-label="Page navigation" style="text-align:center">
+		        <ul class="pagination" id="pagination"></ul>
+		    </nav>
+		</div>   
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>
@@ -111,8 +118,8 @@ $("#pagination").twbsPagination({
 		//console.log(e); //클릭한 페이지와 관련된 이벤트 객체
 		console.log(page); //사용자가 클릭한 페이지
 		// 페이지 이동시에도 데이터를 가지고 있기 위해 session 을 활용한다
-		location.href = "penaltyList?page="+page+"+"&word="+"${sessionScope.word}";
-		
+		location.href = "penaltyList?page="+page+"&word="+"${sessionScope.word}";
+
 	}
 });
 </script>

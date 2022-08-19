@@ -31,7 +31,7 @@ public class PenaltyController {
 	
 	//이용제한내역 리스트
 	@RequestMapping(value = "/penaltyList")
-	public ModelAndView penaltylist(HttpSession session, @RequestParam HashMap<String, String> params) {
+	public ModelAndView penaltyList(HttpSession session, @RequestParam HashMap<String, String> params) {
 		ModelAndView mav = new ModelAndView();
 		logger.info("이용제한내역 리스트 조회");
 		String loginId = (String) session.getAttribute("loginId");
@@ -43,7 +43,7 @@ public class PenaltyController {
 		logger.info(params.get("page"));
 		logger.info("로그인 아이디 : "+loginId);
 		params.put("loginId", loginId);
-		mav = service.penaltylists(params);
+		mav = service.penaltyList(params);
 		return mav;
 	}
 	

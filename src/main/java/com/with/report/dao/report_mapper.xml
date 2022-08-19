@@ -47,8 +47,8 @@
 	</select>
 	
 	<insert id="reportcom" parameterType="hashmap">
-		INSERT INTO penalty (penalty_end, member_id, penalty_admin, penalty_reason)
-		VALUES (#{penalty_end}, #{member_id}, #{loginId}, #{report_reason})
+		INSERT INTO penalty (penalty_end, member_id, penalty_admin, penalty_reason, report_idx)
+		VALUES (#{penalty_end}, #{member_id}, #{loginId}, #{report_reason}, #{report_idx})
 	</insert>
 
 	<update id="penaltycom" parameterType="hashmap">
@@ -82,9 +82,7 @@
 	</select>
 	
 	<select id="penaltydetail" resultType="report">
-		<![CDATA[
-			SELECT penalty_end, penalty_date FROM penalty WHERE member_id = #{param1} AND penalty_end > now()
-		]]> 
+			SELECT penalty_end, penalty_date FROM penalty p, report r WHERE member_id = #{param1} AND p.report_idx = r.report_idx
 	</select>
 
 </mapper>
