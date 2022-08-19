@@ -70,6 +70,8 @@ public class ApplyController {
 			mav=service.applyUpdate(params);
 			return  mav;
 		}
+		
+	
 		//취소(삭제)
 		@RequestMapping(value = "/applyCancle", method = RequestMethod.GET)
 		public ModelAndView applyCancle(HttpSession session, @RequestParam HashMap<String, String> params) {
@@ -117,7 +119,7 @@ public class ApplyController {
 				status = "거절";
 				
 			}
-			params.put("realstatuss", status);
+			params.put("realstatus", status);
 			ModelAndView mav = new ModelAndView();
 			mav=service.taxiApplyUpdate(params);
 			return  mav;
@@ -245,7 +247,7 @@ public class ApplyController {
 			}if(status.equals("0")) {
 				status = "거절";
 			}
-			params.put("realstatuss", status);
+			params.put("realstatus", status);
 			ModelAndView mav = new ModelAndView();
 			mav=service.mealApplyUpdate(params);
 			return  mav;
