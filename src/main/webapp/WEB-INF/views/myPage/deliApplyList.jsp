@@ -46,20 +46,10 @@
 	     
 	     <table>
 			<tr>
-				<th><input type="text" value="제목 : [배달] 제목">내가 제목 : [배달] 제목 모임</th>
+				<th><input type="text" value="제목 : [배달] 제목"></th>
 				<td>
 			</tr>
 		</table>
-		
-		<form action="deliApplyList">
-				<select id="option" name="option">
-					<option value="제목">제목</option>
-					<option value="아이디">아이디</option>
-				</select> 
-				<input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
-		   		<input type="hidden" name="page" value="1"/>
-          			<button id="searchBtn">검색</button>
-		</form>
      
      	<table>
 				<thead>

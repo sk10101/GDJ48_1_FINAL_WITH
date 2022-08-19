@@ -102,7 +102,27 @@ public class HistoryService {
 		logger.info("페이징 체크포인트");
 		return mygList;
 	}
+
+
+	public ModelAndView mygApplyDelete(HashMap<String, String> params) {
+		String board_idx = params.get("board_idx");
+		String apply_idx = params.get("apply_idx");
+		
+		params.put("apply_idx", apply_idx);
+		ModelAndView mav = new ModelAndView("redirect:/mygList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+		dao.mygApplyDelete(params);
+		return mav;
+	}
 	
+	public ModelAndView applyClose(HashMap<String, String> params) {
+		String board_idx = params.get("board_idx");
+		String apply_idx = params.get("apply_idx");
+		
+		params.put("apply_idx", apply_idx);
+		ModelAndView mav = new ModelAndView("redirect:/mygList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+		dao.applyClose(params);
+		return mav;
+	}
 	
 	
 

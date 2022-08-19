@@ -74,7 +74,7 @@ table{
                      checked="checked">내가 만든 모임</th>
                   <td><input type="radio" name="member"
                      onclick="window.location.href='/myApplyList.go';"
-                     value="내가 참여한 모임">내가 참여한 모임</td>
+                     value="내가 참여한 모임">내가 신청한 모임</td>
                   
                </tr>
             </table>

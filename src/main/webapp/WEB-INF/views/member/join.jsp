@@ -499,19 +499,19 @@ $(function(){
 		   return false;
 	      }
 	   
-	   if(!overChkEmail){
+/* 	   if(!overChkEmail){
 	      alert("이메일 중복체크를 눌러주세요.");
 	      $("#EmailOverlay").focus();
 	       
 	      return false;
-	      }
+	      } */
 	   
-	   if(!email_rule.test($("#email").val())){
+/* 	   if(!email_rule.test($("#email").val())){
 		    alert("이메일을 형식에 맞게 입력해주세요. ex) 1234@naver.com");
 		   $("#email").focus();
 		   
 	      return false;   
-	      }
+	      } */
 	   
 	   if ($("#photos").val() == null || $("#photos").val() == "") {
 	      alert("인증서를 등록해주세요.");
@@ -519,6 +519,20 @@ $(function(){
 	       
 	      return false;
 	   }
+	   
+	   if(!overChkEmail){
+		      alert("이메일 중복체크를 눌러주세요.");
+		      $("#EmailOverlay").focus();
+		       
+		      return false;
+		      }	      
+	      
+	   if(!email_rule.test($("#email").val())){
+		    alert("이메일을 형식에 맞게 입력해주세요. ex) 1234@naver.com");
+		   $("#email").focus();
+		   
+	      return false;   
+	      }	   
 	
 	   
 
