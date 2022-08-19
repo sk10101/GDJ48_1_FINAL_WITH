@@ -143,7 +143,7 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
@@ -194,7 +194,9 @@
         color: #fff;
         font-size: 25px;
         padding: 10px 30px;
-        background-color: #2962ff;
+        /* background-color: #2962ff; */
+        background-image: linear-gradient(#2962ff, #2f9df7);
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         border-radius: 10px;
     }
 
@@ -272,7 +274,7 @@
         border-radius: 30px;
         margin-left: 520px;
         width: 2px;
-        min-height: 380px;
+        min-height: 500px;
         background-color: #d1d1d1;
     }
 
@@ -333,7 +335,7 @@
                 <span class="collage">${univ}</span>
                 <br><br><br><br><br><br><br>
                 <p class="score">내 평점</p>
-                <div class="star">
+                <div class="star" onClick="location.href='/myInfo'">
                     <td>
                     	<c:forEach var="i" begin="1" end="5">
 							<c:if test="${avg >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
@@ -419,12 +421,12 @@
 </body>
 <script>
    /* 아래 코드는 지우지 마세요 */
-    $(".sidebar").css("height", ($(".content").height() + $(".footer").height()));
+/*     $(".sidebar").css("height", ($(".content").height() + $(".footer").height()));
    
     var msg = '${msg}';
 	if (msg != "") {
 			alert(msg);
-	}
+	} */
 	
 	
 	// 리스트의 사이즈에 따라 변하는 테이블의 크기를 고정시켜주기 위한 코드 (좌측 테이블)

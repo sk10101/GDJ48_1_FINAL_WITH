@@ -23,7 +23,7 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
@@ -295,8 +295,17 @@
 
 <!-- 신고하기위해 추가함 -제한- -->
 function reportPop(){
-	window.open('reportWrite.go?board_idx=${list.board_idx}','report','width=300, height=300, top=300, left=650')
-}
+    var width = 300;
+    var height = 300;
+    var top = (window.innerHeight - height) / 2 + screenY;
+    var left = (window.innerWidth - width) / 2 + screenX;
+
+    var spec = 'status=no, menubar=no, toolbar=no, resizable=no';
+    spec += ', width=' + width + ', height=' + height;
+    spec += ', top=' + top + ', left=' + left;
+	
+	window.open('reportWrite.go?board_idx=${info.board_idx}','report', spec);
+};
 
 </script>
 </html>

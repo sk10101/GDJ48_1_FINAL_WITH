@@ -7,7 +7,7 @@
 	<meta charset="UTF-8">
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="resources/js/jquery.twbsPagination.js"></script>
@@ -25,9 +25,10 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
+        padding: 60px 100px;
     }
     
     a {
@@ -52,7 +53,7 @@
     
     .mealList th, td {
     	color: #eaeaea;
-    	padding: 3px 15px;
+    	padding: 5px 15px;
     	font-size: 14px;
     }
     
@@ -60,6 +61,7 @@
     	padding-top: 15px;
     	padding-bottom: 15px;
     	font-size: 16px;
+    	text-align: left;
     }
     
     .mealList tr:last-child th {
@@ -68,72 +70,71 @@
     
     .mealList tr:last-child td:last-child {
     	text-align: right;
-    }
-    
-    .container {
-    	text-align: center;
-    }
-<style>
-    .content-wrap {
-    	max-width: 1200px;
-    	width: 100%;
-    	margin: 0 auto;
-    }
-
-    .content {
-        display: inline-block;
-        margin-left: 160px;
-        margin-top: 100px;
-        max-width: 1040px;
-        width: 100%;
-        min-height: 680px;
-        /* background-color: #f4f4f4; */
-        background-color: rgb(249, 249, 249);
-    }
-    
-    a {
-    	text-decoration : none;
-    	color : black;
-    }
-    
-     .deliList {
-	   	margin: 0 auto;
-	   	margin-top: 40px;
-	   	border-radius: 20px;
-	   	width: 600px;
-	   	background-color: #537ef4;
-	   	box-shadow: rgba(100, 100, 111, 0.6) 0px 7px 29px 0px;
-	   	background-image: linear-gradient(#537ef4, #2196f3);
-	   	transition: all 0.3s ease;
-    }
-    
-    .deliList:hover {
-        transform: scale(1.03);
-    }
-    
-    .deliList th, td {
-    	color: #eaeaea;
-    	padding: 3px 15px;
-    	font-size: 14px;
-    }
-    
-    .deliList tr:first-child > th {
-    	padding-top: 15px;
     	padding-bottom: 15px;
+    }
+    
+    option {
     	font-size: 16px;
     }
     
-    .deliList tr:last-child th {
-    	padding-bottom: 15px;
-    }
-    
-    .deliList tr:last-child td:last-child {
-    	text-align: right;
-    }
-    
-    .container {
+    .search {
     	text-align: center;
+    	margin-bottom: 60px;
     }
+    
+    .search form input[type="search"] {
+    	width: 400px;
+    	height: 30px;
+    	padding: 10px 10px;
+    	border: 1.5px solid lightgray;
+    	border-radius: 7px;
+    	font-size: 16px;
+    }
+    
+    .search-img {
+    	width: 30px;
+    	position: relative;
+    	top: 8px;
+    	left: 5px;
+    }
+    
+    .write-button {
+    	padding: 2px 10px;
+    	border-radius: 5px;
+    	border: none;
+    	background-color: #2962ff;
+    	color: #eaeaea;
+    	font-size: 16px;
+    	margin-left: 130px;
+    }
+    
+    
+   	#option {
+   		padding: 4px 10px;
+   		border-radius: 5px;
+   	}
+    
+    
+   	/* 페이지네이션 부트스트랩 css 제거 후 직접 수정 (why? 부트스트랩 때문에 사이드바 ul li 깨짐) */
+   	nav {
+    	text-align: center;
+    	margin-top: 60px;
+    }
+   	
+   	#pagination {
+   		display: inline-block;
+   	}
+   
+   	#pagination li {
+   		float: left;
+   		/* border: 0.4px solid gray; */
+   		padding: 5px 15px;
+   	}
+   	
+   	#pagination li a {
+   		color: rgb(88, 88, 88);
+   		font-size: 16px;
+   	}
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -148,21 +149,23 @@
 		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	       <form action="deliList">
-		       <select id="option" name="option">
-					<option value="제목">제목</option>
-					<option value="약속장소">약속장소</option>
-					<option value="작성자">작성자</option>
-			   </select>
-			   <input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
-			   <input type="hidden" name="page" value="1"/>
-			   <button id="searchBtn">검색</button>		
-		   </form>
-	       <input type="button" value="글쓰기" onclick="location.href='MealWrite.go'"/>
+	       <div class="search">
+		       <form action="deliList">
+			       <select id="option" name="option">
+						<option value="제목">제목</option>
+						<option value="약속장소">약속장소</option>
+						<option value="작성자">작성자</option>
+				   </select>
+				   <input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
+				   <input type="hidden" name="page" value="1"/>
+				   <input id="searchBtn" type="image" class="search-img" alt="search" src="../resources/images/search.png">		
+			   </form>
+		   </div>	   
+	       <input type="button" value="글쓰기" class="write-button" onclick="location.href='MealWrite.go'"/>
 					<c:forEach items="${mealList}" var="meal">
 				     	<table class="mealList" onClick="location='mealDetail?board_idx=${meal.board_idx}'">
 							<tr>
-								<td colspan="2">${meal.subject}</td>
+								<th colspan="2">${meal.subject}</th>
 							</tr>
 							<tr>
 								<td>약속장소 : ${meal.appoint_place}</td>
@@ -178,16 +181,14 @@
 							</tr>
 							<tr>
 							<td></td>
-							<c:if test="${meal.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
-							<c:if test="${meal.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
+							<c:if test="${meal.recruit_end eq 0}"><td><span style="padding: 3px 10px; border-radius: 5px; background-color: #2962ff">모집중</span></td></c:if>
+							<c:if test="${meal.recruit_end eq 1}"><td><span style="padding: 3px 10px; border-radius: 5px; background-color: #ef5350;">마감</span></td></c:if>
 						</tr>
 						</table>
 					</c:forEach>
-				<div class="container">
-					<nav aria-label="Page navigation">
-						<ul class="pagination" id="pagination"></ul>
-					</nav>
-				</div>
+				<nav aria-label="Page navigation">
+					<ul class="pagination" id="pagination"></ul>
+				</nav>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>

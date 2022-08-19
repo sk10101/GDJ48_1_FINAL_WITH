@@ -41,16 +41,59 @@
 
     .content {
         display: inline-block;
-        max-width: 600px;
+        max-width: 400px;
         width: 100%;
-        min-height: 300px;
-        margin-left: 300px;
+        min-height: 500px;
+        margin-left: 400px;
         margin-top: 170px;
         border-radius: 20px;
         /* background-color: #f4f4f4; */
         background-color: #fff;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        padding: 30px 30px;
     }
+    
+    #title {
+    	text-align: center;
+    	color: rgb(88, 88, 88);
+    	font-size: 20px;
+    }
+    
+    table {
+    	margin: 0 auto;
+    	color: rgb(88, 88, 88);
+    	margin-top: 50px;
+    }
+    
+    td, th {
+    	padding: 10px 10px;
+    }
+    
+    table tr:last-child td {
+		padding-top: 30px;
+		text-align: center;
+	}
+	
+	.FindBtn {
+		padding: 5px 10px;
+		border: none;
+		background-color: #537ef4;
+		color: #eaeaea;
+		border-radius: 5px;
+		transition: all 0.3s ease;
+		margin: 0 10px;
+	}
+	
+	.FindBtn:hover {
+		background-color: #004ecb;
+		transform: scale(1.05);
+	}
+	
+	input[type='password'] {
+		padding: 3px 10px;
+		border-radius: 5px;
+		border: 0.3px solid gray;
+	}
 
 </style>
 <body>
@@ -58,7 +101,7 @@
         <div class="logo"><a href="#"><img src="./resources/images/logo.png" alt="logo"></a></div>  
         <div class="content">
             <!-- 여기에서 작업 시작하세요 -->
-	<h3>PW 찾기</h3>
+	<p id="title">PW 재설정</p>
 	<form action="newPw" method="POST">
 	<table>
 		<tr>
@@ -69,17 +112,21 @@
 			</td>
 		</tr>	
 		<tr>
-			<th>비밀번호확인</th>
-			<td>
+			<th>비밀번호 확인</th>
+			<td> 
 				<p><input type="password" name="pw1" id="pw1" required="required"/><font id="chkNotice" size="2"></font></p>
 			</td>
 		</tr>
+		<tr>
+			<td colspan="2">
+				<input class="FindBtn" type="submit" value="확인"/>
+				<input class="FindBtn" type="button" onclick="location.href='/'" value="돌아가기"/>
+			</td>
+		</tr>
 	</table>
+	</form>
 			<!-- <button class="FindBtn" type="button" onclick="pwUpdate()">수정</button>
 			<button class="FindBtn" type="button" onclick="location.href='./login.go'">취소</button> -->
-			<input type="submit" value="확인"/>
-			<input type="button" onclick="location.href='/'" value="돌아가기"/>
-			</form>
       </div>
     </div>
 	<jsp:include page="../commons/memberFooter.jsp"/>
