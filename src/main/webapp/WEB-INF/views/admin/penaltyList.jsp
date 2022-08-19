@@ -118,8 +118,8 @@ $("#pagination").twbsPagination({
 		//console.log(e); //클릭한 페이지와 관련된 이벤트 객체
 		console.log(page); //사용자가 클릭한 페이지
 		// 페이지 이동시에도 데이터를 가지고 있기 위해 session 을 활용한다
-		location.href = "penaltyList?page="+page+"+"&word="+"${sessionScope.word}";
-		
+		location.href = "penaltyList?page="+page+"&word="+"${sessionScope.word}";
+
 	}
 });
 </script>
