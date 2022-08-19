@@ -8,13 +8,13 @@
 	<select id="mygList" resultType="board" parameterType="hashmap">
 		SELECT 
 			b.board_idx,
-			category_id,
-			subject,
-			write_date, 
-			recruit_end,
+			b.category_id,
+			b.subject,
+			b.write_date, 
+			b.recruit_end,
 			(SELECT count(a.apply_idx) FROM apply a where a.status = '대기중' AND b.board_idx = a.board_idx AND a.hide = 0) as applyNo
 		FROM board_common_column b
-		WHERE b.member_id = #{loginId}
+		WHERE b.member_id = #{loginId} AND b.hide = 0
 		<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -39,7 +39,7 @@
 
 
 	<select id="allCount" resultType="board" parameterType="hashmap">
-		SELECT board_idx FROM board_common_column WHERE member_id = #{loginId}
+		SELECT board_idx FROM board_common_column WHERE member_id = #{loginId} AND hide = 0
 			<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -59,7 +59,7 @@
 	
 	
 	<update id="mygApplyDelete">
-		UPDATE apply SET hide = 1 WHERE apply_idx = #{apply_idx}	
+		UPDATE board_common_column SET hide = 1 WHERE board_idx = #{board_idx}	
 	</update>
 	
 	<update id="applyClose">

@@ -80,7 +80,7 @@ public class HistoryController {
 	//마감
 	@RequestMapping(value = "/applyClose", method = RequestMethod.GET)
 	public ModelAndView applyClose(HttpSession session, @RequestParam HashMap<String, String> params) {
-		String apply_idx = params.get("apply_idx");
+		String apply_idx = params.get("applyNo");
 		logger.info(params.get("apply_idx"));
 		logger.info(params.get("board_idx"));
 					

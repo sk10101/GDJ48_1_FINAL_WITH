@@ -35,8 +35,9 @@ public interface ApplyDAO {
 
 	void applyDelete(HashMap<String, String> params);
 
-
 	void part(HashMap<String, String> params);
+
+
 
 
 

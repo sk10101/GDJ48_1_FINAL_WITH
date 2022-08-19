@@ -80,15 +80,15 @@
 			</tr>
 		</table>
 		
-		<form action="mealApplyList">
-				<select id="option" name="option">
-					<option value="제목">제목</option>
-					<option value="아이디">아이디</option>
-				</select> 
-				<input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
-		   		<input type="hidden" name="page" value="1"/>
-          			<button id="searchBtn">검색</button>
-		</form>
+<!-- 		<form action="mealApplyList"> -->
+<!-- 				<select id="option" name="option"> -->
+<!-- 					<option value="제목">제목</option> -->
+<!-- 					<option value="아이디">아이디</option> -->
+<!-- 				</select>  -->
+<!-- 				<input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/> -->
+<!-- 		   		<input type="hidden" name="page" value="1"/> -->
+<!--           			<button id="searchBtn">검색</button> -->
+<!-- 		</form> -->
      
      	<table>
 				<thead>
