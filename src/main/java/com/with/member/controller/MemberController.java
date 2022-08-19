@@ -83,15 +83,19 @@ public class MemberController {
 		service.blockDelete(member_id,name);
 		return "redirect:/blockUserList?page="+1;
 	}
+	
 	@RequestMapping(value = "/mannerInfo")
 	public ModelAndView mannerInfogo(@RequestParam HashMap<String, Object> params) {
 		ModelAndView mav = new ModelAndView();
 		String member = (String) params.get("member");
 		int board=Integer.parseInt((String) params.get("board"));
-		logger.info("member의 값 : "+member);
+		String boardName = service.boardName(board);
 		logger.info("board의 값 : {}",board);
+		logger.info("member의 값 : "+member);
+		logger.info("boardName 값 : {}",boardName);
 		params=service.infoAll(member, params);
 		params.put("board",board);
+		params.put("boardName",boardName);
 		mav.addObject("params",params);
 		mav.setViewName("myPage/mannerInfo");
 		return mav;

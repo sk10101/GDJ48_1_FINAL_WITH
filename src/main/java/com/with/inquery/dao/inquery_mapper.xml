@@ -20,7 +20,7 @@
 	</insert>
 	
 	<select id="inqueryDetail" resultType="hashmap">
-    	SELECT member_id, subject, DATE_FORMAT(inquery_date,'%Y-%m-%d %H:%i') as inquery_date, inquery_content ,status, inquery_admin, answer_date, answer_content, hide from inquery where inquery_idx=#{param1}
+    	SELECT member_id, subject, inquery_date, inquery_content ,status, inquery_admin, answer_date, answer_content, hide from inquery where inquery_idx=#{param1}
     </select>
     
     <update id="inqueryDelete">
@@ -36,19 +36,19 @@
 	</select>
     
     <select id="adminInqueryList" resultType="inquery" parameterType="hashmap">
-    	select * from inquery
+    	SELECT * FROM inquery
     	<if test="word != null and word != ''">
-    		AND subject LIKE CONCAT('%',#{word},'%')
+    		WHERE subject LIKE CONCAT('%',#{word},'%')
     	</if> 
     	ORDER BY inquery_idx DESC LIMIT #{cnt} OFFSET #{offset}
     </select>
     
     <select id="adminInqueryDetail" resultType="hashmap">
-    	SELECT member_id, subject, DATE_FORMAT(inquery_date,'%Y-%m-%d %H:%i') as inquery_date, inquery_content FROM inquery WHERE inquery_idx=#{param1}
+    	SELECT member_id, subject, inquery_date, inquery_content, answer_content, status FROM inquery WHERE inquery_idx=#{param1}
     </select>
     
     <update id="admininqueryUpdate" parameterType="hashmap">
-    	UPDATE inquery SET answer_content=#{answer_content}, inquery_admin=#{inquery_admin}, answer_date=now(), status=#{status} WHERE inquery_idx = #{inquery_idx} AND status='미처리'
+    	UPDATE inquery SET answer_content=#{answer_content}, inquery_admin=#{inquery_admin}, answer_date=now(), status=#{status} WHERE inquery_idx = #{inquery_idx}
     </update>
     
     

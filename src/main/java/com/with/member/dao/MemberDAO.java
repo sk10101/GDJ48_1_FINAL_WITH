@@ -40,6 +40,8 @@ public interface MemberDAO {
 
 	String FileName(String member_id);
 
+	String boardName(int board);
+
 	
 
 }

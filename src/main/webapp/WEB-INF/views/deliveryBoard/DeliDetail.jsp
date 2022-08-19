@@ -204,7 +204,7 @@
 				</c:forEach>
 				<c:forEach items="${partList}" var="part">
 					<tr>
-						<td>${part.member_id}</td>
+						<td><a href="/mannerInfo?member=${part.member_id}&board=${info.board_idx}">${part.member_id}</a></td>
 						<td>${part.gender}</td>
 						<td>${part.investment}</td>
 						<c:if test="${partMemberChk > 0}"><td>${part.phone}</td></c:if>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,7 +82,7 @@
 	            	</tr>
 	            	<tr>
 	            		<th>작성일</th>
-	            		<td>${map.inquery_date}</td>
+	            		<td><fmt:formatDate pattern="yyyy-MM-dd KK:mm" value="${map.inquery_date}"/></td>
 	            	</tr>
 	            	<tr>
 	            		<th>내용</th>
@@ -89,37 +90,90 @@
 	            	</tr>
 	        </table>
 	        <br><br><br>
-	        <form action="adminInqueryUpdate" method="POST">
-	        	<table class="myinfo" style="margin-left:180px;">
-	            	<tr>
-	            		<th>처리한 관리자</th>
-	            		<td>
-	            			<input type="hidden" name="inquery_idx" value="${page}"/>
-	            			<input type="text" name="inquery_admin" value="${sessionScope.loginId}" readonly/>
-	            		</td>
-	            	</tr>
-	            	<tr>
-	            		<th>답변내용</th>
-	            		<td><input type="text" name="answer_content" placeholder="150자 이내" style="width : 300px; height : 300px;"/></td>
-	            	</tr>
-	            	<tr>
-	            		<th>작성일</th>
-	            		<td><input type="date" name="date"/></td>
-	            	</tr>
-	            	<tr>
-	            		<th>처리상태</th>
-	            		<td>
-	            			<select name="status" size="1">
-								<option value="미처리">미처리</option>
-								<option value="처리중">처리중</option>
-								<option value="처리완료">처리완료</option>
-							</select>
-	            		</td>
-	            	</tr>
-	        	</table>
-	        	<input type="button" value="돌아가기" onclick="location.href='/admininqueryList.go'"/>
-	        	<input type="submit" value="답변하기"/>
-	        </form>
+	        <c:choose>
+		         <c:when test = "${map.status eq '미처리'}">
+		            <form action="adminInqueryUpdate" method="POST">
+		        	<table class="myinfo" style="margin-left:180px;">
+		            	<tr>
+		            		<th>처리한 관리자</th>
+		            		<td>
+		            			<input type="hidden" name="inquery_idx" value="${page}"/>
+		            			<input type="text" name="inquery_admin" value="${sessionScope.loginId}" readonly/>
+		            		</td>
+		            	</tr>
+		            	<tr>
+		            		<th>답변내용</th>
+		            		<td><input type="text" name="answer_content" placeholder="150자 이내" style="width : 300px; height : 300px;"/></td>
+		            	</tr>
+		            	<tr>
+		            		<th>처리상태</th>
+		            		<td>
+		            			<select name="status" size="1">
+									<option value="미처리">미처리</option>
+									<option value="처리중">처리중</option>
+									<option value="처리완료">처리완료</option>
+								</select>
+		            		</td>
+		            	</tr>
+		        	</table>
+		        	<input type="button" value="돌아가기" onclick="location.href='/admininqueryList.go'"/>
+		        	<input type="submit" value="답변하기"/>
+		        	</form>
+		         </c:when>
+		         <c:when test = "${map.status eq '처리중'}">
+		         	<form action="adminInqueryUpdate" method="POST">
+		        	<table class="myinfo" style="margin-left:180px;">
+		            	<tr>
+		            		<th>처리한 관리자</th>
+		            		<td>
+		            			<input type="hidden" name="inquery_idx" value="${page}"/>
+		            			<input type="text" name="inquery_admin" value="${sessionScope.loginId}" readonly/>
+		            		</td>
+		            	</tr>
+		            	<tr>
+		            		<th>답변내용</th>
+		            		<td><input type="text" name="answer_content" value="${map.answer_content}" placeholder="150자 이내" style="width : 300px; height : 300px;"/></td>
+		            	</tr>
+		            	<tr>
+		            		<th>처리상태</th>
+		            		<td>
+		            			<select name="status" size="1">
+									<option value="미처리">미처리</option>
+									<option value="처리중" selected="selected">처리중</option>
+									<option value="처리완료">처리완료</option>
+								</select>
+		            		</td>
+		            	</tr>
+		        	</table>
+		        	<input type="button" value="돌아가기" onclick="location.href='/admininqueryList.go'"/>
+		        	<input type="submit" value="답변하기"/>
+		        	</form>
+		         </c:when>
+		         <c:otherwise>
+		        	<table class="myinfo" style="margin-left:180px;">
+		            	<tr>
+		            		<th>처리한 관리자</th>
+		            		<td>
+		            			<input type="hidden" name="inquery_idx" value="${page}"/>
+		            			${sessionScope.loginId}
+		            		</td>
+		            	</tr>
+		            	<tr>
+		            		<th>답변내용</th>
+		            		<td>${map.answer_content}</td>
+		            	</tr>
+		            	<tr>
+		            		<th>답변 작성일</th>
+		            		<td><fmt:formatDate pattern="yyyy-MM-dd KK:mm" value="${map.inquery_date}"/></td>
+		            	</tr>
+		            	<tr>
+		            		<th>처리상태</th>
+		            		<td>${map.status}</td>
+		            	</tr>
+		        	</table>
+		        	<input type="button" value="돌아가기" onclick="location.href='/admininqueryList.go'"/>
+		         </c:otherwise>
+		    </c:choose>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>

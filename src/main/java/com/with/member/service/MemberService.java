@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.with.main.dao.MainDAO;
 import com.with.member.dao.MemberDAO;
 import com.with.member.dto.MannerDTO;
 import com.with.member.dto.MemberDTO;
@@ -21,6 +22,7 @@ import com.with.member.dto.MemberDTO;
 @Service
 public class MemberService {
 	@Autowired MemberDAO dao;
+	@Autowired MainDAO mainDao;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public HashMap<String, Object> mblist(String member_id) {
@@ -208,6 +210,10 @@ public class MemberService {
 
 	public void blockUser(String member, String mb_id) {
 		dao.blockUser(member,mb_id);
+	}
+
+	public String boardName(int board) {
+		return dao.boardName(board);
 	}
 
 }
