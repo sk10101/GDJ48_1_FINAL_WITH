@@ -136,8 +136,15 @@ public class DeliveryController {
 	public ModelAndView applyDeli(HttpSession session, RedirectAttributes rAttr, @RequestParam HashMap<String, String> params) {
 		logger.info("로그인한 아이디 : " + params.get("member_id"));
 		ModelAndView mav = new ModelAndView();
+		// 기존 글의 최소 투자금액을 가져온다.
+		int min_fund = Integer.parseInt(service.getMin_fund(params.get("board_idx"))); 
+		int inverstment = Integer.parseInt(params.get("investment"));
 		
-		service.applyDeli(rAttr,params);
+		if(inverstment < min_fund) {
+			rAttr.addFlashAttribute("msg","최소투자금액 이상의 금액을 입력해야 합니다.");
+		} else {
+			service.applyDeli(rAttr,params);
+		}
 		
 		mav.setViewName("redirect:/deliDetail?board_idx="+params.get("board_idx"));
 		
