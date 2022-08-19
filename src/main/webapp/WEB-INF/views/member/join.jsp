@@ -158,7 +158,7 @@
 			  <tr>
 				<th colspan="3" style="text-align: center;"><br>
 					<button class="btn btn-default bottom-button" type="button" onclick="save(); return false;">회원가입</button>
-					<button class="btn btn-default bottom-button" type="button" onclick="location.href='/'"/>돌아가기</button> 
+					<button class="btn btn-default bottom-button" type="button" onclick="location.href='/'">돌아가기</button> 
 <!-- 				<input type="submit"  class="btn btn-default" value="회원가입" />
 					<input type="button"  class="btn btn-default" value="돌아가기" onclick="location.href='/'"/>  -->
 				</th>
@@ -417,7 +417,7 @@ $(function(){
 		}
 
 		
-	function save() {
+	function save() { 
 		
 		 /* 정규식 설명
 숫자 (0~9) or 알파벳 (a~z, A~Z) 으로 시작하며 중간에 -_. 문자가 있을 수 있으며 그 후 숫자 (0~9) or 알파벳 (a~z, A~Z)이 올 수도 있고 연달아 올 수도 있고 없을 수도 있다. 
@@ -434,8 +434,8 @@ $(function(){
 	      $("#member_id").focus();
 	    
 	      return false;
-	      } 
-	   
+	     
+	   }
 	   
 	   if(!overChk){
 	      alert("아이디 중복체크를 눌러주세요.");
@@ -444,16 +444,16 @@ $(function(){
 	      return false;
 	      }
 	   
-	   
 	   if ($("#member_pw").val() == null || $("#member_pw").val() == "") {
 	      alert("비밀번호를 입력해주세요.");
 	      $("#member_pw").focus();
 		    return false;
-       }  
-
-	 	if(!pw_rule.test($("#member_pw").val()))  {
+        	}
+	   
+	   if(!pw_rule.test($("#member_pw").val()))  {
 		    alert("비밀번호는 8 ~ 16자 영문, 숫자, 특수문자를 최소 한가지씩 조합해야 합니다.");
 		    $("#member_pw").focus();
+		    
 		    return false;
 	       }
 	   
@@ -463,7 +463,6 @@ $(function(){
 	       
 	      return false;
 	      }
-	    
 	   
 	   if ($("#member_pw").val() != $("#member_pw2").val()) {
 	      alert("비밀번호가 일치하지 않습니다.");
@@ -473,19 +472,18 @@ $(function(){
 	      }
 	   
 	   if ($("#name").val() == null || $("#name").val() == "") {
-	   alert("이름을 입력해주세요.");
-	   $("#name").focus();
+		   alert("이름을 입력해주세요.");
+		   $("#name").focus();
 	    
 	      return false;
-	      } 
-	   
+	      }
 	   
 	   if ($("#university_name").val() == null || $("#university_name").val() == "") {
 	      alert("대학교를 입력해주세요.");
 	      $("#university_name").focus();
 	       
 	      return false;
-	      } 
+	      }
 	   
 	   if ($("#phone").val() == null || $("#phone").val() == "") {
 	      alert("연락처를 입력해주세요.");
@@ -494,46 +492,44 @@ $(function(){
 	      return false;
 	      }
 	   
-	   
 	   if ($("#email").val() == null || $("#email").val() == "") {
 	      alert("이메일을 입력해주세요.");
 	      $("#email").focus();
 	    
-	      return false;
+		   return false;
 	      }
 	   
-	   
-	   
-	   if(!EmailOverlay){
+	   if(!overChkEmail){
 	      alert("이메일 중복체크를 눌러주세요.");
 	      $("#EmailOverlay").focus();
 	       
 	      return false;
 	      }
 	   
-
+	   if(!email_rule.test($("#email").val())){
+		    alert("이메일을 형식에 맞게 입력해주세요. ex) 1234@naver.com");
+		   $("#email").focus();
+		   
+	      return false;   
+	      }
 	   
 	   if ($("#photos").val() == null || $("#photos").val() == "") {
 	      alert("인증서를 등록해주세요.");
 	      $("#photos").focus();
 	       
 	      return false;
-	      }
+	   }
+	
+	   
 
-	   
-	   if(!email_rule.test($("#email").val())){
-		      alert("이메일을 형식에 맞게 입력해주세요. ex) 1234@naver.com");
-		      $("#email").focus();
-		      return false;
-		      }
-	   
-	   
-	   if (confirm("회원가입하시겠습니까?")) {
+	    if (confirm("회원가입하시겠습니까?")) {
 	    
 	   $("#test").submit();
 	    
 	      return false;
 	      }
+	    
+	    
 	   }		
 		
 		
