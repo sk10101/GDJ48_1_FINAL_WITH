@@ -113,15 +113,12 @@
 			</tr>
 			<tr>
 				<th>비밀번호</th>
-				<td><input type="password" name="member_pw" id="member_pw" placeholder="비밀번호 입력" required/></td> <!--   어떤 패스워드넣었는지 확인하려고 text 타입으로.. -->
-				<td>* 8 ~ 15자 입력 </td>
+				<td colspan="2"><input type="password" name="member_pw" id="member_pw" placeholder="비밀번호 입력" required/> * 영문/숫자/특수문자를 포함하여 8~15자</td> <!--   어떤 패스워드넣었는지 확인하려고 text 타입으로.. -->
 			</tr>
 			<tr>
 			<!-- onkeyup="JS function" 입력이 되었을 때, -->
 				<th>비밀번호 확인</th>
-				<td><input type="password"  id="member_pw2" placeholder="비밀번호확인" required/></td>
-				<font id="chkNotice" size="2"></font>
-				<!-- <span id="confirmMsg"></span></td> -->
+				<td><input type="password"  id="member_pw2" placeholder="비밀번호확인" required/><font id="chkNotice" size="2"></font></td>
 			</tr>			
 			<tr>
 				<th>이름</th>

@@ -158,7 +158,8 @@
 				<tr>
 					<td><img alt="성별제한" src="../resources/images/gender.png" style="width:20px; height:20px;"> ${info.gender}</td>
 					<!-- 신고하기위해 살짝 수정함 -제한- -->
-					<td><a id="link" href="#" onclick="reportPop()"><span style="border:1px solid black; background-color:red;">신고</span></a></td> 
+					<c:if test="${info.member_id eq sessionScope.loginId}"><td></td></c:if>
+					<c:if test="${info.member_id ne sessionScope.loginId}"><td><a id="link" href="#" onclick="reportPop()"><span style="border:1px solid black; background-color:red;">신고</span></a></td></c:if>
 				</tr>
 			</table>
 			<hr>
@@ -235,7 +236,7 @@
         	<form action="applyDeli">
 	           내 연락처 <input type="text" value="010-1234-5678" readonly/><br/>
 	           투자 금액 <input type="text" name="investment" placeholder="최소 투자 금액 : ${info.min_fund}" required/><br/>
-	           <input type="hidden" name="member_id" value="id_test"/>
+	           <input type="hidden" name="member_id" value="${sessionScope.loginId}"/>
 	           <input type="hidden" name="board_idx" value="${info.board_idx}"/>
 	           <input type="hidden" name="gd_restriction" value="${info.gender}"/>
 	           <input type="submit" value="보내기" style="text-align: right;"/>
@@ -284,8 +285,17 @@
 	
 	<!-- 신고하기위해 추가함 -제한- -->
 	function reportPop(){
-		window.open('reportWrite.go?board_idx=${list.board_idx}','report','width=300, height=300, top=300, left=650')
-	}
+	    var width = 300;
+	    var height = 300;
+	    var top = (window.innerHeight - height) / 2 + screenY;
+	    var left = (window.innerWidth - width) / 2 + screenX;
+
+	    var spec = 'status=no, menubar=no, toolbar=no, resizable=no';
+	    spec += ', width=' + width + ', height=' + height;
+	    spec += ', top=' + top + ', left=' + left;
+		
+		window.open('reportWrite.go?board_idx=${info.board_idx}','report', spec);
+	};
 
 </script>
 </html>

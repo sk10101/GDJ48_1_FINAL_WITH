@@ -42,14 +42,14 @@
     }
 
     .sidebar li:nth-child(1):hover,
-    li:nth-child(3):hover {
+    .sidebar li:nth-child(3):hover {
         transform: translateX(17px);
     }
 
     .sidebar li:nth-child(5):hover,
-    li:nth-child(6):hover,
-    li:nth-child(7):hover,
-    li:nth-child(8):hover {
+    .sidebar li:nth-child(6):hover,
+    .sidebar li:nth-child(7):hover,
+    .sidebar li:nth-child(8):hover {
         background-color: #0026ca;
     }
 
@@ -60,7 +60,12 @@
         display: block;
         height: 73px;
     }
-
+    
+	.sidebar li a span {
+    	position:relative;
+    	top: 16px;
+    }
+    
     .sidebar li a.my {
         height: 50px;
         line-height: 50px;

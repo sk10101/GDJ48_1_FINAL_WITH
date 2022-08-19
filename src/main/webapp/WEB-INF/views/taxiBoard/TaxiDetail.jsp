@@ -301,11 +301,14 @@
 		       			<th>
 		       				<img style="position: relative; top: 5px;" id="gender" src="./resources/images/gender.png" alt="gender"/>&nbsp; ${list.gender}
 		       			</th>
+		       			<c:if test="${list.member_id eq sessionScope.loginId}"><td></td></c:if>
+		       			<c:if test="${list.member_id ne sessionScope.loginId}">
 		       			<td colspan="3" style="text-align: right;">
 		       				<img id="report-img" src="./resources/images/report.png" alt="report"/>
 		       				<!-- 신고하기위해 살짝 수정함 -제한- -->
-		       				<input id="report" type="button" value="신고" onclick="reportPop()"/>
+		       				<input id="report" type="button" name="report" value="신고" onclick="reportPop()"/>
 		       			</td>
+		       			</c:if>
 		       		</tr>
 		       		<tr>
 		       			<td colspan="4"><br/><br/><hr/><br/><br/></td>
@@ -380,7 +383,7 @@
 			       			<c:if test="${sessionScope.loginId eq list.member_id}">
 				       			<input class="bottom-button del-button" type="button" value="삭제" onclick="location.href='/deliDelete?board_idx=${list.board_idx}'"/>
 				       		</c:if>	
-							<input class="bottom-button back-button" type="button" value="돌아가기" onclick="location.href='/taxiList?page=${sessionScope.page}&option=${sessionScope.option}&word=${sessionScope.word}'"/>
+							<input class="bottom-button back-button" type="button" value="돌아가기" onclick="location.href='/taxiListGo'"/>
 						</td>
 		       		</tr>
 		       </table>
@@ -461,8 +464,17 @@
 
 	<!-- 신고하기위해 추가함 -제한- -->
 	function reportPop(){
-		window.open('reportWrite.go?board_idx=${list.board_idx}','report','width=300, height=300, top=300, left=650')
-	}
+	    var width = 300;
+	    var height = 300;
+	    var top = (window.innerHeight - height) / 2 + screenY;
+	    var left = (window.innerWidth - width) / 2 + screenX;
+
+	    var spec = 'status=no, menubar=no, toolbar=no, resizable=no';
+	    spec += ', width=' + width + ', height=' + height;
+	    spec += ', top=' + top + ', left=' + left;
+		
+		window.open('reportWrite.go?board_idx=${list.board_idx}','report', spec);
+	};
 	
 </script>
 </html>
