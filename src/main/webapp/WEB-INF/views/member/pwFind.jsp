@@ -88,6 +88,12 @@
 		background-color: #004ecb;
 		transform: scale(1.05);
 	}
+	
+	input[type='text'], input[type='email'] {
+		padding: 3px 10px;
+		border-radius: 5px;
+		border: 0.3px solid gray;
+	}
 
 </style>
 <body>
