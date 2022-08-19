@@ -31,8 +31,8 @@
  		SELECT member_id FROM member WHERE name=#{param1} AND email=#{param2}
  	</select> 
  	
- 	<select id="pwFind" resultType="String">
- 		SELECT member_pw FROM member WHERE member_id=#{param1} AND email=#{param2}
+ 	<select id="pwFind" resultType="int">
+ 		SELECT COUNT(member_pw) FROM member WHERE member_id=#{param1} AND email=#{param2}
  	</select>
  	
 	<update id="newPw">

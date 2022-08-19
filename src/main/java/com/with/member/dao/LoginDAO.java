@@ -22,7 +22,7 @@ public interface LoginDAO {
 
 	String idFind(String name, String email);
 
-	String pwFind(String id, String email);
+	int pwFind(String id, String email);
 
 	boolean newPw(String id, String pw);
 
