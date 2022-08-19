@@ -256,6 +256,7 @@ public class DeliveryService {
 		} else {
 			// 위 세 경우에 모두 해당되지 않아야 신청이 가능하도록 조건 설정함
 			logger.info("모임 참여 신청 성공");
+			rAttr.addFlashAttribute("msg","정상적으로 신청되었습니다.");
 			dao.applyDeli(member_id,board_idx,investment);
 		}
 		
