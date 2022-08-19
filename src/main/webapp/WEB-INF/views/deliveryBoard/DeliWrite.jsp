@@ -34,6 +34,62 @@
         background-color: rgb(249, 249, 249);
         padding: 60px 100px;
     }
+    
+    #writeTable {
+    	border-radius: 20px;
+    	padding: 20px;
+    	margin: 0 auto;
+    	margin-bottom: 60px;
+    	width: 600px;
+    	box-shadow: rgba(100, 100, 111, 0.6) 0px 7px 29px 0px;
+    }
+    
+    #writeTable th,td {
+    	color: rgb(88, 88, 88);
+    	padding: 10px 10px;
+    }
+    
+    #subject {
+    	width: 80%;
+    }
+    
+    textarea {
+	    width: 100%;
+	    height: 120px;
+	    border-radius: 5px;
+	    padding: 3px 5px;
+	    resize: none;
+  	}
+  	
+    input[type="text"],
+    input[type="number"] {
+    	border-radius: 5px;
+    	padding: 3px 5px;
+    	border: 1px solid gray;
+    }
+    
+    input[type="number"] {
+    	width: 130px;
+    }
+    
+    
+    .map-button {
+   		padding: 3px 20px;
+   		border-radius: 5px;
+   		border: 0.4px solid rgb(88, 88, 88);
+   		color: rgb(88, 88, 88);
+   }
+   
+   .bottom-button {
+   		margin: 10px 20px;
+   		padding: 5px 20px;
+   		border-radius: 5px;
+   		border: none;
+   		background-color: #2962ff;
+   		color: #eaeaea;
+   }
+    
+    
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -49,28 +105,28 @@
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	   		<form action="write" method="POST" enctype="multipart/form-data">
-				<table>
+				<table id="writeTable"> 
 					<tr>
 						<th>제목</th>
-						<td><input type="text" name="subject" placeholder="30자 이내" required/></td>
+						<td><input id="subject" type="text" name="subject" placeholder="30자 이내" maxlength="30" required/></td>
 					</tr>
 					<tr>
 						<th>내용</th>
-						<td><input type="text" name="content" placeholder="500자 이내" required/></td>
+						<td><textarea name="content" placeholder="500자 이내" maxlength="333" required></textarea></td>
 					</tr>
 					<tr>
 						<th>성별</th>
 						<td>
-							<input type="radio" name="gender" value="남자만"/>남자만
-							<input type="radio" name="gender" value="여자만"/>여자만
-							<input type="radio" name="gender" value="상관없음" checked="checked"/>상관없음
+					      <label><input type="radio" name="gender" value="남자만"/> 남자만</label>
+					      <label><input type="radio" name="gender" value="여자만"/> 여자만</label>
+					      <label><input type="radio" name="gender" value="상관없음" checked/> 상관없음</label>
 						</td>
 					</tr>
 					<tr>
 						<th>수령장소</th>
 						<td>
-							<input type="text" name="appoint_place" required/>
-							<input type="button" value="상세위치" onclick="showPopup()">
+							<input type="text" name="appoint_place" maxlength="66" required/>
+							<input class="map-button" type="button" value="상세위치" onclick="showPopup()">
 						</td>
 					</tr>
 					<tr>
@@ -81,7 +137,7 @@
 						<th>모집인원</th>
 						<td>
 							<select name="member_cnt">
-								<option value="1">1</option>
+								<option value="1" selected>1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
 							</select>
@@ -95,32 +151,41 @@
 					</tr>
 					<tr>
 						<th>최소주문금액</th>
-						<td><input type="text" name="min_delivery" required/>원</td>
+						<td><input type="number" min="0" max="100000" step="500" name="min_delivery" required/> 원</td>
 					</tr>
 					<tr>
 						<th>인당 최소<br>투자금액</th>
-						<td><input type="text" name="min_fund" required/>원</td>
+						<td><input type="number" min="0" max="100000" step="500" name="min_fund" required/> 원</td>
 					</tr>
 					<tr>
 						<th>배달료</th>
-						<td><input type="text" name="delivery_fee" required/>원</td>
+						<td><input type="number" min="0" max="100000" step="500" name="delivery_fee" required/> 원</td>
 					</tr>
 					<tr>
-						<td colspan="2">
-							<input type="submit" value="등록"/>
-							<input type="button" value="돌아가기" onclick="history.back()"/>
-						</td>
+						<th colspan="2">
+							<input class="bottom-button" type="submit" value="등록"/>
+							<input class="bottom-button" type="button" value="돌아가기" onclick="history.back()"/>
+						</th>
 					</tr>
 				</table>
 			</form>
-
 	   </div>
-</div>
+	</div>
+	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script>
 
 	function showPopup(){
-	    window.open("deliKakaoMap","팝업 테스트","width=1000, height=1000, top=10, left=10");
+	    var width = 700;
+	    var height = 500;
+	    var top = (window.innerHeight - height) / 2 + screenY;
+	    var left = (window.innerWidth - width) / 2 + screenX;
+
+	    var spec = 'status=no, menubar=no, toolbar=no, resizable=no';
+	    spec += ', width=' + width + ', height=' + height;
+	    spec += ', top=' + top + ', left=' + left;
+		
+	    window.open("deliKakaoMap","팝업 테스트", spec);
 	}
 	
 	/* 타임피커 관련 스크립트 */
@@ -139,5 +204,5 @@
 		]	  
 	});
 </script>
-<jsp:include page="../commons/footer.jsp"/>
+
 </html>

@@ -66,20 +66,10 @@
 		padding: 5px 10px;
 		font-size: 14px;
 	}
-	
-	
-    
   
 </style>
 <body>
-	<c:choose>
-		<c:when test="${sessionScope.member_class eq '일반회원'}">
-		   	<jsp:include page="../commons/header.jsp"/>
-		</c:when>
-		<c:when test="${sessionScope.member_class eq '관리자'}">
-			<jsp:include page="../commons/adminHeader.jsp"/>
-		</c:when>
-	</c:choose>
+   	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
 		<c:choose>
 			<c:when test="${chkCate eq '배달게시판' and sessionScope.member_class eq '일반회원'}">

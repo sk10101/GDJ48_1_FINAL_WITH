@@ -348,4 +348,10 @@ public class DeliveryService {
 			
 		return mav;
 	}
+
+
+	public String getMin_fund(String board_idx) {
+		
+		return dao.getMin_fund(board_idx);
+	}
 }

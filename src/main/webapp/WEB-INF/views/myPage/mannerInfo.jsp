@@ -94,7 +94,8 @@
 			<p>
 				<img src="./resources/images/people.png" alt="people" style="width: 30px; margin-left: 20px;">${params.manner_cnt}
 			</p>
-			<input type="button" value="확인" onclick="location.href='/deliDetail?board_idx=${params.board}'"/>
+			<%-- <input type="button" value="확인" onclick="location.href='/deliDetail?board_idx=${params.board}'"/> --%>
+			<input type="button" value="확인" onclick="history.back()"/>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>

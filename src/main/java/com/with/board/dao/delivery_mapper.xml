@@ -204,6 +204,11 @@
 		INSERT INTO blind_board(category_id,board_idx,member_id,subject,blind_reason)
 			VALUES(#{param1},#{param2},#{param3},#{param4},'단순삭제')
 	</insert>
+	
+	<select id="getMin_fund" resultType="String">
+		SELECT min_fund FROM delivery_board
+			WHERE board_idx = #{param1}
+	</select>
 </mapper>
 
 

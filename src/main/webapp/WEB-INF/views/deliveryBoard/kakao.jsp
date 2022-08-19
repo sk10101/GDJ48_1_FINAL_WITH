@@ -16,7 +16,7 @@
 <form action="getCoords" id="getCoords">
 	<input type="hidden" id="lat" name="lat" value=""/>
 	<input type="hidden" id="lng" name="lng" value=""/>
-	<div id="deliMap" style="width:1000px;height:800px;"></div>
+	<div id="deliMap" style="width:700px;height:500px;"></div>
 	<input type="submit" value="확인" id="close_button"> 
 </form>
 

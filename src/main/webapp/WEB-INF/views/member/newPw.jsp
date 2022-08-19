@@ -41,16 +41,59 @@
 
     .content {
         display: inline-block;
-        max-width: 600px;
+        max-width: 400px;
         width: 100%;
-        min-height: 300px;
-        margin-left: 300px;
+        min-height: 500px;
+        margin-left: 400px;
         margin-top: 170px;
         border-radius: 20px;
         /* background-color: #f4f4f4; */
         background-color: #fff;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        padding: 30px 30px;
     }
+    
+    #title {
+    	text-align: center;
+    	color: rgb(88, 88, 88);
+    	font-size: 20px;
+    }
+    
+    table {
+    	margin: 0 auto;
+    	color: rgb(88, 88, 88);
+    	margin-top: 50px;
+    }
+    
+    td, th {
+    	padding: 10px 10px;
+    }
+    
+    table tr:last-child td {
+		padding-top: 30px;
+		text-align: center;
+	}
+	
+	.FindBtn {
+		padding: 5px 10px;
+		border: none;
+		background-color: #537ef4;
+		color: #eaeaea;
+		border-radius: 5px;
+		transition: all 0.3s ease;
+		margin: 0 10px;
+	}
+	
+	.FindBtn:hover {
+		background-color: #004ecb;
+		transform: scale(1.05);
+	}
+	
+	input[type='password'] {
+		padding: 3px 10px;
+		border-radius: 5px;
+		border: 0.3px solid gray;
+	}
 
 </style>
 <body>
