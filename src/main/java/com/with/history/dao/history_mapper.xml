@@ -59,7 +59,7 @@
 	
 	
 	<update id="mygApplyDelete">
-		UPDATE apply SET hide = 1 WHERE board_idx = #{board_idx} 	
+		UPDATE apply SET hide = 1 WHERE apply_idx = #{apply_idx}	
 	</update>
 	
 	<update id="applyClose">
