@@ -133,7 +133,7 @@
 					<td>작성일 : ${info.write_date}</td>
 				</tr>
 				<tr>
-					<td>인원 : ${count} / ${info.member_cnt}</td>
+					<td>인원 : ${count} / ${info.member_cnt + 1}</td>
 					<td>조회수 : ${info.hit}</td>
 				</tr>
 				<tr>
@@ -206,7 +206,7 @@
 						<td>${part.gender}</td>
 						<c:if test="${partMemberChk > 0}"><td>${part.phone}</td></c:if>
 						<c:if test="${info.recruit_end eq 1 }">
-						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}"><td><input type="button" value="평가하기"/></td></c:if>
+						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}"><td><input type="button" value="평가하기" id="manner" onclick="mannrBlock()"/></td></c:if>
 						</c:if>
 						<c:if test="${info.recruit_end eq 0 }">
 						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='mealBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
@@ -218,13 +218,11 @@
 			<input type="hidden" id="lat" value="${info.appoint_coords_lat}"/>
 			<input type="hidden" id="lng" value="${info.appoint_coords_lng}"/>
 			<div id="map" style="width:500px;height:350px;"></div>
-			<c:if test="${info.recruit_end eq 0}">
-		<%-- 	<c:if test="${info.member_cnt eq ${count}"> --%>
+			<c:if test="${info.recruit_end eq 0 and info.member_id ne sessionScope.loginId}">
 				<button id="openModalPop">참여신청</button><br/>
 			</c:if>
-			<%-- </c:if> --%>
 			<input type="button" value="삭제" onclick="location.href='mealDelete?board_idx=${info.board_idx}'"/>
-			<input type="button" value="돌아가기" onclick="history.back()"/>
+			<input type="button" value="돌아가기" onclick=onclick="location.href=mealList.go'"/>
 	   </div>
 	</div>
 	<!-- 아래부터 참여 신청 모달 부분 -->
@@ -236,9 +234,9 @@
         </div>
         <h2>참여신청</h2>
         <div class="pop_content">
-        	<form action="mealAppl">
+        	<form action="mealApply">
 	           내 연락처 <input type="text" name="phone" value="${phone}" readonly/><br/>
-	           <input type="hidden" name="member_id" value="${info.member_id}"/>
+	           <input type="hidden" name="member_id" value="${sessionScope.loginId}"/>
 	           <input type="hidden" name="board_idx" value="${info.board_idx}"/>
 	           <input type="submit" value="보내기" style="text-align: right;"/>
         	</form>
@@ -292,6 +290,23 @@
 	        $("#modal").fadeOut();
 	    });
 	});	
+	
+	
+	function mannrBlock() {
+		  
+		  // 토글 할 버튼 선택 (mannr)
+		  const manner = document.getElementById('manner');
+		  
+		  // 평가 버튼 한 번 클릭시  숨기기 (display: none)
+		  if(manner.style.display !== 'none') {
+			  manner.style.display = 'none';
+		  }
+		  location.href='mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'
+
+		  
+		}
+	
+	
 
 <!-- 신고하기위해 추가함 -제한- -->
 function reportPop(){
