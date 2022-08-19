@@ -144,7 +144,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 			service.mealApply(rAttr,params);
 			
-			mav.setViewName("redirect:/mealDetail?board_idx="+board_idx);
+			mav.setViewName("redirect:/mealDetail?board_idx="+params.get("board_idx"));
 			
 			return mav;
 		}
