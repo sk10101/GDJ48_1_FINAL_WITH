@@ -69,7 +69,8 @@
 		DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date,
 		(SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE a.member_id = m.member_id) as avg_allAvg,
 		a.apply_idx,
-		b.board_idx	
+		b.board_idx,
+		b.category_id	
 	FROM apply a, board_common_column b
 	WHERE b.board_idx = a.board_idx AND a.member_id != b.member_id AND a.status = '대기중' AND b.board_idx = #{board_idx} AND a.hide = 0]]>
 		<if test="word != null and word != ''">
@@ -110,6 +111,13 @@
 	<update id="applyUpdate" parameterType="hashmap">
 		UPDATE apply SET status = #{realstatus} WHERE apply_idx = #{apply_idx} 
 	</update>
+	<update id="taxiApplyUpdate" parameterType="hashmap">
+		UPDATE apply SET status = #{realstatus} WHERE apply_idx = #{apply_idx} 
+	</update>
+	<update id="mealApplyUpdate" parameterType="hashmap">
+		UPDATE apply SET status = #{realstatus} WHERE apply_idx = #{apply_idx} 
+	</update>
+	
 	
 	<update id="applyCancle">
 		UPDATE apply SET status = '취소' WHERE apply_idx = #{apply_idx}
@@ -131,7 +139,8 @@
 		DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date,
 		(SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE a.member_id = m.member_id) as avg_allAvg,
 		a.apply_idx,
-		b.board_idx	
+		b.board_idx,
+		category_id
 	FROM apply a, board_common_column b
 	WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx  AND a.status = '대기중' AND b.board_idx = #{board_idx} AND a.hide = 0]]>
 		<if test="word != null and word != ''">
@@ -178,7 +187,8 @@
       DATE_FORMAT(a.apply_date,'%Y-%m-%d %H:%i') as apply_date,
       (SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE a.member_id = m.member_id) as avg_allAvg,
       a.apply_idx,
-      b.board_idx   
+      b.board_idx,
+      category_id
    FROM apply a, board_common_column b
    WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx  AND b.board_idx = #{board_idx} AND a.status = '대기중' AND b.board_idx = #{board_idx}]]>
       <if test="word != null and word != ''">
@@ -214,14 +224,6 @@
 					</choose>
 				</if>
 	</select>
-	
-	<update id="taxiApplyUpdate" parameterType="hashmap">
-		UPDATE apply SET status = #{realstatuss} WHERE apply_idx = #{apply_idx} 
-	</update>
-	
-	<update id="mealApplyUpdate" parameterType="hashmap">
-		UPDATE apply SET status = #{realstatuss} WHERE apply_idx = #{apply_idx} 
-	</update>
 	
 	
 
