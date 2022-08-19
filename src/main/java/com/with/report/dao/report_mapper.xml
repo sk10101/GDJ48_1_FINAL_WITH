@@ -82,9 +82,7 @@
 	</select>
 	
 	<select id="penaltydetail" resultType="report">
-		<![CDATA[
 			SELECT penalty_end, penalty_date FROM penalty p, report r WHERE member_id = #{param1} AND p.report_idx = r.report_idx
-		]]> 
 	</select>
 
 </mapper>

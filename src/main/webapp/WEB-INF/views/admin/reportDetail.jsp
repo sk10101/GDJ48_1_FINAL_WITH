@@ -95,12 +95,15 @@
 		       	</tr>
 	       </table>
 		       <input type="button" value="돌아가기" onclick="location.href='reportList.go'"/>
-		       <input type="submit" value="처리"/>
+		       <input name="send" type="submit" value="처리"/>
 	       </form>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script>
+if(${info.status eq '처리완료'}){
+	$('input[name=send]').prop('type', "hidden");
+}
 </script>
 </html>
