@@ -88,6 +88,7 @@ public class DeliveryService {
 		mav.addObject("partMemberChk",partMemberChk);
 		mav.addObject("partMaster",partMaster);
 		
+		
 		return mav;
 	}
 
