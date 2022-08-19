@@ -107,7 +107,7 @@
 			<tr>
 				<th>EMAIL</th>
 				<td>
-					<input type="email" id="id" name="email" required="required"/>
+					<input type="email" id="email" name="email" required="required"/>
 				</td>
 			</tr>
 				<!-- 
