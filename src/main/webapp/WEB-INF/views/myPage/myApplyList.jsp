@@ -48,7 +48,7 @@
 					<tr>
 						<th><input type="radio" name="member" onclick="window.location.href='/mygList.go';"
 						value="내가 만든 모임">내가 만든 모임</th>
-						<td><input type="radio" name="member" value="내가 참여한 모임" checked="checked">내가 참여한 모임</td>
+						<td><input type="radio" name="member" value="내가 참여한 모임" checked="checked">내가 신청한 모임</td>
 						<td>
 					</tr>
 				</table>
@@ -95,7 +95,7 @@
 								<c:if test="${his.status eq '취소'}"><td>취소</td></c:if>
 								<c:if test="${his.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
 								<c:if test="${his.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
-								<c:if test="${his.recruit_end eq 0}"><td><input type="button" value="취소" onclick="location.href='applyCancle?apply_idx=${his.apply_idx}&board_idx=${his.board_idx}'" /></td></c:if>
+								<c:if test="${his.recruit_end eq 0}"><td><input type="button" value="취소" onclick="location.href='applyCancle?apply_idx=${his.apply_idx}&board_idx=${his.board_idx}&status=2'" /></td></c:if>
 								<c:if test="${his.recruit_end eq 1}">	<td><input type="button" value="삭제" onclick="location.href='applyDelete?apply_idx=${his.apply_idx}&board_idx=${his.board_idx}'" /></td></c:if>
 							</tr>
 					</tbody>

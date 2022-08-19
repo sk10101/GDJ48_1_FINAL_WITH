@@ -193,7 +193,7 @@
 				</tr>
 				<c:forEach items="${partMaster}" var="ptm">
 					<tr>
-						<td><a href="/mannerInfo?member=${ptm.member_id}&board=${info.board_idx}">${ptm.member_id}</a></td>
+						<td><img id="crown" src="./resources/images/crown.png" alt="crown"/><a href="/mannerInfo?member=${ptm.member_id}&board=${info.board_idx}">${ptm.member_id}</a></td>
 						<td>${ptm.gender}</td>
 						<td>-</td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>

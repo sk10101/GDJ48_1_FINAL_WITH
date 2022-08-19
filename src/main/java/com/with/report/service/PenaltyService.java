@@ -20,7 +20,7 @@ public class PenaltyService {
 
 	@Autowired PenaltyDAO dao;
 
-	public ModelAndView penaltylists(HashMap<String, String> params) {
+	public ModelAndView penaltyList(HashMap<String, String> params) {
 		ModelAndView mav = new ModelAndView("admin/penaltyList");
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -35,7 +35,7 @@ public class PenaltyService {
 		}
 		
 		ArrayList<PenaltyDTO> list = pagination(map);
-		logger.info("페널티 회원 수 : " + list);
+		logger.info("페널티 회원 수 : " + list.size());
 		mav.addObject("penalty", list);
 		mav.addObject("map", map);
 		return mav;
@@ -48,7 +48,7 @@ public class PenaltyService {
 			int page = (int) map.get("page");
 			String word = (String) map.get("word");
 			logger.info("보여줄 페이지 : " + map.get("page"));
-			logger.info("검색어 : " + " / " + map.get("word") + "/" + word);
+			logger.info("검색어 : " + " / " + map.get("word"));
 			
 			ArrayList<PenaltyDTO> penaltyList = new ArrayList<PenaltyDTO>();
 			

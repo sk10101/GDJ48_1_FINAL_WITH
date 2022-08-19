@@ -80,15 +80,15 @@
 			</tr>
 		</table>
 		
-		<form action="mealApplyList">
-				<select id="option" name="option">
-					<option value="제목">제목</option>
-					<option value="아이디">아이디</option>
-				</select> 
-				<input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
-		   		<input type="hidden" name="page" value="1"/>
-          			<button id="searchBtn">검색</button>
-		</form>
+<!-- 		<form action="mealApplyList"> -->
+<!-- 				<select id="option" name="option"> -->
+<!-- 					<option value="제목">제목</option> -->
+<!-- 					<option value="아이디">아이디</option> -->
+<!-- 				</select>  -->
+<!-- 				<input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/> -->
+<!-- 		   		<input type="hidden" name="page" value="1"/> -->
+<!--           			<button id="searchBtn">검색</button> -->
+<!-- 		</form> -->
      
      	<table>
 				<thead>
@@ -97,7 +97,9 @@
 						<th>최근 14일간 받은 패널티</th>
 						<th>신청시간</th>
 						<th>매너점수</th>
-						<th colspan="2">수락 || 거절</th>
+						<th colspan="2">
+							<td>수락/거절</td>
+						</th>
 					</tr>
 				</thead>
 				
@@ -114,10 +116,8 @@
 				                     <c:if test="${apply.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 15px;"></c:if>
               				    </c:forEach>
 							</td>
-								<td colspan="2">
-								<input type="button" value="수락" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&status=1'" />
-								<input type="button" value="거절" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&status=0'" />
-								</td>
+								<td><input type="button" value="수락" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=1&member_id=${apply.member_id}'" /></td>
+								<td><input type="button" value="거절" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=0'" /></td>
 							</tr>
 				</tbody>
 				</c:forEach>

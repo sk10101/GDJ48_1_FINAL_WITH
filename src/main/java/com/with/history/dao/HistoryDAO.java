@@ -25,6 +25,10 @@ public interface HistoryDAO {
 
 	ArrayList<BoardDTO> mygList(HashMap<String, Object> map);
 
+	void applyClose(HashMap<String, String> params);
+
+	void mygApplyDelete(HashMap<String, String> params);
+
 	
 
 	//ArrayList<HistoryDTO> myglist(String opt, String keyword);

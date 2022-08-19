@@ -101,34 +101,32 @@
         <div class="logo"><a href="#"><img src="./resources/images/logo.png" alt="logo"></a></div>  
         <div class="content">
             <!-- 여기에서 작업 시작하세요 -->
-	<p id="title">PW 재설정</p>
-	<form action="newPw" method="POST">
-	<table>
-		<tr>
-			<th>비밀번호</th>
-			<td>
-				<input type="hidden" name="id" id="id" value="${id}"/>
-				<input type="password" name="pw" id="pw" required="required"/>
-			</td>
-		</tr>	
-		<tr>
-			<th>비밀번호 확인</th>
-			<td> 
-				<p><input type="password" name="pw1" id="pw1" required="required"/><font id="chkNotice" size="2"></font></p>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<input class="FindBtn" type="submit" value="확인"/>
-				<input class="FindBtn" type="button" onclick="location.href='/'" value="돌아가기"/>
-			</td>
-		</tr>
-	</table>
+            <h2>비밀번호 재설정</h2><br>
+     <form action="newPw" id="test" method="POST">
+		<table>
+			<tr>
+				<th>비밀번호</th>
+				<td>
+					<input type="hidden" name="id" id="id" value="${id}"/>
+					<input type="password" name="pw" id="pw" required="required"/>
+				</td>
+			</tr>	
+			<tr>
+				<th>비밀번호확인</th>
+				<td>
+					<p><input type="password" name="pw1" id="pw1" required="required"/><font id="chkNotice" size="2"></font></p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="text-align: center;"><br>
+					<button class="FindBtn" type="button" onclick="save(); return false;">수정</button>
+					<button class="FindBtn" type="button" onclick="location.href='/'" >돌아가기</button>
+				</td>
+			</tr>
+		</table>
 	</form>
-			<!-- <button class="FindBtn" type="button" onclick="pwUpdate()">수정</button>
-			<button class="FindBtn" type="button" onclick="location.href='./login.go'">취소</button> -->
-      </div>
-    </div>
+     	</div>
+    	</div>
 	<jsp:include page="../commons/memberFooter.jsp"/>
 </body>
 <script>
@@ -146,5 +144,20 @@ $(function(){
     });
 });
 
+
+function save() {
+	   if ($("#pw").val() != $("#pw1").val()) {
+		      alert("비밀번호가 일치하지 않습니다.");
+		      $("#pw2").focus();
+		    
+		      return false;
+		      }
+	    if (confirm("수정하시겠습니까?")) {
+		    
+	 	   $("#test").submit();
+	 	    
+	 	      return false;
+	 	      }
+}
 </script>
 </html>
