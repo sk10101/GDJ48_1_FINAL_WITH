@@ -158,7 +158,8 @@
 				<tr>
 					<td><img alt="성별제한" src="../resources/images/gender.png" style="width:20px; height:20px;"> ${info.gender}</td>
 					<!-- 신고하기위해 살짝 수정함 -제한- -->
-					<td><a id="link" href="#" onclick="reportPop()"><span style="border:1px solid black; background-color:red;">신고</span></a></td> 
+					<c:if test="${info.member_id eq sessionScope.loginId}"><td></td></c:if>
+					<c:if test="${info.member_id ne sessionScope.loginId}"><td><a id="link" href="#" onclick="reportPop()"><span style="border:1px solid black; background-color:red;">신고</span></a></td></c:if>
 				</tr>
 			</table>
 			<hr>
