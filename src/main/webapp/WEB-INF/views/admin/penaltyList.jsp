@@ -13,6 +13,22 @@
 	<script type="text/javascript" src="resources/js/jquery.twbsPagination.js"></script>
 </head>
 <style>
+table{
+      width: 100%;
+   }
+   table, th, td{
+      border: 1px solid black;
+      border-collapse: collapse;
+   }
+   
+   th, td{
+      padding: 5px 10px;
+      text-align: center;
+   }
+   
+   table{
+      width: 80%;
+   }
     .content-wrap {
     	max-width: 1200px;
     	width: 100%;
@@ -64,8 +80,10 @@
 			        		<td>${penalty.penalty_date}</td>
 			        		<td>${penalty.penalty_end}</td>
 			        		<td>${penalty.penalty_admin}</td>
-			        		<td><c:if test="${penalty.cancel eq '0'}">N</c:if></td>
-			        		<td><c:if test="${penalty.cancel eq '1'}">Y</c:if></td>
+			        		<c:choose>
+			        			<c:when test="${penalty.cancel eq '0'}"><td>N</td></c:when>
+			        			<c:when test="${penalty.cancel eq '1'}"><td>Y</td></c:when>
+			        		</c:choose>
 			        	</tr>
 			        </c:forEach>
 		        </tbody>

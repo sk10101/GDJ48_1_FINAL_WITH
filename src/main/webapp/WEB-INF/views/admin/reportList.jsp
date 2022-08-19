@@ -29,6 +29,24 @@
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
+    
+table{
+      width: 100%;
+   }
+   table, th, td{
+      border: 1px solid black;
+      border-collapse: collapse;
+      width: 300px;
+   }
+   
+   th, td{
+      padding: 5px 10px;
+      text-align: center;
+   }
+   
+   table{
+      width: 80%;
+   }
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -73,9 +91,9 @@
 				<tr>
 					<td>${report.report_idx}</td>
 					<td>${report.category_id}</td>
-					<td><c:if test="${report.category_id eq '배달게시판'}"><a href="deliDetail?board_idx=${report.board_idx}">${report.subject}</a></c:if></td>
-					<td><c:if test="${report.category_id eq '택시게시판'}"><a href="taxiDetail?board_idx=${report.board_idx}">${report.subject}</a></c:if></td>
-					<td><c:if test="${report.category_id eq '밥게시판'}"><a href="mealDetail?board_idx=${report.board_idx}">${report.subject}</a></c:if></td>
+					<c:if test="${report.category_id eq '배달게시판'}"><td><a href="deliDetail?board_idx=${report.board_idx}">${report.subject}</a></td></c:if>
+					<c:if test="${report.category_id eq '택시게시판'}"><td><a href="taxiDetail?board_idx=${report.board_idx}">${report.subject}</a></td></c:if>
+					<c:if test="${report.category_id eq '밥게시판'}"><td><a href="mealDetail?board_idx=${report.board_idx}">${report.subject}</a></td></c:if>
 					<td>${report.reporter_id}</td>
 					<td>${report.report_date}</td>
 					<td>${report.report_content}</td>
