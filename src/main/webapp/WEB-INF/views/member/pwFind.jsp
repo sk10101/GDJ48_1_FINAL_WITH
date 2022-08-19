@@ -88,6 +88,12 @@
 		background-color: #004ecb;
 		transform: scale(1.05);
 	}
+	
+	input[type='text'], input[type='email'] {
+		padding: 3px 10px;
+		border-radius: 5px;
+		border: 0.3px solid gray;
+	}
 
 </style>
 <body>
@@ -127,6 +133,9 @@
 	<jsp:include page="../commons/memberFooter.jsp"/>
 </body>
 <script>
-
+var msg = '${msg}';
+if (msg != "") {
+	alert(msg);
+}
 </script>
 </html>

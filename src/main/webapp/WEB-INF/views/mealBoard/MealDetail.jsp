@@ -23,7 +23,7 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
@@ -149,7 +149,8 @@
 				<tr>
 					<td><img alt="성별제한" src="../resources/images/gender.png" style="width:20px; height:20px;"> ${info.gender}</td>
 					<!-- 신고하기위해 살짝 수정함 -제한- -->
-					<td><a id="link" href="#" onclick="reportPop()"><span style="border:1px solid black; background-color:red;">신고</span></a></td>
+					<c:if test="${info.member_id eq sessionScope.loginId}"><td></td></c:if>
+					<c:if test="${info.member_id ne sessionScope.loginId}"><td><a id="link" href="#" onclick="reportPop()"><span style="border:1px solid black; background-color:red;">신고</span></a></td></c:if>
 				</tr>
 			</table>
 			<hr>
@@ -294,8 +295,17 @@
 
 <!-- 신고하기위해 추가함 -제한- -->
 function reportPop(){
-	window.open('reportWrite.go?board_idx=${list.board_idx}','report','width=300, height=300, top=300, left=650')
-}
+    var width = 300;
+    var height = 300;
+    var top = (window.innerHeight - height) / 2 + screenY;
+    var left = (window.innerWidth - width) / 2 + screenX;
+
+    var spec = 'status=no, menubar=no, toolbar=no, resizable=no';
+    spec += ', width=' + width + ', height=' + height;
+    spec += ', top=' + top + ', left=' + left;
+	
+	window.open('reportWrite.go?board_idx=${info.board_idx}','report', spec);
+};
 
 </script>
 </html>

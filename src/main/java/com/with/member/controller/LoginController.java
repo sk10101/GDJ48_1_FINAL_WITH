@@ -122,12 +122,13 @@ public class LoginController {
          ModelAndView mav = new ModelAndView();
     	 logger.info("아이디 찾기 아이디: "+id);
          logger.info("아이디 찾기 이메일: "+email);
-         String pw = service.pwFind(id,email);
-         mav.addObject("id",id);
-         logger.info("id 값 : "+id);
-         mav.addObject("pw",pw);
-         logger.info("pw 값 : "+pw);
-         mav.setViewName("member/newPw");
+         int cnt = service.pwFind(id,email);
+         if (cnt==0) {
+        	 mav.setViewName("member/pwFind");
+        	 mav.addObject("msg", "입력한 아이디와 이메일을 확인해주세요.");
+         } else {
+        	 mav.setViewName("member/newPw");
+         }
          return mav;
       }
 	  

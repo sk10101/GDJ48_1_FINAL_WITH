@@ -40,15 +40,15 @@
     }
 
     .sidebar li:nth-child(2):hover,
-    li:nth-child(3):hover {
+    .sidebar li:nth-child(3):hover {
         transform: translateX(17px);
     }
 
     .sidebar li:nth-child(5):hover,
-    li:nth-child(6):hover,
-    li:nth-child(7):hover,
-    li:nth-child(8):hover,
-    li:nth-child(9):hover {
+    .sidebar li:nth-child(6):hover,
+    .sidebar li:nth-child(7):hover,
+    .sidebar li:nth-child(8):hover,
+    .sidebar li:nth-child(9):hover {
         background-color: #0026ca;
     }
 
@@ -100,7 +100,7 @@
             <li><a href="/taxiListGo"><img src="./resources/images/taxi.png" alt="taxi"><div class="circle"></div>택시</a></li>
             <li><a href="/mealList.go"><img class="eating" src="./resources/images/eating.png" alt="eating"><div class="circle"></div>식사</a></li>
             <li><div class="line"></div></li>
-            <li><a class="my" href="/userlist.go">회원관리</a></li>
+            <li><a class="my" href="/userList.go">회원관리</a></li>
             <li><a class="my" href="/reportList.go">신고 내역 관리</a></li>
             <li><a class="my" href="/penaltyList.go">회원 이용 제한</a></li>
             <li><a class="my" href="/admininqueryList.go">고객 문의</a></li>
