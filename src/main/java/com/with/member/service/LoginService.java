@@ -55,7 +55,7 @@ public class LoginService {
 	}
 	
 	//비밀번호 찾기
-	public String pwFind(String id, String email) {
+	public int pwFind(String id, String email) {
 		return dao.pwFind(id,email);
 	}
 

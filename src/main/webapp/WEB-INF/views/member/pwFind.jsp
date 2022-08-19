@@ -127,6 +127,9 @@
 	<jsp:include page="../commons/memberFooter.jsp"/>
 </body>
 <script>
-
+var msg = '${msg}';
+if (msg != "") {
+	alert(msg);
+}
 </script>
 </html>
