@@ -43,18 +43,27 @@
     	text-align: center;
     }
 </style>
-
-<jsp:include page="../commons/header.jsp"/>
-
 <body>
 	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
 		<c:choose>
-			<c:when test="${sessionScope.member_class eq '일반회원'}">
+			<c:when test="${sessionScope.member_class eq '일반회원' and params.boardName eq '배달게시판'}">
+			   <jsp:include page="../commons/memberSideBar1.jsp"/>
+			</c:when>
+			<c:when test="${sessionScope.member_class eq '일반회원' and params.boardName eq '택시게시판'}">
 			   <jsp:include page="../commons/memberSideBar2.jsp"/>
 			</c:when>
-			<c:when test="${sessionScope.member_class eq '관리자'}">
+			<c:when test="${sessionScope.member_class eq '일반회원' and params.boardName eq '밥게시판'}">
+			   <jsp:include page="../commons/memberSideBar3.jsp"/>
+			</c:when>
+			<c:when test="${sessionScope.member_class eq '관리자' and params.boardName eq '배달게시판'}">
+				<jsp:include page="../commons/adminSideBar1.jsp"/>
+			</c:when>
+			<c:when test="${sessionScope.member_class eq '관리자' and params.boardName eq '택시게시판'}">
 				<jsp:include page="../commons/adminSideBar2.jsp"/>
+			</c:when>
+			<c:when test="${sessionScope.member_class eq '관리자' and params.boardName eq '밥게시판'}">
+				<jsp:include page="../commons/adminSideBar3.jsp"/>
 			</c:when>
 		</c:choose>
 	   <div class="content">
@@ -94,8 +103,17 @@
 			<p>
 				<img src="./resources/images/people.png" alt="people" style="width: 30px; margin-left: 20px;">${params.manner_cnt}
 			</p>
-			<%-- <input type="button" value="확인" onclick="location.href='/deliDetail?board_idx=${params.board}'"/> --%>
-			<input type="button" value="확인" onclick="history.back()"/>
+			<c:choose>
+				<c:when test="${params.boardName eq '배달게시판'}">
+					<input type="button" value="확인" onclick="location.href='/deliDetail?board_idx=${params.board}'"/>
+				</c:when>
+				<c:when test="${params.boardName eq '택시게시판'}">
+					<input type="button" value="확인" onclick="location.href='/taxiDetail?board_idx=${params.board}'"/>
+				</c:when>
+				<c:when test="${params.boardName eq '밥게시판'}">
+					<input type="button" value="확인" onclick="location.href='/mealDetail?board_idx=${params.board}'"/>
+				</c:when>
+			</c:choose>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>

@@ -57,13 +57,14 @@
 				<th>대학교</th>
 				<td>${dto.university_name}</td>
 			</tr>
-			<c:if test="${file eq null}"></c:if>
-			<c:if test="${file ne null}">
 			<tr>
 				<th>사진</th>
-				<td><img src="./resources/certificate/${file}" width="500px"/></td>
+				<td>
+				<c:if test="${file ne null}">
+				<img src="./resources/certificate/${file}" width="500px"/>
+				</c:if>
+				</td>
 			</tr>
-			</c:if>
 			<tr>
 				<th>이메일</th>
 				<td>${dto.email}</td>

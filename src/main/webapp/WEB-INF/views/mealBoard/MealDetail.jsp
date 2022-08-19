@@ -190,7 +190,7 @@
 				</c:if> --%>
 				<c:forEach items="${partMaster}" var="ptm">
 					<tr>
-						<td>${ptm.member_id}</td>
+						<td><a href="/mannerInfo?member=${ptm.member_id}&board=${info.board_idx}">${ptm.member_id}</a></td>
 						<td>${ptm.gender}</td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>
 						<c:if test="${partMemberChk > 0}"><td></td></c:if>				
@@ -202,7 +202,7 @@
 				</c:forEach>
 				<c:forEach items="${partList}" var="part">
 					<tr>
-						<td>${part.member_id}</td>
+						<td><a href="/mannerInfo?member=${part.member_id}&board=${info.board_idx}">${part.member_id}</a></td>
 						<td>${part.gender}</td>
 						<c:if test="${partMemberChk > 0}"><td>${part.phone}</td></c:if>
 						<c:if test="${info.recruit_end eq 1 }">

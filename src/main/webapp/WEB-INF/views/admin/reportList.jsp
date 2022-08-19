@@ -49,7 +49,7 @@ table{
    }
 </style>
 <body>
-	<jsp:include page="../commons/header.jsp"/>
+<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
 		<c:choose>
 			<c:when test="${sessionScope.member_class eq '일반회원'}">

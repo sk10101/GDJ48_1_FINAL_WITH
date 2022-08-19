@@ -29,6 +29,24 @@
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
+    
+    table{
+      width: 100%;
+   }
+   table, th, td{
+      border: 1px solid black;
+      border-collapse: collapse;
+      width: 300px;
+   }
+   
+   th, td{
+      padding: 5px 10px;
+      text-align: center;
+   }
+   
+   table{
+      width: 80%;
+   }
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -72,8 +90,8 @@
 					<td>${user.name}</td>
 					<td>${user.university_name}</td>
 					<td>${user.gender}</td>
-					<td><c:if test="${user.certficate_chk eq 0}">N</c:if></td>
-					<td><c:if test="${user.certficate_chk eq 1}">Y</c:if></td>
+					<c:if test="${user.certficate_chk eq 0}"><td>N</td></c:if>
+					<c:if test="${user.certficate_chk eq 1}"><td>Y</td></c:if>
 				</tr>
 			</c:forEach>
 			</tbody>

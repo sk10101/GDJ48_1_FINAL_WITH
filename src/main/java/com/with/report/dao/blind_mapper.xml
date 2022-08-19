@@ -5,19 +5,20 @@
 	
 	<select id="blindList" resultType="blind" parameterType="hashmap">
 		SELECT * FROM blind_board
-			<!-- WHERE 1=1 -->
+			<where>
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('아이디')">
-							AND member_id LIKE CONCAT('%',#{word},'%')
+							member_id LIKE CONCAT('%',#{word},'%')
 						</when>
 						<when test="option.equals('이용서비스')">
-							AND category_id LIKE CONCAT('%',#{word},'%')
+							category_id LIKE CONCAT('%',#{word},'%')
 						</when>
 						<otherwise>
 						</otherwise>
 					</choose>
 				</if>
+			</where>
 				<!-- 정렬조건 여기에 -->
 				ORDER BY blind_idx DESC
 				LIMIT #{cnt} OFFSET #{offset}
@@ -25,7 +26,7 @@
 	
 	<select id="allCount" resultType="blind" parameterType="hashmap">
 	 	SELECT * FROM blind_board
-			<!-- WHERE 1=1 -->
+			<where>
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('아이디')">
@@ -38,6 +39,7 @@
 						</otherwise>
 					</choose>
 				</if>
+			</where>
 	</select>
 	
 	<select id="blindDetail" resultType="blind" parameterType="String">
