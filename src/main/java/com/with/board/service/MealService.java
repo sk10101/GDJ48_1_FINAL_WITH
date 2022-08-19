@@ -244,12 +244,6 @@ public class MealService {
 
 
 	
-	 // 밥 게시글 참여 신청
-	public void mealApply(RedirectAttributes rAttr, String member_id, String board_idx) {
-		logger.info("밥 서비스 참가신청 서비스 도착");
-		dao.mealApply(member_id,board_idx);
-		rAttr.addFlashAttribute("msg", "모임 참여 신청 성공");
-	}
 	
 
 
@@ -259,10 +253,26 @@ public class MealService {
 		ModelAndView mav = new ModelAndView();
 		String member_id = params.get("member_id");
 		String board_idx = params.get("board_idx");
-	
-		logger.info("모임 참여 신청 성공");
-		dao.mealApply(member_id,board_idx);
-		rAttr.addFlashAttribute("msg", "모임 참여 신청 성공");
+		
+		
+		
+		// 이미 신청했을 때, 방장이 수락했을 때
+		if (dao.isApplied(member_id,board_idx) > 0) {
+			rAttr.addFlashAttribute("msg","이미 수락 대기중이거나 수락된 신청입니다.");
+		}
+		// 해당 글에 신청했다가 거절당한 이력이 있을 때
+		else if(dao.isRejected(member_id,board_idx) > 0) {
+			rAttr.addFlashAttribute("msg","이미 거절된 신청입니다.");
+		}
+		// 해당 글에서 강퇴당하거나 스스로 나간 이력이 있을 때
+		else if(dao.isBanned(member_id,board_idx) > 0) {
+			rAttr.addFlashAttribute("msg","이미 모임에서 나간 이력이 있습니다.");
+		} else {
+			// 위 세 경우에 모두 해당되지 않아야 신청이 가능하도록 조건 설정함
+			logger.info("모임 참여 신청 성공");
+			rAttr.addFlashAttribute("msg","정상적으로 신청되었습니다.");
+			dao.mealApply(member_id,board_idx);
+		}
 		
 		return mav;
 	}
