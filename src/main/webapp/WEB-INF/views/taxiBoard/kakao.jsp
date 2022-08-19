@@ -8,18 +8,38 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=303e3eb3eab9c15e38c80a5c6f8d0caf&libraries=services"></script>
 
-<style></style>
+<style>
+    .search-img {
+    	width: 30px;
+    	position: relative;
+    	top: 8px;
+    	left: 5px;
+    }
+</style>
 </head>
 <body>
-
-<input type="text" id="search"/>
-<input type="button" value="검색" onclick="search()"> 
-<form action="taxiGetCoords" id="getCoords">
-	<input type="hidden" id="lat" name="lat" value=""/>
-	<input type="hidden" id="lng" name="lng" value=""/>
-	<div id="taxiMap" style="width:1000px;height:800px;"></div>
-	<input type="submit" value="확인" id="close_button">
-</form>
+	<form action="taxiGetCoords" id="getCoords">
+		<table>
+			<tr>
+				<th>
+					<input type="text" id="search" placeholde="검색어를 입력하세요"/>
+					<!-- <input type="button" value="검색" onclick="search()"> --> 
+					<input id="searchBtn" type="image" class="search-img" alt="search" src="../resources/images/search.png" onclick="search()"/>
+				</th>
+			</tr>
+			<tr>
+				<th>
+					<input type="hidden" id="lat" name="lat" value=""/>
+					<input type="hidden" id="lng" name="lng" value=""/>
+					<div id="taxiMap" style="width:700px;height:500px;"></div>
+				</th>		
+			<tr>
+				<th>
+					<input type="submit" value="확인" id="close_button"/>
+				</th>
+			</tr>		
+		</table>
+	</form>
 
 <script>
 

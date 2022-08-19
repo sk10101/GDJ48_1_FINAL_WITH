@@ -33,15 +33,15 @@
     }
 
     .sidebar li:nth-child(1):hover,
-    li:nth-child(2):hover,
-    li:nth-child(3):hover {
+    .sidebar li:nth-child(2):hover,
+    .sidebar li:nth-child(3):hover {
         transform: translateX(17px);
     }
 
     .sidebar li:nth-child(5):hover,
-    li:nth-child(6):hover,
-    li:nth-child(8):hover,
-    li:nth-child(9):hover {
+    .sidebar li:nth-child(6):hover,
+    .sidebar li:nth-child(8):hover,
+    .sidebar li:nth-child(9):hover {
         background-color: #0026ca;
     }
 
@@ -86,7 +86,6 @@
     }
 
 </style>
-
     <div class="sidebar">
         <ul>
             <li><a href="/deliListGo"><img src="./resources/images/delivery.png" alt="delivery"><div class="circle"></div>배달</a></li>

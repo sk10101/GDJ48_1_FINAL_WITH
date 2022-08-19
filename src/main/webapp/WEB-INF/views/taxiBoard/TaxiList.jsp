@@ -7,7 +7,7 @@
 	<meta charset="UTF-8">
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./resources/js/jquery.twbsPagination.js"></script>
@@ -56,6 +56,7 @@
     	padding-top: 15px;
     	padding-bottom: 15px;
     	font-size: 16px;
+    	text-align: left;
     }
     
     .taxiList tr:last-child td {
@@ -101,16 +102,33 @@
     	margin-left: 130px;
     }
     
-    nav {
-    	text-align: center;
-    	margin-top: 40px;
-    }
-    
    	#option {
    		padding: 4px 10px;
    		border-radius: 5px;
    	}
-  
+   	
+   	/* 페이지네이션 부트스트랩 css 제거 후 직접 수정 (why? 부트스트랩 때문에 사이드바 ul li 깨짐) */
+    nav {
+    	text-align: center;
+    	margin-top: 60px;
+    }
+    
+   	#pagination {
+   		display: inline-block;
+
+   	}
+   
+   	#pagination li {
+   		float: left;
+   		/* border: 0.4px solid gray; */
+   		padding: 5px 15px;
+   	}
+   	
+   	#pagination li a {
+   		color: rgb(88, 88, 88);
+   		font-size: 16px;
+   	}
+   	
 </style>
 <body>
    	<jsp:include page="../commons/header.jsp"/>
@@ -210,7 +228,6 @@
 			console.log(page); //사용자가 클릭한 페이지
 			// 페이지 이동시에도 데이터를 가지고 있기 위해 session 을 활용한다
 			location.href = "taxiList?page="+page+"&option="+"${sessionScope.option}"+"&word="+"${sessionScope.word}";
-			
 		}
 	});
 </script>
