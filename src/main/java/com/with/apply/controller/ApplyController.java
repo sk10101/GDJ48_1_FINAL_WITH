@@ -112,8 +112,10 @@ public class ApplyController {
 			String status = params.get("status");
 			if (status.equals("1")) {
 				status = "수락";
+				
 			}if(status.equals("0")) {
 				status = "거절";
+				
 			}
 			params.put("realstatuss", status);
 			ModelAndView mav = new ModelAndView();

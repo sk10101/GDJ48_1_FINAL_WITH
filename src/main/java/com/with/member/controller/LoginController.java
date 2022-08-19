@@ -122,6 +122,8 @@ public class LoginController {
          ModelAndView mav = new ModelAndView();
     	 logger.info("아이디 찾기 아이디: "+id);
          logger.info("아이디 찾기 이메일: "+email);
+         mav.addObject("id",id);
+         logger.info("id 값 : "+id);
          int cnt = service.pwFind(id,email);
          if (cnt==0) {
         	 mav.setViewName("member/pwFind");

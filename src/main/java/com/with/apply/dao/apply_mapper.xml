@@ -118,6 +118,10 @@
 	<update id="applyDelete">
 		UPDATE apply SET hide = 1 WHERE apply_idx = #{apply_idx}
 	</update>
+
+
+	
+	
 	
 	<select id="taxiApplyList" resultType="board" parameterType="hashmap">
 	<![CDATA[
@@ -218,9 +222,11 @@
 	<update id="mealApplyUpdate" parameterType="hashmap">
 		UPDATE apply SET status = #{realstatuss} WHERE apply_idx = #{apply_idx} 
 	</update>
+	
+	
 
 	<insert id="part" parameterType="hashmap">
 		INSERT INTO participant(member_id,board_idx) VALUES (#{member_id},#{board_idx})
 	</insert>
 	
-	</mapper>
+</mapper>

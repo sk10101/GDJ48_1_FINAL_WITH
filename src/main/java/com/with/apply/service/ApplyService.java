@@ -134,7 +134,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			   mav.addObject("map",map);
 			 
 			   return mav;
-			
+			   
 		}
 		
 		
@@ -296,21 +296,52 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 		}
 		public ModelAndView taxiApplyUpdate(HashMap<String, String> params) {
+			String member_id = params.get("member_id");
 			String board_idx = params.get("board_idx");
+			ModelAndView mav = new ModelAndView("redirect:/deliApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			//dao.applyUpdate(params);
 			
-			ModelAndView mav = new ModelAndView("redirect:/taxiApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
-			dao.taxiApplyUpdate(params);
+			String status = params.get("status");
+			if (status.equals("1")) {
+				status = "수락";
+				dao.taxiApplyUpdate(params);
+				logger.info("참가자 테이블에 넣을게"+member_id);
+				dao.part(params);
+			}
+			if(status.equals("0")) {
+				status = "거절";
+				logger.info("참여 신청 거절"+member_id);
+				dao.taxiApplyUpdate(params);
+			}
+			
+			
 			return mav;
 			
 		}
 		
 
 		public ModelAndView mealApplyUpdate(HashMap<String, String> params) {
+			String member_id = params.get("member_id");
 			String board_idx = params.get("board_idx");
+			ModelAndView mav = new ModelAndView("redirect:/deliApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			//dao.applyUpdate(params);
 			
-			ModelAndView mav = new ModelAndView("redirect:/mealApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
-			dao.mealApplyUpdate(params);
+			String status = params.get("status");
+			if (status.equals("1")) {
+				status = "수락";
+				dao.mealApplyUpdate(params);
+				logger.info("참가자 테이블에 넣을게"+member_id);
+				dao.part(params);
+			}
+			if(status.equals("0")) {
+				status = "거절";
+				logger.info("참여 신청 거절"+member_id);
+				dao.mealApplyUpdate(params);
+			}
+			
+			
 			return mav;
+			
 		}
 		
 		

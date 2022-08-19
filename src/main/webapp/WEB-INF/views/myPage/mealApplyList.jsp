@@ -115,8 +115,8 @@
               				    </c:forEach>
 							</td>
 								<td colspan="2">
-								<input type="button" value="수락" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&status=1'" />
-								<input type="button" value="거절" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&status=0'" />
+								<td><input type="button" value="수락" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=1&member_id=${apply.member_id}'" /></td>
+								<td><input type="button" value="거절" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=0'" /></td>
 								</td>
 							</tr>
 				</tbody>

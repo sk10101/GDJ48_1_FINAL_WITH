@@ -170,6 +170,20 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 			return mav;
 		}
+		/*
+		// 매너평가 이동
+		@RequestMapping(value = "/mannerGo", method = RequestMethod.GET)
+		public ModelAndView mannerGo(@RequestParam String board_idx, @RequestParam String member_id) {
+			return service.mannerGo(board_idx, member_id);
+		}
+		
+		// 매너평가 실행
+		@RequestMapping(value = "/manner.Do", method = RequestMethod.POST)
+		public ModelAndView mannerDo(HttpSession session, @RequestParam HashMap<String, String> params,
+		RedirectAttributes rAttr) {
+			return service.mannerDo(session, params, rAttr);
+		}
+		*/
 	
 		 
 	
