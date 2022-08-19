@@ -80,15 +80,15 @@
 			</tr>
 		</table>
 		
-		<form action="mealApplyList">
-				<select id="option" name="option">
-					<option value="제목">제목</option>
-					<option value="아이디">아이디</option>
-				</select> 
-				<input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
-		   		<input type="hidden" name="page" value="1"/>
-          			<button id="searchBtn">검색</button>
-		</form>
+<!-- 		<form action="mealApplyList"> -->
+<!-- 				<select id="option" name="option"> -->
+<!-- 					<option value="제목">제목</option> -->
+<!-- 					<option value="아이디">아이디</option> -->
+<!-- 				</select>  -->
+<!-- 				<input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/> -->
+<!-- 		   		<input type="hidden" name="page" value="1"/> -->
+<!--           			<button id="searchBtn">검색</button> -->
+<!-- 		</form> -->
      
      	<table>
 				<thead>
@@ -115,8 +115,8 @@
               				    </c:forEach>
 							</td>
 								<td colspan="2">
-								<input type="button" value="수락" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&status=1'" />
-								<input type="button" value="거절" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&status=0'" />
+								<td><input type="button" value="수락" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=1&member_id=${apply.member_id}'" /></td>
+								<td><input type="button" value="거절" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=0'" /></td>
 								</td>
 							</tr>
 				</tbody>

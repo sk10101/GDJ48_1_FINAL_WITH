@@ -21,28 +21,27 @@ public interface ApplyDAO {
 
 	void applyUpdate(HashMap<String, String> params);
 
-	void taxiApplyUpdate(HashMap<String, String> params);
-	
 
 	ArrayList<BoardDTO> mealCount(HashMap<String, Object> map);
 
 	ArrayList<BoardDTO> mealApplyList(HashMap<String, Object> map);
 
 
-	void mealApplyUpdate(HashMap<String, String> params);
-
+	
 	void applyCancle(HashMap<String, String> params);
 
 	void applyDelete(HashMap<String, String> params);
 
-
 	void part(HashMap<String, String> params);
 
-	void applyClose(HashMap<String, String> params);
 
-	void mygApplyDelete(HashMap<String, String> params);
+
 
 	void refuse(HashMap<String, String> params);
+
+	void taxiApplyUpdate(HashMap<String, String> params);
+
+	void mealApplyUpdate(HashMap<String, String> params);
 
 
 }
