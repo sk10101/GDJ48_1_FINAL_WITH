@@ -31,7 +31,7 @@
 				<th>
 					<input type="hidden" id="lat" name="lat" value=""/>
 					<input type="hidden" id="lng" name="lng" value=""/>
-					<div id="taxiMap" style="width:700px;height:500px;"></div>
+					<div id="taxiMap" style="width:700px; height:500px;"></div>
 				</th>		
 			<tr>
 				<th>
