@@ -13,9 +13,7 @@ public interface MealDAO {
 	
 	void hit(String board_idx);
 	
-	
 
-	
 	void endUpdate();
 
 	int writeBcc(BoardDTO dto);
@@ -45,7 +43,7 @@ public interface MealDAO {
 
 	String mealPhone(String loginId);
 
-	void updateEnd();
+	
 
 	int partMeal(String member_id, int board_idx);
 
@@ -59,15 +57,7 @@ public interface MealDAO {
 
 	int recruitEnd(String board_idx);
 
-	int chkStatus(HashMap<String, Object> params);
 
-	int chkReject(HashMap<String, Object> params);
-
-	int chkElim(HashMap<String, Object> params);
-
-	String chkGender(HashMap<String, Object> params);
-
-	int mealApplys(HashMap<String, Object> params);
 
 	String chkCate(String board_idx);
 
