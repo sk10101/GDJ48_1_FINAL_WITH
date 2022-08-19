@@ -239,7 +239,7 @@ public class DeliveryService {
 		String gd_restriction = params.get("gd_restriction");
 		
 		// 성별 제한에 걸렸을 때
-		if(!(dao.getGender(member_id)+'만').equals(gd_restriction) || !gd_restriction.equals("상관없음")) {
+		if(!(dao.getGender(member_id)+'만').equals(gd_restriction) && !gd_restriction.equals("상관없음")) {
 			rAttr.addFlashAttribute("msg",gd_restriction + " 가능한 신청입니다.");
 		}
 		// 이미 신청했을 때, 방장이 수락했을 때
@@ -256,6 +256,7 @@ public class DeliveryService {
 		} else {
 			// 위 세 경우에 모두 해당되지 않아야 신청이 가능하도록 조건 설정함
 			logger.info("모임 참여 신청 성공");
+			rAttr.addFlashAttribute("msg","정상적으로 신청되었습니다.");
 			dao.applyDeli(member_id,board_idx,investment);
 		}
 		
@@ -346,5 +347,11 @@ public class DeliveryService {
 		}
 			
 		return mav;
+	}
+
+
+	public String getMin_fund(String board_idx) {
+		
+		return dao.getMin_fund(board_idx);
 	}
 }

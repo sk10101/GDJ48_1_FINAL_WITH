@@ -35,14 +35,14 @@
     }
 
     .sidebar li:nth-child(1):hover,
-    li:nth-child(2):hover,
-    li:nth-child(3):hover {
+    .sidebar li:nth-child(2):hover,
+    .sidebar li:nth-child(3):hover {
         transform: translateX(17px);
     }
 
     .sidebar li:nth-child(5):hover,
-    li:nth-child(6):hover,
-    li:nth-child(7):hover {
+    .sidebar li:nth-child(6):hover,
+    .sidebar li:nth-child(7):hover {
         background-color: #0026ca;
     }
 

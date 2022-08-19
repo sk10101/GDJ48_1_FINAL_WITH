@@ -67,6 +67,8 @@ public interface DeliveryDAO {
 
 	BoardDTO getSubAndWriter(String board_idx);
 
+	String getMin_fund(String board_idx);
+
 
 
 
