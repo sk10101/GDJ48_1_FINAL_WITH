@@ -69,6 +69,15 @@ public interface MealDAO {
 
 	int mealApplys(HashMap<String, Object> params);
 
+	String chkCate(String board_idx);
+
+	int putKind(HashMap<String, String> params);
+
+	int putResponse(HashMap<String, String> params);
+
+	int putTime(HashMap<String, String> params);
+
+	
 	
 
 	

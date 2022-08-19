@@ -42,5 +42,7 @@ public interface ApplyDAO {
 
 	void mygApplyDelete(HashMap<String, String> params);
 
+	void refuse(HashMap<String, String> params);
+
 
 }
