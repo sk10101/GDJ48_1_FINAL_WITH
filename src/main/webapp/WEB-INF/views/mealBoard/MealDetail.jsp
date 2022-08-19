@@ -205,7 +205,7 @@
 						<td>${part.gender}</td>
 						<c:if test="${partMemberChk > 0}"><td>${part.phone}</td></c:if>
 						<c:if test="${info.recruit_end eq 1 }">
-						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}"><td><input type="button" value="평가하기"/></td></c:if>
+						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}"><td><input type="button" value="평가하기" id="manner" onclick="mannrBlock()"/></td></c:if>
 						</c:if>
 						<c:if test="${info.recruit_end eq 0 }">
 						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='mealBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
@@ -291,6 +291,23 @@
 	        $("#modal").fadeOut();
 	    });
 	});	
+	
+	
+	function mannrBlock() {
+		  
+		  // 토글 할 버튼 선택 (mannr)
+		  const manner = document.getElementById('manner');
+		  
+		  // 평가 버튼 한 번 클릭시  숨기기 (display: none)
+		  if(manner.style.display !== 'none') {
+			  manner.style.display = 'none';
+		  }
+		  location.href='mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'
+
+		  
+		}
+	
+	
 
 <!-- 신고하기위해 추가함 -제한- -->
 function reportPop(){
