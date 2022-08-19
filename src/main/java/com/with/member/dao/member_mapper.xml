@@ -63,4 +63,16 @@
 		INSERT INTO block (member_id,block_member) VALUES (#{param2}, #{param1})
 	</insert>
 	
+	<update id="memberFileUpdate" parameterType="String">
+		UPDATE certificate SET ori_fileName=#{param1}, new_fileName=#{param2} WHERE member_id=#{param3}
+	</update>
+	
+	<select id="FileName" resultType="String">
+		SELECT new_fileName FROM certificate WHERE member_id = #{param1}
+	</select>
+	
+	<select id="boardName" resultType="String">
+		SELECT category_id FROM board_common_column WHERE board_idx=#{param1};
+	</select>
+	
 </mapper>

@@ -63,7 +63,6 @@
 			   <input type="hidden" name="page" value="1"/>
 			   <button id="searchBtn">검색</button>		
 		   </form>
-		   
 	     <table class="myinfo" style="margin-left:180px;">
             	<tr>
             		<th>제목</th>
@@ -76,7 +75,7 @@
 						<tr>
 							<td><a href="/adminInqueryDetail.go?idx=${name.inquery_idx}">${name.subject}</a></td>							
 							<td>${name.member_id}</td>						
-							<td><fmt:formatDate pattern="yyyy-MM-dd KK:mm:ss" value="${name.inquery_date}"/></td>						
+							<td><fmt:formatDate pattern="yyyy-MM-dd KK:mm" value="${name.inquery_date}"/></td>						
 							<td>${name.inquery_admin}</td>
 							<td>${name.status}</td>
 						</tr>

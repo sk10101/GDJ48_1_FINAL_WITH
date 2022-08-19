@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -90,7 +91,7 @@
 	            	</tr>
 	            	<tr>
 	            		<th>작성일</th>
-	            		<td>${map.inquery_date}</td>
+	            		<td><fmt:formatDate pattern="yyyy-MM-dd KK:mm" value="${map.inquery_date}"/></td>
 	            	</tr>
 	            	<tr>
 	            		<th>처리상태</th>
@@ -118,7 +119,7 @@
 	            	</tr>
 	            	<tr>
 	            		<th>작성일</th>
-	            		<td>${map.answer_date}</td>
+	            		<td><fmt:formatDate pattern="yyyy-MM-dd KK:mm" value="${map.answer_date}"/></td>
 	            	</tr>
 	            	<tr>
 	            		<th>답변내용</th>

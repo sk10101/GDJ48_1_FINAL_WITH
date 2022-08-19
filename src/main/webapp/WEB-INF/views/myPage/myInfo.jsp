@@ -223,6 +223,10 @@ button {
 	<jsp:include page="../commons/footer.jsp" />
 </body>
 <script>
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
 const drawStar = (target) => {
     document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
   }

@@ -160,8 +160,7 @@ public class MealService {
 		// login person 연락처 가져오기
 		String phone = dao.mealPhone(loginId);
 		mav.addObject("phone", phone);
-		// 시간 비교를 통해 마감여부를 update 해주는 코드
-		dao.updateEnd();
+		
 		
 		// 로그인한 참가자가 명단에 있는지 
 		int partMemberChk = dao.partMemberChk((String) session.getAttribute("loginId"),board_idx);
@@ -254,14 +253,7 @@ public class MealService {
 		String member_id = params.get("member_id");
 		String board_idx = params.get("board_idx");
 		
-		
-		
-		// 이미 신청했을 때, 방장이 수락했을 때
-		if (dao.isApplied(member_id,board_idx) > 0) {
-			rAttr.addFlashAttribute("msg","이미 수락 대기중이거나 수락된 신청입니다.");
-		}
-		// 해당 글에 신청했다가 거절당한 이력이 있을 때
-		else if(dao.isRejected(member_id,board_idx) > 0) {
+		if(dao.isRejected(member_id,board_idx) > 0) {
 			rAttr.addFlashAttribute("msg","이미 거절된 신청입니다.");
 		}
 		// 해당 글에서 강퇴당하거나 스스로 나간 이력이 있을 때

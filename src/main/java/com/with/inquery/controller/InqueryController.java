@@ -1,6 +1,5 @@
 package com.with.inquery.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.with.inquery.dto.InqueryDTO;
 import com.with.inquery.service.InqueryService;
 @Controller
 public class InqueryController {
@@ -64,6 +62,7 @@ public class InqueryController {
 		map = service.inqueryDetail(idx);
 		map.put("idx",idx);
 		logger.info("map 값 : {}",map);
+		//map.get(")
 		model.addAttribute("map",map);
 		return "myPage/inqueryDetail";
 	}
@@ -93,9 +92,9 @@ public class InqueryController {
 	}
 	
 	@RequestMapping(value = "/adminInQueryList")
-	public ModelAndView adminInQueryList(@RequestParam int page) {
+	public ModelAndView adminInQueryList(@RequestParam HashMap<String, Object> map) {
 		ModelAndView mav = new ModelAndView();
-		mav = service.adminInqueryList(page);
+		mav = service.adminInqueryList(map);
 		return mav;
 	}
 	
