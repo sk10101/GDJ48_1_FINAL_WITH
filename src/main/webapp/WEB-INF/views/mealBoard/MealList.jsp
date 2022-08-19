@@ -150,7 +150,7 @@
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	       <div class="search">
-		       <form action="deliList">
+		       <form action="mealList">
 			       <select id="option" name="option">
 						<option value="제목">제목</option>
 						<option value="약속장소">약속장소</option>
