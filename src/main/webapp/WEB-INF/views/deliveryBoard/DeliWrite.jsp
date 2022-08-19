@@ -30,9 +30,9 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
-        /* background-color: #f4f4f4; */
+		min-height: 100vh;
         background-color: rgb(249, 249, 249);
+        padding: 60px 100px;
     }
 </style>
 <body>

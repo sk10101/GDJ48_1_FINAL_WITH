@@ -25,9 +25,9 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 100vh;
-        /* background-color: #f4f4f4; */
+		min-height: 100vh;
         background-color: rgb(249, 249, 249);
+        padding: 60px 100px;
     }
     
     /* 양수빈 CSS 작업[삭제 해도 됨] */
@@ -56,6 +56,8 @@
 				<jsp:include page="../commons/adminSideBar6.jsp"/>
 			</c:when>
 		</c:choose>
+		<div class="content">
+	       <!-- 여기에서 작업 시작하세요 -->
 	     <table class="myinfo" style="margin-left:180px;">
             	<tr>
             		<th>차단 대상 ID</th>
