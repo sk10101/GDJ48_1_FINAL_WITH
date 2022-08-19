@@ -33,7 +33,7 @@ public class DeliveryService {
 	@Autowired DeliveryDAO dao;
 	
 	// 배달 게시판 목록 조회 서비스
-	public ModelAndView deliList(HashMap<String, String> params) {
+	public ModelAndView deliList(HashMap<String, String> params, HttpSession session) {
 		logger.info("게시글 목록 요청");
 		ModelAndView mav = new ModelAndView("deliveryBoard/DeliList");
 		
@@ -45,8 +45,11 @@ public class DeliveryService {
 		int page = Integer.parseInt(params.get("page"));
 		String option = params.get("option");
 		String word = params.get("word");
+		// 로그인한 사람이 차단한 회원이 작성한 게시글은 보여주지 않기 위해 가져온다.
+		String loginId = (String) session.getAttribute("loginId"); 
 		
 		map.put("page", page); // page 입력
+		map.put("loginId", loginId);
 		// 검색어를 입력했을 때
 		if(word != "" && word != " ") {
 			map.put("word", word); // 검색어 입력
