@@ -86,7 +86,6 @@
     }
 
 </style>
-
     <div class="sidebar">
         <ul>
             <li><a href="/deliListGo"><img src="./resources/images/delivery.png" alt="delivery"><div class="circle"></div>배달</a></li>
