@@ -337,7 +337,7 @@
 		       					<c:if test="${pt.member_id eq list.member_id}">
 		       						<img id="crown" src="./resources/images/crown.png" alt="crown"/>
 		       					</c:if>
-		       					${pt.member_id}
+		       					<a href="/mannerInfo?member=${pt.member_id}&board=${list.board_idx}">${pt.member_id}</a>
 		       				</th>
 			       			<td class="ptList">${pt.gender}</td>
 			       			<!-- 현재 로그인한 아이디가 이 방의 참여인원으로 있다면 연락처를 보여준다. -->
