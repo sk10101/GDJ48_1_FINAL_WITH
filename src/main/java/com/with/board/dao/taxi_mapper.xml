@@ -124,7 +124,10 @@
 </select>
 
  <update id="updateEnd">
-	UPDATE board_common_column SET recruit_end = if(deadline &gt; now(), '0', '1')
+	<![CDATA[
+		UPDATE board_common_column 
+			SET recruit_end = 1 WHERE deadline <= now()
+	]]> 
  </update>
  
 <!--  <select id="taxiSearchList" resultType="board">

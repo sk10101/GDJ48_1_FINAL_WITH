@@ -31,7 +31,7 @@ public interface DeliveryDAO {
 
 	MemberDTO getUnivAddr(String loginid);
 
-	ArrayList<BoardDTO> partList(String board_idx);
+	ArrayList<BoardDTO> partList(String board_idx, String loginId);
 
 	void applyDeli(String member_id, String board_idx, String investment);
 

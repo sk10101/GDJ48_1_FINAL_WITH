@@ -295,10 +295,12 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			return mav;
 			
 		}
+		
 		public ModelAndView taxiApplyUpdate(HashMap<String, String> params) {
 			String member_id = params.get("member_id");
 			String board_idx = params.get("board_idx");
-			ModelAndView mav = new ModelAndView("redirect:/deliApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			
+			ModelAndView mav = new ModelAndView("redirect:/taxiApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
 			//dao.applyUpdate(params);
 			
 			String status = params.get("status");
@@ -323,7 +325,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		public ModelAndView mealApplyUpdate(HashMap<String, String> params) {
 			String member_id = params.get("member_id");
 			String board_idx = params.get("board_idx");
-			ModelAndView mav = new ModelAndView("redirect:/deliApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			ModelAndView mav = new ModelAndView("redirect:/mealApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
 			//dao.applyUpdate(params);
 			
 			String status = params.get("status");
@@ -343,12 +345,6 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			return mav;
 			
 		}
-		
-		
-		
-		
-		
-		
 		
 		
 		// 현수 밥 추가요----------------------------------------------------------

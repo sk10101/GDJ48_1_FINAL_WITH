@@ -301,13 +301,12 @@
 		       			<th>
 		       				<img style="position: relative; top: 5px;" id="gender" src="./resources/images/gender.png" alt="gender"/>&nbsp; ${list.gender}
 		       			</th>
-		       			<c:if test="${list.member_id eq sessionScope.loginId}"><td></td></c:if>
 		       			<c:if test="${list.member_id ne sessionScope.loginId}">
-		       			<td colspan="3" style="text-align: right;">
-		       				<img id="report-img" src="./resources/images/report.png" alt="report"/>
-		       				<!-- 신고하기위해 살짝 수정함 -제한- -->
-		       				<input id="report" type="button" name="report" value="신고" onclick="reportPop()"/>
-		       			</td>
+			       			<td colspan="3" style="text-align: right;">
+			       				<img id="report-img" src="./resources/images/report.png" alt="report"/>
+			       				<!-- 신고하기위해 살짝 수정함 -제한- -->
+			       				<input id="report" type="button" name="report" value="신고" onclick="reportPop()"/>
+			       			</td>
 		       			</c:if>
 		       		</tr>
 		       		<tr>
@@ -373,8 +372,8 @@
 		       		<tr>
 		       			<td colspan="4" style="text-align: center">
 		       				<!--  모집중 and 본인이 작성한 글이 아니라면 참여신청 버튼이 노출된다. -->
-		       				<c:if test="${list.recruit_end == 0 and sessionScope.loginId ne list.member_id}">
-								<input id="apply-button" type="button" value="참여신청"/>
+		       				<c:if test="${list.recruit_end == 0}">
+								<input id="apply-button" type="button" value="참여신청" <c:if test="${sessionScope.loginId eq list.member_id}">hidden</c:if>/>
 							</c:if>
 						</td>
 		       		</tr>
@@ -382,7 +381,7 @@
 		       			<td colspan="4" style="text-align: center">
 			       			<c:if test="${sessionScope.loginId eq list.member_id}">
 				       			<input class="bottom-button del-button" type="button" value="삭제" onclick="location.href='/deliDelete?board_idx=${list.board_idx}'"/>
-				       		</c:if>	
+				       		</c:if>		
 							<input class="bottom-button back-button" type="button" value="돌아가기" onclick="location.href='/taxiListGo'"/>
 						</td>
 		       		</tr>

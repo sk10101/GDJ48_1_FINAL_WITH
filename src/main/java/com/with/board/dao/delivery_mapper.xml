@@ -58,8 +58,10 @@
 	</select>
 	
 	<select id="allCount" resultType="board" parameterType="hashmap">
-	 	SELECT board_idx FROM board_common_column
-			WHERE category_id = '배달게시판' AND hide = 0
+	 	SELECT board_idx, university_idx FROM board_common_column bcc, member m
+			WHERE category_id = '배달게시판' AND bcc.hide = 0 AND m.member_id = #{loginId} 
+			AND (SELECT COUNT(block_member) FROM block b WHERE b.member_id = #{loginId} AND block_member = bcc.member_id) = 0
+			AND university_idx = (SELECT university_idx FROM member m WHERE bcc.member_id = m.member_id)
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -81,16 +83,19 @@
 		SELECT bcc.board_idx
 		,subject
 		,appoint_place
-		,member_id
+		,bcc.member_id
 		,min_delivery
 		,write_date
 		,DATE_FORMAT(deadline,'%Y-%m-%d %H:%i') as deadline
 		,hit
 		,member_cnt
-		,recruit_end 
+		,recruit_end
+		,university_idx
 		,(SELECT COUNT(pt_idx) FROM participant p WHERE bcc.board_idx = p.board_idx AND p.hide = 0) as partNo
-		FROM board_common_column bcc, delivery_board d
-			WHERE bcc.board_idx = d.board_idx AND category_id = '배달게시판' AND hide = 0
+		FROM board_common_column bcc, delivery_board d, member m
+			WHERE bcc.board_idx = d.board_idx AND category_id = '배달게시판' AND bcc.hide = 0 AND m.member_id = #{loginId} 
+			AND (SELECT COUNT(block_member) FROM block b WHERE b.member_id = #{loginId} AND block_member = bcc.member_id) = 0
+			AND university_idx = (SELECT university_idx FROM member m WHERE bcc.member_id = m.member_id)
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -114,10 +119,12 @@
 			WHERE m.university_idx = u.university_idx AND member_id = #{loginId}
 	</select>
 	
-	<select id="partList" parameterType="String" resultType="board">
-			SELECT p.member_id, m.gender, a.investment, m.phone FROM participant p, member m, apply a
-				WHERE p.board_idx = #{board_idx} AND a.board_idx = #{board_idx}
-				AND a.member_id = p.member_id AND p.hide = 0 AND p.member_id = m.member_id AND a.member_id = m.member_id
+	<select id="partList" resultType="board">
+			SELECT p.member_id, m.gender, a.investment, m.phone
+			,(SELECT COUNT(assess_idx) FROM manner_assess ma WHERE assessor = #{param2} AND ma.board_idx = #{param1}) as assessNo
+			 FROM participant p, member m, apply a
+				WHERE p.board_idx = #{param1} AND a.board_idx = p.board_idx AND status = '수락'
+				AND a.member_id = p.member_id AND p.hide = 0 AND p.member_id = m.member_id
 					ORDER BY pt_idx ASC
 	</select>
 	

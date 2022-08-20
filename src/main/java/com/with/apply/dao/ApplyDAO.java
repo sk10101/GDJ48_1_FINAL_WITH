@@ -44,4 +44,5 @@ public interface ApplyDAO {
 	void mealApplyUpdate(HashMap<String, String> params);
 
 
+
 }
