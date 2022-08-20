@@ -137,7 +137,7 @@
 				<td>
 						<input type="hidden" id="university_idx" name='university_idx' />
 						<input type="text" id="university_name" name='university_name'  placeholder="대학교 입력"readonly />
-					   <button type="button" id="empSearch" class="btn btn-default">검색</button>
+					   <button type="button" id="univSearch" class="btn btn-default">검색</button>
 				</td>	
 			  <tr>
 				<th>연락처</th>
@@ -169,7 +169,7 @@
 </form>
     
  <!-- 대학검색 Modal -->
-<div id="empSearchModal" class="modal fade" role="dialog" data-backdrop="static">
+<div id="univSearchModal" class="modal fade" role="dialog" data-backdrop="static">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -179,13 +179,13 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>        
       </div>
       <div class="modal-body" style="width:100%; height:500px; overflow:auto">
-        <table id="emptable" class="table table-striped">
+        <table id="univtable" class="table table-striped">
         <div id="goodList" class="form-inline" >
 		<!--   <select style="width:20%"><option>대학이름</option></select> -->
 			<span>대학이름 : </span>
 		  <input  class="form-control" type="text" style="width:50%" id="keyword" name="keyword" display="inline-block"/> 
 		  <!-- <input type="hide" id="univ_idx" name=univ_idx/> --> 
-		  <button type="button" id="empsearch" style="width:20%" class="btn btn-default">검색</button> 
+		  <button type="button" id="univsearch" style="width:20%" class="btn btn-default">검색</button> 
 		 </div>
         	<thead style="text-align:center; font-size:20px;">
         		<tr><td>대학교</td><tr>
@@ -196,7 +196,7 @@
 
       </div>
       <div class="modal-footer" >
-      	<button type="button" id="empUp" onclick="empUp()" class="btn btn-default" >선택</button>
+      	<button type="button" id="univUp" onclick="univUp()" class="btn btn-default" >선택</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
       </div>
     </div>
@@ -351,13 +351,13 @@ $(function(){
 	} 
 
 	//모달뜨게하는 기능
-	$("#empSearch").click(function(){
-		       $('#empSearchModal').modal();
+	$("#univSearch").click(function(){
+		       $('#univSearchModal').modal();
 		
 		// 모달창 띄우고 뿌리기 
 		$.ajax({
 			type:'get',
-			url:'cliempList.ajax',
+			url:'univList.ajax',
 			data:{},
 			dataType:'json',
 			success:function(data){
@@ -372,11 +372,11 @@ $(function(){
 	
 	
 	// 대학 검색 
-	$('#empsearch').on('click',function(){
+	$('#univsearch').on('click',function(){
 
 		$.ajax({
 			type:'get',
-			url:'cliempSearch.ajax',
+			url:'univSearch.ajax',
 			data:{
 					keyword:$("#keyword").val()
 				},
@@ -405,10 +405,10 @@ $(function(){
 	}
 	
 	//대학 등록 
-	function empUp(){
+	function univUp(){
 			$("#university_idx").val($('input[name=selectUniv]:checked').val());		
 			$("#university_name").val($('input[name=selectUniv]:checked').attr("class"));		
-			$('#empSearchModal').modal('hide')
+			$('#univSearchModal').modal('hide')
 		}
 		
 		function joinDo(){
@@ -490,43 +490,29 @@ $(function(){
 	      $("#phone").focus();
 	    
 	      return false;
-	      }
+	     }
 	   
 	   if ($("#email").val() == null || $("#email").val() == "") {
 	      alert("이메일을 입력해주세요.");
 	      $("#email").focus();
 	    
 		   return false;
-	      }
-	   
-/* 	   if(!overChkEmail){
-	      alert("이메일 중복체크를 눌러주세요.");
-	      $("#EmailOverlay").focus();
-	       
-	      return false;
-	      } */
-	   
-/* 	   if(!email_rule.test($("#email").val())){
-		    alert("이메일을 형식에 맞게 입력해주세요. ex) 1234@naver.com");
-		   $("#email").focus();
-		   
-	      return false;   
-	      } */
-	   
-	   if ($("#photos").val() == null || $("#photos").val() == "") {
-	      alert("인증서를 등록해주세요.");
-	      $("#photos").focus();
-	       
-	      return false;
-	   }
+	  	  }	  
 	   
 	   if(!overChkEmail){
 		      alert("이메일 중복체크를 눌러주세요.");
 		      $("#EmailOverlay").focus();
 		       
-		      return false;
-		      }	      
+		  return false;
+	  	  }	      
 	      
+	   if ($("#photos").val() == null || $("#photos").val() == "") {
+	      alert("인증서를 등록해주세요.");
+	      $("#photos").focus();
+	       
+	      return false;
+	   	  }
+	   
 	   if(!email_rule.test($("#email").val())){
 		    alert("이메일을 형식에 맞게 입력해주세요. ex) 1234@naver.com");
 		   $("#email").focus();
@@ -534,19 +520,12 @@ $(function(){
 	      return false;   
 	      }	   
 	
-	   
-
 	    if (confirm("회원가입하시겠습니까?")) {
-	    
-	   $("#test").submit();
+	       $("#test").submit();
 	    
 	      return false;
 	      }
 	    
-	    
-	   }		
-		
-		
-		
+	   }					
 </script>
 </html>

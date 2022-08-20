@@ -8,9 +8,9 @@ public interface JoinDAO {
 
 	int join(MemberDTO dto);
 
-	ArrayList<MemberDTO> empList();
+	ArrayList<MemberDTO> univList();
 
-	ArrayList<MemberDTO> empSearch(String university_name);
+	ArrayList<MemberDTO> univSearch(String university_name);
 
 	void memberFileWrite(String oriFileName, String newFileName, String member_id);
 
