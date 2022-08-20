@@ -205,10 +205,7 @@
 						<td><a href="/mannerInfo?member=${part.member_id}&board=${info.board_idx}">${part.member_id}</a></td>
 						<td>${part.gender}</td>
 						<c:if test="${partMemberChk > 0}"><td>${part.phone}</td></c:if>
-						<c:if test="${info.recruit_end eq 1 }">
-						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}">
-						<td><input type="button" value="평가하기" onclick="location.href='mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'" <c:if test="${pt.member_id eq sessionScope.loginId or pt.chkManner > 0}">hidden</c:if>/></td></c:if>
-						</c:if>
+						<td><c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0 and part.assessNo eq 0}"><input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'"/></c:if></td>
 						<c:if test="${info.recruit_end eq 0 }">
 						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='mealBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
 						</c:if>

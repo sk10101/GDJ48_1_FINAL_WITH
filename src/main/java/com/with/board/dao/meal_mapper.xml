@@ -78,17 +78,28 @@
 	</select>
 	
 	<select id="mealList" resultType="board" parameterType="hashmap">
-		SELECT bcc.board_idx
-		,subject
-		,appoint_place
-		,member_id
-		,write_date
-		,DATE_FORMAT(deadline,'%Y-%m-%d %H:%i') as deadline
-		,hit
-		,member_cnt
-		,(SELECT COUNT(pt_idx) FROM participant p WHERE bcc.board_idx = p.board_idx AND p.hide = 0) as partNo		
-		,recruit_end FROM board_common_column bcc, meal_board mb
-			WHERE bcc.board_idx = mb.board_idx AND category_id = '밥게시판'
+		SELECT 
+	bcc.board_idx,
+	bcc.member_id,
+	hit,
+	write_date,
+	subject,
+	DATE_FORMAT(bcc.deadline,'%Y-%m-%d %H:%i') as deadline,
+	appoint_place,
+	(member_cnt + 1) as member_cnt,
+	recruit_end,
+	bcc.hide,
+	(SELECT COUNT(pt_idx) FROM participant p WHERE bcc.board_idx = p.board_idx AND p.hide = 0) as partNo
+	FROM
+	board_common_column bcc,
+	meal_board mb,
+	member m
+	WHERE
+	bcc.board_idx = mb.board_idx AND
+	bcc.hide = 0 AND
+	category_id = '밥게시판' AND
+	m.member_id = bcc.member_id AND
+	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{loginId})
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -108,7 +119,7 @@
 	</select>
 	
 	<select id="getUniversityAddr" parameterType="String" resultType="member">
-		SELECT university_addr, m.university_idx FROM university u, member m
+		SELECT u.university_addr,u.university_name, m.university_idx FROM university u, member m
 			WHERE m.university_idx = u.university_idx AND member_id = #{loginId}
 	</select>
 	
@@ -125,14 +136,12 @@
 	</insert>
 		
 	<select id="partList" parameterType="String" resultType="board">
-		SELECT
-		p.member_id, 
-		m.gender, 
-		m.phone,
-		(SELECT COUNT(*) FROM manner_assess m WHERE m.board_idx = #{param1} AND assessor = #{param2} and p.member_id = m.member_id) as chkManner 	
-		FROM participant p, member m, apply a
-		WHERE p.board_idx = #{board_idx} AND a.board_idx = #{board_idx} AND a.status = '수락' 
-		AND a.member_id = p.member_id AND p.hide = 0 AND p.member_id = m.member_id AND a.member_id = m.member_id
+		SELECT p.member_id, m.gender, a.investment, m.phone
+			,(SELECT COUNT(assess_idx) FROM manner_assess ma WHERE assessor = #{param2} AND ma.board_idx = #{param1}) as assessNo
+			 FROM participant p, member m, apply a
+				WHERE p.board_idx = #{param1} AND a.board_idx = p.board_idx AND status = '수락'
+				AND a.member_id = p.member_id AND p.hide = 0 AND p.member_id = m.member_id
+					ORDER BY pt_idx ASC
 	</select>
 	
 	<select id="mealCount" resultType="int">
@@ -191,7 +200,10 @@
 				WHERE member_id = #{param1} AND board_idx = #{param2} AND hide=1
 	</select>
 		
-
+	<select id="chkGender" resultType="String" parameterType="hashmap">
+		SELECT gender FROM member
+				WHERE member_id = #{param1}
+	</select>
 	
 </mapper>
 
