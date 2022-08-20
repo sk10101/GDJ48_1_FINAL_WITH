@@ -29,19 +29,6 @@
         padding-bottom: 60px;
     }
     
-	.goodRegister {
-		position: relative;
-		margin: 20px auto;
-		margin: 0 auto;
-		max-width: 180px;
-		text-decoration: none;
-		border-radius: 4px;
-		padding: 10px 20px;
-	    color: rgb(26 18 50 / 100%);
-	    font-size: 18px;
-	    font-weight: 500;
-		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
-	}
 	
     div.logo {
         display: inline-block;
@@ -159,8 +146,6 @@
 				<th colspan="3" style="text-align: center;"><br>
 					<button class="btn btn-default bottom-button" type="button" onclick="save(); return false;">회원가입</button>
 					<button class="btn btn-default bottom-button" type="button" onclick="location.href='/'">돌아가기</button> 
-<!-- 				<input type="submit"  class="btn btn-default" value="회원가입" />
-					<input type="button"  class="btn btn-default" value="돌아가기" onclick="location.href='/'"/>  -->
 				</th>
 			</tr>
 		</table>
@@ -180,8 +165,7 @@
       </div>
       <div class="modal-body" style="width:100%; height:500px; overflow:auto">
         <table id="univtable" class="table table-striped">
-        <div id="goodList" class="form-inline" >
-		<!--   <select style="width:20%"><option>대학이름</option></select> -->
+        <div id="List" class="form-inline" >
 			<span>대학이름 : </span>
 		  <input  class="form-control" type="text" style="width:50%" id="keyword" name="keyword" display="inline-block"/> 
 		  <!-- <input type="hide" id="univ_idx" name=univ_idx/> --> 
@@ -205,61 +189,59 @@
     
 	<jsp:include page="../commons/memberFooter.jsp"/>
 </body>
-<link rel="icon" href="resources/img/icon.png">
-	<link href="../resources/img/goodfavicon.png" rel="icon">
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script>
 
 // 연락처 입력할때 하이픈(-) 자동입력
-$(function(){
-
-    $(".phone-number-check").on('keydown', function(e){
-       // 숫자만 입력받기
-        var trans_num = $(this).val().replace(/-/gi,'');
-	var k = e.keyCode;
-				
-	if(trans_num.length >= 11 && ((k >= 48 && k <=126) || (k >= 12592 && k <= 12687 || k==32 || k==229 || (k>=45032 && k<=55203)) ))
-	{
-  	    e.preventDefault();
-	}
-    }).on('blur', function(){ // 포커스를 잃었을때 실행합니다.
-        if($(this).val() == '') return;
-
-        // 기존 번호에서 - 를 삭제합니다.
-        var trans_num = $(this).val().replace(/-/gi,'');
-      
-        // 입력값이 있을때만 실행합니다.
-        if(trans_num != null && trans_num != '')
-        {
-            // 총 핸드폰 자리수는 11글자이거나, 10자여야 합니다.
-            if(trans_num.length==11 || trans_num.length==10) 
-            {   
-                // 유효성 체크
-                var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
-                if(regExp_ctn.test(trans_num))
-                {
-                    // 유효성 체크에 성공하면 하이픈을 넣고 값을 바꿔줍니다.
-                    trans_num = trans_num.replace(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?([0-9]{3,4})-?([0-9]{4})$/, "$1-$2-$3");                  
-                    $(this).val(trans_num);
-                }
-                else
-                {
-                    alert("유효하지 않은 연락처 입니다.");
-                    $(this).val("");
-                    $(this).focus();
-                }
-            }
-            else 
-            {
-                alert("유효하지 않은 연락처 입니다.");
-                $(this).val("");
-                $(this).focus();
-            }
-      }
-  });  
-});
+	$(function(){
+	
+	    $(".phone-number-check").on('keydown', function(e){
+	       // 숫자만 입력받기
+	        var trans_num = $(this).val().replace(/-/gi,'');
+		var k = e.keyCode;
+					
+		if(trans_num.length >= 11 && ((k >= 48 && k <=126) || (k >= 12592 && k <= 12687 || k==32 || k==229 || (k>=45032 && k<=55203)) ))
+		{
+	  	    e.preventDefault();
+		}
+	    }).on('blur', function(){ // 포커스를 잃었을때 실행합니다.
+	        if($(this).val() == '') return;
+	
+	        // 기존 번호에서 - 를 삭제합니다.
+	        var trans_num = $(this).val().replace(/-/gi,'');
+	      
+	        // 입력값이 있을때만 실행합니다.
+	        if(trans_num != null && trans_num != '')
+	        {
+	            // 총 핸드폰 자리수는 11글자이거나, 10자여야 합니다.
+	            if(trans_num.length==11 || trans_num.length==10) 
+	            {   
+	                // 유효성 체크
+	                var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+	                if(regExp_ctn.test(trans_num))
+	                {
+	                    // 유효성 체크에 성공하면 하이픈을 넣고 값을 바꿔줍니다.
+	                    trans_num = trans_num.replace(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?([0-9]{3,4})-?([0-9]{4})$/, "$1-$2-$3");                  
+	                    $(this).val(trans_num);
+	                }
+	                else
+	                {
+	                    alert("유효하지 않은 연락처 입니다.");
+	                    $(this).val("");
+	                    $(this).focus();
+	                }
+	            }
+	            else 
+	            {
+	                alert("유효하지 않은 연락처 입니다.");
+	                $(this).val("");
+	                $(this).focus();
+	            }
+	      }
+	  });  
+	});
 
 
 	//비밀번호 일치 불일치 여부 확인후 내용띄우기
@@ -316,10 +298,7 @@ $(function(){
 		});
 	}
 
-	
-	
-	
-	
+
 	//이메일 중복 체크
 	var overChkEmail = false; // 중복체크 여부
 
@@ -368,7 +347,7 @@ $(function(){
 				}
 		});	
 		
-		    });
+	});
 	
 	
 	// 대학 검색 
@@ -409,123 +388,110 @@ $(function(){
 			$("#university_idx").val($('input[name=selectUniv]:checked').val());		
 			$("#university_name").val($('input[name=selectUniv]:checked').attr("class"));		
 			$('#univSearchModal').modal('hide')
-		}
+	}
 		
 		function joinDo(){
 			alert("test");
 			location.href="/join.do";
-		}
+	}
 
 		
 	function save() { 
 		
-		 /* 정규식 설명
-숫자 (0~9) or 알파벳 (a~z, A~Z) 으로 시작하며 중간에 -_. 문자가 있을 수 있으며 그 후 숫자 (0~9) or 알파벳 (a~z, A~Z)이 올 수도 있고 연달아 올 수도 있고 없을 수도 있다. 
-@ 는 반드시 존재하며 . 도 반드시 존재하고 a~z, A~Z 의 문자가 2,3개 존재하고 i = 대소문자 구분 안한다.
+		/*이메일은
+		숫자 (0~9) or 알파벳 (a~z, A~Z) 으로 시작하며 중간에 -_. 문자가 있을 수 있으며 그 후 숫자 (0~9) or 알파벳 (a~z, A~Z)이 올 수도 있고
+		연달아 올 수도 있고 없을 수도 있다. 
+		@ 는 반드시 존재하며 . 도 반드시 존재하고 a~z, A~Z 의 문자가 2,3개 존재하고 i = 대소문자 구분 안한다.
 		*/
-		//특수문자 / 문자 / 숫자 포함 형태의 8~15자리 이내의 암호 정규식 ( 3 가지 조합)
+		//비밀번호는 특수문자 / 문자 / 숫자 포함 형태의 8~15자리 이내의 암호 정규식 ( 3 가지 조합)
 
 	   var pw_rule =/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 	   var email_rule =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-	   // var tel_rule = /^\d{2,3}-\d{3,4}-\d{4}$/; 전화번호용
 	    
 	   if ($("#member_id").val() == null || $("#member_id").val() == "") {
 	      alert("아이디를 입력해주세요.");
 	      $("#member_id").focus();
 	    
 	      return false;
-	     
-	   }
+	      }
 	   
 	   if(!overChk){
 	      alert("아이디 중복체크를 눌러주세요.");
 	      $("#IdOverlay").focus();
-	    
-	      return false;
+		  return false;
 	      }
 	   
 	   if ($("#member_pw").val() == null || $("#member_pw").val() == "") {
 	      alert("비밀번호를 입력해주세요.");
 	      $("#member_pw").focus();
-		    return false;
+		      return false;
         	}
 	   
 	   if(!pw_rule.test($("#member_pw").val()))  {
 		    alert("비밀번호는 8 ~ 16자 영문, 숫자, 특수문자를 최소 한가지씩 조합해야 합니다.");
 		    $("#member_pw").focus();
-		    
-		    return false;
+			  return false;
 	       }
 	   
 	   if ($("#member_pw2").val() == null || $("#member_pw2").val() == "") {
 	      alert("비밀번호 확인을 입력해주세요.");
 	      $("#member_pw2").focus();
-	       
-	      return false;
+	         return false;
 	      }
 	   
 	   if ($("#member_pw").val() != $("#member_pw2").val()) {
 	      alert("비밀번호가 일치하지 않습니다.");
 	      $("#member_pw2").focus();
-	    
-	      return false;
+	         return false;
 	      }
 	   
 	   if ($("#name").val() == null || $("#name").val() == "") {
 		   alert("이름을 입력해주세요.");
 		   $("#name").focus();
-	    
-	      return false;
+			  return false;
 	      }
 	   
 	   if ($("#university_name").val() == null || $("#university_name").val() == "") {
 	      alert("대학교를 입력해주세요.");
 	      $("#university_name").focus();
-	       
-	      return false;
-	      }
+			 return false;
+		  }
 	   
 	   if ($("#phone").val() == null || $("#phone").val() == "") {
 	      alert("연락처를 입력해주세요.");
 	      $("#phone").focus();
-	    
-	      return false;
-	     }
+			 return false;
+	      }
 	   
 	   if ($("#email").val() == null || $("#email").val() == "") {
 	      alert("이메일을 입력해주세요.");
 	      $("#email").focus();
-	    
-		   return false;
+			 return false;
 	  	  }	  
 	   
 	   if(!overChkEmail){
 		      alert("이메일 중복체크를 눌러주세요.");
 		      $("#EmailOverlay").focus();
-		       
-		  return false;
+			return false;
 	  	  }	      
 	      
 	   if ($("#photos").val() == null || $("#photos").val() == "") {
 	      alert("인증서를 등록해주세요.");
 	      $("#photos").focus();
-	       
-	      return false;
+			 return false;
 	   	  }
 	   
 	   if(!email_rule.test($("#email").val())){
 		    alert("이메일을 형식에 맞게 입력해주세요. ex) 1234@naver.com");
 		   $("#email").focus();
-		   
-	      return false;   
+			return false;   
 	      }	   
 	
 	    if (confirm("회원가입하시겠습니까?")) {
 	       $("#test").submit();
-	    
-	      return false;
+			 return false;
 	      }
 	    
-	   }					
+	 }					
 </script>
 </html>
