@@ -80,7 +80,10 @@ public class DeliveryService {
 		mav.addObject("info",info);
 		mav.addObject("deliPhotoList",deliPhotoList);
 		// 참여자 목록 조회
-		ArrayList<BoardDTO> partList = partList(board_idx);
+		// 한 번 평가한 회원은 다시 평가할 수 없도록 평가하기 버튼을 가린다.
+		String loginId = (String) session.getAttribute("loginId");
+		ArrayList<BoardDTO> partList = partList(board_idx, loginId);
+		
 		
 		mav.addObject("partList",partList);
 		// 참여자 명단에 방장을 맨위에 따로 그려준다 (방장은 investment 변수에 입력한 값이 없어 부득이하게 따로 입력)
@@ -226,10 +229,10 @@ public class DeliveryService {
 	}
 
 	
-	private ArrayList<BoardDTO> partList(String board_idx) {
+	private ArrayList<BoardDTO> partList(String board_idx, String loginId) {
 		logger.info("참여 회원 목록 서비스");
 		
-		return dao.partList(board_idx);
+		return dao.partList(board_idx, loginId);
 	}
 
 

@@ -244,4 +244,16 @@ public int getBoard_idx() {
 		this.manner_score = manner_score;
 	}
 	
+	// 해당 회원에게 평가를 한 적이 있는지 세어보기 위한 DTO
+	private int assessNo;
+
+	public int getAssessNo() {
+		return assessNo;
+	}
+	public void setAssessNo(int assessNo) {
+		this.assessNo = assessNo;
+	}
+	
+	
+	
 }
