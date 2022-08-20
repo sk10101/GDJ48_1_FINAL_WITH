@@ -69,7 +69,9 @@
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	       	<p>${params.member}님의 매너평가 점수</p>
-	       	<input type="button" value="차단" onclick="location.href='/blockAdd?member=${params.member}&board=${params.board}'"/>
+	        <c:if test="${sessionScope.loginId ne params.member}">
+	       		<input type="button" value="차단" onclick="location.href='/blockAdd?member=${params.member}&board=${params.board}'"/>
+	       	</c:if>	
 	     	<table class="myinfo" style="margin-left: 180px;">
 				<tr>
 					<th>친절함</th>

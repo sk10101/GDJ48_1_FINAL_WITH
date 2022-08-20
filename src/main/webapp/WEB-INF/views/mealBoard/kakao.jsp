@@ -7,20 +7,66 @@
 <title>약속장소 상세위치</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=303e3eb3eab9c15e38c80a5c6f8d0caf&libraries=services"></script>
-<style></style>
+<style>
+    .search-img {
+    	width: 30px;
+    	position: relative;
+    	top: 8px;
+    	left: 5px;
+    }
+    
+    #kakao-table {
+    	margin: 0 auto;
+    }
+    
+    #kakao-table tr:first-child th {
+		padding-bottom: 15px;
+	}
+	
+    #kakao-table tr:first-child th input:first-child {
+		width: 200px;
+		border-radius: 5px;
+		border: 0.4px solid gray;
+		padding: 3px 10px;
+	}
+	
+	#kakao-table tr:last-child th {
+		padding-top: 15px;
+	}
+	
+	#kakao-table tr:last-child th input {
+		padding: 5px 20px;
+		background-color: #537ef4;
+		border-radius: 5px;
+		border: none;
+		color: #eaeaea;
+	}
+</style>
 </head>
 <body>
-
-<input type="text" id="search"/>
-<input type="button" value="검색" onclick="search()"> 
-<form action="getCoord" id="getCoord">
-	<input type="hidden" id="lat" name="lat" value=""/>
-	<input type="hidden" id="lng" name="lng" value=""/>
-	<div id="mealMap" style="width:700px;height:500px;"></div>
-	<input type="submit" value="확인" id="close_button"> 
-</form>
-
-
+		<table id="kakao-table">
+			<tr>
+				<th>
+					<input type="text" id="search" placeholder="장소를 입력하세요"/>
+					<!-- <input type="button" value="검색" onclick="search()"> --> 
+					<input id="searchBtn" type="image" class="search-img" alt="search" src="../resources/images/search.png" onclick="search()"/>
+				</th>
+			</tr>
+		<form action="getCoord" id="getCoord">
+			<tr>
+				<th>
+					<input type="hidden" id="lat" name="lat" value=""/>
+					<input type="hidden" id="lng" name="lng" value=""/>
+					<div id="mealMap" style="width:700px; height:500px;"></div>
+				</th>		
+			</tr>
+			<tr>
+				<th>
+					<input type="submit" value="확인" id="close_button"/>
+				</th>
+			</tr>		
+		</table>
+		</form>
 <script>
 	var loginId = "${sessionScope.loginId}";
 	var lat;

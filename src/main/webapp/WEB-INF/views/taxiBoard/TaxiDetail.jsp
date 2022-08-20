@@ -235,8 +235,7 @@
 	       <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${list.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
 	       <!-- 참여신청 모달팝업창 -->
  	       <form action="taxiApplyDo" method="post">
-			   <div id= "modal"> 
-			   </div>
+			   <div id="modal"></div>
 			   <div id="banner_online">
 			      <div id="close_button" style ="cursor: pointer;"> 
 			            <a id="close_button">&times;</a>
@@ -372,8 +371,8 @@
 		       		<tr>
 		       			<td colspan="4" style="text-align: center">
 		       				<!--  모집중 and 본인이 작성한 글이 아니라면 참여신청 버튼이 노출된다. -->
-		       				<c:if test="${list.recruit_end == 0}">
-								<input id="apply-button" type="button" value="참여신청" <c:if test="${sessionScope.loginId eq list.member_id}">hidden</c:if>/>
+		       				<c:if test="${list.recruit_end == 0 and sessionScope.loginId ne list.member_id}">
+								<input id="apply-button" type="button" value="참여신청"/>
 							</c:if>
 						</td>
 		       		</tr>

@@ -59,7 +59,7 @@
 	}
 	
 	.bottom-button {
-		background-color: #2962ff;
+		background-color: #537ef4;
 		color: #eaeaea;
 		border-radius: 5px;
 		border: none;

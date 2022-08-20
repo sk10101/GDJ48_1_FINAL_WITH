@@ -73,7 +73,7 @@
    		padding: 5px 20px;
    		border-radius: 5px;
    		border: none;
-   		background-color: #2962ff;
+   		background-color: #537ef4;
    		color: #eaeaea;
    }
 
@@ -160,7 +160,7 @@
 <script>
 function showPopup(){
     var width = 750;
-    var height = 550;
+    var height = 580;
     var top = (window.innerHeight - height) / 2 + screenY;
     var left = (window.innerWidth - width) / 2 + screenX;
 
@@ -168,7 +168,7 @@ function showPopup(){
     spec += ', width=' + width + ', height=' + height;
     spec += ', top=' + top + ', left=' + left;
 
-    window.open("taxiKakaoGo","팝업 테스트", spec);
+    window.open("taxiKakaoGo","kakao map", spec);
 }
 
 /* 타임피커 관련 스크립트 */
