@@ -49,7 +49,7 @@ public class DeliveryController {
 			session.setAttribute("word", params.get("word"));
 		}
 		ModelAndView mav = new ModelAndView();
-		mav = service.deliList(params);
+		mav = service.deliList(params, session);
 		
 		return mav;
 	}

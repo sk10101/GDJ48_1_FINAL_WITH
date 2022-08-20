@@ -58,8 +58,8 @@
 	</select>
 	
 	<select id="allCount" resultType="board" parameterType="hashmap">
-	 	SELECT board_idx FROM board_common_column
-			WHERE category_id = '배달게시판' AND hide = 0
+	 	SELECT board_idx FROM board_common_column bcc
+			WHERE category_id = '배달게시판' AND hide = 0 AND (SELECT COUNT(block_member) FROM block b WHERE b.member_id = #{loginId} AND block_member = bcc.member_id) = 0
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -90,7 +90,7 @@
 		,recruit_end 
 		,(SELECT COUNT(pt_idx) FROM participant p WHERE bcc.board_idx = p.board_idx AND p.hide = 0) as partNo
 		FROM board_common_column bcc, delivery_board d
-			WHERE bcc.board_idx = d.board_idx AND category_id = '배달게시판' AND hide = 0
+			WHERE bcc.board_idx = d.board_idx AND category_id = '배달게시판' AND hide = 0 AND (SELECT COUNT(block_member) FROM block b WHERE b.member_id = #{loginId} AND block_member = bcc.member_id) = 0
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
