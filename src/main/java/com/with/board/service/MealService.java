@@ -252,8 +252,13 @@ public class MealService {
 		ModelAndView mav = new ModelAndView();
 		String member_id = params.get("member_id");
 		String board_idx = params.get("board_idx");
-		
-		if(dao.isRejected(member_id,board_idx) > 0) {
+		String gd_restriction = params.get("gd_restriction");
+		 // 이미 신청했을 때, 방장이 수락했을 때
+		 if(dao.isApplied(member_id,board_idx) > 0) {
+	        rAttr.addFlashAttribute("msg","이미 수락 대기중이거나 수락된 신청입니다.");
+	     }
+
+		else if(dao.isRejected(member_id,board_idx) > 0) {
 			rAttr.addFlashAttribute("msg","이미 거절된 신청입니다.");
 		}
 		// 해당 글에서 강퇴당하거나 스스로 나간 이력이 있을 때

@@ -206,7 +206,8 @@
 						<td>${part.gender}</td>
 						<c:if test="${partMemberChk > 0}"><td>${part.phone}</td></c:if>
 						<c:if test="${info.recruit_end eq 1 }">
-						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}"><td><input type="button" value="평가하기" id="manner" onclick="mannrBlock()"/></td></c:if>
+						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}">
+						<td><input type="button" value="평가하기" onclick="location.href='mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'" <c:if test="${pt.member_id eq sessionScope.loginId or pt.chkManner > 0}">hidden</c:if>/></td></c:if>
 						</c:if>
 						<c:if test="${info.recruit_end eq 0 }">
 						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='mealBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
@@ -221,7 +222,7 @@
 			<c:if test="${info.recruit_end eq 0 and info.member_id ne sessionScope.loginId}">
 				<button id="openModalPop">참여신청</button><br/>
 			</c:if>
-			<input type="button" value="삭제" onclick="location.href='mealDelete?board_idx=${info.board_idx}'"/>
+			<input type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
 			<input type="button" value="돌아가기" onclick="location.href=mealList.go'"/>
 	   </div>
 	</div>
