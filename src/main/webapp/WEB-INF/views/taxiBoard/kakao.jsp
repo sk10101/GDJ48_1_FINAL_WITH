@@ -18,7 +18,6 @@
 </style>
 </head>
 <body>
-	<form action="taxiGetCoords" id="getCoords">
 		<table>
 			<tr>
 				<th>
@@ -27,19 +26,21 @@
 					<input id="searchBtn" type="image" class="search-img" alt="search" src="../resources/images/search.png" onclick="search()"/>
 				</th>
 			</tr>
+		<form action="taxiGetCoords" id="getCoords">
 			<tr>
 				<th>
 					<input type="hidden" id="lat" name="lat" value=""/>
 					<input type="hidden" id="lng" name="lng" value=""/>
 					<div id="taxiMap" style="width:700px; height:500px;"></div>
 				</th>		
+			</tr>
 			<tr>
 				<th>
 					<input type="submit" value="확인" id="close_button"/>
 				</th>
 			</tr>		
 		</table>
-	</form>
+		</form>
 
 <script>
 
@@ -132,7 +133,7 @@ $("#close_button").click(function(){
 	$('#getCoords').submit();
 	setTimeout(function() {
 		window.close();
-	 }, 5);
+	 }, 10);
 });
 </script>
 </body>

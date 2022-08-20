@@ -159,8 +159,8 @@
 </body>
 <script>
 function showPopup(){
-    var width = 700;
-    var height = 500;
+    var width = 750;
+    var height = 550;
     var top = (window.innerHeight - height) / 2 + screenY;
     var left = (window.innerWidth - width) / 2 + screenX;
 

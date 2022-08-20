@@ -420,13 +420,13 @@
     </div>
 </body>
 <script>
-   /* 아래 코드는 지우지 마세요 */
-/*     $(".sidebar").css("height", ($(".content").height() + $(".footer").height()));
+   	/* 아래 코드는 지우지 마세요 */
+	/* $(".sidebar").css("height", ($(".content").height() + $(".footer").height())); */
    
     var msg = '${msg}';
 	if (msg != "") {
 			alert(msg);
-	} */
+	}
 	
 	
 	// 리스트의 사이즈에 따라 변하는 테이블의 크기를 고정시켜주기 위한 코드 (좌측 테이블)
