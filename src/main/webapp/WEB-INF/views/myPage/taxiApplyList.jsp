@@ -88,8 +88,8 @@
 				                     <c:if test="${apply.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 15px;"></c:if>
               				    </c:forEach>
 							</td>
-								<td><input type="button" value="수락" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=1&member_id=${apply.member_id}'" /></td>
-								<td><input type="button" value="거절" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&status=0'" /></td>
+								<td><input type="button" value="수락" onclick="location.href='taxiApplyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&category_id=${apply.category_id}&status=1&member_id=${apply.member_id}'" /></td>
+								<td><input type="button" value="거절" onclick="location.href='taxiApplyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&category_id=${apply.category_id}&status=0'" /></td>
 						</tr>
 				</tbody>
 				</c:forEach>

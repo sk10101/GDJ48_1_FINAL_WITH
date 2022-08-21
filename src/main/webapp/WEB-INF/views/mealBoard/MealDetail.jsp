@@ -222,7 +222,7 @@
 				<button id="openModalPop">참여신청</button><br/>
 			</c:if>
 			<input type="button" value="삭제" onclick="location.href='mealDelete?board_idx=${info.board_idx}'"/>
-			<input type="button" value="돌아가기" onclick=onclick="location.href=mealList.go'"/>
+			<input type="button" value="돌아가기" onclick="location.href=mealList.go'"/>
 	   </div>
 	</div>
 	<!-- 아래부터 참여 신청 모달 부분 -->

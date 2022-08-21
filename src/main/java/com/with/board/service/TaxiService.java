@@ -85,9 +85,6 @@ public class TaxiService {
 		
 		session.setAttribute("chkHit", "chkHit");
 		
-		// 시간 비교를 통해 마감여부를 update 해주는 코드
-		dao.updateEnd();
-		
 		BoardDTO list = dao.taxiDetail(board_idx);
 		
 		// 로그인 회원의 연락처를 불러오는 코드

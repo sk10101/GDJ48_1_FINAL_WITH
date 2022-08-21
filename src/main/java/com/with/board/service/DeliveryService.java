@@ -33,7 +33,7 @@ public class DeliveryService {
 	@Autowired DeliveryDAO dao;
 	
 	// 배달 게시판 목록 조회 서비스
-	public ModelAndView deliList(HashMap<String, String> params) {
+	public ModelAndView deliList(HashMap<String, String> params, HttpSession session) {
 		logger.info("게시글 목록 요청");
 		ModelAndView mav = new ModelAndView("deliveryBoard/DeliList");
 		
@@ -45,8 +45,11 @@ public class DeliveryService {
 		int page = Integer.parseInt(params.get("page"));
 		String option = params.get("option");
 		String word = params.get("word");
+		// 로그인한 사람이 차단한 회원이 작성한 게시글은 보여주지 않기 위해 가져온다.
+		String loginId = (String) session.getAttribute("loginId"); 
 		
 		map.put("page", page); // page 입력
+		map.put("loginId", loginId);
 		// 검색어를 입력했을 때
 		if(word != "" && word != " ") {
 			map.put("word", word); // 검색어 입력
@@ -77,7 +80,10 @@ public class DeliveryService {
 		mav.addObject("info",info);
 		mav.addObject("deliPhotoList",deliPhotoList);
 		// 참여자 목록 조회
-		ArrayList<BoardDTO> partList = partList(board_idx);
+		// 한 번 평가한 회원은 다시 평가할 수 없도록 평가하기 버튼을 가린다.
+		String loginId = (String) session.getAttribute("loginId");
+		ArrayList<BoardDTO> partList = partList(board_idx, loginId);
+		
 		
 		mav.addObject("partList",partList);
 		// 참여자 명단에 방장을 맨위에 따로 그려준다 (방장은 investment 변수에 입력한 값이 없어 부득이하게 따로 입력)
@@ -223,10 +229,10 @@ public class DeliveryService {
 	}
 
 	
-	private ArrayList<BoardDTO> partList(String board_idx) {
+	private ArrayList<BoardDTO> partList(String board_idx, String loginId) {
 		logger.info("참여 회원 목록 서비스");
 		
-		return dao.partList(board_idx);
+		return dao.partList(board_idx, loginId);
 	}
 
 

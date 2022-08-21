@@ -193,9 +193,9 @@
 				</tr>
 				<c:forEach items="${partMaster}" var="ptm">
 					<tr>
-						<td><img id="crown" src="./resources/images/crown.png" alt="crown"/><a href="/mannerInfo?member=${ptm.member_id}&board=${info.board_idx}">${ptm.member_id}</a></td>
+						<td><img id="crown" src="./resources/images/crown.png" alt="crown" style="width:35px;height:35px;"/><a href="/mannerInfo?member=${ptm.member_id}&board=${info.board_idx}">${ptm.member_id}</a></td>
 						<td>${ptm.gender}</td>
-						<td>-</td>
+						<td style="text-align:center;">-</td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>
 						<c:if test="${partMemberChk > 0}"><td></td></c:if>
 						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId}"><td><input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${ptm.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
@@ -207,9 +207,9 @@
 						<td><a href="/mannerInfo?member=${part.member_id}&board=${info.board_idx}">${part.member_id}</a></td>
 						<td>${part.gender}</td>
 						<td>${part.investment}</td>
-						<c:if test="${partMemberChk > 0}"><td>${part.phone}</td></c:if>
-						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}"><td><input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
-						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
+						<td><c:if test="${partMemberChk > 0}">${part.phone}</c:if></td>
+						<td><c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0 and part.assessNo eq 0}"><input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'"/></c:if></td>
+						<td><c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></c:if></td>
 					</tr>
 				</c:forEach>
 			</table>

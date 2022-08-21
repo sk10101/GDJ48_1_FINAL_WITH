@@ -36,7 +36,7 @@
 		dataType:'json',
 		success:function(data){
 			console.log(data.university_addr);
-			searchMap(data.university_addr);
+			startMap(data.university_addr);
 			
 		},
 		error:function(e){
@@ -44,7 +44,26 @@
 		}
 	});
 
-	var mapContainer = document.getElementById('deliMap'); // 지도를 표시할 div 
+	var mapContainer = document.getElementById('deliMap'); // 지도를 표시할 div
+	
+	// 주소-좌표 변환 객체를 생성합니다 (초기 위치를 본인의 대학교로 잡기 위함)
+	var geocoder = new kakao.maps.services.Geocoder();
+
+	// 주소로 좌표를 검색합니다
+	function startMap(univAddr) {
+		geocoder.addressSearch(univAddr, function(result, status) {
+	
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === kakao.maps.services.Status.OK) {
+	
+		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        map.setCenter(coords);
+		    } 
+		});    
+	}
+	
 	var mapOption = {
 	        center: new kakao.maps.LatLng(37.45975, 126.95109), // 지도의 중심좌표
 	        level: 3, // 지도의 확대 레벨
@@ -67,12 +86,12 @@
 	}
 
 	
-	function searchMap(addrKeyword) {
+	function searchMap(mapKeyword) {
 		// 장소 검색 객체를 생성합니다
 		var ps = new kakao.maps.services.Places(); 
 	
 		// 키워드로 장소를 검색합니다
-		ps.keywordSearch(addrKeyword, placesSearchCB); 
+		ps.keywordSearch(mapKeyword, placesSearchCB); 
 	
 		// 키워드 검색 완료 시 호출되는 콜백함수 입니다
 		function placesSearchCB (data, status, pagination) {
@@ -124,7 +143,7 @@
 		$('#getCoords').submit();
 		setTimeout(function() { 
 			window.close();
-		 }, 10);
+		 }, 5);
     });
 	
 </script>
