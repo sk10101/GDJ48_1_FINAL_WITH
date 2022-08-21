@@ -111,7 +111,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		public ModelAndView deliApplyList(HashMap<String, String> params) {
 				logger.info("배달 참가 목록 요청");
 			   ModelAndView mav = new ModelAndView("myPage/deliApplyList");
-			   
+			
 			   // 페이징 처리
 			   HashMap<String, Object> map = new HashMap<String, Object>(); // map 객체화
 			   int page = Integer.parseInt(params.get("page"));
@@ -127,9 +127,10 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 					map.put("word", word); // 검색어 입력
 					map.put("option", option); // 검색 옵션 입력
 				}
-		
+			   BoardDTO info = dao.deliList(params);
 			   ArrayList<BoardDTO> deliApplyList = delipagination(map);
 			   logger.info("게시글의 개수 : "+ deliApplyList.size());
+			   mav.addObject("info",info);
 			   mav.addObject("deliApplyList",deliApplyList);
 			   mav.addObject("map",map);
 			 
@@ -211,8 +212,10 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 					map.put("option", option); // 검색 옵션 입력
 				}
 		
+			   BoardDTO info = dao.taxiList(params);
 			   ArrayList<BoardDTO> taxiApplyList = taxipagination(map);
 			   logger.info("게시글의 개수 : "+ taxiApplyList.size());
+			   mav.addObject("info",info);
 			   mav.addObject("taxiApplyList",taxiApplyList);
 			   mav.addObject("map",map);
 			   
@@ -272,13 +275,14 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			return taxiApplyList;
 		}
 
-		public ModelAndView applyUpdate(HashMap<String, String> params) {
-			String member_id = params.get("member_id");
-			String board_idx = params.get("board_idx");
+		public ModelAndView applyUpdate(HashMap<String, Object> params) {
+			String member_id = (String) params.get("member_id");
+			String board_idx = (String) params.get("board_idx");
 			ModelAndView mav = new ModelAndView("redirect:/deliApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
 			//dao.applyUpdate(params);
 			
-			String status = params.get("status");
+			
+			String status = (String) params.get("status");
 			if (status.equals("1")) {
 				status = "수락";
 				dao.applyUpdate(params);
@@ -296,14 +300,14 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 		}
 		
-		public ModelAndView taxiApplyUpdate(HashMap<String, String> params) {
-			String member_id = params.get("member_id");
-			String board_idx = params.get("board_idx");
+		public ModelAndView taxiApplyUpdate(HashMap<String, Object> params) {
+			String member_id = (String) params.get("member_id");
+			String board_idx = (String) params.get("board_idx");
 			
 			ModelAndView mav = new ModelAndView("redirect:/taxiApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
 			//dao.applyUpdate(params);
 			
-			String status = params.get("status");
+			String status = (String) params.get("status");
 			if (status.equals("1")) {
 				status = "수락";
 				dao.taxiApplyUpdate(params);
@@ -322,13 +326,13 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		}
 		
 
-		public ModelAndView mealApplyUpdate(HashMap<String, String> params) {
-			String member_id = params.get("member_id");
-			String board_idx = params.get("board_idx");
+		public ModelAndView mealApplyUpdate(HashMap<String, Object> params) {
+			String member_id = (String) params.get("member_id");
+			String board_idx = (String) params.get("board_idx");
 			ModelAndView mav = new ModelAndView("redirect:/mealApplyList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
 			//dao.applyUpdate(params);
 			
-			String status = params.get("status");
+			String status = (String) params.get("status");
 			if (status.equals("1")) {
 				status = "수락";
 				dao.mealApplyUpdate(params);
@@ -368,8 +372,10 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 					map.put("option", option); // 검색 옵션 입력
 				}
 		
+			   BoardDTO info = dao.mealList(params);
 			   ArrayList<BoardDTO> mealApplyList = mealpagination(map);
 			   logger.info("게시글의 개수 : "+ mealApplyList.size());
+			   mav.addObject("info",info);
 			   mav.addObject("mealApplyList",mealApplyList);
 			   mav.addObject("map",map);
 			   
@@ -377,7 +383,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		}
 
 		private ArrayList<BoardDTO> mealpagination(HashMap<String, Object> map) {
-int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
+			int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
 			
 			logger.info("테스트");
 			
@@ -447,6 +453,23 @@ int cnt = 10; // 한 페이지에 10 건의 게시글 (고정)
 			dao.applyDelete(params);
 			return mav;
 		}
+
+		public int update(String board_idx) {
+			
+			return dao.update(board_idx);
+		}
+
+		public int taxiupdate(String board_idx) {
+			
+			return dao.taxiupdate(board_idx);
+		}
+
+		public int mealupdate(String board_idx) {
+			
+			return dao.mealupdate(board_idx);
+		}
+
+
 
 
 

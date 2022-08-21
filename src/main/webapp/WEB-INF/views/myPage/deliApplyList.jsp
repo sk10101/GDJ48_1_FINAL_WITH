@@ -43,14 +43,12 @@
 		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	     
 	     <table>
 			<tr>
-				<th><input type="text" value="제목 : [배달] 제목"></th>
-				<td>
+				<th>제목 : </th>
+				<td>${info.subject}</td>
 			</tr>
 		</table>
-     
      	<table>
 				<thead>
 					<tr>
@@ -79,7 +77,7 @@
 				                     <c:if test="${apply.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 15px;"></c:if>
               				    </c:forEach>
 							</td>
-								<td><input type="button" value="수락" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&category_id=${apply.category_id}&status=1&member_id=${apply.member_id}'" /></td>
+								<td><input type="button" value="수락" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&category_id=${apply.category_id}&member_cnt=${apply.member_cnt}&status=1&member_id=${apply.member_id}'" /></td>
 								<td><input type="button" value="거절" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&category_id=${apply.category_id}&status=0'" /></td>
 							</tr>
 				</tbody>
@@ -96,26 +94,32 @@
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script type="text/javascript">
-	var page = 1; // 초기 페이지 번호
+var msg = "${msg}";
+
+if(msg != "") {
+	alert(msg);
+}
+
+var page = 1; // 초기 페이지 번호
+
+// 검색 버튼 클릭했을 때 한 번 초기화
+$('#searchBtn').on('click',function(){	
 	
-	// 검색 버튼 클릭했을 때 한 번 초기화
-	$('#searchBtn').on('click',function(){	
-		
-		$("#delipagination").twbsPagination('destroy');
-	});
-	
-// 플러그인을 이용해 페이징 처리
-	$("#delipagination").twbsPagination({
-		startPage:${map.page}, //시작 페이지 (page)
-		totalPages:${map.pages}, //총 페이지(전체 게시물 수 / 한 페이지에 보여줄 게시물 수) (pages)
-		visiblePages: 5, //한 번에 보여줄 페이지 수
-		initiateStartPageClick: false,
-		onPageClick:function(e,page){
-			//console.log(e); //클릭한 페이지와 관련된 이벤트 객체
-			console.log(page); //사용자가 클릭한 페이지
-			// 페이지 이동시에도 데이터를 가지고 있기 위해 session 을 활용한다
-			location.href = "deliApplyList?page="+page+"&option="+"${sessionScope.option}"+"&word="+"${sessionScope.word}";
-	}
+	$("#delipagination").twbsPagination('destroy');
+});
+
+//플러그인을 이용해 페이징 처리
+$("#delipagination").twbsPagination({
+	startPage:${map.page}, //시작 페이지 (page)
+	totalPages:${map.pages}, //총 페이지(전체 게시물 수 / 한 페이지에 보여줄 게시물 수) (pages)
+	visiblePages: 5, //한 번에 보여줄 페이지 수
+	initiateStartPageClick: false,
+	onPageClick:function(e,page){
+		//console.log(e); //클릭한 페이지와 관련된 이벤트 객체
+		console.log(page); //사용자가 클릭한 페이지
+		// 페이지 이동시에도 데이터를 가지고 있기 위해 session 을 활용한다
+		location.href = "deliApplyList?page="+page+"&option="+"${sessionScope.option}"+"&word="+"${sessionScope.word}";
+}
 });
 
 </script>
