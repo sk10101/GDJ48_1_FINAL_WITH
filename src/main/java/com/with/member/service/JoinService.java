@@ -104,13 +104,13 @@ private void memberFileSave(MultipartFile[] photos, String member_id) {
 	}
 
 	//모달 뿌려주는 ajax
-	public ArrayList<MemberDTO> empList() { 
-		  return dao.empList();
+	public ArrayList<MemberDTO> univList() { 
+		  return dao.univList();
 	  	}
 	  
 	//대학검색
-	  public ArrayList<MemberDTO> empSearch(String university_name) {
-		  return dao.empSearch(university_name); 
+	  public ArrayList<MemberDTO> univSearch(String university_name) {
+		  return dao.univSearch(university_name); 
 	  }
 
 	  

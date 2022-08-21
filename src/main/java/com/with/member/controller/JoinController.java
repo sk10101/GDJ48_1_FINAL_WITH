@@ -47,16 +47,16 @@ public class JoinController {
 	}	
 	
 	  //대학검색
-	  @RequestMapping("/cliempSearch.ajax")
-	  @ResponseBody public ArrayList<MemberDTO> empSearch(@RequestParam String keyword) { 
-		  return service.empSearch(keyword); 
+	  @RequestMapping("/univSearch.ajax")
+	  @ResponseBody public ArrayList<MemberDTO> univSearch(@RequestParam String keyword) { 
+		  return service.univSearch(keyword); 
 	  }
 	  
 	  //모달 뿌려주는 ajax
-	  @RequestMapping("/cliempList.ajax")
+	  @RequestMapping("/univList.ajax")
 	  @ResponseBody 
-	  public ArrayList<MemberDTO> empList() { 
-		  return service.empList(); 
+	  public ArrayList<MemberDTO> univList() { 
+		  return service.univList(); 
 	  }
 	 
 	  

@@ -15,8 +15,8 @@
 			<mvc:exclude-mapping path="/*join*"/>
 			<mvc:exclude-mapping path="/IdCheck.ajax"/>
 			<mvc:exclude-mapping path="/EmailCheck.ajax"/>
-			<mvc:exclude-mapping path="/cliempSearch.ajax"/>
-			<mvc:exclude-mapping path="/cliempList.ajax"/> 
+			<mvc:exclude-mapping path="/univSearch.ajax"/>
+			<mvc:exclude-mapping path="/univList.ajax"/> 
 			<mvc:exclude-mapping path="/login.*"/>
 			<mvc:exclude-mapping path="/login"/>
 			<mvc:exclude-mapping path="/idFind*"/>	
