@@ -267,17 +267,17 @@ public class MealService {
 		//String chkGender = dao.chkGender(member_id) + "만";
 		String gd_restriction = params.get("gd_restriction");
 
-		//params.put("loginId", loginId);
+		params.put("loginId", loginId);
 		//params.put("gender", gender);
 		
 		// 성별 제한에 걸렸을 때
-		/*
+		
 	   if(!(dao.getGender(member_id)+'만').equals(gd_restriction) && !gd_restriction.equals("상관없음")) {
 				rAttr.addFlashAttribute("msg",gd_restriction + " 가능한 신청입니다.");
 			}
 		// 이미 신청했을 때, 방장이 수락했을 때
 		else 
-		*/	
+		
 			if(dao.isApplied(member_id,board_idx) > 0) {
 	        rAttr.addFlashAttribute("msg","이미 수락 대기중이거나 수락된 신청입니다.");
 	     }

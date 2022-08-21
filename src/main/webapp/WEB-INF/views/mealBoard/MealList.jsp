@@ -176,7 +176,7 @@
 								<td>작성일 : ${meal.write_date}</td>
 							</tr>
 							<tr>
-								<td>인원 : ${meal.partNo} / ${meal.member_cnt + 1}</td>
+								<td>인원 : ${meal.partNo} / ${meal.member_cnt}</td>
 								<td>조회수 : ${meal.hit}</td>
 							</tr>
 							<tr>

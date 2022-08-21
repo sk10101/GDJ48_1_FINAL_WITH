@@ -137,7 +137,7 @@
 		
 	<select id="partList" parameterType="String" resultType="board">
 		SELECT p.member_id, m.gender, a.investment, m.phone
-			,(SELECT COUNT(assess_idx) FROM manner_assess ma WHERE assessor = #{param2} AND ma.board_idx = #{param1}) as assessNo
+			,(SELECT COUNT(assess_idx) FROM manner_assess ma WHERE assessor = #{param2} AND ma.board_idx = #{param1} and ma.member_id = p.member_id) as assessNo
 			 FROM participant p, member m, apply a
 				WHERE p.board_idx = #{param1} AND a.board_idx = p.board_idx AND status = '수락'
 				AND a.member_id = p.member_id AND p.hide = 0 AND p.member_id = m.member_id
@@ -200,7 +200,7 @@
 				WHERE member_id = #{param1} AND board_idx = #{param2} AND hide=1
 	</select>
 		
-	<select id="chkGender" resultType="String" parameterType="hashmap">
+	<select id="getGender" resultType="String">
 		SELECT gender FROM member
 				WHERE member_id = #{param1}
 	</select>
