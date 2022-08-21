@@ -29,7 +29,7 @@
     </select>
     
     <select id="blockList" resultType="member" parameterType="hashmap">
-    	select block_member from block where member_id=#{idx}
+    	select block_member, gender from block b, member m where b.member_id=#{idx} and block_member = m.member_id 
     	<if test="word != null and word != ''">
     		AND block_member LIKE CONCAT('%',#{word},'%')
     	</if> LIMIT #{cnt} OFFSET #{offset}

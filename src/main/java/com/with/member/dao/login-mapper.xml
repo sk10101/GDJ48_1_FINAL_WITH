@@ -43,4 +43,9 @@
 		SELECT penalty_end FROM penalty
 			WHERE member_id = #{param1} AND cancel = 0
 	</select>
+	
+	<!-- 8.20 정현민 추가 -->
+	<select id="chkGender" resultType="String">
+		SELECT gender FROM member WHERE member_id = #{param1}
+	</select>
 </mapper>

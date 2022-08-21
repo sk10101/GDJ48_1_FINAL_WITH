@@ -7,7 +7,7 @@
 	<meta charset="UTF-8">
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./resources/js/jquery.twbsPagination.js"></script>
@@ -28,22 +28,55 @@
         min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
+        padding: 60px 100px;
     }
     
-    /* 양수빈 CSS 작업[삭제 해도 됨] */
-	.myinfo th, td {
-		border: 1px solid #000000;
-		padding: 8px;
-		text-align: center;
-	}
-	
-	.myinfo th {
-		background-color: #2962ff;
-		color: #ffffff;
-	}
-	.container {
-    	text-align: center;
+    .myinfo {
+   		width: 70%;
+    	color: rgb(88, 88, 88);
+    	margin: 0 auto;
+    	padding: 30px 50px;
+    	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    	border-radius: 20px;
+    	font-size: 16px;
+    	border-collapse: collapse;
     }
+    
+    .myinfo th,td {
+    	padding: 20px 15px;
+    }
+    
+    #subject {
+    	width: 80%;
+    }
+    
+    input[type="text"] {
+    	border-radius: 5px;
+    	padding: 3px 5px;
+    	border: 1px solid gray;
+    }
+    
+    textarea {
+	    width: 90%;
+	    height: 400px;
+	    border-radius: 5px;
+	    padding: 3px 5px;
+	    resize: none;
+  	}
+    
+    .bottom-button {
+   		margin: 10px 20px;
+   		padding: 5px 20px;
+   		border-radius: 5px;
+   		border: none;
+   		background-color: #537ef4;
+   		color: #eaeaea;
+   }
+    
+    
+    
+    
+    
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -59,19 +92,24 @@
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	       <form action="inqueryWrite" method="POST">
-		       <table class="myinfo" style="margin-left:180px;">
+	       	   <!-- <h2 style="text-align: center; font-weight: normal; color: rgb(88, 88, 88); margin-bottom: 30px;">문의 작성</h2> -->
+		       <table class="myinfo">
 	            	<tr>
 	            		<th>제목</th>
-	            		<td><input style="width : 400px;" type="text" name="subject" placeholder="50자 이내"/></td>
+	            		<td><input id="subject" type="text" name="subject" placeholder="50자 이내" maxlength="50" required/></td>
 	            	</tr>
 	            	<tr>
 	            		<th>내용</th>
-	            		<td><input style="width : 400px; height: 400px;" type="text" name="inquery_content" placeholder="500자 이내"/></td>
+	            		<td><textarea name="inquery_content" placeholder="500자 이내" maxlength="333" required></textarea></td>
+	            	</tr>
+	            	<tr>
+	            		<th colspan="2">
+				            <input class="bottom-button" type="submit" value="저장"/>
+				            <input class="bottom-button" type="button" onclick="location.href='/inqueryList?page=1'" value="돌아가기"/>
+	            		</th>
 	            	</tr>
 	            </table>
 	           	<input type="hidden" name="member_id" value="${sessionScope.loginId}"/>
-	            <input type="submit" value="저장"/>
-	            <input type="button" onclick="location.href='/inqueryList?page=1'" value="돌아가기"/>
             </form>
 	   </div>
 	</div>

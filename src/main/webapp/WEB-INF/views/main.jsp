@@ -127,7 +127,6 @@
 
     .navbar-top p {
         float: right;
-        margin-top: 20px;
         margin-right: 20px;
         font-size: 14px;
     }
@@ -307,6 +306,13 @@
         color: rgb(104, 104, 104);
     }
     
+    .gender {
+    	position:relative;
+    	width: 35px;
+    	top: 15px;
+    	right: 10px;
+    }
+    
 
 </style>
 <body>
@@ -314,7 +320,23 @@
         <div class="navbar-top-bg"></div>
         <div class="navbar-top">
             <a href="/main"><img class="logo" src="./resources/images/logo.png" alt="logo"></a>
-            <p><a href="#">${sessionScope.loginId}(${sessionScope.member_class}) 님 환영합니다.</a> &nbsp; | &nbsp; <a href="logout">로그아웃</a></p>
+            <p>
+            	<c:if test="${sessionScope.member_class eq '일반회원'}">
+            		<a href="/myInfo">
+            	</c:if>	
+            	<c:if test="${sessionScope.member_class eq '관리자'}">
+            		<a href="#">
+            	</c:if>
+		            <c:if test="${sessionScope.gender eq '남자'}">
+		            	<img class="gender" src="./resources/images/man.png" alt="man">
+		            </c:if>	
+		            <c:if test="${sessionScope.gender eq '여자'}">
+		            	<img class="gender" src="./resources/images/girl.png" alt="girl">
+		            </c:if>	
+            		${sessionScope.loginId}(${sessionScope.member_class}) 님 환영합니다.
+            	</a>
+            	 &nbsp; | &nbsp; <a href="logout">로그아웃</a>
+            </p>
             <a href="#"><img class="bell" src="./resources/images/bell.png" alt="bell"></a>
             <img class="dot" src="./resources/images/dot.png" alt="dot">
         </div>

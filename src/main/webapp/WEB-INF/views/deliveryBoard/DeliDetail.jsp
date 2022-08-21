@@ -138,12 +138,14 @@
     
     #main-table {
     	width: 100%;
-    	color: rgb(64, 64, 64);
+    	color: rgb(88, 88, 88);
+    	padding: 20px 10px;
     }
     
     #center-table {
     	margin: 0 auto;
     	margin-top: 20px;
+    	color: rgb(88, 88, 88);
     }
     
     #bottom-table {
@@ -197,9 +199,6 @@
     	text-align: center;
     }
     
-    
-    
-    
     /* 참여신청 모달 */
     #modal-table,
     #modal-table input {
@@ -213,7 +212,7 @@
     }
     
     #modal-table input[type='submit'] {
-    	margin-top: 70px;
+    	margin-top: 40px;
     	padding: 5px 20px;
     	border: none;
     	border-radius: 10px;
@@ -227,7 +226,7 @@
 	    box-shadow: rgba(100, 100, 111, 0.6) 0px 7px 29px 0px;
 	    background-color: white;
 	    z-index: 9999;
-	    left: 800px;
+	    left: 45%;
 	    top: 30%;
 	    display: none;
 	    position: fixed;
@@ -272,7 +271,7 @@
 	
 	#link {
 		color : black;
-	}	
+	}
 
 	#crown {
 		position: relative;
@@ -313,12 +312,57 @@
     }
     
     .del-button {
-    	background-color: #ef5350;
+    	background-color: #ff6f00;
     }
     
     .back-button {
     	background-color: #537ef4;
     }
+    
+    .manner-button {
+    	background-color: #537ef4;
+    	color: #eaeaea;
+    	padding: 3px 10px;
+    	border-radius: 5px;
+    	border: none;
+    }
+    
+    .elim-button {
+    	background-color: #ff6f00;
+    	color: #eaeaea;
+    	padding: 3px 10px;
+    	border-radius: 5px;
+    	border: none;
+    }
+    
+    #center-table a {
+    	color: rgb(88, 88, 88);
+    }
+    
+    #center-table tr:first-child th {
+		padding-bottom: 10px;
+	}
+	
+    #center-table tr:not(tr:first-child) th,
+    #center-table tr:not(tr:first-child) td {
+		padding: 5px 10px;
+	}
+	
+	.gender1 {
+    	width: 35px;
+    	transition: all 0.3s ease;
+	}
+	
+	.gender1:hover {
+		transform: scale(1.1);
+	}
+	
+	#center-table {
+		/* border: 0.4px solid gray; */
+		border-radius: 10px;
+		padding: 15px 15px;
+	}
+    
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -413,6 +457,7 @@
 			<!-- 아래부터 참여현황 -->
 			<table id="center-table">
 				<tr>
+					<th></th>
 					<th>아이디</th>
 					<th>성별</th>
 					<th>금액</th>
@@ -423,25 +468,45 @@
 				<c:forEach items="${partMaster}" var="ptm">
 					<tr>
 						<th>
+		       				<a href="/mannerInfo?member=${ptm.member_id}&board=${info.board_idx}">
+				            	<c:if test="${ptm.gender eq '남자'}">
+			           				<img class="gender1" src="./resources/images/man.png" alt="man">
+			        				    </c:if>	
+					            <c:if test="${ptm.gender eq '여자'}">
+					            	<img class="gender1" src="./resources/images/girl.png" alt="girl">
+					            </c:if>	
+				            </a>
+						</th>
+						<th>
 							<img id="crown" src="./resources/images/crown.png" alt="crown"/>
 							<a href="/mannerInfo?member=${ptm.member_id}&board=${info.board_idx}">${ptm.member_id}</a>
 						</th>
 						<td>${ptm.gender}</td>
-						<td style="text-align: center;">-</td>
+						<td style="text-align: center;"> - </td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>
-						<c:if test="${partMemberChk > 0}"><td></td></c:if>
-						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId}"><td><input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${ptm.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
-						<td></td>
+						<%-- <c:if test="${partMemberChk > 0}"><td></td></c:if> --%>
+						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId}"><td><input class="manner-button" type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${ptm.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
+						<!-- <td></td> -->
 					</tr>
 				</c:forEach>
 				<c:forEach items="${partList}" var="part">
 					<tr>
-						<td><a href="/mannerInfo?member=${part.member_id}&board=${info.board_idx}">${part.member_id}</a></td>
+						<th>
+		       				<a href="/mannerInfo?member=${part.member_id}&board=${info.board_idx}">
+				            	<c:if test="${part.gender eq '남자'}">
+			           				<img class="gender1" src="./resources/images/man.png" alt="man">
+			        				    </c:if>	
+					            <c:if test="${part.gender eq '여자'}">
+					            	<img class="gender1" src="./resources/images/girl.png" alt="girl">
+					            </c:if>	
+				            </a>
+						</th>
+						<th><a href="/mannerInfo?member=${part.member_id}&board=${info.board_idx}">${part.member_id}</a></th>
 						<td>${part.gender}</td>
 						<td>${part.investment}</td>
-						<c:if test="${partMemberChk > 0}"><td>${part.phone}</td></c:if>
-						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}"><td><input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
-						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
+						<td><c:if test="${partMemberChk > 0}">${part.phone}</c:if></td>
+						<td><c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0 and part.assessNo eq 0}"><input type="button" class="manner-button" value="평가하기" onclick="location.href='/mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'"/></c:if></td>
+						<td><c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><input id="elim" type="button" class="elim-button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></c:if></td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -464,23 +529,23 @@
 				<tr>
 					<td colspan="4" style="text-align: center">		
 						<c:if test="${info.member_id eq sessionScope.loginId}">
-							<input type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
+							<input class="bottom-button del-button" type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
 						</c:if>
-						<input type="button" value="돌아가기" onclick="location.href='deliListGo'"/>
+						<input class="bottom-button back-button" type="button" value="돌아가기" onclick="location.href='deliListGo'"/>
 					</td>
 				</tr>	
 			</table>
 	   </div>
 	</div>
 	<!-- 아래부터 참여 신청 모달 부분 -->
-	<div id="modal"></div>
-	<div id="banner_online">
-        <div id="close_button" style ="cursor: pointer;"> 
-            <a id="close_button">&times;</a>
-        </div>
-        <h2>참여신청</h2>
-        <div class="pop_content">
-        	<form action="applyDeli">
+  	<form action="applyDeli">
+		<div id="modal"></div>
+		<div id="banner_online">
+        	<div id="close_button" style ="cursor: pointer;"> 
+            	<a id="close_button">&times;</a>
+        	</div>
+	        <h2>참여신청</h2>
+	        <div class="pop_content">
 	        	<table id="modal-table">
 		        	<tr>
 		        	   <th>내 연락처 :</th>
@@ -491,7 +556,7 @@
 		        	<tr>
 		        	   <th>투자 금액 :</th>
 		           	   <td>
-				           <input type="text" name="investment" placeholder="최소 투자 금액 : ${info.min_fund}" required/><br/>
+				           <input type="number" step="500" name="investment" placeholder="최소 투자 금액 : ${info.min_fund}" required/><br/>
 		           	   </td>
 		           	</tr>			
 		           <input type="hidden" name="member_id" value="${sessionScope.loginId}"/>
@@ -501,16 +566,20 @@
 		           	   <th colspan="2"><input type="submit" value="보내기"></th>
 		           </tr>
 	        	</table>
-        	</form>
-        </div>
-    </div>
+	        </div>
+	    </div>
+   	</form>
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script type="text/javascript">
-
-    $("#deliPop").click(function() {
-        $("#banner_online").show();
+// 참여신청 모달팝업
+   	$("#apply-button").click(function() {
+        	$("#banner_online").show();
     });
+
+    /* $("#deliPop").click(function() {
+        $("#banner_online").show();
+    }); */
 
     $("#close_button").click(function(){
         $("#banner_online").fadeOut();

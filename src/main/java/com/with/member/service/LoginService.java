@@ -64,6 +64,11 @@ public class LoginService {
 		logger.info("비밀번호 수정 서비스");
 		boolean success =dao.newPw(id,pw); 
 		return success; 
+	}
+
+	// 8.20 정현민 추가
+	public String chkGender(String loginId) {
+		return dao.chkGender(loginId);
 	}	
 	
 	/* 양수빈 service 작업 공간 

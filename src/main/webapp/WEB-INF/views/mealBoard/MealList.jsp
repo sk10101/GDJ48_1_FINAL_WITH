@@ -75,6 +75,7 @@
     
     option {
     	font-size: 16px;
+    	text-align: center;
     }
     
     .search {
@@ -99,15 +100,14 @@
     }
     
     .write-button {
-    	padding: 2px 10px;
+    	padding: 4px 15px;
     	border-radius: 5px;
     	border: none;
-    	background-color: #2962ff;
+    	background-color: #537ef4;
     	color: #eaeaea;
     	font-size: 16px;
     	margin-left: 130px;
     }
-    
     
    	#option {
    		padding: 4px 10px;

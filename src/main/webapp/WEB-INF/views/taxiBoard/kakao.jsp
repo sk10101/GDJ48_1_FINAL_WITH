@@ -59,7 +59,7 @@
 				<th>
 					<input type="hidden" id="lat" name="lat" value=""/>
 					<input type="hidden" id="lng" name="lng" value=""/>
-					<div id="taxiMap" style="width:700px; height:500px;"></div>
+					<div id="taxiMap" style="width:90vw; height:75vh;"></div>
 				</th>		
 			</tr>
 			<tr>
