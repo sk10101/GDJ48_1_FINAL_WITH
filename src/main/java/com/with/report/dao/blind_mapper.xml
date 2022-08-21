@@ -67,5 +67,10 @@
 			WHERE bcc.board_idx = #{board_idx} AND a.board_idx = #{board_idx} AND status = '대기중'
 	</update>
 	
+	<insert id="blindBoardWrite">
+		INSERT INTO blind_board(category_id,board_idx,member_id,subject,blind_reason)
+			VALUES(#{param1},#{param2},#{param3},#{param4},'신고처리')
+	</insert>
+	
 	
 </mapper>
