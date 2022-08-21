@@ -131,9 +131,7 @@
 					<td>인원 : ${count} / ${info.member_cnt + 1}</td>
 					<td>조회수 : ${info.hit}</td>
 				</tr>
-				<tr>
-					<td>마감시간 : ${info.deadline}</td>
-				</tr>
+				
 				<tr>
 				</tr>
 				<tr>
@@ -188,10 +186,8 @@
 						<td><a href="/mannerInfo?member=${ptm.member_id}&board=${info.board_idx}">${ptm.member_id}</a></td>
 						<td>${ptm.gender}</td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>
-						<c:if test="${partMemberChk > 0}"><td></td></c:if>				
-						<c:if test="${info.recruit_end eq 1 }">
-						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId}"><td><input type="button" value="평가하기"/></td></c:if>
-						</c:if>
+						<c:if test="${partMemberChk > 0}"><td></td></c:if>
+						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId and info.recruit_end eq 1}"><td><input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${ptm.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
 						<td></td>
 					</tr>
 				</c:forEach>
@@ -200,8 +196,8 @@
 						<td><a href="/mannerInfo?member=${part.member_id}&board=${info.board_idx}">${part.member_id}</a></td>
 						<td>${part.gender}</td>
 						<c:if test="${partMemberChk > 0}"><td>${part.phone}</td></c:if>
-						<c:if test="${info.recruit_end eq 1 }">
-						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0}"><td><input type="button" value="평가하기" id="manner" onclick="mannrBlock()"/></td></c:if>
+						<c:if test="${info.recruit_end eq 1 and partMemberChk > 0 }">
+						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0 and part.assessNo eq 0}"><td><input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
 						</c:if>
 						<c:if test="${info.recruit_end eq 0 }">
 						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='mealBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
@@ -216,7 +212,7 @@
 			<c:if test="${info.recruit_end eq 0 and info.member_id ne sessionScope.loginId}">
 				<button id="openModalPop">참여신청</button><br/>
 			</c:if>
-			<input type="button" value="삭제" onclick="location.href='mealDelete?board_idx=${info.board_idx}'"/>
+			<input type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
 			<input type="button" value="돌아가기" onclick="location.href=mealList.go'"/>
 	   </div>
 	</div>
@@ -233,6 +229,7 @@
 	           내 연락처 <input type="text" name="phone" value="${phone}" readonly/><br/>
 	           <input type="hidden" name="member_id" value="${sessionScope.loginId}"/>
 	           <input type="hidden" name="board_idx" value="${info.board_idx}"/>
+   	           <input type="hidden" name="gd_restriction" value="${info.gender}"/>
 	           <input type="submit" value="보내기" style="text-align: right;"/>
         	</form>
         </div>

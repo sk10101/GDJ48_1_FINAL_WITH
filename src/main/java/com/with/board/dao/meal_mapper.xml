@@ -36,7 +36,7 @@
 			
 	<insert id="writeBcc" parameterType="board"> 
 		INSERT INTO board_common_column (member_id, category_id, subject, content, deadline, appoint_place, appoint_coords_lat, appoint_coords_lng, gender, member_cnt)
-			VALUES(#{member_id}, '밥게시판', #{subject}, #{content}, DATE_FORMAT(#{deadline},'%Y-%m-%d %H:%i'), #{appoint_place}, '37.45975', '126.95109', #{gender}, #{member_cnt})
+			VALUES(#{member_id}, '밥게시판', #{subject}, #{content}, DATE_FORMAT(#{deadline},'%Y-%m-%d %H:%i'), #{appoint_place}, #{appoint_coords_lat}, #{appoint_coords_lng}, #{gender}, #{member_cnt})
 	</insert>
 	
 	<select id="getBoardIdx" resultType="int" parameterType="board">
@@ -78,17 +78,28 @@
 	</select>
 	
 	<select id="mealList" resultType="board" parameterType="hashmap">
-		SELECT bcc.board_idx
-		,subject
-		,appoint_place
-		,member_id
-		,write_date
-		,DATE_FORMAT(deadline,'%Y-%m-%d %H:%i') as deadline
-		,hit
-		,member_cnt
-		,(SELECT COUNT(pt_idx) FROM participant p WHERE bcc.board_idx = p.board_idx AND p.hide = 0) as partNo		
-		,recruit_end FROM board_common_column bcc, meal_board mb
-			WHERE bcc.board_idx = mb.board_idx AND category_id = '밥게시판'
+		SELECT 
+	bcc.board_idx,
+	bcc.member_id,
+	hit,
+	write_date,
+	subject,
+	DATE_FORMAT(bcc.deadline,'%Y-%m-%d %H:%i') as deadline,
+	appoint_place,
+	(member_cnt + 1) as member_cnt,
+	recruit_end,
+	bcc.hide,
+	(SELECT COUNT(pt_idx) FROM participant p WHERE bcc.board_idx = p.board_idx AND p.hide = 0) as partNo
+	FROM
+	board_common_column bcc,
+	meal_board mb,
+	member m
+	WHERE
+	bcc.board_idx = mb.board_idx AND
+	bcc.hide = 0 AND
+	category_id = '밥게시판' AND
+	m.member_id = bcc.member_id AND
+	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{loginId})
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -108,7 +119,7 @@
 	</select>
 	
 	<select id="getUniversityAddr" parameterType="String" resultType="member">
-		SELECT university_addr, m.university_idx FROM university u, member m
+		SELECT u.university_addr,u.university_name, m.university_idx FROM university u, member m
 			WHERE m.university_idx = u.university_idx AND member_id = #{loginId}
 	</select>
 	
@@ -125,9 +136,12 @@
 	</insert>
 		
 	<select id="partList" parameterType="String" resultType="board">
-		SELECT p.member_id, m.gender, m.phone FROM participant p, member m, apply a
-			WHERE p.board_idx = #{board_idx} AND a.board_idx = #{board_idx} AND a.status = '수락' 
-			AND a.member_id = p.member_id AND p.hide = 0 AND p.member_id = m.member_id AND a.member_id = m.member_id
+		SELECT p.member_id, m.gender, a.investment, m.phone
+			,(SELECT COUNT(assess_idx) FROM manner_assess ma WHERE assessor = #{param2} AND ma.board_idx = #{param1} and ma.member_id = p.member_id) as assessNo
+			 FROM participant p, member m, apply a
+				WHERE p.board_idx = #{param1} AND a.board_idx = p.board_idx AND status = '수락'
+				AND a.member_id = p.member_id AND p.hide = 0 AND p.member_id = m.member_id
+					ORDER BY pt_idx ASC
 	</select>
 	
 	<select id="mealCount" resultType="int">
@@ -186,7 +200,10 @@
 				WHERE member_id = #{param1} AND board_idx = #{param2} AND hide=1
 	</select>
 		
-
+	<select id="getGender" resultType="String">
+		SELECT gender FROM member
+				WHERE member_id = #{param1}
+	</select>
 	
 </mapper>
 
