@@ -168,16 +168,16 @@
 								<th colspan="2">${meal.subject}</th>
 							</tr>
 							<tr>
-								<td>약속장소 : ${meal.appoint_place}</td>
-								<td>작성자 : ${meal.member_id}</td>
+								<td>약속장소 &nbsp;:&nbsp; ${meal.appoint_place}</td>
+								<td>작성자 &nbsp;:&nbsp; ${meal.member_id}</td>
 							</tr>
 							<tr>
-								<td>마감시간 : ${meal.deadline}</td>
-								<td>작성일 : ${meal.write_date}</td>
+								<td>마감시간 &nbsp;:&nbsp; ${meal.deadline}</td>
+								<td>작성일 &nbsp;:&nbsp; ${meal.write_date}</td>
 							</tr>
 							<tr>
-								<td>인원 : ${meal.partNo} / ${meal.member_cnt}</td>
-								<td>조회수 : ${meal.hit}</td>
+								<td>인원 &nbsp;:&nbsp; ${meal.partNo} / ${meal.member_cnt}</td>
+								<td>조회수 &nbsp;:&nbsp; ${meal.hit}</td>
 							</tr>
 							<tr>
 							<td></td>

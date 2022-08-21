@@ -90,20 +90,11 @@
 	    margin-top: -3px;
 	}
 	
-	.eye {
-        position: absolute;
-        z-index: 1;
-        width: 27px;
-        right: 665px;
-        top: 105px;
-    }
-    
-    .eye {
-        position: absolute;
-        z-index: 1;
-        width: 27px;
-        right: 665px;
-        top: 105px;
+   	.off {
+        width: 40px;
+        float: right;
+        margin-top: 10px;
+        margin-right: 20px;
     }
 </style>
 <body>
@@ -119,7 +110,11 @@
 		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	       <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${info.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
+       	   <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}">
+	  			<a href="superBlind?board_idx=${info.board_idx}">
+	  				<img class="off" src="./resources/images/off.png" alt="off">
+	  			</a>
+     	   </c:if>
 	     	<table>
 	     		<tr>
 	     			<td class='subject'>${info.subject}</td>

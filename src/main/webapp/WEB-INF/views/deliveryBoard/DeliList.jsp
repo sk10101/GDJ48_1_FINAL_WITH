@@ -172,19 +172,19 @@
 								<th colspan="2">${bbs.subject}</th>
 							</tr>
 							<tr>
-								<td>약속장소 : ${bbs.appoint_place}</td>
-								<td>작성자 : ${bbs.member_id}</td>
+								<td>약속장소 &nbsp;:&nbsp; ${bbs.appoint_place}</td>
+								<td>작성자 &nbsp;:&nbsp; ${bbs.member_id}</td>
 							</tr>
 							<tr>
-								<td>최소주문금액 : ${bbs.min_delivery}</td>
-								<td>작성일 : ${bbs.write_date}</td>
+								<td>최소주문금액 &nbsp;:&nbsp; ${bbs.min_delivery}</td>
+								<td>작성일 &nbsp;:&nbsp; ${bbs.write_date}</td>
 							</tr>
 							<tr>
-								<td>마감시간 : ${bbs.deadline}</td>
-								<td>조회수 : ${bbs.hit}</td>
+								<td>마감시간 &nbsp;:&nbsp; ${bbs.deadline}</td>
+								<td>조회수 &nbsp;:&nbsp; ${bbs.hit}</td>
 							</tr>
 							<tr>
-								<td>인원 : ${bbs.partNo} / ${bbs.member_cnt + 1}</td>
+								<td>인원 &nbsp;:&nbsp; ${bbs.partNo} / ${bbs.member_cnt + 1}</td>
 								<c:if test="${bbs.recruit_end eq 0}"><td><span style="padding: 3px 10px; border-radius: 5px; background-color: #2962ff">모집중</span></td></c:if>
 								<c:if test="${bbs.recruit_end eq 1}"><td><span style="padding: 3px 10px; border-radius: 5px; background-color: #ef5350;">마감</span></td></c:if>
 							</tr>
