@@ -162,5 +162,10 @@
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
-<script></script>
+<script>
+	var msg = '${msg}';
+	if (msg != "") {
+		alert(msg);
+	}
+</script>
 </html>

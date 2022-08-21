@@ -42,6 +42,8 @@ public interface MemberDAO {
 
 	String boardName(int board);
 
+	int blockChk(String member, String mb_id);
+
 	
 
 }
