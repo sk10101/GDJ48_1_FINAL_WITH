@@ -510,7 +510,7 @@
 						<td>${part.gender}</td>
 						<td>${part.investment}</td>
 						<td><c:if test="${partMemberChk > 0}">${part.phone}</c:if></td>
-						<td><c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0 and part.assessNo eq 0}"><input type="button" class="manner-button" value="평가하기" onclick="location.href='/mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'"/></c:if></td>
+						<td><c:if test="${info.recruit_end eq 1 and partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0 and part.assessNo eq 0}"><input type="button" class="manner-button" value="평가하기" onclick="location.href='/mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'"/></c:if></td>
 						<td><c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><input id="elim" type="button" class="elim-button" value="강퇴" onclick="location='deliBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></c:if></td>
 					</tr>
 				</c:forEach>
@@ -574,6 +574,7 @@
 	        </div>
 	    </div>
    	</form>
+	</div>
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script type="text/javascript">
