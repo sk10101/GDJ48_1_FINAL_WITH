@@ -42,12 +42,21 @@
 	
 	.myinfo th,
 	.myinfo td {
-		padding: 10px 10px;
+		padding: 10px 35px;
+	}
+	
+	.myinfo th {
+		text-align: center;
+	}
+	
+	.myinfo tr:first-child th,
+	.myinfo tr:first-child td {
+		padding-top: 30px;
 	}
 	
 	.myinfo input[type='text'],
 	.myinfo input[type='password'] {
-		padding: 3px 10px;
+		padding: 2px 10px;
 		border-radius: 5px;
 		border: 0.4px solid gray;
 		font-size: 16px;
@@ -86,13 +95,12 @@
             	<tr>
             		<th>PW</th>
             		<td>
-	            		<input id="pw" name="pw" type="password"/>
-	            		<br>※ 8 ~ 15자 입력, 비밀번호 수정시에만 작성
+	            		<input id="pw" name="pw" type="password"/> &nbsp;&nbsp;&nbsp; ※ 8 ~ 15자 입력, 비밀번호 수정시에만 작성
             		</td>
             	</tr>
             	<tr>
-            		<th>PW확인</th>
-	            		<td><input id="member_pw" name="member_pw" type="password"/><p id=result></p>&nbsp;&nbsp;&nbsp; ※ 8 ~ 15자 입력, 비밀번호 수정시에만 작성</td>
+            		<th>PW 확인</th>
+	            		<td><input id="member_pw" name="member_pw" type="password"/> &nbsp;&nbsp;&nbsp; ※ 8 ~ 15자 입력, 비밀번호 수정시에만 작성<p id=result></p></td>
             	</tr>
             	<tr>
             		<th>이름</th>
@@ -126,13 +134,16 @@
             		<th>회원탈퇴 신청</th>
             		<td>
             		<!-- <input id="hide" name="hide" type="checkbox" value=0/>&emsp; -->
-					  <div><input type="radio" id="hide" name="hide" value=1>예<input type="radio" id="hide" name="hide" value=0 checked="checked">아니요</div>&emsp;
-            		※ 체크하신 후 수정버튼을 누르시면 탈퇴신청이 접수됩니다.
-					(탈퇴 시 with 서비스를 이용하실 수 없으며 해당 아이디로 재 가입이 불가능 합니다.)
+					  <label><input type="radio" id="hide" name="hide" value=1> 예</label> &nbsp;&nbsp;&nbsp;
+					  <label><input type="radio" id="hide" name="hide" value=0 checked="checked"> 아니요</label>
             		</td>
             	</tr>
             	<tr>
-            		<td colspan="2" style="text-align: right; padding-top: 40px;">
+            		<th></th>
+            		<td>※ 체크하신 후 수정버튼을 누르시면 탈퇴신청이 접수됩니다. (탈퇴 시 With 서비스를 이용하실 수 없으며 해당 아이디로 재 가입이 불가능 합니다.)</td>
+            	</tr>
+            	<tr>
+            		<td colspan="2" style="text-align: right; padding-top: 40px; padding-bottom: 30px;">
             			<button class="btu">변경</button>
             			<input class="btu" type="button" value="돌아가기" onclick="location.href='/myInfo'"/>
             		</td>
@@ -191,11 +202,11 @@
 	
     if(pass1 != "" || pass2 != ""){
         if(pass1 == pass2){
-            $("#result").html('※일치');
-            $("#result").css('color','blue');
+            $("#result").html('일치');
+            $("#result").css('color','#537ef4');
         }else{
-            $("#result").html('※불일치');
-            $("#result").css('color','red');
+            $("#result").html('불일치');
+            $("#result").css('color','#ef5350');
         }
     }
 })
