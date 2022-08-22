@@ -92,17 +92,16 @@
 		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	     	<table class="myinfo">
-	     		<tr>
-	     			<td>	     	
-				        <c:if test="${sessionScope.loginId ne params.member}">
-				       		<input id="black" type="button" value="차단" onclick="location.href='/blockAdd?member=${params.member}&board=${params.board}'"/>
-				       	</c:if>	
-				    </td>
-				</tr>       	
-	     		<tr>
-		       		<th colspan="3"><h2 style="margin-bottom: 40px;">${params.member}님의 매너평가 점수</h2></th>
-		       	</tr>	
+	       	<p>${params.member}님의 매너평가 점수</p>
+	       	<c:choose>
+			    <c:when test="${params.whoId eq 0 }">
+	       			<input type="button" value="차단" onclick="location.href='/blockAdd?member=${params.member}&board=${params.board}'"/>			    
+			    </c:when>
+			    <c:when test="${sessionScope.loginId != params.member}">
+	       			<input type="button" value="차단" onclick="location.href='/blockAdd?member=${params.member}&board=${params.board}'"/>			    
+			    </c:when>
+			</c:choose>
+	     	<table class="myinfo" style="margin-left: 180px;">
 				<tr>
 					<th>친절함</th>
 					<td><c:forEach var="i" begin="1" end="5">
