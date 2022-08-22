@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.with.apply.service.ApplyService;
 import com.with.member.service.MemberService;
@@ -54,20 +55,35 @@ public class ApplyController {
 		//배달 업데이트
 
 		@RequestMapping(value = "/applyUpdate", method = RequestMethod.GET)
-		public ModelAndView applyUpdate(HttpSession session, @RequestParam HashMap<String, String> params) {
-			logger.info(params.get("status"));
-			logger.info(params.get("apply_idx"));
-			logger.info(params.get("board_idx"));
-			logger.info(params.get("member_id"));
-			String status = params.get("status");
-			if (status.equals("1")) {
-				status = "수락";
+		public ModelAndView applyUpdate(HttpSession session, @RequestParam HashMap<String, Object> params, RedirectAttributes rAttr) {
+			logger.info((String) params.get("status"));
+			logger.info((String) params.get("apply_idx"));
+			logger.info((String) params.get("board_idx"));
+			logger.info((String) params.get("member_id"));
+			
+			ModelAndView mav = new ModelAndView();
+			
+			String board_idx = (String) params.get("board_idx");
+			int member_cnt = Integer.parseInt((String) params.get("member_cnt"));
+			logger.info((String) params.get("member_cnt"));
+			params.put("member_cnt", member_cnt);
+			int abc = service.update(board_idx);
+			logger.info("abc 값 : {}",abc);
+		if(member_cnt <= abc) {
+			rAttr.addFlashAttribute("msg", "모집 인원 초과입니다.");
+			mav.setViewName("redirect:/mygList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			
+		}else if (member_cnt != abc) {
+				
+				String status = (String) params.get("status");
+				if (status.equals("1")) {
+					status = "수락";
 				}if(status.equals("0")) {
 					status = "거절";
 				}
-			params.put("realstatus", status);
-			ModelAndView mav = new ModelAndView();
-			mav=service.applyUpdate(params);
+				params.put("realstatus", status);
+				mav=service.applyUpdate(params);
+		}
 			return  mav;
 		}
 		
@@ -107,23 +123,40 @@ public class ApplyController {
 		
 		//택시 업데이트
 		@RequestMapping(value = "/taxiApplyUpdate", method = RequestMethod.GET)
-		public ModelAndView taxiApplyUpdate(HttpSession session, @RequestParam HashMap<String, String> params) {
-			logger.info(params.get("status"));
-			logger.info(params.get("apply_idx"));
-			logger.info(params.get("board_idx"));
-			String status = params.get("status");
-			if (status.equals("1")) {
-				status = "수락";
-				
-			}if(status.equals("0")) {
-				status = "거절";
-				
-			}
-			params.put("realstatus", status);
+		public ModelAndView taxiApplyUpdate(HttpSession session, @RequestParam HashMap<String, Object> params, RedirectAttributes rAttr) {
+			logger.info((String) params.get("status"));
+			logger.info((String) params.get("apply_idx"));
+			logger.info((String) params.get("board_idx"));
+			logger.info((String) params.get("member_id"));
+			
 			ModelAndView mav = new ModelAndView();
-			mav=service.taxiApplyUpdate(params);
+			
+			String board_idx = (String) params.get("board_idx");
+			int member_cnt = Integer.parseInt((String) params.get("member_cnt"));
+			logger.info((String) params.get("member_cnt"));
+			params.put("member_cnt", member_cnt);
+			int abc = service.update(board_idx);
+			logger.info("abc 값 : {}",abc);
+		if(member_cnt <= abc) {
+			rAttr.addFlashAttribute("msg", "모집 인원 초과입니다.");
+			mav.setViewName("redirect:/mygList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			
+		}else if (member_cnt != abc) {
+				
+				String status = (String) params.get("status");
+				if (status.equals("1")) {
+					status = "수락";
+				}if(status.equals("0")) {
+					status = "거절";
+				}
+				params.put("realstatus", status);
+				mav=service.taxiApplyUpdate(params);
+		}
+			
 			return  mav;
 		}
+		
+		
 		
 		/*
 		//배달 참여 신청자 목록
@@ -237,19 +270,36 @@ public class ApplyController {
 		
 		//택시 업데이트
 		@RequestMapping(value = "/mealApplyUpdate", method = RequestMethod.GET)
-		public ModelAndView mealApplyUpdate(HttpSession session, @RequestParam HashMap<String, String> params) {
-			logger.info(params.get("status"));
-			logger.info(params.get("apply_idx"));
-			logger.info(params.get("board_idx"));
-			String status = params.get("status");
-			if (status.equals("1")) {
-				status = "수락";
-			}if(status.equals("0")) {
-				status = "거절";
-			}
-			params.put("realstatus", status);
+		public ModelAndView mealApplyUpdate(HttpSession session, @RequestParam HashMap<String, Object> params, RedirectAttributes rAttr) {
+			logger.info((String) params.get("status"));
+			logger.info((String) params.get("apply_idx"));
+			logger.info((String) params.get("board_idx"));
+			logger.info((String) params.get("member_id"));
+			
 			ModelAndView mav = new ModelAndView();
-			mav=service.mealApplyUpdate(params);
+			
+			String board_idx = (String) params.get("board_idx");
+			int member_cnt = Integer.parseInt((String) params.get("member_cnt"));
+			logger.info((String) params.get("member_cnt"));
+			params.put("member_cnt", member_cnt);
+			int abc = service.update(board_idx);
+			logger.info("abc 값 : {}",abc);
+		if(member_cnt <= abc) {
+			rAttr.addFlashAttribute("msg", "모집 인원 초과입니다.");
+			mav.setViewName("redirect:/mygList?page="+1+"&board_idx="+board_idx+"&option="+"&word=");
+			
+		}else if (member_cnt != abc) {
+				
+				String status = (String) params.get("status");
+				if (status.equals("1")) {
+					status = "수락";
+				}if(status.equals("0")) {
+					status = "거절";
+				}
+				params.put("realstatus", status);
+				mav=service.mealApplyUpdate(params);
+		}
+			
 			return  mav;
 		}
 

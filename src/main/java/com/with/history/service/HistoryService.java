@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.with.board.dto.BoardDTO;
@@ -21,7 +22,7 @@ public class HistoryService {
 
 
 //내가 만든 모임
-	   public ModelAndView mygList(HashMap<String, String > params, String loginId) {
+	   public ModelAndView mygList(@RequestParam HashMap<String, String > params, String loginId) {
 		      logger.info("내가 만든 목록 요청");
 		      ModelAndView mav = new ModelAndView("myPage/myGroupList");
 		      

@@ -36,6 +36,7 @@
 		color: #eaeaea;
 		font-size: 18px;
 		width: 50%;
+		position: relative;
 	}
 	
 	#top-table th {
@@ -43,7 +44,6 @@
 		font-weight: normal;
 		background-color: #537ef4;
 		border-radius: 10px;
-		text-align: left;
 	}
 	
 	#main-table {
@@ -144,7 +144,9 @@
 	       <!-- 여기에서 작업 시작하세요 -->
 	     <table id="top-table">
 			<tr>
-				<th>[밥게시판] 제목</th>
+				<th>
+					<img style="position: absolute; left: -20px; top: -40px; width: 65px; filter: drop-shadow(5px 5px 5px rgba(100, 100, 111, 0.4));"  src="./resources/images/3Dmeal.png" alt="3Dmeal">${info.subject}
+				</th>
 			</tr>
 		</table>
 		
@@ -173,9 +175,9 @@
 				<c:forEach items="${mealApplyList}" var="apply">
 				
 				<tbody class="mealApplyList">
-					<tr>
-						<td>${apply.member_id}</td>
-						<c:choose>
+						<tr>
+							<td>${apply.member_id}</td>
+							<c:choose>
 							<c:when test="${apply.penalty_idx > 0}">
 								<td style="color: #ef5350;"><img style="position: relative; top: 3px; right: 3px; width: 20px;" src="./resources/images/warning.png" alt="warning"> ${apply.penalty_idx}</td>
 							</c:when>
@@ -183,16 +185,16 @@
 								<td>${apply.penalty_idx}</td>
 							</c:otherwise>
 						</c:choose>
-						<td>${apply.apply_date}</td> 
-						<td>
-							<c:forEach var="i" begin="1" end="5">
-		                     <c:if test="${apply.avg_allAvg >= i}"><img src="./resources/images/star.png" alt="star" style="width: 20px; position: relative; top: 2px;"></c:if>
-		                     <c:if test="${apply.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 20px; position: relative; top: 2px;"></c:if>
-           				    </c:forEach>
-						</td>
-						<td><input class="common-button yes-button" type="button" value="수락" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&category_id=${apply.category_id}&status=1&member_id=${apply.member_id}'" /></td>
-						<td><input class="common-button no-button" type="button" value="거절" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&category_id=${apply.category_id}&status=0'" /></td>
-					</tr>
+							<td>${apply.apply_date}</td> 
+							<td>
+								<c:forEach var="i" begin="1" end="5">
+				                     <c:if test="${apply.avg_allAvg >= i}"><img src="./resources/images/star.png" alt="star" style="width: 20px; position: relative; top: 3px;"></c:if>
+				                     <c:if test="${apply.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 20px; position: relative; top: 3px;"></c:if>
+              				    </c:forEach>
+							</td>
+								<td><input class="common-button yes-button" type="button" value="수락" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&category_id=${apply.category_id}&member_cnt=${apply.member_cnt}&status=1&member_id=${apply.member_id}'" /></td>
+								<td><input  class="common-button no-button" type="button" value="거절" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&category_id=${apply.category_id}&status=0'" /></td>
+							</tr>
 				</tbody>
 				</c:forEach>
 			</table>

@@ -216,4 +216,10 @@ public class MemberService {
 		return dao.boardName(board);
 	}
 
+	public int blockChk(String member, String mb_id) {
+		// 차단했는지 여부 확인용
+		
+		return dao.blockChk(member,mb_id);
+	}
+
 }
