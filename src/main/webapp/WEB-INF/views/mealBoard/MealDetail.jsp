@@ -11,7 +11,7 @@
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=303e3eb3eab9c15e38c80a5c6f8d0caf&libraries=services"></script>
 </head>
 <style type="text/css">
-    .content-wrap {
+/*     .content-wrap {
     	max-width: 1200px;
     	width: 100%;
     	margin: 0 auto;
@@ -24,7 +24,6 @@
         max-width: 1040px;
         width: 100%;
         min-height: 100vh;
-        /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
     }
     
@@ -42,7 +41,7 @@
     div#map {
     	border : 3px solid #2962ff;
     }
-    /* 아래부터 모달 팝업 css */
+
     #banner_online {
 	    height: 270px;
 	    width: 350px;
@@ -95,6 +94,250 @@
         float: right;
         margin-top: 10px;
         margin-right: 20px;
+    } */
+    
+    .content-wrap {
+    	max-width: 1200px;
+    	width: 100%;
+    	margin: 0 auto;
+    }
+
+    .content {
+        display: inline-block;
+        margin-left: 160px;
+        margin-top: 100px;
+        max-width: 1040px;
+        width: 100%;
+		min-height: 100vh;
+        background-color: rgb(249, 249, 249);
+        padding: 60px 100px;
+    }
+    
+    /* 박스쉐도우를 위해 div 생성 */
+    #table-wrap {
+    	width: 100%;
+    	border-radius: 20px;
+    	box-shadow: rgba(100, 100, 111, 0.6) 0px 7px 29px 0px;
+    }
+    
+    #main-table {
+    	width: 100%;
+    	color: rgb(88, 88, 88);
+    	padding: 20px 10px;
+    }
+    
+    #center-table {
+    	margin: 0 auto;
+    	margin-top: 20px;
+    	color: rgb(88, 88, 88);
+    }
+    
+    #bottom-table {
+    	margin: 0 auto;
+    	margin-top: 100px;
+    }
+    
+    #main-table th,td {
+    	border: none;
+    	padding: 7px 10px;
+    }
+    
+    #gender {
+    	width: 30px;
+    }
+    
+    #people {
+    	position: relative;
+    	top: 7px;
+    	right: 5px;
+    	width: 30px;
+    }
+    
+    #subject {
+    	padding: 15px 15px;
+    	color: #eaeaea;
+    	border-radius: 10px;
+    	background-color: #537ef4;
+    	font-size: 20px;
+    	margin-bottom: 30px;
+    }
+    
+    #report {
+    	border: none; 
+    	font-size: 14px; 
+    	padding: 3px 10px; 
+    	border-radius: 5px; 
+    	background-color: #ef5350; 
+    	color: #eaeaea;
+    }
+    
+    #report-img {
+    	width: 30px;
+    	position: relative;
+    	top: 8px;
+    }
+    
+    .ptList {
+    	text-align: center;
+    }
+    
+    /* 참여신청 모달 */
+    #modal-table,
+    #modal-table input {
+    	font-size: 16px;
+    	margin: 0 auto;
+    }
+    
+    #modal-table td {
+    	text-align: center;
+    	padding-left: 10px;
+    }
+    
+    #modal-table input[type='submit'] {
+    	margin-top: 70px;
+    	padding: 5px 20px;
+    	border: none;
+    	border-radius: 10px;
+    	background-color: #537ef4;
+    	color: #eaeaea;
+    }
+    
+    #banner_online {
+	    height: 270px;
+	    width: 350px;
+	    box-shadow: rgba(100, 100, 111, 0.6) 0px 7px 29px 0px;
+	    background-color: white;
+	    z-index: 9999;
+	    left: 45%;
+	    top: 30%;
+	    display: none;
+	    position: fixed;
+	    border-radius: 20px;
+	}
+	
+	#banner_online h2 {
+	    text-align: center;
+	    font-size: 17px;
+	    margin-bottom: 60px;
+	    margin-top: 20px;
+	    color: rgb(64, 64, 64);
+	}
+	
+	.pop_content {
+	    font-size: 13px;
+	    margin-left: 20px;
+	    color: rgb(64, 64, 64);
+	}
+	
+	#close_button {
+		position: absolute;
+	    float: right;
+	    left: 160px;
+	    top: 5px;
+	}
+	
+	#close_button a {
+		font-size: 20px;
+	} 
+	
+	#modal {
+	  position:fixed;
+	  width:100%;
+	  height:100%;
+	  background:rgba(0, 0, 0, 0.5);
+	  top: 0;
+	  left: 0;
+	  z-index: 99;
+	  display: none;
+	}
+	
+	#link {
+		color : black;
+	}	
+
+	#crown {
+		position: relative;
+		top: 3px;
+		right: 5px;
+		width: 20px;
+	}
+	
+    .star {
+    	width: 30px;
+    }
+    
+    #openModalPop {
+    	padding: 10px 20px;
+    	border-radius: 5px;
+    	border: none;
+    	background-color: #537ef4;
+    	color: #eaeaea;
+    	font-size: 16px;
+    	margin-top: 20px;
+    }
+    
+    .bottom-button {
+    	padding: 5px 10px;
+    	border-radius: 5px;
+    	border: none;
+    	color: #eaeaea;
+    	font-size: 14px;
+    	margin: 20px 20px;
+    }
+    
+    .del-button {
+    	background-color: #ff6f00;
+    }
+    
+    .back-button {
+    	background-color: #537ef4;
+    }
+    
+    .manner-button {
+    	background-color: #537ef4;
+    	color: #eaeaea;
+    	padding: 3px 10px;
+    	border-radius: 5px;
+    	border: none;
+    }
+    
+    .elim-button {
+    	background-color: #ff6f00;
+    	color: #eaeaea;
+    	padding: 3px 10px;
+    	border-radius: 5px;
+    	border: none;
+    }
+    
+    #center-table a {
+    	color: rgb(88, 88, 88);
+    }
+    
+    #center-table tr th,
+    #center-table tr td {
+		padding: 5px 10px;
+	}
+	
+	.gender1 {
+    	width: 35px;
+    	transition: all 0.3s ease;
+	}
+	
+	.gender1:hover {
+		transform: scale(1.1);
+	}
+	
+	#center-table {
+		/* border: 0.4px solid gray; */
+		border-radius: 10px;
+		padding: 15px 15px;
+	}
+	
+	.eye {
+        width: 40px;
+        float: right;
+        margin-top: 10px;
+        margin-right: 20px;
     }
 </style>
 <body>
@@ -110,130 +353,182 @@
 		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-       	   <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}">
-	  			<a href="superBlind?board_idx=${info.board_idx}">
-	  				<img class="off" src="./resources/images/off.png" alt="off">
-	  			</a>
-     	   </c:if>
-	     	<table>
-	     		<tr>
-	     			<td class='subject'>${info.subject}</td>
-	     		</tr>
+     		<c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자' and info.hide == 0}">
+     			<a href="superBlind?board_idx=${info.board_idx}">
+     				<img class="eye on" src="./resources/images/on.png" alt="on">
+     			</a>
+     		</c:if>
+     		<c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자' and info.hide == 1}">
+   				<img class="eye off" src="./resources/images/off.png" alt="off">
+     		</c:if>
+     	   
+     	   <p id="subject">${info.subject}</p>
+     	   <div id="table-wrap">
+	     	<table id="main-table">
 				<tr>
-					<td>약속장소 : ${info.appoint_place}</td>
-					<td>작성자 : ${info.member_id}</td>
+					<th>약속장소</th>
+					<td>${info.appoint_place}</td>
+					<th>작성자</th>
+					<td>${info.member_id}</td>
 				</tr>
 				<tr>
-					<td>마감시간 : ${info.deadline}</td>
-					<td>작성일 : ${info.write_date}</td>
+					<th>마감시간</th>
+					<td>${info.deadline}</td>
+					<th>작성일</th>
+					<td>${info.write_date}</td>
 				</tr>
 				<tr>
-					<td>인원 : ${count} / ${info.member_cnt + 1}</td>
-					<td>조회수 : ${info.hit}</td>
-				</tr>
-				
-				<tr>
-				</tr>
-				<tr>
-					<td></td>
-					<c:if test="${info.recruit_end eq 0}"><td><span style="border:1px solid black; background-color:#2962ff;">모집중</span></td></c:if>
-					<c:if test="${info.recruit_end eq 1}"><td><span style="border:1px solid black; background-color:red;">마감</span></td></c:if>
+					<th>인원</th>
+					<td>${count} / ${info.member_cnt + 1}</td>
+					<th>조회수</th>
+					<td>${info.hit}</td>
 				</tr>
 				<tr>
-					<td><img alt="성별제한" src="../resources/images/gender.png" style="width:20px; height:20px;"> ${info.gender}</td>
+					<c:if test="${info.recruit_end eq 0}">
+						<td colspan="4" style="text-align: right">
+							<span style="padding: 3px 10px; border-radius: 5px; background-color: #2962ff; color: #eaeaea;">모집중</span>
+						</td>
+					</c:if>
+					<c:if test="${info.recruit_end eq 1}">
+						<td colspan="4" style="text-align: right">
+							<span style="padding: 3px 10px; border-radius: 5px; background-color: #ef5350; color: #eaeaea;">마감</span>
+						</td>
+					</c:if>
+				</tr>
+				<tr>
+	       			<th>
+	       				<img style="position: relative; top: 5px;" id="gender" src="./resources/images/gender.png" alt="gender"/>&nbsp; ${info.gender}
+	       			</th>
 					<!-- 신고하기위해 살짝 수정함 -제한- -->
-					<c:if test="${info.member_id eq sessionScope.loginId}"><td></td></c:if>
-					<c:if test="${info.member_id ne sessionScope.loginId}"><td><a id="link" href="#" onclick="reportPop()"><span style="border:1px solid black; background-color:red;">신고</span></a></td></c:if>
+	       			<c:if test="${info.member_id ne sessionScope.loginId}">
+		       			<td colspan="3" style="text-align: right;">
+		       				<img id="report-img" src="./resources/images/report.png" alt="report"/>
+		       				<!-- 신고하기위해 살짝 수정함 -제한- -->
+		       				<input id="report" type="button" name="report" value="신고" onclick="reportPop()"/>
+		       			</td>
+	       			</c:if>
 				</tr>
-			</table>
-			<hr>
-			<table>
+	       		<tr>
+	       			<td colspan="4"><br/><br/><hr/><br/><br/></td>
+	       		<tr>
 				<c:if test="${mealPhotoList.size()>0}">
 		            <tr>
-		                <td>
+		                <td colspan="4" style="text-align: center">
 			                <c:forEach items="${mealPhotoList}" var="path">
-									<img src="./photo/${path.newFileName}" width="500px"/>
+									<img src="./resources/photo/${path.newFileName}" width="400px"/>
 							</c:forEach>
 						</td>
 		            </tr>
             	</c:if>
-            	<tr>
-            		<td>${info.content}</td>
-            	</tr>
+	       		<tr>
+	       			<td colspan="4" style="padding: 40px 30px;">${info.content}</td>
+	       		</tr>
+	       		<tr>
+	       			<th colspan="4"><img id="people" src="./resources/images/people.png" alt="people"/> 참여현황</th>
+	       		</tr>
 			</table>
-			<hr> 
 			<!-- 아래부터 참여현황 -->
-			<table>
-				<tr>
-					<th><img alt="참여현황" src="../resources/images/people.png" style="width:20px; height:20px;"/>참여현황</th>
-				</tr>
-				<tr>
-					<th>아이디</th>
-					<th>성별</th>
-					<c:if test="${partMemberChk > 0}"><th>연락처</th></c:if>
-					<c:if test="${info.recruit_end eq 1 }">
-					<c:if test="${partMemberChk > 0}"><th>평가</th></c:if>
-					</c:if>
-					<c:if test="${info.recruit_end eq 0 }">
-					<c:if test="${info.member_id eq sessionScope.loginId}"><th>강퇴</th></c:if>
-					</c:if>
-				</tr>
+			<table id="center-table">
+				<c:forEach items="${partMaster}" var="ptm">
 				<%-- <c:if test="${partList.size() eq 0}">
 					<tr><td colspan="5">참여한 회원이 없습니다.</td></tr>			
 				</c:if> --%>
-				<c:forEach items="${partMaster}" var="ptm">
 					<tr>
-						<td><a href="/mannerInfo?member=${ptm.member_id}&board=${info.board_idx}">${ptm.member_id}</a></td>
+		       			<th>
+		       				<a href="/mannerInfo?member=${ptm.member_id}&board=${info.board_idx}">
+				            	<c:if test="${ptm.gender eq '남자'}">
+		            				<img class="gender1" src="./resources/images/man.png" alt="man">
+	          				    </c:if>	
+					            <c:if test="${ptm.gender eq '여자'}">
+					            	<img class="gender1" src="./resources/images/girl.png" alt="girl">
+					            </c:if>
+				            </a>
+		       			</th>
+	       				<th>
+	       					<!-- 참여자와 방장의 아이디가 같으면 왕관 아이콘을 붙여준다. -->
+	       					<img id="crown" src="./resources/images/crown.png" alt="crown"/>
+							<a href="/mannerInfo?member=${ptm.member_id}&board=${info.board_idx}">${ptm.member_id}</a>
+	       				</th>
 						<td>${ptm.gender}</td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>
-						<c:if test="${partMemberChk > 0}"><td></td></c:if>
-						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId and info.recruit_end eq 1}"><td><input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${ptm.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
-						<td></td>
+						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId and info.recruit_end eq 1}"><td><input type="button" class="manner-button" value="평가하기" onclick="location.href='/mannerGo?member_id=${ptm.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
 					</tr>
 				</c:forEach>
 				<c:forEach items="${partList}" var="part">
 					<tr>
-						<td><a href="/mannerInfo?member=${part.member_id}&board=${info.board_idx}">${part.member_id}</a></td>
+						<th>
+		       				<a href="/mannerInfo?member=${part.member_id}&board=${info.board_idx}">
+				            	<c:if test="${part.gender eq '남자'}">
+			           				<img class="gender1" src="./resources/images/man.png" alt="man">
+			        				    </c:if>	
+					            <c:if test="${part.gender eq '여자'}">
+					            	<img class="gender1" src="./resources/images/girl.png" alt="girl">
+					            </c:if>	
+				            </a>
+						</th>
+						<th><a href="/mannerInfo?member=${part.member_id}&board=${info.board_idx}">${part.member_id}</a></th>
 						<td>${part.gender}</td>
 						<c:if test="${partMemberChk > 0}"><td>${part.phone}</td></c:if>
 						<c:if test="${info.recruit_end eq 1 and partMemberChk > 0 }">
-						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0 and part.assessNo eq 0}"><td><input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
+						<c:if test="${partMemberChk > 0 and part.member_id ne sessionScope.loginId and partMemberChk > 0 and part.assessNo eq 0}"><td><input type="button" class="manner-button" value="평가하기" onclick="location.href='/mannerGo?member_id=${part.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
 						</c:if>
-						<c:if test="${info.recruit_end eq 0 }">
-						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><td><input type="button" value="강퇴" onclick="location='mealBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
+						<c:if test="${info.recruit_end eq 0}">
+						<c:if test="${partMemberChk > 0 and info.member_id eq sessionScope.loginId}"><td><input type="button" id="elim" class="elim-button" value="강퇴" onclick="location='mealBan?board_idx=${info.board_idx}&member_id=${part.member_id}'"/></td></c:if>
 						</c:if>
 					</tr>
 				</c:forEach>
 			</table>
+			<table id="bottom-table">
 			<!-- 아래부터 Kakao Map API 구역 -->
-			<input type="hidden" id="lat" value="${info.appoint_coords_lat}"/>
-			<input type="hidden" id="lng" value="${info.appoint_coords_lng}"/>
-			<div id="map" style="width:500px;height:350px;"></div>
-			<c:if test="${info.recruit_end eq 0 and info.member_id ne sessionScope.loginId}">
-				<button id="openModalPop">참여신청</button><br/>
-			</c:if>
-			<input type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
-			<input type="button" value="돌아가기" onclick="location.href=mealList.go'"/>
+				<tr>
+					<td colspan="4">
+						<input type="hidden" id="lat" value="${info.appoint_coords_lat}"/>
+						<input type="hidden" id="lng" value="${info.appoint_coords_lng}"/>
+						<div id="map" style="width:700px;height:350px; margin: 0 auto;"></div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align: center">
+						<c:if test="${info.recruit_end eq 0 and info.member_id ne sessionScope.loginId}">
+							<input id="openModalPop" type="button" value="참여신청"/>
+						</c:if>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" style="text-align: center">		
+						<c:if test="${info.member_id eq sessionScope.loginId}">
+							<input class="bottom-button del-button" type="button" value="삭제" onclick="location.href='deliDelete?board_idx=${info.board_idx}'"/>
+						</c:if>
+						<input class="bottom-button back-button" type="button" value="돌아가기" onclick="location.href='mealList.go'"/>
+					</td>
+				</tr>
+			</table>	
 	   </div>
 	</div>
 	<!-- 아래부터 참여 신청 모달 부분 -->
-	<div id="modal">
-	</div>
+   	<form action="mealApply">
+	<div id="modal"></div>
 	<div id ="banner_online">
         <div id="close_button" style ="cursor: pointer;"> 
             <a id="close_button">&times;</a>
         </div>
         <h2>참여신청</h2>
         <div class="pop_content">
-        	<form action="mealApply">
-	           내 연락처 <input type="text" name="phone" value="${phone}" readonly/><br/>
-	           <input type="hidden" name="member_id" value="${sessionScope.loginId}"/>
-	           <input type="hidden" name="board_idx" value="${info.board_idx}"/>
-   	           <input type="hidden" name="gd_restriction" value="${info.gender}"/>
-	           <input type="submit" value="보내기" style="text-align: right;"/>
-        	</form>
+        	<table id="modal-table">
+        		<tr>
+		           <th>내 연락처 : </th>
+		           <td><input type="text" name="phone" value="${phone}" readonly/></td>
+		           <input type="hidden" name="member_id" value="${sessionScope.loginId}"/>
+		           <input type="hidden" name="board_idx" value="${info.board_idx}"/>
+	   	           <input type="hidden" name="gd_restriction" value="${info.gender}"/>
+	           </tr>
+	           <tr>
+	           		<th colspan="2"><input type="submit" value="보내기"/></th>
+	           </tr>
+        	</table>
         </div>
     </div>
+  	</form>
 	
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
@@ -274,7 +569,6 @@
 
 	    $("#openModalPop").click(function() {
 	        $("#banner_online").fadeIn();
-	        $("#modal").fadeIn();
 	    });
 
 	    $("#close_button").click(function(){

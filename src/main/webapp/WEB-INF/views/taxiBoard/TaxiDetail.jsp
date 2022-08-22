@@ -44,14 +44,13 @@
     #center-table {
     	margin: 0 auto;
     	margin-top: 20px;
+    	color: rgb(88, 88, 88);
     }
     
     #bottom-table {
     	margin: 0 auto;
     	margin-top: 100px;
     }
-    
-    
     
     #main-table th,td {
     	border: none;
@@ -151,7 +150,7 @@
 	#close_button {
 		position: absolute;
 	    float: right;
-	    left: 165px;
+	    left: 160px;
 	    top: 5px;
 	}
 	
@@ -246,7 +245,7 @@
 		transform: scale(1.1);
 	}
 	
-	.off {
+	.eye {
         width: 40px;
         float: right;
         margin-top: 10px;
@@ -267,11 +266,14 @@
 		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-      	   <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}">
-	  			<a href="superBlind?board_idx=${info.board_idx}">
-	  				<img class="off" src="./resources/images/off.png" alt="off">
-	  			</a>
-     	   </c:if>
+     		<c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자' and list.hide == 0}">
+     			<a href="superBlind?board_idx=${info.board_idx}">
+     				<img class="eye on" src="./resources/images/on.png" alt="on">
+     			</a>
+     		</c:if>
+     		<c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자' and list.hide == 1}">
+   				<img class="eye off" src="./resources/images/off.png" alt="off">
+     		</c:if>
 	       <!-- 참여신청 모달팝업창 -->
  	       <form action="taxiApplyDo" method="post">
 			   <div id="modal"></div>
@@ -478,7 +480,7 @@
 	// 참여신청 모달팝업
 	$(document).ready(function() {
 	    $("#apply-button").click(function() {
-	        $("#banner_online").show();
+	        $("#banner_online").fadeIn();
 	    });
 
 	    $("#close_button").click(function(){
