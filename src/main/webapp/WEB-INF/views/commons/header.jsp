@@ -46,7 +46,7 @@
         width: 110px;
     }
 
-    .navbar-top .dot {
+/*     .navbar-top .dot {
         width: 40px;
         position: absolute;
         right: 30px;
@@ -59,11 +59,12 @@
         width: 27px;
         right: 25px;
         top: 60px;
-    }
+    } */
 
     .navbar-top p {
         float: right;
         margin-right: 20px;
+        margin-top: 10px;
         font-size: 14px;
     }
 
@@ -75,7 +76,7 @@
     .gender {
     	position:relative;
     	width: 35px;
-    	top: 15px;
+    	top: 13px;
     	right: 10px;
     }
 
@@ -108,7 +109,7 @@
             	</a>
             	 &nbsp; | &nbsp; <a href="logout">로그아웃</a>
             </p>
-	        <a href="#"><img class="bell" src="./resources/images/bell.png" alt="bell"></a>
-	        <img class="dot" src="./resources/images/dot.png" alt="dot">
+	        <!-- <a href="#"><img class="bell" src="./resources/images/bell.png" alt="bell"></a>
+	        <img class="dot" src="./resources/images/dot.png" alt="dot"> -->
 	    </div>
     </div>

@@ -179,7 +179,7 @@
 						<td>인원 &nbsp;:&nbsp; ${list.partNo} / ${list.member_cnt}</td>
 						<c:if test="${list.recruit_end eq 0}">
 							<td>
-								<span style="padding: 3px 10px; border-radius: 5px; background-color: #2962ff">모집중</span>
+								<span style="padding: 3px 10px; border-radius: 5px; background-color: #2962ff;">모집중</span>
 							</td>
 						</c:if>
 						<c:if test="${list.recruit_end eq 1}">

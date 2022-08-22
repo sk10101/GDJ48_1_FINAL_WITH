@@ -66,6 +66,11 @@
 		border-radius: 0 20px 0 0;
 	}
 	
+	.myinfo tr:last-child td {
+		padding-bottom: 15px;
+	}
+	
+	
 	
 	/* .myinfo tr:last-child td {
 		border-bottom: 0.4px solid gray;

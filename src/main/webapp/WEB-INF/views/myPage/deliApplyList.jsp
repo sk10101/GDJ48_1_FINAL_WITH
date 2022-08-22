@@ -82,6 +82,10 @@
 		border-radius: 0 20px 0 0;
 	}
 	
+	#main-table tbody:last-child tr td {
+		padding-bottom: 15px;
+	}
+	
 	#main-table a {
 		color: #537ef4;
 	}
@@ -182,8 +186,8 @@
 						<td>${apply.apply_date}</td> 
 						<td>
 							<c:forEach var="i" begin="1" end="5">
-		                     <c:if test="${apply.avg_allAvg >= i}"><img src="./resources/images/star.png" alt="star" style="width: 20px;"></c:if>
-		                     <c:if test="${apply.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 20px;"></c:if>
+		                     <c:if test="${apply.avg_allAvg >= i}"><img src="./resources/images/star.png" alt="star" style="width: 20px; position: relative; top: 2px;"></c:if>
+		                     <c:if test="${apply.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 20px; position: relative; top: 2px;"></c:if>
            				    </c:forEach>
 						</td>
 						<td><input class="common-button yes-button" type="button" value="수락" onclick="location.href='applyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&category_id=${apply.category_id}&status=1&member_id=${apply.member_id}'" /></td>

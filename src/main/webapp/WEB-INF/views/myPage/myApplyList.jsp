@@ -70,7 +70,7 @@
     	font-size: 16px;
     	border-collapse: collapse;
     	background-color: #fff;
-    	/* table-layout: fixed; */
+    	table-layout: fixed;
 	}
 	
 	#main-table a {
@@ -98,6 +98,10 @@
 	
 	#main-table tr:first-child th:last-child {
 		border-radius: 0 20px 0 0;
+	}
+	
+	#main-table tbody:last-child tr td {
+		padding-bottom: 15px;
 	}
 	
 	/* 검색창 */
@@ -158,7 +162,7 @@
         white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		max-width: 200px;
+		max-width: 300px;
     }
     
   	/* 페이지네이션 부트스트랩 css 제거 후 직접 수정 (why? 부트스트랩 때문에 사이드바 ul li 깨짐) */
@@ -214,8 +218,8 @@
 						<select id="option" name="option">
 							<option value="제목">제목</option>
 							<option value="이용 서비스">이용 서비스</option>
-							<option value="마감상태">마감상태</option>
-							<option value="신청상태">신청상태</option>
+							<option value="마감상태">마감 상태</option>
+							<option value="신청상태">신청 상태</option>
 						</select> 
 						<input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
 				   		<input type="hidden" name="page" value="1"/>
@@ -229,10 +233,10 @@
 						<th>글번호</th>
 						<th>이용 서비스</th>
 						<th>제목</th>
-						<th>본인 투자금액</th>
-						<th>신청시간</th>
-						<th>신청상태</th>
-						<th>마감상태</th>
+						<th>투자금액</th>
+						<th>신청 시간</th>
+						<th>신청 상태</th>
+						<th>마감 상태</th>
 						<th></th>
 					</tr>
 				</thead>

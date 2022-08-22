@@ -103,6 +103,10 @@
 		border-radius: 0 20px 0 0;
 	}
 	
+	#main-table tbody:last-child tr td {
+		padding-bottom: 15px;
+	}
+	
 	#main-table a {
 		color: #537ef4;
 	}

@@ -7,7 +7,7 @@
 	<meta charset="UTF-8">
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="resources/js/jquery.twbsPagination.js"></script>
@@ -28,25 +28,144 @@
         min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
+        padding: 60px 100px;
     }
     
-    table{
-      width: 100%;
-   }
-   table, th, td{
-      border: 1px solid black;
-      border-collapse: collapse;
-      width: 300px;
-   }
+   	#top-table {
+		margin-bottom: 30px;
+		color: rgb(88, 88, 88);
+		font-size: 16px;
+	}
+	
+	#top-table th {
+		padding: 6px 15px;
+		font-weight: normal;
+	}
+	
+    .button {
+    	padding: 5px 20px;
+    	border-radius: 5px;
+    	border: none;
+    	font-size: 14px;
+    }
+    
+    .left-button {
+    	background-color: #537ef4;
+    	color: #eaeaea;
+    }
+    
+    .right-button {
+   		background-color: rgb(249, 249, 249);
+    	padding: 4px 20px;
+    	border-radius: 5px;
+    	border: 0.4px solid gray;
+    	color: rgb(88, 88, 88); 
+    	font-size: 14px; 
+    	transition: all 0.3s ease;
+    }
+    
+    .right-button:hover {
+    	font-weight:500;
+		transform: scale(1.02);
+    }
+
+	#main-table {
+  		width: 100%;
+    	color: rgb(88, 88, 88);
+    	margin: 0 auto;
+    	padding: 30px 50px;
+    	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    	border-radius: 20px;
+    	font-size: 16px;
+    	border-collapse: collapse;
+    	background-color: #fff;
+    	/* table-layout: fixed; */
+	}
+	
+	#main-table th,
+	#main-table td {
+		padding: 10px 10px;
+		text-align: center;
+	}
+	
+	#main-table td {
+		border-top: 5px solid rgb(249, 249, 249);
+	}
+
+	#main-table tr:first-child th {
+		background-color: rgb(249, 249, 249);
+		padding-top: 15px;
+	}
+	
+	#main-table tr:first-child th:first-child {
+		border-radius: 20px 0 0 0;
+	}
+	
+	#main-table tr:first-child th:last-child {
+		border-radius: 0 20px 0 0;
+	}
+	
+	#main-table tr:last-child td {
+		padding-bottom: 15px;
+	}
+	
+	#main-table a {
+		color: #537ef4;
+	}
+	
+	/* 검색창 */
+    option {
+    	font-size: 16px;
+    }
+    
+    .search {
+    	text-align: left;
+    	margin-bottom: 15px;
+    }
+    
+    .search input[type="search"] {
+    	width: 200px;
+    	height: 28px;
+    	padding: 10px 10px;
+    	border: 1.5px solid lightgray;
+    	border-radius: 7px;
+    	font-size: 14px;
+    }
+    
+    .search-img {
+    	width: 30px;
+    	position: relative;
+    	top: 8px;
+    	left: 5px;
+    }
+    
+   	#option {
+   		padding: 2px 6px;
+   		border-radius: 5px;
+   		text-align: center;
+   	}
+   	
+   	/* 페이지네이션 부트스트랩 css 제거 후 직접 수정 (why? 부트스트랩 때문에 사이드바 ul li 깨짐) */
+   	nav {
+    	text-align: center;
+    	margin-top: 60px;
+    }
+   	
+   	#pagination {
+   		display: inline-block;
+   	}
    
-   th, td{
-      padding: 5px 10px;
-      text-align: center;
-   }
+   	#pagination li {
+   		float: left;
+   		/* border: 0.4px solid gray; */
+   		padding: 5px 15px;
+   	}
+   	
+   	#pagination li a {
+   		color: rgb(88, 88, 88);
+   		font-size: 16px;
+   	}
    
-   table{
-      width: 80%;
-   }
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -61,46 +180,58 @@
 		</c:choose>
 	   <div class="content">
 			<form action="userList">
-			   	<button onclick="location.href='userList.go'" name="member_class" value="일반회원">일반회원</button>
-			   	<button onclick="location.href='userList.go'" name="member_class" value="관리자">관리자</button>  
-				<select id="option" name="option">
-					<option value="id">아이디</option>
-					<option value="name">이름</option>
-					<option value="university">대학교</option>
-					<option value="certficate">인증여부</option>
-				</select>
-				<input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
-				<input type="hidden" name="page" value="1"/>
-				<button id="searchBtn">검색</button>
+				<table id="top-table">
+					<tr>
+						<th><button class="button left-button" onclick="location.href='userList.go'" name="member_class" value="일반회원">일반회원</button></th>
+			   			<th><button class="button right-button" onclick="location.href='userList.go'" name="member_class" value="관리자">관리자</button></th>
+			   		</tr>		
+			   	</table>  
+			   	<div class="search">
+					<select id="option" name="option">
+						<option value="id">아이디</option>
+						<option value="name">이름</option>
+						<option value="university">대학교</option>
+						<option value="certficate">인증여부</option>
+					</select>
+					<input id="word" type="search" placeholder="검색어를 입력하세요" name="word" value=""/>
+					<input type="hidden" name="page" value="1"/>
+					<input id="searchBtn" type="image" class="search-img" alt="search" src="../resources/images/search.png">
+				</div>
 			</form>
-		<table>
-			<thead>
-				<tr>
-					<th>아이디</th>
-					<th>이름</th>		
-					<th>대학교</th>
-					<th>성별</th>
-					<th>인증여부</th>	
-				</tr>
-			</thead>
-			<tbody>
-			<c:forEach items="${list}" var="user">
-				<tr>
-					<td><a href="userDetail?member_id=${user.member_id}">${user.member_id}</a></td>
-					<td>${user.name}</td>
-					<td>${user.university_name}</td>
-					<td>${user.gender}</td>
-					<c:if test="${user.certficate_chk eq 0}"><td>N</td></c:if>
-					<c:if test="${user.certficate_chk eq 1}"><td>Y</td></c:if>
-				</tr>
-			</c:forEach>
-			</tbody>
-		</table>
-		<div class="container">
+			<table id="main-table">
+				<thead>
+					<tr>
+						<th>아이디</th>
+						<th>이름</th>		
+						<th>대학교</th>
+						<th>성별</th>
+						<th>인증여부</th>	
+					</tr>
+				</thead>
+				<tbody>
+				<c:forEach items="${list}" var="user">
+					<tr>
+						<td><a href="userDetail?member_id=${user.member_id}">${user.member_id}</a></td>
+						<td>${user.name}</td>
+						<td>${user.university_name}</td>
+						<td>${user.gender}</td>
+						<c:if test="${user.certficate_chk eq 0}">
+							<td>
+								<img src="./resources/images/no.png" alt="no" style="position: relative; top: 2px; width: 18px;">
+							</td>
+						</c:if>
+						<c:if test="${user.certficate_chk eq 1}">
+							<td>
+								<img src="./resources/images/yes.png" alt="yes" style="position: relative; top: 2px; width: 25px;">
+							</td>
+						</c:if>
+					</tr>
+				</c:forEach>
+				</tbody>
+			</table>
 		    <nav arial-label="Page navigation" style="text-align:center">
 		        <ul class="pagination" id="pagination"></ul>
 		    </nav>
-		</div>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>

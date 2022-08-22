@@ -25,7 +25,33 @@
         min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
+        padding: 60px 100px;
     }
+    
+   	#main-table {
+   		min-width: 600px;
+    	color: rgb(88, 88, 88);
+    	margin: 0 auto;
+    	padding: 30px 50px;
+    	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    	border-radius: 20px;
+    	font-size: 16px;
+	}
+	
+	#main-table th,
+	#main-table td {
+		padding: 15px 10px;
+	}
+	
+	.btu {
+		background-color: #537ef4;
+		color: #eaeaea;
+		border-radius: 5px;
+		border: none;
+		padding: 7px 20px;
+		font-size: 16px;
+		margin: 0 10px;
+	}
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -41,7 +67,7 @@
 	   <div class="content">
 	   	<form action="update.do">
 	   	<input type="hidden" name="penalty_idx" value="${params}"/>
-		   	<table>
+		   	<table id="main-table">
 		       	<tr>
 		       		<th>회원ID</th>
 		       		<td>${list.member_id}</td>
@@ -64,16 +90,20 @@
 		       	</tr>
 		       	<tr>
 		       		<th>이용제한 해제</th>
-		       		<td><input id="chkbox" type="checkbox" <c:if test="${list.cancel eq 1}">checked</c:if>>제한 해제</td>
+		       		<td><input id="chkbox" type="checkbox" <c:if test="${list.cancel eq 1}">checked</c:if>> 제한 해제</td>
 		       	</tr>
 		       	<tr>
 		       		<th>해제 사유</th>
-					<td><c:if test="${list.pntCancel_reason eq null}"><input type="text" name="pntCancel_reason" required/></c:if></td>
-		       		<td><c:if test="${list.pntCancel_reason ne null}">${list.pntCancel_reason}</c:if></td>
+					<c:if test="${list.pntCancel_reason eq null}"><td><input type="text" name="pntCancel_reason" required/></td></c:if>
+		       		<c:if test="${list.pntCancel_reason ne null}"><td>${list.pntCancel_reason}</td></c:if>
+		       	</tr>
+		       	<tr>
+		       		<th colspan="2" style="padding-top: 50px;">
+					    <input class="btu" type="button" value="돌아가기" onclick="location.href='penaltyList.go'"/>
+					    <input class="btu" type="submit" name="send" value="처리"/>
+		       		</th>
 		       	</tr>
 		    </table>
-			    <input type="button" value="돌아가기" onclick="location.href='penaltyList.go'"/>
-			    <input type="submit" name="send" value="처리"/>
 	    </form>
 	   </div>
 	</div>

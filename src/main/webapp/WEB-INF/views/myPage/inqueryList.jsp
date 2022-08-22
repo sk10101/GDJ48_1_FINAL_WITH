@@ -72,6 +72,10 @@
 		border-radius: 0 20px 0 0;
 	}
 	
+	#main-table tbody:last-child tr td {
+		padding-bottom: 15px;
+	}
+	
 	/* 검색창 */
     .search {
     	text-align: left;
@@ -173,7 +177,7 @@
             	<c:forEach items="${name}" var="name">
             		<c:if test="${name.hide eq 0}">
 						<tr>
-							<td style="text-align: left"><a href="/inqueryDetail.go?idx=${name.inquery_idx}">${name.subject}</a></td>
+							<td style="text-align: left; padding: 10px 20px;"><a href="/inqueryDetail.go?idx=${name.inquery_idx}">${name.subject}</a></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd KK:mm:ss" value="${name.inquery_date}"/></td>
 							<c:if test="${name.status eq '미처리'}">						
 								<td style="color: #ef5350;">${name.status}</td>

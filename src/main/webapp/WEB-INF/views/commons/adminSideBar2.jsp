@@ -95,6 +95,6 @@
             <li><a class="my" href="/reportList.go">신고 내역 관리</a></li>
             <li><a class="my" href="/penaltyList.go">회원 이용 제한</a></li>
             <li><a class="my" href="/admininqueryList.go">고객 문의</a></li>
-            <li><a class="my" href="/blindListGo">블라인드 게시글 관리</a></li>
+            <li><a class="my" href="/blindListGo">블라인드 글 관리</a></li>
         </ul>
     </div>
