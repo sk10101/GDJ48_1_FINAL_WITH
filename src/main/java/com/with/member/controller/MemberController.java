@@ -9,11 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.with.member.dto.MemberDTO;
 import com.with.member.service.MemberService;
 
 @Controller
@@ -39,14 +42,41 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/mbUpdate.do")
-	public String mbUpdate(Model model,MultipartFile[] photo_idx, @RequestParam HashMap<String, Object> params, HttpSession session) {
+	public String mbUpdate(RedirectAttributes rAttr,MultipartFile[] photo_idx, @RequestParam HashMap<String, Object> params, HttpSession session) {
 		params.put("member_id",(String) session.getAttribute("loginId"));
-		logger.info("파일의 값 : {}",photo_idx);
 		logger.info("업데이트 변경 값 : {}",params);
-		int cnt = service.update(photo_idx,params);
-		if(cnt>0) {
-			model.addAttribute("msg","회원 수정이 완료되었습니다.");
+		String pw = (String) params.get("pw");
+		String member_pw = (String) params.get("member_pw");
+		String phone = (String) params.get("phone");
+		String university_name = (String) params.get("university_name");
+		int hide = Integer.parseInt((String)params.get("hide"));
+		int cnt=0;
+		String msg="회원정보 수정에 실패하었습니다.";
+		if(photo_idx != null) {
+			service.photoUpdate(photo_idx,params);
+			msg="회원정보 수정에 성공하였습니다.";
 		}
+		if(phone != null) {
+			service.mbPhone(params);
+			msg="회원정보 수정에 성공하였습니다.";
+		}
+		if(hide > 0) {
+			service.hideUpdate(params);
+			msg="회원정보 수정에 성공하였습니다.";
+		}
+		if(!university_name.isEmpty()) {
+			service.univer_add(params);
+			msg="대학교 설정에 성공하였습니다.";
+		}
+		if(!pw.isEmpty()&&!member_pw.isEmpty()){
+			if(pw.equals(member_pw)) {
+				cnt = service.pwUpdate(params);
+				msg="비밀번호 변경에 성공하였습니다.";
+			}else {
+				msg="비밀번호가 일치하지 않습니다.";
+			}
+		}
+		rAttr.addFlashAttribute("msg",msg);
 		return "redirect:/myInfo";
 	}
 	
@@ -85,17 +115,18 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/mannerInfo")
-	public ModelAndView mannerInfogo(@RequestParam HashMap<String, Object> params) {
+	public ModelAndView mannerInfo(@RequestParam HashMap<String, Object> params,HttpSession session) {
+		String mb_id = (String) session.getAttribute("loginId");
 		ModelAndView mav = new ModelAndView();
 		String member = (String) params.get("member");
+		int whoId = service.whoId(mb_id,member);
+		logger.info("whoId 의 값 : {}",whoId);
 		int board=Integer.parseInt((String) params.get("board"));
 		String boardName = service.boardName(board);
-		logger.info("board의 값 : {}",board);
-		logger.info("member의 값 : "+member);
-		logger.info("boardName 값 : {}",boardName);
 		params=service.infoAll(member, params);
 		params.put("board",board);
 		params.put("boardName",boardName);
+		params.put("whoId", whoId);
 		mav.addObject("params",params);
 		mav.setViewName("myPage/mannerInfo");
 		return mav;

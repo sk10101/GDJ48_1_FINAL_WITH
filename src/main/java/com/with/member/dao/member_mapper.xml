@@ -9,10 +9,18 @@
 	
 	<select id="univer" resultType="String">
 		SELECT university_name FROM university WHERE university_idx = #{param1}
-	</select>
-	
-	<update id="update">
-      UPDATE member SET member_pw=#{param1},phone=#{param2},hide=#{param3} WHERE member_id = #{param4}
+	</select>    
+    
+    <update id="pwUpdate" parameterType="hashmap">
+      UPDATE member SET member_pw=#{pw} WHERE member_id = #{member_id}
+    </update>
+
+    <update id="mbPhone" parameterType="hashmap">
+      UPDATE member SET phone=#{phone} WHERE member_id = #{member_id}
+    </update>
+
+    <update id="hideUpdate" parameterType="hashmap">
+      UPDATE member SET hide=#{hide} WHERE member_id = #{member_id}
     </update>
    
     <select id="macnt" resultType="int">
@@ -74,5 +82,13 @@
 	<select id="boardName" resultType="String">
 		SELECT category_id FROM board_common_column WHERE board_idx=#{param1};
 	</select>
+
+	<select id="whoId" resultType="int">
+		SELECT count(block_member) FROM block WHERE member_id=#{param1} AND block_member=#{param2};
+	</select>
+	
+	<update id="univer_add" parameterType="hashmap">
+		UPDATE member SET university_idx=(SELECT university_idx FROM university WHERE university_name = #{university_name}) WHERE member_id = #{member_id}
+	</update>
 	
 </mapper>

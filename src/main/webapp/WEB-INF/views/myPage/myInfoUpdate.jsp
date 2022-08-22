@@ -8,6 +8,9 @@
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </head>
 <style>
 .content-wrap {
@@ -76,13 +79,13 @@
             	<tr>
             		<th>PW</th>
             		<td>
-	            		<input id="pw1" type="password"/>
+	            		<input id="pw" name="pw" type="password"/>
 	            		<br>※ 8 ~ 15자 입력, 비밀번호 수정시에만 작성
             		</td>
             	</tr>
             	<tr>
             		<th>PW확인</th>
-            		<td><input id="member_pw" name="member_pw" type="password"/><p id=result></p></td>
+	            		<td><input id="member_pw" name="member_pw" type="password"/><p id=result></p></td>
             	</tr>
             	<tr>
             		<th>이름</th>
@@ -94,7 +97,11 @@
             	</tr>
             	<tr>
             		<th>대학교</th>
-            		<td><input id="university_idx" name="university_idx" type="button" style="width:100px; height:30px;" value="대학교 찾기"/></td>
+            		<td>
+            			<input type="hidden" id="university_idx" name='university_idx' />
+						<input type="text" id="university_name" name='university_name'  placeholder="대학교 입력" readonly />
+					    <button type="button" id="univSearch" class="btn btn-default">검색</button>
+            		</td>
             	</tr>
             	<tr>
             		<th>인증서</th>
@@ -111,21 +118,64 @@
             	<tr>
             		<th>회원탈퇴 신청</th>
             		
-            		<td><input id="hide" name="hide" type="checkbox" value="1"/>&emsp;
+            		<td>
+            		<!-- <input id="hide" name="hide" type="checkbox" value=0/>&emsp; -->
+					  <div><input type="radio" id="hide" name="hide" value=1>예<input type="radio" id="hide" name="hide" value=0 checked="checked">아니요</div>&emsp;
             		※ 체크하신 후 수정버튼을 누르시면 탈퇴신청이 접수됩니다.
 					(탈퇴 시 with 서비스를 이용하실 수 없으며 해당 아이디로 재 가입이 불가능 합니다.)
             		</td>
             	</tr>
             </table>
-            <div class="button"><button class="btu">변경</button><input class="btu" type="button" value="돌아가기" onclick="location.href='/myInfo'"/></div>
+				<div class="button"><button class="btu">변경</button><input class="btu" type="button" value="돌아가기" onclick="location.href='/myInfo'"/></div>
             </form>
 	   </div>
 	</div>
+	
+	 <!-- 대학검색 Modal -->
+	<div id="univSearchModal" class="modal fade" role="dialog" data-backdrop="static">
+	  <div class="modal-dialog">
+	
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	      <h4 class="modal-title">대학 검색 </h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>        
+	      </div>
+	      <div class="modal-body" style="width:100%; height:500px; overflow:auto">
+	        <table id="univtable" class="table table-striped">
+	        <div id="List" class="form-inline">
+				<span>대학이름 : </span>
+			  <input  class="form-control" type="text" style="width:50%" id="keyword" name="keyword" display="inline-block"/> 
+			  <!-- <input type="hide" id="univ_idx" name=univ_idx/> --> 
+			  <button type="button" id="univsearch" style="width:20%" class="btn btn-default">검색</button> 
+			 </div>
+	        	<thead style="text-align:center; font-size:20px;">
+	        		<tr><td>대학교</td><tr>
+	        	</thead>
+	        	<tbody id="list" style="font-size:20px;">
+	        	</tbody>
+	        </table>
+	
+	      </div>
+	      <div class="modal-footer" >
+	      	<button type="button" id="univUp" onclick="univUp()" class="btn btn-default" >선택</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div> 
+	
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script>
-$('#member_pw').keyup(function(){
-    var pass1 = $("#pw1").val();
+	var checkbox = document.getElementById("hide");
+	const is_checked = checkbox.checked;
+	if(checkbox==true){
+			Myelement.value = 1;
+	}
+
+	$('#member_pw').keyup(function(){
+    var pass1 = $("#pw").val();
     var pass2 = $("#member_pw").val();
 	
     if(pass1 != "" || pass2 != ""){
@@ -138,5 +188,70 @@ $('#member_pw').keyup(function(){
         }
     }
 })
+
+//모달뜨게하는 기능
+	$("#univSearch").click(function(){
+		       $('#univSearchModal').modal();
+		
+		// 모달창 띄우고 뿌리기 
+		$.ajax({
+			type:'get',
+			url:'univList.ajax',
+			data:{},
+			dataType:'json',
+			success:function(data){
+				drawList(data);
+				
+			},
+			error:function(e){console.log(e)
+				}
+		});	
+		
+	});
+	
+	
+	// 대학 검색 
+	$('#univsearch').on('click',function(){
+
+		$.ajax({
+			type:'get',
+			url:'univSearch.ajax',
+			data:{
+					keyword:$("#keyword").val()
+				},
+			dataType:'json',
+			success:function(data){
+				drawList(data);
+			},
+			error:function(e){console.log(e)}
+			
+		});
+	});
+	
+	
+	// 모달창에서 에이잭스 뿌리기 
+	function drawList(list){
+		var content = '';
+		list.forEach(function(item){
+			//console.log(item);
+			content += '<tr>';
+			content += '<td><input type="radio" id="selectUniv" name="selectUniv" value="'+item.university_idx+'" class="'+item.university_name+'" /></td>';
+			content += '<td>'+item.university_name+'</td>';
+			content += '</tr>';
+		});
+		$('#list').empty();
+		$('#list').append(content);
+	}
+	
+	//대학 등록 
+	function univUp(){
+			$("#university_idx").val($('input[name=selectUniv]:checked').val());		
+			$("#university_name").val($('input[name=selectUniv]:checked').attr("class"));		
+			$('#univSearchModal').modal('hide')
+	}
+		function joinDo(){
+			alert("test");
+			location.href="/join.do";
+	} 
 </script>
 </html>

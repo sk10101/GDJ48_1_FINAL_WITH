@@ -10,6 +10,7 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,13 +28,6 @@ public class MemberService {
 
 	public HashMap<String, Object> mblist(String member_id) {
 		return dao.mblist(member_id);
-	}
-	
-	public int update(MultipartFile[] photo_idx, HashMap<String, Object> params) {
-		if(photo_idx!=null) {
-			memberFileSave(photo_idx, (String) params.get("member_id"));
-		}
-		return dao.update(params);
 	}
 	
 	private void memberFileSave(MultipartFile[] photos, String member_id) {
@@ -216,4 +210,30 @@ public class MemberService {
 		return dao.boardName(board);
 	}
 
+	public int whoId(String mb_id, String member) {
+		return dao.whoId(mb_id,member);
+	}
+
+	public int pwUpdate(HashMap<String, Object> params) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String pw = (String) params.get("pw");
+		params.put("pw", encoder.encode(pw));
+		return dao.pwUpdate(params);
+	}
+
+	public void photoUpdate(MultipartFile[] photo_idx, HashMap<String, Object> params) {
+		memberFileSave(photo_idx, (String) params.get("member_id"));
+	}
+
+	public void mbPhone(HashMap<String, Object> params) {
+		dao.mbPhone(params);
+	}
+
+	public void hideUpdate(HashMap<String, Object> params) {
+		dao.hideUpdate(params);
+	}
+
+	public void univer_add(HashMap<String, Object> params) {
+		dao.univer_add(params);
+	}
 }
