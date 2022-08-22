@@ -35,7 +35,7 @@ public interface MealDAO {
 
 
 	
-	ArrayList<BoardDTO> partList(String board_idx);
+	ArrayList<BoardDTO> partList(String board_idx,String loginId);
 
 	void mealApply(String member_id, String board_idx);
 
@@ -67,7 +67,7 @@ public interface MealDAO {
 
 	int putTime(HashMap<String, String> params);
 
-	char getGender(String member_id);
+	String getGender(String member_id);
 
 	int isApplied(String member_id, String board_idx);
 
@@ -75,6 +75,11 @@ public interface MealDAO {
 
 	int isBanned(String member_id, String board_idx);
 
+	
+
+	String chkGender(String member_id);
+
+	
 	
 	
 

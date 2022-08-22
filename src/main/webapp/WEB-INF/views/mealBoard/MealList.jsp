@@ -75,6 +75,7 @@
     
     option {
     	font-size: 16px;
+    	text-align: center;
     }
     
     .search {
@@ -99,15 +100,14 @@
     }
     
     .write-button {
-    	padding: 2px 10px;
+    	padding: 4px 15px;
     	border-radius: 5px;
     	border: none;
-    	background-color: #2962ff;
+    	background-color: #537ef4;
     	color: #eaeaea;
     	font-size: 16px;
     	margin-left: 130px;
     }
-    
     
    	#option {
    		padding: 4px 10px;
@@ -168,16 +168,16 @@
 								<th colspan="2">${meal.subject}</th>
 							</tr>
 							<tr>
-								<td>약속장소 : ${meal.appoint_place}</td>
-								<td>작성자 : ${meal.member_id}</td>
+								<td>약속장소 &nbsp;:&nbsp; ${meal.appoint_place}</td>
+								<td>작성자 &nbsp;:&nbsp; ${meal.member_id}</td>
 							</tr>
 							<tr>
-								<td>마감시간 : ${meal.deadline}</td>
-								<td>작성일 : ${meal.write_date}</td>
+								<td>마감시간 &nbsp;:&nbsp; ${meal.deadline}</td>
+								<td>작성일 &nbsp;:&nbsp; ${meal.write_date}</td>
 							</tr>
 							<tr>
-								<td>인원 : ${meal.partNo} / ${meal.member_cnt}</td>
-								<td>조회수 : ${meal.hit}</td>
+								<td>인원 &nbsp;:&nbsp; ${meal.partNo} / ${meal.member_cnt}</td>
+								<td>조회수 &nbsp;:&nbsp; ${meal.hit}</td>
 							</tr>
 							<tr>
 							<td></td>

@@ -142,7 +142,19 @@
 							</tr>							
 							<tr>
 							<td>
-								<button class="btn" onClick="location='blindDetail?board_idx=${bbs.board_idx}'">상세보기</button>
+								<button class="btn" 
+								<c:if test="${bbs.category_id eq '배달게시판'}">
+									onClick="location='deliDetail?board_idx=${bbs.board_idx}'"
+								</c:if>
+								<c:if test="${bbs.category_id eq '택시게시판'}">
+									onClick="location='/taxiDetail?board_idx=${bbs.board_idx}'"
+								</c:if>
+								<c:if test="${bbs.category_id eq '밥게시판'}">
+									onClick="location='mealDetail?board_idx=${bbs.board_idx}'"
+								</c:if>
+								>상세보기
+								</button>
+								<button class="btn" onClick="location='blindDetail?board_idx=${bbs.board_idx}'">블라인드 해제</button>
 							</td>
 							</tr>
 						</table>

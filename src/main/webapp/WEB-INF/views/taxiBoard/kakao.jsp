@@ -15,32 +15,60 @@
     	top: 8px;
     	left: 5px;
     }
+    
+    #kakao-table {
+    	margin: 0 auto;
+    }
+    
+    #kakao-table tr:first-child th {
+		padding-bottom: 15px;
+	}
+	
+    #kakao-table tr:first-child th input:first-child {
+		width: 200px;
+		border-radius: 5px;
+		border: 0.4px solid gray;
+		padding: 3px 10px;
+	}
+	
+	#kakao-table tr:last-child th {
+		padding-top: 15px;
+	}
+	
+	#kakao-table tr:last-child th input {
+		padding: 5px 20px;
+		background-color: #537ef4;
+		border-radius: 5px;
+		border: none;
+		color: #eaeaea;
+	}
+	
 </style>
 </head>
 <body>
-	<form action="taxiGetCoords" id="getCoords">
-		<table>
+		<table id="kakao-table">
 			<tr>
 				<th>
-					<input type="text" id="search" placeholde="검색어를 입력하세요"/>
+					<input type="text" id="search" placeholder="장소를 입력하세요"/>
 					<!-- <input type="button" value="검색" onclick="search()"> --> 
 					<input id="searchBtn" type="image" class="search-img" alt="search" src="../resources/images/search.png" onclick="search()"/>
 				</th>
 			</tr>
+		<form action="taxiGetCoords" id="getCoords">
 			<tr>
 				<th>
 					<input type="hidden" id="lat" name="lat" value=""/>
 					<input type="hidden" id="lng" name="lng" value=""/>
-					<div id="taxiMap" style="width:700px; height:500px;"></div>
+					<div id="taxiMap" style="width:90vw; height:75vh;"></div>
 				</th>		
+			</tr>
 			<tr>
 				<th>
 					<input type="submit" value="확인" id="close_button"/>
 				</th>
 			</tr>		
 		</table>
-	</form>
-
+		</form>
 <script>
 
 var lat;
@@ -50,9 +78,33 @@ var lng;
 var univAddr = "${univ}";
 console.log(univAddr);
 
-	searchMap(univAddr);
+$(function(){
+startMap(univAddr);
+});	
+		
 
 var mapContainer = document.getElementById('taxiMap'); // 지도를 표시할 div
+
+// 주소-좌표 변환 객체를 생성합니다 (초기 위치를 본인의 대학교로 잡기 위함)
+var geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+function startMap(univ) {
+	geocoder.addressSearch(univ, function(result, status) {
+
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === kakao.maps.services.Status.OK) {
+
+	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	        map.setCenter(coords);
+	    } 
+	});    
+}
+
+
+
 var mapOption = {
         center: new kakao.maps.LatLng(37.45975, 126.95109), // 지도의 중심좌표
         level: 3, // 지도의 확대 레벨
@@ -132,7 +184,7 @@ $("#close_button").click(function(){
 	$('#getCoords').submit();
 	setTimeout(function() {
 		window.close();
-	 }, 5);
+	 }, 10);
 });
 </script>
 </body>

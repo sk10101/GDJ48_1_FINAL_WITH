@@ -68,6 +68,11 @@ public class LoginController {
 			session.setAttribute("loginId", loginId);
 			session.setAttribute("member_class", member_class);
 			session.setAttribute("certficate_chk", certficate_chk);
+			
+			// 8.20 정현민 추가
+			String chkGender = service.chkGender(loginId);
+			session.setAttribute("gender", chkGender);
+			
 			msg = loginId + " (" + member_class + ") 님 환영합니다";			
 			rAttr.addFlashAttribute("msg",msg);
 				

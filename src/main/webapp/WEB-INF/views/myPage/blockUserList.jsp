@@ -7,7 +7,7 @@
 	<meta charset="UTF-8">
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./resources/js/jquery.twbsPagination.js"></script>
@@ -30,20 +30,56 @@
         padding: 60px 100px;
     }
     
-    /* 양수빈 CSS 작업[삭제 해도 됨] */
-	.myinfo th, td {
-		border: 1px solid #000000;
-		padding: 8px;
-		text-align: center;
+   	.myinfo {
+    	color: rgb(88, 88, 88);
+    	margin: 0 auto;
+    	padding: 30px 50px;
+    	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    	border-radius: 20px;
+    	font-size: 16px;
 	}
 	
-	.myinfo th {
-		background-color: #2962ff;
-		color: #ffffff;
+	.myinfo th,
+	.myinfo td {
+		padding: 10px 10px;
 	}
-	.container {
+    
+  	/* 페이지네이션 부트스트랩 css 제거 후 직접 수정 (why? 부트스트랩 때문에 사이드바 ul li 깨짐) */
+    nav {
     	text-align: center;
+    	margin-top: 60px;
     }
+    
+   	#pagination {
+   		display: inline-block;
+
+   	}
+   
+   	#pagination li {
+   		float: left;
+   		/* border: 0.4px solid gray; */
+   		padding: 5px 15px;
+   	}
+   	
+   	#pagination li a {
+   		color: rgb(88, 88, 88);
+   		font-size: 16px;
+   	}
+   	
+   	#unlock-button {
+		background-color: #537ef4;
+		color: #eaeaea;
+		border-radius: 5px;
+		border: none;
+		padding: 7px 20px;
+		font-size: 16px;
+		margin: 0 10px;
+   	}
+   	
+	.gender1 {
+    	width: 35px;
+	}
+    
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -58,23 +94,30 @@
 		</c:choose>
 		<div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	     <table class="myinfo" style="margin-left:180px;">
+	     	<table class="myinfo">
             	<tr>
-            		<th>차단 대상 ID</th>
-            		<th>차단 해제</th>
+            		<th></th>
+            		<th style="padding-bottom: 20px;">차단 대상 ID</th>
+            		<th></th>
             	</tr>
             	<c:forEach items="${name}" var="name">
 					<tr>
-						<td>${name.block_member}</td>
-						<td><input type="button" onclick="location.href='/blockDelete?name=${name.block_member}'" value="해제" style="width: 100px; color : #ffffff; background-color: #2962ff;"/></td>
+						<th>
+			            	<c:if test="${name.gender eq '남자'}">
+	            				<img class="gender1" src="./resources/images/man.png" alt="man">
+         				    </c:if>	
+				            <c:if test="${name.gender eq '여자'}">
+				            	<img class="gender1" src="./resources/images/girl.png" alt="girl">
+				            </c:if>	
+						</th>
+						<th>${name.block_member}</th>
+						<td><input id="unlock-button" type="button" onclick="location.href='/blockDelete?name=${name.block_member}'" value="차단해제"/></td>
 					</tr>
 				</c:forEach>
             </table>
-            <div class="container">
-					<nav aria-label="Page navigation">
-						<ul class="pagination" id="pagination"></ul>
-					</nav>
-			</div>
+			<nav aria-label="Page navigation">
+				<ul class="pagination" id="pagination"></ul>
+			</nav>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>
