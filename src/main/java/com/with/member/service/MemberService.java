@@ -236,4 +236,10 @@ public class MemberService {
 	public void univer_add(HashMap<String, Object> params) {
 		dao.univer_add(params);
 	}
+	public int blockChk(String member, String mb_id) {
+		// 차단했는지 여부 확인용
+		
+		return dao.blockChk(member,mb_id);
+	}
+
 }

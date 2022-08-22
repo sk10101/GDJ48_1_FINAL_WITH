@@ -25,36 +25,86 @@
         min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
+        padding: 60px 100px;
     }
+    
+	#main-table {
+   		min-width: 600px;
+    	color: rgb(88, 88, 88);
+    	margin: 0 auto;
+    	padding: 30px 50px;
+    	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    	border-radius: 20px;
+    	font-size: 16px;
+	}
+	
+	#main-table th,
+	#main-table td {
+		padding: 15px 10px;
+	}
+	
+	.btu {
+		background-color: #537ef4;
+		color: #eaeaea;
+		border-radius: 5px;
+		border: none;
+		padding: 7px 20px;
+		font-size: 16px;
+		margin: 0 10px;
+	}
+	
+	input[type='text'] {
+		width: 100%;
+	}
 </style>
 <body>
-	<jsp:include page="../commons/adminHeader.jsp"/>
+	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
-	   <jsp:include page="../commons/adminSideBar8.jsp"/>
+		<c:choose>
+			<c:when test="${sessionScope.member_class eq '일반회원'}">
+			   <jsp:include page="../commons/memberSideBar7.jsp"/>
+			</c:when>
+			<c:when test="${sessionScope.member_class eq '관리자'}">
+				<jsp:include page="../commons/adminSideBar8.jsp"/>
+			</c:when>
+		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
 	     <form method="post" action="/blind/updateList">
 	     <input type="hidden" name="board_idx" id="board_idx" value="${info.board_idx}">
-	     	<table>
+	     	<table id="main-table">
 	     		<tr>
-	     		<td>블라인드 사유 : </td>
-	     		<td>${info.blind_reason}</td>
+		     		<th>블라인드 사유</th>
+		     		<td>${info.blind_reason}</td>
 	     		</tr>
 	     		<tr>
-	     		<td> 블라인드 해제 관리자 : </td>
-	     		<td>${info.blindCancel_id}</td>
+		     		<th>블라인드 해제 관리자</th>
+		     		<c:if test="${info.blindCancel_id ne null}">
+		     			<td>${info.blindCancel_id}</td>
+		     		</c:if>	
+		     		<c:if test="${info.blindCancel_id eq null}">
+		     			<td> - </td>
+		     		</c:if>	
 	     		</tr>
 	     		<tr>
-	     		<td> 블라인드 해제 : </td>  <!-- db에 저장된 cancel 값이 1이면 체크로 보이게하고,0이면 체크박스 체크 안되어있게하기-->
-	     		<td><input type="checkbox" name="cancel" id="cancel" value="1" <c:if test="${info.cancel==1}">checked</c:if>></td>
+		     		<th>블라인드 해제</th>  <!-- db에 저장된 cancel 값이 1이면 체크로 보이게하고,0이면 체크박스 체크 안되어있게하기-->
+		     		<td>
+		     			<input type="checkbox" name="cancel" id="cancel" value="1" <c:if test="${info.cancel==1}">checked</c:if>>
+		     		</td>
 	     		</tr>
 	     		<tr>
-	     		<td>해제 사유 : </td>
-	     		<td><input name="blindCancel_reason" id="blindCancel_reason" value="${info.blindCancel_reason}" ></td>
+		     		<th>해제 사유</th>
+		     		<td>
+		     			<input type="text" name="blindCancel_reason" id="blindCancel_reason" value="${info.blindCancel_reason}" required="required"/>
+		     		</td>
+	     		</tr>
+	     		<tr>
+	     			<th colspan="2" style="padding-top: 50px;">
+				     	<input class="btu" type="submit" value="해제">
+				     	<input class="btu" type="button" value="돌아가기" onclick="location.href='blindListGo'"/>
+			     	</th>
 	     		</tr>
 	     	</table>
-	     	<input type="submit" value="해제">
-	     	<input type="button" value="돌아가기" onclick="location.href='blindListGo'"/>
 	     </form>
 	   </div>
 	</div>

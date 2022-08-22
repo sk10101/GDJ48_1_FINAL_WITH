@@ -28,4 +28,7 @@ public interface LoginDAO {
 
 	Date chkPenalty(String loginId);
 
+	// 8.20 정현민 추가
+	String chkGender(String loginId);
+
 }

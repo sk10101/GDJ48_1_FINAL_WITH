@@ -25,7 +25,33 @@
         min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
+        padding: 60px 100px;
     }
+    
+   	#main-table {
+   		min-width: 600px;
+    	color: rgb(88, 88, 88);
+    	margin: 0 auto;
+    	padding: 30px 50px;
+    	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    	border-radius: 20px;
+    	font-size: 16px;
+	}
+	
+	#main-table th,
+	#main-table td {
+		padding: 15px 10px;
+	}
+	
+	.btu {
+		background-color: #537ef4;
+		color: #eaeaea;
+		border-radius: 5px;
+		border: none;
+		padding: 7px 20px;
+		font-size: 16px;
+		margin: 0 10px;
+	}
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -40,7 +66,7 @@
 		</c:choose>
 	   <div class="content">
 	   	<form action="pass?member_id=${dto.member_id}" method="post">
-	       <table>
+	       <table id="main-table">
 			<tr>
 				<th>회원 ID</th>
 				<td>${dto.member_id}</td>
@@ -59,11 +85,14 @@
 			</tr>
 			<tr>
 				<th>사진</th>
-				<td>
 				<c:if test="${file ne null}">
-				<img src="./resources/certificate/${file}" width="500px"/>
+					<td>
+						<img src="./resources/certificate/${file}" width="400px"/>
+					</td>
 				</c:if>
-				</td>
+				<c:if test="${file eq null}">
+					<td style="color: #ef5350;">업로드된 사진이 없습니다.</td>
+				</c:if>
 			</tr>
 			<tr>
 				<th>이메일</th>
@@ -83,15 +112,27 @@
 			</tr>
 			<tr>
 				<th>탈퇴처리여부</th>
-				<td><c:if test="${dto.hide eq 0}">X</c:if></td>
-				<td><c:if test="${dto.hide eq 1}">O</c:if></td>
+				<c:if test="${dto.hide eq 0}">
+					<td>
+						<img src="./resources/images/no.png" alt="no" style="position: relative; top: 3px; width: 18px;">
+					</td>
+				</c:if>
+				<c:if test="${dto.hide eq 1}">
+					<td>
+						<img src="./resources/images/yes.png" alt="yes" style="position: relative; top: 3px; width: 25px;">
+					</td>
+				</c:if>
+			</tr>
+			<tr>
+				<th colspan="2" style="padding-top: 50px;">
+					<c:choose>
+					<c:when test="${dto.certficate_chk eq 0}"><input class="btu" type="submit" value="인증완료"></c:when>
+					<c:when test="${dto.certficate_chk eq 1}"><input class="btu" type="hidden"></c:when>
+					</c:choose>
+					<input class="btu" type="button" onclick="location.href='userList.go'" value="돌아가기"/>
+				</th>
 			</tr>
 		</table>
-		<c:choose>
-		<c:when test="${dto.certficate_chk eq 0}"><input type="submit" value="인증완료"></c:when>
-		<c:when test="${dto.certficate_chk eq 1}"><input type="hidden"></c:when>
-		</c:choose>
-		<input type="button" onclick="location.href='userList.go'" value="돌아가기"/>
 		</form>
 	   </div>
 	</div>

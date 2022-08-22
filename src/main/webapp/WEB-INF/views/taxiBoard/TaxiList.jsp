@@ -69,6 +69,7 @@
     
     option {
     	font-size: 16px;
+    	text-align: center;
     }
     
     .search {
@@ -93,10 +94,10 @@
     }
     
     .write-button {
-    	padding: 2px 10px;
+    	padding: 4px 15px;
     	border-radius: 5px;
     	border: none;
-    	background-color: #2962ff;
+    	background-color: #537ef4;
     	color: #eaeaea;
     	font-size: 16px;
     	margin-left: 130px;
@@ -178,7 +179,7 @@
 						<td>인원 &nbsp;:&nbsp; ${list.partNo} / ${list.member_cnt}</td>
 						<c:if test="${list.recruit_end eq 0}">
 							<td>
-								<span style="padding: 3px 10px; border-radius: 5px; background-color: #2962ff">모집중</span>
+								<span style="padding: 3px 10px; border-radius: 5px; background-color: #2962ff;">모집중</span>
 							</td>
 						</c:if>
 						<c:if test="${list.recruit_end eq 1}">

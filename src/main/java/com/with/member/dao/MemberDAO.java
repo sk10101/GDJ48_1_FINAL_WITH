@@ -51,5 +51,8 @@ public interface MemberDAO {
 	void hideUpdate(HashMap<String, Object> params);
 
 	void univer_add(HashMap<String, Object> params);
+	
+	int blockChk(String member, String mb_id);
+
 
 }

@@ -20,4 +20,6 @@ public interface BlindDAO {
 	int updateComm(BlindDTO dto);
 
 	void blindBoardUpdate(String board_idx);
+
+	void blindBoardReport(String category, String board_idx, String member_id, String subject);
 }

@@ -7,7 +7,7 @@
 	<meta charset="UTF-8">
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./resources/js/jquery.twbsPagination.js"></script>
@@ -29,19 +29,43 @@
         background-color: rgb(249, 249, 249);
         padding: 60px 100px;
     }
-    /* 양수빈 CSS 작업[삭제 해도 됨] */
-    .myinfo th, td {
-	    border: 1px solid #000000;
-	    width: 100px;
-	    text-align: center;
-  	}
-  	.myinfo th{
-  		background-color : #2962ff;
-  		color:#ffffff;
-  	}
-  	.container {
-    	text-align: center;
+    
+    .myinfo {
+    	color: rgb(88, 88, 88);
+    	margin: 0 auto;
+    	padding: 30px 50px;
+    	box-shadow: rgba(100, 100, 111, 0.6) 0px 7px 29px 0px;
+    	border-radius: 20px;
     }
+    
+    .myinfo th,
+    .myinfo td {
+    	padding: 15px 15px;
+    }
+    
+    .myinfo td {
+    	font-size: 18px;
+    }
+    
+   	.bottom-button {
+   		margin-top: 40px;
+		background-color: #537ef4;
+		color: #eaeaea;
+		border-radius: 5px;
+		border: none;
+		padding: 10px 20px;
+		font-size: 14px;
+	}
+	
+	#black {
+		padding: 5px 20px;
+		background-color: #ff6f00;
+		color: #eaeaea;
+		border: none;
+		border-radius: 5px;
+	}
+	
+    
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -105,25 +129,42 @@
 					</td>
 					<td>${params.avg_timeFloat}</td>
 				</tr>
+				<c:if test="${params.manner_cnt > 0}">
+				<tr>
+					<th colspan="3">
+						<img src="./resources/images/people.png" alt="people" style="position:relative; width: 30px; top: 8px; right: 10px;"> ${params.manner_cnt}		
+					</th>
+				</tr>
+				</c:if>
+				<c:if test="${params.manner_cnt eq 0}">
+					<tr>
+						<td colspan="3" style="text-align: center; color: #ef5350;">아직까지 받은 평가가 없습니다.</td>
+					</tr>
+				</c:if>
+				<tr>
+					<th colspan="3">
+						<c:choose>
+							<c:when test="${params.boardName eq '배달게시판'}">
+								<input class="bottom-button" type="button" value="돌아가기" onclick="location.href='/deliDetail?board_idx=${params.board}'"/>
+							</c:when>
+							<c:when test="${params.boardName eq '택시게시판'}">
+								<input class="bottom-button" type="button" value="돌아가기" onclick="location.href='/taxiDetail?board_idx=${params.board}'"/>
+							</c:when>
+							<c:when test="${params.boardName eq '밥게시판'}">
+								<input class="bottom-button" type="button" value="돌아가기" onclick="location.href='/mealDetail?board_idx=${params.board}'"/>
+							</c:when>
+						</c:choose>
+					</th>	
+				</tr>
 			</table>
-			<br><br>
-			<p>
-				<img src="./resources/images/people.png" alt="people" style="width: 30px; margin-left: 20px;">${params.manner_cnt}
-			</p>
-			<c:choose>
-				<c:when test="${params.boardName eq '배달게시판'}">
-					<input type="button" value="확인" onclick="location.href='/deliDetail?board_idx=${params.board}'"/>
-				</c:when>
-				<c:when test="${params.boardName eq '택시게시판'}">
-					<input type="button" value="확인" onclick="location.href='/taxiDetail?board_idx=${params.board}'"/>
-				</c:when>
-				<c:when test="${params.boardName eq '밥게시판'}">
-					<input type="button" value="확인" onclick="location.href='/mealDetail?board_idx=${params.board}'"/>
-				</c:when>
-			</c:choose>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>
 </body>
-<script></script>
+<script>
+	var msg = '${msg}';
+	if (msg != "") {
+		alert(msg);
+	}
+</script>
 </html>

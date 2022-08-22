@@ -48,7 +48,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		session.setAttribute("word", params.get("word"));
 		}
 		ModelAndView mav = new ModelAndView();
-		mav = service.mealList(params);
+		mav = service.mealList(session,params);
 		
 		return mav;
 	}
@@ -98,16 +98,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	}
 	
 	
-		// kakao
-		@RequestMapping(value = "/mealkakao.go", method = RequestMethod.GET)
-		public ModelAndView kakao(HttpSession session, RedirectAttributes rAttr) {
-			logger.info("글쓰기 페이지 이동");
-			ModelAndView mav = new ModelAndView();
-
-			mav.setViewName("mealBoard/kakao");
-			
-			return mav;
-		}
+		
 		
 		// 상세위치 모달 ajax
 		@RequestMapping("/mealMarker.ajax")
@@ -120,6 +111,15 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			return mealMap;
 		}
 		
+		// kakao
+		@RequestMapping(value = "/mealkakao.go", method = RequestMethod.GET)
+		public ModelAndView kakao(HttpSession session, RedirectAttributes rAttr) {
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("mealBoard/kakao");
+			
+			return mav;
+		}
+
 		// 카카오 팝업 창에서 가져온 좌표를 잠시 세션에 보관
 		@RequestMapping(value = "/getCoord", method = RequestMethod.GET)
 		public void getCoords(HttpSession session, @RequestParam HashMap<String, String> params) {
@@ -142,7 +142,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			
 			ModelAndView mav = new ModelAndView();
 			
-			service.mealApply(rAttr,params);
+			service.mealApply(session,rAttr,params);
 			
 			mav.setViewName("redirect:/mealDetail?board_idx="+params.get("board_idx"));
 			

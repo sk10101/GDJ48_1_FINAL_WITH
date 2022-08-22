@@ -133,12 +133,20 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/blockAdd")
-	public String blockAdd(@RequestParam HashMap<String, Object> params, HttpSession session) {
+	public String blockAdd(@RequestParam HashMap<String, Object> params, HttpSession session, RedirectAttributes rAttr) {
 		String mb_id = (String) session.getAttribute("loginId");
 		String member = (String) params.get("member");
 		int board=Integer.parseInt((String) params.get("board"));
-		service.blockUser(member,mb_id);
-		return "redirect:/deliDetail?board_idx="+board;
+		String page = "redirect:/deliDetail?board_idx="+board;
+		// 차단하기 이전에 이미 차단한 회원인지 부터 확인한다.
+		int blockChk = service.blockChk(member,mb_id);
+		if (blockChk == 0) {
+			service.blockUser(member,mb_id);
+		} else {
+			rAttr.addFlashAttribute("msg","이미 차단한 회원입니다.");
+			page = "redirect:/mannerInfo?member="+member+"&board="+board;
+		}
+		return page;
 	}
 
 }

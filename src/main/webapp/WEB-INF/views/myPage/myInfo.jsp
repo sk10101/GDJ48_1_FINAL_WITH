@@ -10,18 +10,85 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
-.content {
-	display: inline-block;
-	margin-left: 160px;
-	margin-top: 100px;
-	max-width: 1040px;
-	width: 100%;
-	min-height: 100vh;
-	/* background-color: #f4f4f4; */
-	background-color: rgb(249, 249, 249);
-}
 
-.content-top {
+    .content-wrap {
+    	max-width: 1200px;
+    	width: 100%;
+    	margin: 0 auto;
+    }
+	
+	.content {
+		display: inline-block;
+		margin-left: 160px;
+		margin-top: 100px;
+		max-width: 1040px;
+		width: 100%;
+		min-height: 100vh;
+		/* background-color: #f4f4f4; */
+		background-color: rgb(249, 249, 249);
+		padding: 60px 100px;
+	}
+	
+	#main-table {
+		width: 100%;
+		margin: 0 auto;
+		color: rgb(88, 88, 88);
+	}
+	
+    #main-table .collage {
+        color: #fff;
+        font-size: 25px;
+        padding: 10px 30px;
+        /* background-color: #2962ff; */
+        background-image: linear-gradient(#2962ff, #2f9df7);
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        border-radius: 10px;
+        font-weight: normal;
+    }
+    
+    #main-table th,
+    #main-table td {
+    	padding: 15px 10px;
+    }
+    
+    #main-table td {
+    	font-size: 16px;
+    }
+    
+    #main-table th a {
+    	color: rgb(88, 88, 88);
+    }
+    
+    #mod-button {
+   		margin-top: 20px;
+		background-color: #537ef4;
+		color: #eaeaea;
+		border-radius: 5px;
+		border: none;
+		padding: 10px 20px;
+		font-size: 16px;
+    }
+    
+    #bottom-table {
+		width: 70%;	
+		margin: 0 auto;
+		color: rgb(88, 88, 88);
+		box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+		padding: 10px 20px;
+		border-radius: 15px;
+    }
+    
+    #bottom-table th,
+    #bottom-table td {
+    	padding: 15px 10px;
+    }
+    
+    #bottom-table td {
+    	font-size: 16px;
+    }
+    
+
+/* .content-top {
 	display: inline-block;
 	width: 100%;
 	min-height: 300px;
@@ -66,7 +133,6 @@
 	transform: scale(1.1);
 }
 
-/* 양수빈 CSS 작업[삭제 해도 됨] */
 .myinfo th, td {
 	border: 1px solid #000000;
 	padding: 8px;
@@ -118,7 +184,7 @@ button {
 	color: yellow;
 	overflow: hidden;
 	pointer-events: none;
-}
+} */
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp" />
@@ -133,94 +199,114 @@ button {
 		</c:choose>
 		<div class="content">
 			<!-- 여기에서 작업 시작하세요 -->
-			<div class="content-top">
-				<span class="collage">${mblist.university_idx}</span> <br>
-				<br><br><br><br><br><br>
-				<p class="score">내 평점</p>
-				<div class="star" style="margin-left : 420px;">
-                    <td>
-                    	<c:forEach var="i" begin="1" end="5">
-							<c:if test="${mblist.avg_allAvg >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
-							<c:if test="${mblist.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
-						</c:forEach>
-					</td>
-                </div>
-				<br><br>
-				<p class="score">${mblist.avg_allAvg}</p>
-			</div>
-			<table class="myinfo" style="margin-left: 180px;">
-				<tr>
-					<th>친절함</th>
-					<td><c:forEach var="i" begin="1" end="5">
-							<c:if test="${mblist.avg_kindInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
-							<c:if test="${mblist.avg_kindInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
-						</c:forEach>		
-					</td>
-					<td>${mblist.avg_kindFloat}</td>
-				</tr>
-				<tr>
-					<th>응답속도</th>
-					<td><c:forEach var="i" begin="1" end="5">
-							<c:if test="${mblist.avg_answerInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
-							<c:if test="${mblist.avg_answerInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
-						</c:forEach>
-					</td>
-					<td>${mblist.avg_answerFloat}</td>
-				</tr>
-				<tr>
-					<th>시간약속</th>
-					<td><c:forEach var="i" begin="1" end="5">
-							<c:if test="${mblist.avg_timeInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
-							<c:if test="${mblist.avg_timeInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
-						</c:forEach>
-					</td>
-					<td>${mblist.avg_timeFloat}</td>
-				</tr>
-			</table>
-			<br><br>
-			<p>
-				<a href="/mannerDetail.go">
-				<img src="./resources/images/people.png" alt="people"
-					style="width: 30px; margin-left: 20px;">${mblist.manner_cnt}
-				</a>
-			</p>
-			<br><br><hr><br><br>
-			<p>내정보</p>
-				<br><br>
-            
-			<form action="/mbUpdate.go" method="POST">
-            <table class="myinfo" style="margin-left:180px;">
-            	<tr>
-            		<th>ID</th>
-            		<td>${mblist.member_id}</td>
-            	</tr>
-            	<tr>
-            		<th>이름</th>
-            		<td>${mblist.name}</td>
-            	</tr>
-            	<tr>
-            		<th>성별</th>
-            		<td>${mblist.gender}</td>
-            	</tr>
-            	<tr>
-            		<th>대학교</th>
-            		<td>${mblist.university_idx}</td>
-            	</tr>
-            	<tr>
-            		<th>연락처</th>
-            		<td>${mblist.phone}</td>
-            	</tr>
-            	<tr>
-            		<th>이메일</th>
-            		<td>${mblist.email}</td>
-            	</tr>
-            </table>
-            <br><br>
-            <!-- <button onclick="location.href='/mbUpdate.go'">수정</button> --><button>수정</button>
-			</form>
-	   </div>
+				<table id="main-table">
+					<tr>
+						<th colspan="3">
+							<span class="collage">${mblist.university_idx}</span>
+						</th>
+					</tr>
+					<tr>		
+						<th class="score" colspan="3" style="padding-bottom: 0; font-size: 18px;">내 평점</th>
+					</tr>
+					<tr>	
+	                    <th colspan="3">
+							<div class="star">	
+		                    	<c:forEach var="i" begin="1" end="5">
+									<c:if test="${mblist.avg_allAvg >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+									<c:if test="${mblist.avg_allAvg < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+								</c:forEach>
+			                </div>
+						</th>
+		            </tr>
+		            <tr>
+		            	<th class="score" colspan="3" style="padding-top: 0; padding-bottom: 60px; font-size: 18px;">${mblist.avg_allAvg}</th>
+		            </tr>    
+					<tr>
+						<th style="text-align: right; width: 100px;">친절함</th>
+						<th style="width: 100px;">
+							<c:forEach var="i" begin="1" end="5">
+								<c:if test="${mblist.avg_kindInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+								<c:if test="${mblist.avg_kindInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+							</c:forEach>		
+						</th>	
+						<td>${mblist.avg_kindFloat}</td>
+					</tr>
+					<tr>
+						<th style="text-align: right; width: 100px;">응답속도</th>
+						<th>
+							<c:forEach var="i" begin="1" end="5">
+								<c:if test="${mblist.avg_answerInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+								<c:if test="${mblist.avg_answerInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+							</c:forEach>
+						</th>
+						<td style="width: 100px;">${mblist.avg_answerFloat}</td>
+					</tr>
+					<tr>
+						<th style="text-align: right; width: 100px;">시간약속</th>
+						<th>
+							<c:forEach var="i" begin="1" end="5">
+								<c:if test="${mblist.avg_timeInt >= i}"><img src="./resources/images/star.png" alt="star" style="width: 30px;"></c:if>
+								<c:if test="${mblist.avg_timeInt < i}"><img src="./resources/images/star1.png" alt="star1" style="width: 30px;"></c:if>
+							</c:forEach>
+						</th>
+						<td>${mblist.avg_timeFloat}</td>
+					</tr>
+					<c:if test="${mblist.manner_cnt > 0}">
+						<tr>
+							<th colspan="3">
+								<a href="/mannerDetail.go">
+									<img src="./resources/images/people.png" alt="people" style="position:relative; width: 30px; top: 8px; right: 10px;"> ${mblist.manner_cnt}
+								</a>
+							</th>
+						</tr>
+					</c:if>
+					<c:if test="${mblist.manner_cnt eq 0}">
+						<tr>
+							<td colspan="3" style="text-align: center; color: #ef5350;">아직까지 받은 평가가 없습니다.</td>
+						</tr>
+					</c:if>
+					<tr>
+						<td colspan="3" style="padding: 50px 0;"><hr></td>
+					</tr>
+					<tr>
+						<th colspan="3" style="font-size: 18px; padding-bottom: 50px;">내정보</th>
+					</tr>
+					</table>
+					
+					<table id="bottom-table">
+					<form action="/mbUpdate.go" method="POST">
+	            	<tr>
+	            		<th>ID</th>
+	            		<td colspan="2">${mblist.member_id}</td>
+	            	</tr>
+	            	<tr>
+	            		<th>이름</th>
+	            		<td colspan="2">${mblist.name}</td>
+	            	</tr>
+	            	<tr>
+	            		<th>성별</th>
+	            		<td colspan="2">${mblist.gender}</td>
+	            	</tr>
+	            	<tr>
+	            		<th>대학교</th>
+	            		<td colspan="2">${mblist.university_idx}</td>
+	            	</tr>
+	            	<tr>
+	            		<th>연락처</th>
+	            		<td colspan="2">${mblist.phone}</td>
+	            	</tr>
+	            	<tr>
+	            		<th>이메일</th>
+	            		<td colspan="2">${mblist.email}</td>
+	            	</tr>
+	            	<tr>
+	            		<td colspan="3" style="text-align: right;"><!-- <button onclick="location.href='/mbUpdate.go'">수정</button> --><button id="mod-button">수정</button></td>
+	            	</tr>
+					</form>
+					</table>
+	   	</div>
 	</div>
-	<jsp:include page="../commons/footer.jsp" />
+	<jsp:include page="../commons/footer.jsp"/>
 </body>
 <script>
 var msg = "${msg}";

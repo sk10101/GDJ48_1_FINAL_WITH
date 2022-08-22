@@ -7,7 +7,7 @@
 	<meta charset="UTF-8">
 	<link rel="favicon" href="./resources/images/with_favicon.ico">
 	<title>With</title>
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./resources/js/jquery.twbsPagination.js"></script>
@@ -25,23 +25,86 @@
         margin-top: 100px;
         max-width: 1040px;
         width: 100%;
-        min-height: 680px;
+        min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
+        padding: 60px 100px;
     }
-    /* 양수빈 CSS 작업[삭제 해도 됨] */
-    .myinfo th, td {
-	    border: 1px solid #000000;
-	    width: 100px;
-	    text-align: center;
-  	}
-  	.myinfo th{
-  		background-color : #2962ff;
-  		color:#ffffff;
-  	}
-  	.container {
+    
+   	.myinfo {
+   		width: 100%;
+    	color: rgb(88, 88, 88);
+    	margin: 0 auto;
+    	padding: 30px 50px;
+    	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    	border-radius: 20px;
+    	font-size: 16px;
+    	border-collapse: collapse;
+    	background-color: #fff;
+	}
+	
+	.myinfo th,
+	.myinfo td {
+		padding: 10px 10px;
+		text-align: center;
+	}
+	
+	.myinfo td {
+		border-top: 5px solid rgb(249, 249, 249);
+	}
+
+	.myinfo tr:first-child th {
+		background-color: rgb(249, 249, 249);
+		padding-top: 15px;
+	}
+	
+	.myinfo tr:first-child th:first-child {
+		border-radius: 20px 0 0 0;
+	}
+	
+	.myinfo tr:first-child th:last-child {
+		border-radius: 0 20px 0 0;
+	}
+	
+	.myinfo tr:last-child td {
+		padding-bottom: 15px;
+	}
+	
+	
+	
+	/* .myinfo tr:last-child td {
+		border-bottom: 0.4px solid gray;
+	} */
+	
+	.myinfo th {
+		width: 100px;
+	}
+	
+	.myinfo img {
+		position: relative;
+		top: 2px;
+	}
+    
+   	/* 페이지네이션 부트스트랩 css 제거 후 직접 수정 (why? 부트스트랩 때문에 사이드바 ul li 깨짐) */
+   	nav {
     	text-align: center;
+    	margin-top: 60px;
     }
+   	
+   	#pagination {
+   		display: inline-block;
+   	}
+   
+   	#pagination li {
+   		float: left;
+   		/* border: 0.4px solid gray; */
+   		padding: 5px 15px;
+   	}
+   	
+   	#pagination li a {
+   		color: rgb(88, 88, 88);
+   		font-size: 16px;
+   	}
 </style>
 <body>
 	<jsp:include page="../commons/header.jsp"/>
@@ -70,13 +133,11 @@
 						<td>${manner.manner_score}&ensp;<img src="./resources/images/star.png" alt="star" style="width: 20px;"></td>
 						<td>${manner.assess_date}&ensp;</td>
 					</tr>
-				</c:forEach> 
-            </table>        
-            <div class="container">
-					<nav aria-label="Page navigation">
-						<ul class="pagination" id="pagination"></ul>
-					</nav>
-			</div>
+				</c:forEach>
+            </table>
+			<nav aria-label="Page navigation">
+				<ul class="pagination" id="pagination"></ul>
+			</nav>
 	   </div>
 	</div>
 	<jsp:include page="../commons/footer.jsp"/>

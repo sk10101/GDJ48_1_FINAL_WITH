@@ -6,6 +6,9 @@
 <head>
    <meta charset="UTF-8">
    <link rel="favicon" href="./resources/images/with_favicon.ico">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
    <title>With</title>
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -16,6 +19,7 @@
         box-sizing: border-box;
         text-decoration: none;
         list-style: none;
+		font-family: 'Noto Sans KR', sans-serif;
     }
 
     .main {
@@ -50,7 +54,7 @@
         width: 110px;
     }
 
-    .navbar-top .dot {
+/*     .navbar-top .dot {
         width: 40px;
         position: absolute;
         right: 30px;
@@ -63,7 +67,7 @@
         width: 27px;
         right: 25px;
         top: 60px;
-    }
+    } */
 
     .sidebar {
         top: 100px;
@@ -127,8 +131,8 @@
 
     .navbar-top p {
         float: right;
-        margin-top: 20px;
         margin-right: 20px;
+        margin-top: 10px;
         font-size: 14px;
     }
 
@@ -151,7 +155,7 @@
     .content-top {
         display: inline-block;
         width: 100%;
-        min-height: 300px;
+        min-height: 350px;
     }
 
     .content-left {
@@ -307,16 +311,38 @@
         color: rgb(104, 104, 104);
     }
     
-
+    .gender {
+    	position:relative;
+    	width: 35px;
+    	top: 13px;
+    	right: 10px;
+    }
+    
 </style>
 <body>
     <div class="main">
         <div class="navbar-top-bg"></div>
         <div class="navbar-top">
             <a href="/main"><img class="logo" src="./resources/images/logo.png" alt="logo"></a>
-            <p><a href="#">${sessionScope.loginId}(${sessionScope.member_class}) 님 환영합니다.</a> &nbsp; | &nbsp; <a href="logout">로그아웃</a></p>
-            <a href="#"><img class="bell" src="./resources/images/bell.png" alt="bell"></a>
-            <img class="dot" src="./resources/images/dot.png" alt="dot">
+            <p>
+            	<c:if test="${sessionScope.member_class eq '일반회원'}">
+            		<a href="/myInfo">
+            	</c:if>	
+            	<c:if test="${sessionScope.member_class eq '관리자'}">
+            		<a href="#">
+            	</c:if>
+		            <c:if test="${sessionScope.gender eq '남자'}">
+		            	<img class="gender" src="./resources/images/man.png" alt="man">
+		            </c:if>	
+		            <c:if test="${sessionScope.gender eq '여자'}">
+		            	<img class="gender" src="./resources/images/girl.png" alt="girl">
+		            </c:if>	
+            		${sessionScope.loginId}(${sessionScope.member_class}) 님 환영합니다.
+            	</a>
+            	 &nbsp; | &nbsp; <a href="logout">로그아웃</a>
+            </p>
+            <!-- <a href="#"><img class="bell" src="./resources/images/bell.png" alt="bell"></a>
+            <img class="dot" src="./resources/images/dot.png" alt="dot"> -->
         </div>
         <div class="sidebar">
             <ul>
@@ -420,13 +446,13 @@
     </div>
 </body>
 <script>
-   /* 아래 코드는 지우지 마세요 */
-/*     $(".sidebar").css("height", ($(".content").height() + $(".footer").height()));
+   	/* 아래 코드는 지우지 마세요 */
+	/* $(".sidebar").css("height", ($(".content").height() + $(".footer").height())); */
    
     var msg = '${msg}';
 	if (msg != "") {
 			alert(msg);
-	} */
+	}
 	
 	
 	// 리스트의 사이즈에 따라 변하는 테이블의 크기를 고정시켜주기 위한 코드 (좌측 테이블)

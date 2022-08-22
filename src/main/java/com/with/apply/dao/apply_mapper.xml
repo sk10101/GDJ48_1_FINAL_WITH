@@ -60,6 +60,20 @@
 				</if>
 	</select>
 	
+	<select id="deliList" resultType="board">
+		SELECT * FROM board_common_column WHERE board_idx = #{board_idx}
+	</select>
+	<select id="taxiList" resultType="board">
+		SELECT * FROM board_common_column WHERE board_idx = #{board_idx}
+	</select>
+	<select id="mealList" resultType="board">
+		SELECT * FROM board_common_column WHERE board_idx = #{board_idx}
+	</select>
+	
+	<update id="member_cnt" parameterType="hashmap">
+		UPDATE board_common_column SET recruit_end = 1 WHERE member_cnt = #{member_cnt}	
+	</update>
+	
 	<select id="deliApplyList" resultType="board" parameterType="hashmap">
 	<![CDATA[
 	SELECT 
@@ -70,7 +84,9 @@
 		(SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE a.member_id = m.member_id) as avg_allAvg,
 		a.apply_idx,
 		b.board_idx,
-		b.category_id	
+		b.category_id,
+		b.member_cnt,
+		b.subject
 	FROM apply a, board_common_column b
 	WHERE b.board_idx = a.board_idx AND a.member_id != b.member_id AND a.status = '대기중' AND b.board_idx = #{board_idx} AND a.hide = 0]]>
 		<if test="word != null and word != ''">
@@ -108,6 +124,17 @@
 				</if>
 	</select>
 	
+	
+	<select id="update" resultType="int">
+		SELECT count(a.apply_idx) FROM apply a where a.status = '수락' AND a.board_idx = #{param1} and hide = 0
+	</select>
+	<select id="taxiupdate" resultType="int">
+		SELECT count(a.apply_idx) FROM apply a where a.status = '수락' AND a.board_idx = #{param1} and hide = 0
+	</select>
+	<select id="mealupdate" resultType="int">
+		SELECT count(a.apply_idx) FROM apply a where a.status = '수락' AND a.board_idx = #{param1} and hide = 0
+	</select>
+	
 	<update id="applyUpdate" parameterType="hashmap">
 		UPDATE apply SET status = #{realstatus} WHERE apply_idx = #{apply_idx} 
 	</update>
@@ -140,6 +167,7 @@
 		(SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE a.member_id = m.member_id) as avg_allAvg,
 		a.apply_idx,
 		b.board_idx,
+		b.member_cnt,
 		category_id
 	FROM apply a, board_common_column b
 	WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx  AND a.status = '대기중' AND b.board_idx = #{board_idx} AND a.hide = 0]]>
@@ -188,6 +216,7 @@
       (SELECT AVG(avg_score) as avg_allAvg FROM manner_score m WHERE a.member_id = m.member_id) as avg_allAvg,
       a.apply_idx,
       b.board_idx,
+      b.member_cnt,
       category_id
    FROM apply a, board_common_column b
    WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx  AND b.board_idx = #{board_idx} AND a.status = '대기중' AND b.board_idx = #{board_idx}]]>
@@ -209,7 +238,7 @@
 	<select id="mealCount" resultType="board" parameterType="hashmap">
 		SELECT a.member_id
 		FROM apply a, board_common_column b
-		WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx AND a.status = '대기중'
+		WHERE a.member_id != b.member_id AND b.board_idx = a.board_idx AND b.board_idx = #{board_idx} AND a.status = '대기중' AND a.hide = 0
 
 			<if test="word != null and word != ''">
 					<choose>

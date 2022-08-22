@@ -29,9 +29,11 @@ public class MealService {
 	@Autowired MealDAO dao;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public ModelAndView mealList(HashMap<String, String> params) {
+	public ModelAndView mealList(HttpSession session,HashMap<String, String> params) {
 		logger.info("게시글 목록 요청");
 		ModelAndView mav = new ModelAndView("mealBoard/MealList");
+		String loginId = (String) session.getAttribute("loginId");
+
 		
 		// 마감 여부 확인 후 업데이트 (스케쥴러 대체)
 		dao.endUpdate();
@@ -43,6 +45,7 @@ public class MealService {
 		String word = params.get("word");
 		
 		map.put("page", page); // page 입력
+		map.put("loginId", loginId);
 		// 검색어를 입력했을 때
 		if(word != "") {
 			map.put("word", word); // 검색어 입력
@@ -148,8 +151,10 @@ public class MealService {
 		mav.addObject("info",info);
 		mav.addObject("mealPhotoList",mealPhotoList);
 		// 참여자 목록 조회하기
-		ArrayList<BoardDTO> partList = partList(board_idx);
+		ArrayList<BoardDTO> partList = partList(board_idx,loginId);
 		mav.addObject("partList",partList);
+		
+		// 한 번 평가한 회원은 다시 평가할 수 없도록 평가하기 버튼을 가린다.
 		
 		ArrayList<MemberDTO> partMaster = dao.partMaster(info.getMember_id());
 
@@ -171,9 +176,13 @@ public class MealService {
 	}
 	
 
-	private ArrayList<BoardDTO> partList(String board_idx) {
+	
+
+
+
+	private ArrayList<BoardDTO> partList(String board_idx,String loginId) {
 		logger.info("참여 회원 목록 서비스");
-		return dao.partList(board_idx);
+		return dao.partList(board_idx,loginId);
 	}
 
 
@@ -233,7 +242,7 @@ public class MealService {
 		
 		HashMap<String, Object> mealMap = new HashMap<String, Object>(); 
 		MemberDTO dto = dao.getUniversityAddr(loginid);
-		String university_addr = dto.getUniversity_addr();
+		String university_addr = dto.getUniversity_name();
 		mealMap.put("university_addr", university_addr);
 		
 		logger.info("가져온 대학교 주소 : " + university_addr);
@@ -247,13 +256,33 @@ public class MealService {
 
 
 	 // 밥 게시글 참여 신청
-	public ModelAndView mealApply(RedirectAttributes rAttr, HashMap<String, String> params) {
+	public ModelAndView mealApply(HttpSession session,RedirectAttributes rAttr, HashMap<String, String> params) {
 		logger.info( "게시글 참여 신청 서비스");
 		ModelAndView mav = new ModelAndView();
+		String loginId = (String) session.getAttribute("loginId");
+
 		String member_id = params.get("member_id");
 		String board_idx = params.get("board_idx");
+		//String gender = (String) params.get("gender");
+		//String chkGender = dao.chkGender(member_id) + "만";
+		String gd_restriction = params.get("gd_restriction");
+
+		params.put("loginId", loginId);
+		//params.put("gender", gender);
 		
-		if(dao.isRejected(member_id,board_idx) > 0) {
+		// 성별 제한에 걸렸을 때
+		
+	   if(!(dao.getGender(member_id)+'만').equals(gd_restriction) && !gd_restriction.equals("상관없음")) {
+				rAttr.addFlashAttribute("msg",gd_restriction + " 가능한 신청입니다.");
+			}
+		// 이미 신청했을 때, 방장이 수락했을 때
+		else 
+		
+			if(dao.isApplied(member_id,board_idx) > 0) {
+	        rAttr.addFlashAttribute("msg","이미 수락 대기중이거나 수락된 신청입니다.");
+	     }
+
+		else if(dao.isRejected(member_id,board_idx) > 0) {
 			rAttr.addFlashAttribute("msg","이미 거절된 신청입니다.");
 		}
 		// 해당 글에서 강퇴당하거나 스스로 나간 이력이 있을 때
@@ -265,7 +294,7 @@ public class MealService {
 			rAttr.addFlashAttribute("msg","정상적으로 신청되었습니다.");
 			dao.mealApply(member_id,board_idx);
 		}
-		
+	
 		return mav;
 	}
 

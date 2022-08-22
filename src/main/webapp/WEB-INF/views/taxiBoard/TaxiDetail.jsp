@@ -38,6 +38,7 @@
     #main-table {
     	width: 100%;
     	color: rgb(64, 64, 64);
+    	padding: 20px 10px;
     }
     
     #center-table {
@@ -126,7 +127,7 @@
 	    box-shadow: rgba(100, 100, 111, 0.6) 0px 7px 29px 0px;
 	    background-color: white;
 	    z-index: 9999;
-	    left: 800px;
+	    left: 45%;
 	    top: 30%;
 	    display: none;
 	    position: fixed;
@@ -180,14 +181,6 @@
 		width: 20px;
 	}
 	
-	.eye {
-        position: absolute;
-        z-index: 1;
-        width: 27px;
-        right: 665px;
-        top: 105px;
-    }
-    
     .star {
     	width: 30px;
     }
@@ -212,12 +205,54 @@
     }
     
     .del-button {
-    	background-color: #ef5350;
+    	background-color: #ff6f00;
     }
     
     .back-button {
     	background-color: #537ef4;
     }
+    
+    .manner-button {
+    	background-color: #537ef4;
+    	color: #eaeaea;
+    	padding: 3px 10px;
+    	border-radius: 5px;
+    	border: none;
+    }
+    
+    .elim-button {
+    	background-color: #ff6f00;
+    	color: #eaeaea;
+    	padding: 3px 10px;
+    	border-radius: 5px;
+    	border: none;
+    }
+    
+    #center-table a {
+    	color: rgb(88, 88, 88);
+    }
+    
+    #center-table tr th,
+    #center-table tr td {
+		padding: 5px 10px;
+	}
+	
+	.gender1 {
+    	width: 35px;
+    	transition: all 0.3s ease;
+	}
+	
+	.gender1:hover {
+		transform: scale(1.1);
+	}
+	
+	.off {
+        width: 40px;
+        float: right;
+        margin-top: 10px;
+        margin-right: 20px;
+    }
+	
 </style>
 <body>
    	<jsp:include page="../commons/header.jsp"/>
@@ -232,11 +267,14 @@
 		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	       <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}"><a href="superBlind?board_idx=${list.board_idx}"><img class="eye" src="./resources/images/bell.png" alt="eye"></a></c:if>
+      	   <c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}">
+	  			<a href="superBlind?board_idx=${info.board_idx}">
+	  				<img class="off" src="./resources/images/off.png" alt="off">
+	  			</a>
+     	   </c:if>
 	       <!-- 참여신청 모달팝업창 -->
  	       <form action="taxiApplyDo" method="post">
-			   <div id= "modal"> 
-			   </div>
+			   <div id="modal"></div>
 			   <div id="banner_online">
 			      <div id="close_button" style ="cursor: pointer;"> 
 			            <a id="close_button">&times;</a>
@@ -331,6 +369,16 @@
 		       	<table id="center-table">	
 		       		<c:forEach items="${pt}" var="pt">
 			       		<tr>
+			       			<th>
+			       				<a href="/mannerInfo?member=${pt.member_id}&board=${list.board_idx}">
+					            	<c:if test="${pt.gender eq '남자'}">
+			            				<img class="gender1" src="./resources/images/man.png" alt="man">
+		          				    </c:if>	
+						            <c:if test="${pt.gender eq '여자'}">
+						            	<img class="gender1" src="./resources/images/girl.png" alt="girl">
+						            </c:if>
+					            </a>
+			       			</th>
 		       				<th class="ptList">
 		       					<!-- 참여자와 방장의 아이디가 같으면 왕관 아이콘을 붙여준다. -->
 		       					<c:if test="${pt.member_id eq list.member_id}">
@@ -348,13 +396,13 @@
 			       			<!-- 한번 평가했다면 버튼은 사라져야한다. (해야할 것) -->
 	       					<c:if test="${chkPt > 0 and list.recruit_end == 1}">
 			       				<td class="ptList">
-			       					<input type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${pt.member_id}&board_idx=${list.board_idx}'" <c:if test="${pt.member_id eq sessionScope.loginId or pt.chkManner > 0}">hidden</c:if>/>
+			       					<input type="button" value="평가하기" class="manner-button" onclick="location.href='/mannerGo?member_id=${pt.member_id}&board_idx=${list.board_idx}'" <c:if test="${pt.member_id eq sessionScope.loginId or pt.chkManner > 0}">hidden</c:if>/>
 			       				</td>
 		       				</c:if>
 		       				<!-- 강퇴 열 방장빼고는 아예 못보게 한다. -->
 		       				<c:if test="${list.member_id eq sessionScope.loginId and list.recruit_end == 0}">
 			       				<td class="ptList">
-			       					<input type="button" class="elim" value="강퇴" onclick="location.href='/elimDo?board_idx=${list.board_idx}&member_id=${pt.member_id}'" <c:if test="${pt.member_id eq list.member_id}">hidden</c:if>/>
+			       					<input type="button" class="elim-button" value="강퇴" onclick="location.href='/elimDo?board_idx=${list.board_idx}&member_id=${pt.member_id}'" <c:if test="${pt.member_id eq list.member_id}">hidden</c:if>/>
 	      						</td>
 			       			</c:if>
 			       		</tr>	
@@ -372,8 +420,8 @@
 		       		<tr>
 		       			<td colspan="4" style="text-align: center">
 		       				<!--  모집중 and 본인이 작성한 글이 아니라면 참여신청 버튼이 노출된다. -->
-		       				<c:if test="${list.recruit_end == 0}">
-								<input id="apply-button" type="button" value="참여신청" <c:if test="${sessionScope.loginId eq list.member_id}">hidden</c:if>/>
+		       				<c:if test="${list.recruit_end == 0 and sessionScope.loginId ne list.member_id}">
+								<input id="apply-button" type="button" value="참여신청"/>
 							</c:if>
 						</td>
 		       		</tr>
@@ -381,7 +429,7 @@
 		       			<td colspan="4" style="text-align: center">
 			       			<c:if test="${sessionScope.loginId eq list.member_id}">
 				       			<input class="bottom-button del-button" type="button" value="삭제" onclick="location.href='/deliDelete?board_idx=${list.board_idx}'"/>
-				       		</c:if>		
+				       		</c:if>	
 							<input class="bottom-button back-button" type="button" value="돌아가기" onclick="location.href='/taxiListGo'"/>
 						</td>
 		       		</tr>

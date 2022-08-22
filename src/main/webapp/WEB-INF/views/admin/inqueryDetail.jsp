@@ -26,42 +26,67 @@
         min-height: 100vh;
         /* background-color: #f4f4f4; */
         background-color: rgb(249, 249, 249);
+        padding: 60px 100px;
     }
     
-     /* 양수빈 CSS 작업[삭제 해도 됨] */
-	.myinfo th, td {
-		border: 1px solid #000000;
-		padding: 8px;
-		text-align: center;
-	}
-	
-	.myinfo th {
-		background-color: #2962ff;
-		color: #ffffff;
-	}
-	
-	.manegerinfo th, td {
-		border: 1px solid #000000;
-		padding: 8px;
-		text-align: center;
-	}
-	
-	.manegerinfo td{
-		width: 300px;
-	}
-	
-	.manegerinfo th {
-		background-color: #2962ff;
-		color: #ffffff;
-	}
-	.container {
-    	text-align: center;
+    .myinfo {
+   		width: 70%;
+    	color: rgb(88, 88, 88);
+    	margin: 0 auto;
+    	padding: 30px 50px;
+    	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    	border-radius: 20px;
+    	font-size: 16px;
+    	border-collapse: collapse;
     }
+    
+    .myinfo th,td {
+    	padding: 20px 15px;
+    }
+    
+    .myinfo th {
+    	max-width: 100px;
+    }
+    
+    input[type="text"] {
+    	border-radius: 5px;
+    	padding: 3px 5px;
+    	border: 1px solid gray;
+    	font-size: 14px;
+    }
+    
+    .textarea {
+	    width: 90%;
+	    height: 200px;
+	    border-radius: 5px;
+	    padding: 3px 5px;
+	    resize: none;
+	    font-size: 14px;
+  	}
+  	
+   .bottom-button {
+   		margin: 20px 20px;
+   		padding: 7px 20px;
+   		border-radius: 5px;
+   		border: none;
+   		background-color: #537ef4;
+   		color: #eaeaea;
+   }
+   
+   #button-wrap {
+   		text-align: center;
+   		margin-top: 40px;
+   }
+    
+     
+    
+    
+    
 </style>
 <body>
-	<jsp:include page="../commons/adminHeader.jsp"/>
+	<jsp:include page="../commons/header.jsp"/>
 	<div class="content-wrap">
-	   <c:choose>
+		<c:choose>
 			<c:when test="${sessionScope.member_class eq '일반회원'}">
 			   <jsp:include page="../commons/memberSideBar7.jsp"/>
 			</c:when>
@@ -71,7 +96,7 @@
 		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-	     	<table class="myinfo" style="margin-left:180px;">
+	     	<table class="myinfo">
 	            	<tr>
 	            		<th>작성자</th>
 	            		<td>${map.member_id}</td>
@@ -93,7 +118,7 @@
 	        <c:choose>
 		         <c:when test = "${map.status eq '미처리'}">
 		            <form action="adminInqueryUpdate" method="POST">
-		        	<table class="myinfo" style="margin-left:180px;">
+		        	<table class="myinfo">
 		            	<tr>
 		            		<th>처리한 관리자</th>
 		            		<td>
@@ -103,7 +128,8 @@
 		            	</tr>
 		            	<tr>
 		            		<th>답변내용</th>
-		            		<td><input type="text" name="answer_content" placeholder="150자 이내" style="width : 300px; height : 300px;"/></td>
+		            		<!-- <td><input type="text" name="answer_content" placeholder="150자 이내" required="required"/></td> -->
+		            		<td><textarea class="textarea" name="answer_content" placeholder="150자 이내" required="required"></textarea></td>
 		            	</tr>
 		            	<tr>
 		            		<th>처리상태</th>
@@ -115,14 +141,18 @@
 								</select>
 		            		</td>
 		            	</tr>
+		            	<tr>
+		            		<th colspan="2">
+					        	<input class="bottom-button" type="button" value="돌아가기" onclick="location.href='/admininqueryList.go'"/>
+					        	<input class="bottom-button" type="submit" value="답변하기"/>
+		            		</th>
+		            	</tr>
 		        	</table>
-		        	<input type="button" value="돌아가기" onclick="location.href='/admininqueryList.go'"/>
-		        	<input type="submit" value="답변하기"/>
 		        	</form>
 		         </c:when>
 		         <c:when test = "${map.status eq '처리중'}">
 		         	<form action="adminInqueryUpdate" method="POST">
-		        	<table class="myinfo" style="margin-left:180px;">
+		        	<table class="myinfo">
 		            	<tr>
 		            		<th>처리한 관리자</th>
 		            		<td>
@@ -132,7 +162,8 @@
 		            	</tr>
 		            	<tr>
 		            		<th>답변내용</th>
-		            		<td><input type="text" name="answer_content" value="${map.answer_content}" placeholder="150자 이내" style="width : 300px; height : 300px;"/></td>
+		            		<%-- <td><input type="text" name="answer_content" value="${map.answer_content}" placeholder="150자 이내" required="required"/></td> --%>
+		            		<td><textarea class="textarea" name="answer_content" placeholder="150자 이내" required="required">${map.answer_content}</textarea></td>
 		            	</tr>
 		            	<tr>
 		            		<th>처리상태</th>
@@ -144,13 +175,17 @@
 								</select>
 		            		</td>
 		            	</tr>
+		            	<tr>
+		            		<th colspan="2">
+					        	<input class="bottom-button" type="button" value="돌아가기" onclick="location.href='/admininqueryList.go'"/>
+					        	<input class="bottom-button" type="submit" value="답변하기"/>
+		            		</th>
+		            	</tr>
 		        	</table>
-		        	<input type="button" value="돌아가기" onclick="location.href='/admininqueryList.go'"/>
-		        	<input type="submit" value="답변하기"/>
 		        	</form>
 		         </c:when>
 		         <c:otherwise>
-		        	<table class="myinfo" style="margin-left:180px;">
+		        	<table class="myinfo">
 		            	<tr>
 		            		<th>처리한 관리자</th>
 		            		<td>
@@ -170,8 +205,12 @@
 		            		<th>처리상태</th>
 		            		<td>${map.status}</td>
 		            	</tr>
+		            	<tr>
+		            		<th colspan="2">
+		        				<input class="bottom-button" type="button" value="돌아가기" onclick="location.href='/admininqueryList.go'"/>
+		        			</th>
+		            	</tr>
 		        	</table>
-		        	<input type="button" value="돌아가기" onclick="location.href='/admininqueryList.go'"/>
 		         </c:otherwise>
 		    </c:choose>
 	   </div>

@@ -37,7 +37,7 @@
     </select>
     
     <select id="blockList" resultType="member" parameterType="hashmap">
-    	select block_member from block where member_id=#{idx}
+    	select block_member, gender from block b, member m where b.member_id=#{idx} and block_member = m.member_id 
     	<if test="word != null and word != ''">
     		AND block_member LIKE CONCAT('%',#{word},'%')
     	</if> LIMIT #{cnt} OFFSET #{offset}
@@ -90,5 +90,9 @@
 	<update id="univer_add" parameterType="hashmap">
 		UPDATE member SET university_idx=(SELECT university_idx FROM university WHERE university_name = #{university_name}) WHERE member_id = #{member_id}
 	</update>
+	
+	<select id="blockChk" resultType="int">
+		SELECT COUNT(block_member) FROM block WHERE member_id = #{param2} AND block_member = #{param1}
+	</select>
 	
 </mapper>

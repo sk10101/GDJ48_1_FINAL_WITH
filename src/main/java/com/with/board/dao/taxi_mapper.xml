@@ -31,6 +31,7 @@
 	bcc.hide = 0 AND
 	category_id = '택시게시판' AND
 	m.member_id = bcc.member_id AND
+	(SELECT COUNT(block_member) FROM block b WHERE b.member_id = #{loginId} AND block_member = bcc.member_id) = 0 AND
 	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{loginId})
 		<if test="word != null and word != ''">
 			<choose>
@@ -101,6 +102,7 @@
 	bcc.hide = 0 AND
 	category_id = '택시게시판' AND
 	m.member_id = bcc.member_id AND
+	(SELECT COUNT(block_member) FROM block b WHERE b.member_id = #{loginId} AND block_member = bcc.member_id) = 0 AND
 	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{loginId})
 		<if test="word != null and word != ''">
 			<choose>
