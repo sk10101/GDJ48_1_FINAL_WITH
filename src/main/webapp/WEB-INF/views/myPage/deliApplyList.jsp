@@ -140,8 +140,7 @@
 	       <!-- 여기에서 작업 시작하세요 -->
 	     <table id="top-table">
 			<tr>
-				<th>제목 : </th>
-				<td>${info.subject}</td>
+				<th>제목 : ${info.subject}</th>
 			</tr>
 		</table>
 <!-- 		<form action="taxiApplyList"> -->
