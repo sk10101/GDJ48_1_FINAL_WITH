@@ -59,8 +59,12 @@
 	</select>
 	
 	<select id="allCount" resultType="board" parameterType="hashmap">
-	 	SELECT board_idx FROM board_common_column
-			WHERE category_id = '밥게시판'
+	 	SELECT board_idx FROM board_common_column bcc, member m
+			WHERE category_id = '밥게시판' AND bcc.hide = 0 AND m.member_id = #{loginId} 
+			AND (SELECT COUNT(block_member) FROM block b WHERE b.member_id = #{loginId} AND block_member = bcc.member_id) = 0
+			<if test="member_class.equals('일반회원')">
+				AND university_idx = (SELECT university_idx FROM member m WHERE bcc.member_id = m.member_id)
+			</if>
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -99,8 +103,10 @@
 	bcc.board_idx = mb.board_idx AND
 	bcc.hide = 0 AND
 	category_id = '밥게시판' AND
-	m.member_id = bcc.member_id AND
-	m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{loginId})
+	m.member_id = bcc.member_id
+	<if test="member_class.equals('일반회원')">
+		AND m.university_idx = (SELECT university_idx FROM member WHERE member_id  = #{loginId})
+	</if>
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">

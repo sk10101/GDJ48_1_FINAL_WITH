@@ -191,7 +191,7 @@
 		$('#getCoord').submit();
 		setTimeout(function() { 
 			window.close();
-		 }, 5);
+		 }, 10);
     });
 	
 </script>
