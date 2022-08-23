@@ -101,7 +101,7 @@
 		          		<th colspan="2" style="padding-bottom: 50px;"><h2>${member_id}님은 어떤 사람이었나요?</h2></th>
 		          	</tr>
 		          	<tr>
-		          		<th>친절함 </th>
+		          		<th>친절함</th>
 		          		<td>
 		          			<label>
 		          				<input class="button" type="radio" name="kind" value="1" checked/>
@@ -126,7 +126,7 @@
 		          		</td>
 		          	</tr>
 		          	<tr>
-		          		<th>응답속도 </th>
+		          		<th>응답속도</th>
 		          		<td>
 		          			<label>
 		          				<input class="button" type="radio" name="response" value="1" checked/>
@@ -151,7 +151,7 @@
 		          		</td>
 		          	</tr>
 		          	<tr>
-		          		<th>시간약속 </th>
+		          		<th>시간약속</th>
 		          		<td>
 		          			<label>
 		          				<input class="button" type="radio" name="time" value="1" checked/>

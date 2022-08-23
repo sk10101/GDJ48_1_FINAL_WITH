@@ -42,8 +42,17 @@ public interface MemberDAO {
 
 	String boardName(int board);
 
+	int whoId(String mb_id, String member);
+
+	int pwUpdate(HashMap<String, Object> params);
+
+	void mbPhone(HashMap<String, Object> params);
+
+	void hideUpdate(HashMap<String, Object> params);
+
+	void univer_add(HashMap<String, Object> params);
+	
 	int blockChk(String member, String mb_id);
 
-	
 
 }

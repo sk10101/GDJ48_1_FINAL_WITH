@@ -278,7 +278,7 @@
         border-radius: 30px;
         margin-left: 520px;
         width: 2px;
-        min-height: 500px;
+        min-height: 600px;
         background-color: #d1d1d1;
     }
 

@@ -250,7 +250,7 @@
 	#close_button {
 		position: absolute;
 	    float: right;
-	    left: 165px;
+	    left: 160px;
 	    top: 5px;
 	}
 	
@@ -355,7 +355,7 @@
 		padding: 15px 15px;
 	}
 	
-	.off {
+	.eye {
         width: 40px;
         float: right;
         margin-top: 10px;
@@ -376,10 +376,13 @@
 		</c:choose>
 	   <div class="content">
 	       <!-- 여기에서 작업 시작하세요 -->
-     		<c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자'}">
+     		<c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자' and info.hide == 0}">
      			<a href="superBlind?board_idx=${info.board_idx}">
-     				<img class="off" src="./resources/images/off.png" alt="off">
+     				<img class="eye on" src="./resources/images/on.png" alt="on">
      			</a>
+     		</c:if>
+     		<c:if test="${sessionScope.loginId ne null and sessionScope.member_class eq '관리자' and info.hide == 1}">
+   				<img class="eye off" src="./resources/images/off.png" alt="off">
      		</c:if>
 	     	<p id="subject">
 	     		${info.subject}
@@ -490,7 +493,7 @@
 						<td style="text-align: center;"> - </td>
 						<c:if test="${partMemberChk > 0}"><td>${ptm.phone}</td></c:if>
 						<%-- <c:if test="${partMemberChk > 0}"><td></td></c:if> --%>
-						<c:if test="${partMemberChk > 0 and ptm.member_id ne sessionScope.loginId}"><td><input class="manner-button" type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${ptm.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
+						<c:if test="${info.recruit_end eq 1 and partMemberChk > 0 and ptm.member_id ne sessionScope.loginId}"><td><input class="manner-button" type="button" value="평가하기" onclick="location.href='/mannerGo?member_id=${ptm.member_id}&board_idx=${info.board_idx}'"/></td></c:if>
 						<!-- <td></td> -->
 					</tr>
 				</c:forEach>
@@ -500,7 +503,7 @@
 		       				<a href="/mannerInfo?member=${part.member_id}&board=${info.board_idx}">
 				            	<c:if test="${part.gender eq '남자'}">
 			           				<img class="gender1" src="./resources/images/man.png" alt="man">
-			        				    </c:if>	
+	        				    </c:if>	
 					            <c:if test="${part.gender eq '여자'}">
 					            	<img class="gender1" src="./resources/images/girl.png" alt="girl">
 					            </c:if>	
@@ -580,7 +583,7 @@
 <script type="text/javascript">
 // 참여신청 모달팝업
    	$("#apply-button").click(function() {
-        	$("#banner_online").show();
+        	$("#banner_online").fadeIn();
     });
 
     /* $("#deliPop").click(function() {

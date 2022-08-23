@@ -24,6 +24,7 @@
 		,content
 		,appoint_coords_lat
 		,appoint_coords_lng
+		,bcc.hide
 		 FROM board_common_column bcc, meal_board mb
 			WHERE bcc.board_idx = #{board_idx} AND bcc.board_idx = mb.board_idx
 	</select>

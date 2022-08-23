@@ -29,6 +29,7 @@
 		,appoint_coords_lat
 		,appoint_coords_lng
 		,min_fund
+		,bcc.hide
 		,delivery_fee FROM board_common_column bcc, delivery_board d
 			WHERE bcc.board_idx = #{board_idx} AND bcc.board_idx = d.board_idx
 	</select>
