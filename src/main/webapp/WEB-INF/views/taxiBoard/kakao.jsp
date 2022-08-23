@@ -184,7 +184,7 @@ $("#close_button").click(function(){
 	$('#getCoords').submit();
 	setTimeout(function() {
 		window.close();
-	 }, 10);
+	 }, 5);
 });
 </script>
 </body>
