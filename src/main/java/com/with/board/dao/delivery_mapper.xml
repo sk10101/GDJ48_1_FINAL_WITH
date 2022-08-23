@@ -62,7 +62,9 @@
 	 	SELECT board_idx, university_idx FROM board_common_column bcc, member m
 			WHERE category_id = '배달게시판' AND bcc.hide = 0 AND m.member_id = #{loginId} 
 			AND (SELECT COUNT(block_member) FROM block b WHERE b.member_id = #{loginId} AND block_member = bcc.member_id) = 0
-			AND university_idx = (SELECT university_idx FROM member m WHERE bcc.member_id = m.member_id)
+			<if test="member_class.equals('일반회원')">
+				AND university_idx = (SELECT university_idx FROM member m WHERE bcc.member_id = m.member_id)
+			</if>
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">
@@ -96,7 +98,9 @@
 		FROM board_common_column bcc, delivery_board d, member m
 			WHERE bcc.board_idx = d.board_idx AND category_id = '배달게시판' AND bcc.hide = 0 AND m.member_id = #{loginId} 
 			AND (SELECT COUNT(block_member) FROM block b WHERE b.member_id = #{loginId} AND block_member = bcc.member_id) = 0
-			AND university_idx = (SELECT university_idx FROM member m WHERE bcc.member_id = m.member_id)
+			<if test="member_class.equals('일반회원')">
+				AND university_idx = (SELECT university_idx FROM member m WHERE bcc.member_id = m.member_id)
+			</if>
 				<if test="word != null and word != ''">
 					<choose>
 						<when test="option.equals('제목')">

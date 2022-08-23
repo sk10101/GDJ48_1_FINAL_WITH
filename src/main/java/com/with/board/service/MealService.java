@@ -43,9 +43,11 @@ public class MealService {
 		int page = Integer.parseInt(params.get("page"));
 		String option = params.get("option");
 		String word = params.get("word");
+		String member_class = (String) session.getAttribute("member_class");
 		
 		map.put("page", page); // page 입력
 		map.put("loginId", loginId);
+		map.put("member_class",member_class);
 		// 검색어를 입력했을 때
 		if(word != "") {
 			map.put("word", word); // 검색어 입력

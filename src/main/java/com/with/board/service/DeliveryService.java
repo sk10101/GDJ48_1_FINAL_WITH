@@ -46,10 +46,12 @@ public class DeliveryService {
 		String option = params.get("option");
 		String word = params.get("word");
 		// 로그인한 사람이 차단한 회원이 작성한 게시글은 보여주지 않기 위해 가져온다.
-		String loginId = (String) session.getAttribute("loginId"); 
+		String loginId = (String) session.getAttribute("loginId");
+		String member_class = (String) session.getAttribute("member_class");
 		
 		map.put("page", page); // page 입력
 		map.put("loginId", loginId);
+		map.put("member_class",member_class);
 		// 검색어를 입력했을 때
 		if(word != "" && word != " ") {
 			map.put("word", word); // 검색어 입력
