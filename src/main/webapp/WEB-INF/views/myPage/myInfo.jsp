@@ -46,6 +46,10 @@
         font-weight: normal;
     }
     
+    #main-table tr:first-child th {
+		padding-bottom: 30px;
+	}
+    
     #main-table th,
     #main-table td {
     	padding: 15px 10px;

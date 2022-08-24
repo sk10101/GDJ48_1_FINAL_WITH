@@ -190,11 +190,20 @@
         left: 21px;
         top: 6px;
     }
-
-    .content-top .collage {
+    
+    /* .content-top .collage {
         position: absolute;
         left: 50%;
         top: 150px;
+        color: #fff;
+        font-size: 25px;
+        padding: 10px 30px;
+        background-image: linear-gradient(#2962ff, #2f9df7);
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        border-radius: 10px;
+    } */
+    
+    .content-top .collage {
         color: #fff;
         font-size: 25px;
         padding: 10px 30px;
@@ -358,8 +367,8 @@
         </div>
         <div class="content">
             <div class="content-top">
-                <span class="collage">${univ}</span>
-                <br><br><br><br><br><br><br>
+                <p style="text-align: center; margin-top: 60px;"><span class="collage">${univ}</span></p>
+                <br><br><br>
                 <p class="score">내 평점</p>
                 <div class="star" onClick="location.href='/myInfo'">
                     <td>

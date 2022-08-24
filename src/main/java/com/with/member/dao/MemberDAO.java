@@ -30,7 +30,7 @@ public interface MemberDAO {
 
 	void mannerCnt(String member_id, String string, float avg);
 
-	float avg(String member_id, String string);
+	int avg(String member_id);
 
 	void insert(String member_id, String nameBox, int i);
 
