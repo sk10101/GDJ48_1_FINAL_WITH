@@ -124,7 +124,7 @@ public class MealService {
 					
 					try {
 						byte[] arr = photo.getBytes();
-						Path path = Paths.get("/Users/hyunsoungkim/GDJ48_FINAL_WITH/src/main/webapp/resources/photo/" + newFileName);
+						Path path = Paths.get("C:/image/photo/" + newFileName);
 						// 같은이름의 파일이 나올 수 없기 떄문에 옵션 설정 안해도된다.
 						Files.write(path, arr);
 						logger.info(newFileName + " SAVE OK");

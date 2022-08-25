@@ -356,7 +356,7 @@
 			            <tr>
 			                <td colspan="4" style="text-align: center">
 				                <c:forEach items="${photo}" var="path">
-										<img src="./resources/photo/${path.newFileName}" width="400px"/>
+										<img src="/photo/${path.newFileName}" width="400px"/>
 								</c:forEach>
 							</td>
 			            </tr>

@@ -28,7 +28,7 @@
 				</otherwise>
 			</choose>
 		</if>	
-				LIMIT #{cnt} OFFSET #{offset}
+			ORDER BY m.reg_date DESC LIMIT #{cnt} OFFSET #{offset}
 	</select>
 
 	<select id="userDetail" resultType="member" parameterType="String">

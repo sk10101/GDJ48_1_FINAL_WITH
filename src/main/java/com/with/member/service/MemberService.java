@@ -45,7 +45,7 @@ public class MemberService {
 				logger.info(oriFileName + " ===> " + newFileName);
 				try {
 					byte[] arr = photo.getBytes();
-					Path path = Paths.get("C:\\STUDY\\SPRING_ADVANCE\\GDJ48_1_FINAL_WITH\\src\\main\\webapp\\resources\\certificate\\" + newFileName);
+					Path path = Paths.get("C:/image/certificate/" + newFileName);
 					// 같은이름의 파일이 나올 수 없기 떄문에 옵션 설정 안해도된다.
 					Files.write(path, arr);
 					logger.info(newFileName + " SAVE OK");
@@ -168,15 +168,15 @@ public class MemberService {
 	public HashMap<String, Object> infoAll(String member_id, HashMap<String, Object> map) {
 		String name = dao.univer(map.get("university_idx"));
 		String nameBox[] = {"친절함","응답속도","시간약속"};
-		float mannerAvg = dao.avg(member_id,nameBox[0]);
+		int mannerAvg = dao.avg(member_id);
 		int cnt=0;
 		float avg[]= new float[4];
 		int result[]= new int[4]; 
-		if(mannerAvg!=0) {
+		if(mannerAvg>0) {
 			cnt = dao.macnt(member_id)/3; // 매너점수를 작성한 회원들 예) 12명
 		}
 		for(int i=0;i<3;i++) {
-			if(mannerAvg!=0) {
+			if(mannerAvg>0) {
 				result[i]+=dao.average(member_id,nameBox[i]); //
 				avg[i]=(float)result[i]/cnt;
 				dao.mannerCnt(member_id,nameBox[i],avg[i]);
