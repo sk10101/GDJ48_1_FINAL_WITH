@@ -193,7 +193,7 @@
               				    </c:forEach>
 							</td>
 								<td><input class="common-button yes-button" type="button" value="수락" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&category_id=${apply.category_id}&member_cnt=${apply.member_cnt}&status=1&member_id=${apply.member_id}'" /></td>
-								<td><input  class="common-button no-button" type="button" value="거절" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&category_id=${apply.category_id}&status=0'" /></td>
+								<td><input  class="common-button no-button" type="button" value="거절" onclick="location.href='mealApplyUpdate?apply_idx=${apply.apply_idx}&board_idx=${apply.board_idx}&category_id=${apply.category_id}&member_cnt=${apply.member_cnt}&member_id=${apply.member_id}&status=0'" /></td>
 							</tr>
 				</tbody>
 				</c:forEach>
