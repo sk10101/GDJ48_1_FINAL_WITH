@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.with.member.dao.JoinDAO;
 import com.with.member.dao.MemberDAO;
@@ -28,7 +29,7 @@ public class JoinService {
 	@Autowired MemberDAO mbdao;
 	
 	//회원가입
-	public ModelAndView join(MultipartFile[] photos, MemberDTO dto) {
+	public ModelAndView join(MultipartFile[] photos, MemberDTO dto, RedirectAttributes rAttr) {
 		
 		String plainPass = dto.getMember_pw();
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -64,9 +65,9 @@ public class JoinService {
 			
 			/* 여기까지 */
 		}
-		mav.addObject("msg", msg);
+		/* mav.addObject("msg", msg); */
+		rAttr.addFlashAttribute("msg", msg);
 		mav.setViewName(page);
-		
 		return mav;
 	}
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.with.member.dto.MemberDTO;
 import com.with.member.service.JoinService;
@@ -33,7 +34,7 @@ public class JoinController {
 	
 	//회원가입 정보 저장
 	@RequestMapping(value = "main/join.do", method = RequestMethod.POST)
-	public ModelAndView join(MultipartFile[] photos, @ModelAttribute MemberDTO dto) {
+	public ModelAndView join(MultipartFile[] photos, @ModelAttribute MemberDTO dto, RedirectAttributes rAttr) {
 		logger.info(dto.getMember_id());
 		//logger.info(dto.getUniversity_idx());
 		logger.info("pw:"+dto.getMember_pw());
@@ -42,8 +43,9 @@ public class JoinController {
 		logger.info("이메일:"+dto.getEmail());
 		logger.info("연락처:"+dto.getPhone());
 		
-		System.out.println("test");
-			return service.join(photos,dto);
+		/* System.out.println("test"); */
+		ModelAndView mav = service.join(photos,dto,rAttr);
+		return mav;
 	}	
 	
 	  //대학검색
